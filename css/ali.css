@@ -33,5 +33,10 @@ body {
 }
 
 .dropdown-menu > li > a {
+  color: #000;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
   color: rgba(255,255,255,.8);
 }

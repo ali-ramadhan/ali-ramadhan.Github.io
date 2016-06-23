@@ -15,6 +15,7 @@ body {
 .btn-default {
     border: 0;
     color: inherit;
+    vertical-align: middle;
 }
 
 .btn-default:hover,

@@ -1,3 +1,8 @@
 body {
     background-color: #003153; /* Prussian blue! */
 }
+
+.btn-default {
+    border: 0;
+    color: inherit;
+}

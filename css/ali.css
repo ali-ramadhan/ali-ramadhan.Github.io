@@ -2,7 +2,25 @@ body {
     background-color: #003153; /* Prussian blue! */
 }
 
+/*.btn {
+    border-radius: 0;
+    text-transform: uppercase;
+    font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-weight: 400;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    transition: all .3s ease-in-out;
+}*/
+
 .btn-default {
     border: 0;
     color: inherit;
+}
+
+.btn-default:hover,
+.btn-default:focus {
+    border: 0;
+/*    outline: 0;
+    color: #000;*/
+    background-color: inherit;
 }

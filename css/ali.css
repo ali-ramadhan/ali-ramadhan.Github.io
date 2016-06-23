@@ -15,7 +15,9 @@ body {
 .btn-default {
     border: 0;
     color: inherit;
-    vertical-align: middle;
+  	position: relative;
+  	top: 50%;
+	transform: translateY(-50%);
 }
 
 .btn-default:hover,

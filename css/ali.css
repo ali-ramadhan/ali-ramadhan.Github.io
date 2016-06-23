@@ -2,13 +2,16 @@ body {
     background-color: #003153; /* Prussian blue! */
 }
 
-/*.btn-default {
+.btn-default {
     border: 0;
     color: inherit;
-  	position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+/*  	position: relative;
   	top: 50%;
-	transform: translateY(+25%);
-}*/
+	transform: translateY(+25%);*/
+}
 
 .btn-default:hover,
 .btn-default:focus {
@@ -37,10 +40,4 @@ body {
 .dropdown-menu > .active > a:hover,
 .dropdown-menu > .active > a:focus {
 	color: rgba(0,0,0,.8);
-}
-
-.btn-group {
-    display: inline-block;
-    vertical-align: middle;
-    float: none;
 }

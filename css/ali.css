@@ -25,7 +25,8 @@ body {
     background-color: transparent;
 }
 
-.dropdown-toggle {
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
     border: 0;
     color: rgba(255,255,255,.8);
 	background-color: transparent;

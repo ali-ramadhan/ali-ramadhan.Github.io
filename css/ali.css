@@ -76,3 +76,23 @@ body {
 .dropdown-menu > .active > a:focus {
 	color: rgba(0,0,0,.8);
 }*/
+
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open > .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open > .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open > .dropdown-toggle.btn-default.focus {
+	border: 0;
+	color: rgba(255,255,255,0.8);
+	background-color: transparent;
+	border-color: #fff;
+}
+
+.btn-group.open .dropdown-toggle {
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}

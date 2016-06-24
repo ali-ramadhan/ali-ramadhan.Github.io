@@ -55,6 +55,10 @@ body {
 	color: rgba(f,f,f,.8);
 }
 
+.content-section {
+    padding-top: 20px;
+}
+
 /*.dropdown-menu > li > a:hover,
 .dropdown-menu > li > a:focus {
 	color: rgba(0,0,0,.8);

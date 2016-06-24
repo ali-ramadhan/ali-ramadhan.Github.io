@@ -2,12 +2,21 @@ body {
     background-color: #003153; /* Prussian blue! */
 }
 
-.btn-default {
-    border: 0;
-    color: inherit;
-/*  	position: relative;
-  	top: 50%;
-	transform: translateY(+25%);*/
+@media (max-width: 767px) {
+	.btn-default {
+		border: 0;
+		color: inherit;
+	}
+}
+
+@media (min-width: 768px) {
+	.btn-default {
+		border: 0;
+		color: inherit;
+		position: relative;
+		top: 50%;
+		transform: translateY(+25%);
+	}
 }
 
 .btn-default:hover,
@@ -30,8 +39,16 @@ body {
 	background-color: transparent;
 }
 
-.dropdown-menu > li > a {
-	color: #000;
+@media (max-width: 767px) {
+	.dropdown-menu > li > a {
+		color: #fff;
+	}
+}
+
+@media (min-width: 768px) {
+	.dropdown-menu > li > a {
+		color: #000;
+	}
 }
 
 .dropdown-menu > li > a:hover,

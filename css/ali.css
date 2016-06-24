@@ -3,6 +3,10 @@ body {
     background-color: #003153;
 }
 
+.content-section {
+    padding-top: 100px;
+}
+
 @media (max-width: 767px) {
 	.btn-default {
 		border: 0;
@@ -18,6 +22,12 @@ body {
 		top: 50%;
 		transform: translateY(+25%);
 	}
+}
+
+.btn {
+    -webkit-transition: none;
+    -moz-transition: none;
+    transition: none;
 }
 
 .btn-default:hover,
@@ -54,10 +64,6 @@ body {
 
 .navbar-custom .nav li a:hover {
 	color: rgba(f,f,f,.8);
-}
-
-.content-section {
-    padding-top: 100px;
 }
 
 /*.dropdown-menu > li > a:hover,

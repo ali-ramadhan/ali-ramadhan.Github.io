@@ -49,10 +49,10 @@ body {
 	.dropdown-menu > li > a {
 		color: #000;
 	}
+}
 
-	.navbar-custom .nav li a:hover {
-		color: rgba(0,0,0,.8);
-	}
+.navbar-custom .nav li a:hover {
+	color: rgba(f,f,f,.8);
 }
 
 /*.dropdown-menu > li > a:hover,

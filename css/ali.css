@@ -1,5 +1,6 @@
+/* Prussian blue background! */
 body {
-    background-color: #003153; /* Prussian blue! */
+    background-color: #003153;
 }
 
 @media (max-width: 767px) {

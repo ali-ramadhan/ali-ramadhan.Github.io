@@ -96,3 +96,30 @@ body {
 	-webkit-box-shadow: none;
 	box-shadow: none;
 }
+
+.research-box {
+	cursor: pointer;
+}
+
+.initially-hidden {
+	display: none;
+}
+
+.research-navbar-btn {
+	margin-top: 5px;
+	margin-bottom: 20px;
+}
+
+.btn-lg {
+    border: 0;
+    color: rgba(255,255,255,1);
+    background-color: transparent;
+}
+
+.btn-lg:hover,
+.btn-lg:focus {
+    border: 0;
+    outline: 0;
+	color: rgba(255,255,255,.8);
+    background-color: transparent;
+}

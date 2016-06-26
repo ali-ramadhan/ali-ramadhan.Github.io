@@ -32,6 +32,31 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <!-- Linking files for FlexSlider. -->
+    <link rel="stylesheet" href="css/flexslider.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script src="js/jquery.flexslider.js"></script>
+
+    <style type="text/css">
+    .flex-caption {
+      width: 96%;
+      padding: 2%;
+      left: 0;
+      bottom: 0;
+      background: rgba(0,0,0,.5);
+      color: #fff;
+      text-shadow: 0 -1px 0 rgba(0,0,0,.3);
+      font-size: 14px;
+      line-height: 18px;
+    }
+    </style>
+
+    <!-- Load and initialize FlexSlider -->
+    <script type="text/javascript" charset="utf-8">
+      $(window).load(function() {
+        $('.flexslider').flexslider();
+      });
+    </script>
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -91,40 +116,28 @@
         <!-- /.container -->
     </nav>
 
-    <!-- Good reads section -->
-    <section id="good-reads" class="container content-section text-left">
-        <h1>Good reads</h1>
-
-        <h3>Cooking</h3>
-
-        <div class="row">
-            <div class="col-lg-3">
-                <img src="img/on-food-and-cooking.jpg" class="img-responsive" alt="On Food and Cooking">
-            </div>
-
-            <div class="col-lg-3">
-                <img src="img/the-professional-chef.jpg" class="img-responsive" alt="The Professional Chef">
-            </div>
-
-            <div class="col-lg-3">
-                <img src="img/the-flavor-bible.jpg" class="img-responsive" alt="The Flavor Bible">
-            </div>
-
-            <div class="col-lg-3">
-                <img src="img/omnivores-dilemma.jpg" class="img-responsive" alt="The Omnivore's Dilemma">
-            </div>
-        </div>
-
-        <h3>Scientific writing</h3>
-
-        <div class="row">
-            <div class="col-lg-3">
-                <img src="img/style-lessons-in-clarity-and-grace.jpg" class="img-responsive" alt="Style">
-            </div>
-
-            <div class="col-lg-3">
-                <img src="img/writing-science-in-plain-english.jpg" class="img-responsive" alt="Writing Science in Plain English">
-            </div>
+    <!-- Bio section -->
+    <section id="bio" class="container content-section text-center">
+        <!-- Place somewhere in the <body> of your page -->
+        <div class="flexslider">
+          <ul class="slides">
+            <li>
+              <img src="img/slide1.jpg" />
+              <p class="flex-caption">Slide 1!</p>
+            </li>
+            <li>
+              <img src="img/slide2.jpg" />
+              <p class="flex-caption">Slide two!</p>
+            </li>
+            <li>
+              <img src="img/slide3.jpg" />
+              <p class="flex-caption">Slide THREE!!!</p>
+            </li>
+            <li>
+              <img src="img/slide4.jpg" />
+              <p class="flex-caption">Slide 4...</p>
+            </li>
+          </ul>
         </div>
     </section>
 

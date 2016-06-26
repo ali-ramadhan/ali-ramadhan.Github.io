@@ -37,3 +37,45 @@ $(document).ready(function () {
         ).appendTo('#research-description')
     });
 });
+
+            $('#researchBoxMolecularImaging').on('click', function () {
+                currentDescription = 1;
+                $('.research-description-insertable').hide(500);
+                $('#researchDescription1').show(500);
+                $('#researchNavbar').show(500);
+            });
+
+            $('#researchBoxPolyyneSynthesis').on('click', function () {
+                currentDescription = 2;
+                $('.research-description-insertable').hide(500);
+                $('#researchDescription2').show(500);
+                $('#researchNavbar').show(500);
+            });
+
+            $('#researchBoxPerfectChocolate').on('click', function () {
+                currentDescription = 3;
+                $('.research-description-insertable').hide(500);
+                $('#researchDescription3').show(500);
+                $('#researchNavbar').show(500);
+            });
+
+            $('#researchBoxMolecularMovies').on('click', function () {
+                currentDescription = 4;
+                $('.research-description-insertable').hide(500);
+                $('#researchDescription4').show(500);
+                $('#researchNavbar').show(500);
+            });
+
+            $('#researchBoxGrapheneOxide').on('click', function () {
+                currentDescription = 5;
+                $('.research-description-insertable').hide(500);
+                $('#researchDescription5').show(500);
+                $('#researchNavbar').show(500);
+            });
+
+            $('#researchBoxTeaching').on('click', function () {
+                currentDescription = 6;
+                $('.research-description-insertable').hide(500);
+                $('#researchDescription6').show(500);
+                $('#researchNavbar').show(500);
+            });

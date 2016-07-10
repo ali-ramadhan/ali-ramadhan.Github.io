@@ -34,14 +34,7 @@
   <!-- Linking files for FlexSlider. -->
   <link rel="stylesheet" href="css/flexslider.css" type="text/css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="js/jquery.flexslider.js"></script>
-
-  <!-- Load and initialize FlexSlider -->
-  <script type="text/javascript" charset="utf-8">
-    $(window).load(function() {
-      $('.flexslider').flexslider();
-    });
-  </script>
+  <script src="js/jquery.bsPhotoGallery.js"></script>
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -102,36 +95,35 @@
   </nav>
 
   <!-- Bio section -->
-  <section id="bio" class="container content-section text-center">
-    <!-- Place somewhere in the <body> of your page -->
-    <div class="row">
-      <div class="col-lg-12">
-        <div class="flexslider">
-          <ul class="slides">
-            <li>
-              <img src="img/slide1.jpg" />
-              <p class="flex-caption">Slide 1!</p>
-            </li>
-            <li>
-              <img src="img/slide2.jpg" />
-              <p class="flex-caption">Slide two!</p>
-            </li>
-            <li>
-              <img src="img/slide3.jpg" />
-              <p class="flex-caption">Slide THREE!!!</p>
-            </li>
-            <li>
-              <img src="img/slide4.jpg" />
-              <p class="flex-caption">Slide 4...</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
+  <section id="gallery" class="container content-section text-center">
+    <h1>Gallery</h1>
+
+    <ul class="first">
+      <li>
+        <img alt="Wow so much X-ray!"  src="img/slide1.jpg">
+        <p class="text">Wow so much X-ray!</p>
+      </li>
+      <li>
+        <img alt="Second!" src="img/slide2.jpg">
+      </li>
+      <li>
+        <img "Third!"  src="img/slide3.jpg">
+      </li>
+      <li>
+        <img "Fourth!"  src="img/slide4.jpg">
+      </li>
+    </ul>
   </section>
 
-  <!-- jQuery -->
-  <!--    <script src="js/jquery.js"></script> -->
+  <!-- Load and initialize bsPhotoGallery -->
+  <script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+      $('ul.first').bsPhotoGallery({
+        "classes" : "col-lg-2 col-md-4 col-sm-3 col-xs-4 col-xxs-12",
+        "hasModal" : true
+      });
+    });
+  </script>
 
   <!-- Bootstrap Core JavaScript -->
   <script src="js/bootstrap.min.js"></script>

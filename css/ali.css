@@ -1,137 +1,134 @@
 /* Prussian blue background! */
 body {
-    background-color: #003153;
+  background-color: #003153;
 }
 
-.content-section {
+/* Spacing between the navbar and page header. */
+@media (max-width: 768px) {
+  .content-section {
+    padding-top: 80px;
+  }
+}
+@media (min-width: 768px) {
+  .content-section {
+    padding-top: 125px;
+  }
+}
+@media (min-width: 991px) {
+  .content-section {
     padding-top: 100px;
+  }
 }
 
-@media (max-width: 767px) {
-	.btn-default {
-		border: 0;
-		color: inherit;
-	}
+/* Blending buttons into my page. */
+.btn-default {
+  border: 0;
+  color: inherit;
 }
-
-@media (min-width: 768px) {
-	.btn-default {
-		border: 0;
-		color: inherit;
-		position: relative;
-		top: 50%;
-		transform: translateY(+25%);
-	}
-}
-
 .btn {
-    -webkit-transition: none;
-    -moz-transition: none;
-    transition: none;
+  -webkit-transition: none;
+  -moz-transition: none;
+  transition: none;
+}
+.btn-default:hover, .btn-default:focus {
+  border: 0;
+  color: rgba(255, 255, 255, .8);
+  background-color: transparent;
+}
+.btn-lg {
+  border: 0;
+  color: rgba(255, 255, 255, 1);
+  background-color: transparent;
+}
+.btn-lg:hover, .btn-lg:focus {
+  border: 0;
+  outline: 0;
+  color: rgba(255, 255, 255, .8);
+  background-color: transparent;
 }
 
-.btn-default:hover,
-.btn-default:focus {
-    border: 0;
-    color: rgba(255,255,255,.8);
-	background-color: transparent;
-}
-
-.dropdown-toggle {
-	display: inline-block;
-    vertical-align: middle;
-    float: none;
-}
-
-.dropdown-toggle:hover,
-.dropdown-toggle:focus {
-    border: 0;
-    color: rgba(255,255,255,.8);
-	background-color: transparent;
-}
-
-@media (max-width: 767px) {
-	.dropdown-menu > li > a {
-		color: #fff;
-	}
-}
-
+/* Vertically centering dropdown menu button for large screens. */
 @media (min-width: 768px) {
-	.dropdown-menu > li > a {
-		color: #000;
-	}
+  .dropdown-toggle {
+    position: relative;
+    top: 50%;
+    transform: translateY(+25%);
+  }
 }
 
-.navbar-custom .nav li a:hover {
-	color: rgba(f,f,f,.8);
+/* Further fixing the dropdown button menu. */
+.dropdown-toggle {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
 }
 
-/*.dropdown-menu > li > a:hover,
-.dropdown-menu > li > a:focus {
-	color: rgba(0,0,0,.8);
-}
-
-.dropdown-menu > .active > a,
-.dropdown-menu > .active > a:hover,
-.dropdown-menu > .active > a:focus {
-	color: rgba(0,0,0,.8);
-}*/
-
-.btn-default:active:hover,
-.btn-default.active:hover,
-.open > .dropdown-toggle.btn-default:hover,
-.btn-default:active:focus,
-.btn-default.active:focus,
-.open > .dropdown-toggle.btn-default:focus,
-.btn-default:active.focus,
-.btn-default.active.focus,
-.open > .dropdown-toggle.btn-default.focus {
-	border: 0;
-	color: rgba(255,255,255,0.8);
-	background-color: transparent;
-	border-color: #fff;
+.btn-group .dropdown-toggle {
+  background-color: transparent;
+  color: rgba(255, 255, 255, 1)
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  /*-webkit-transition: none;
+       -o-transition: none;
+          transition: none;*/
 }
 
 .btn-group.open .dropdown-toggle {
-	-webkit-box-shadow: none;
-	box-shadow: none;
+  background-color: transparent;
+  color: rgba(255, 255, 255, .8);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  /*-webkit-transition: none;
+       -o-transition: none;
+          transition: none;*/
 }
 
+.dropdown-toggle:hover, .dropdown-toggle:focus {
+  border: 0;
+  color: rgba(255, 255, 255, .8);
+  background-color: transparent;
+}
+
+@media (max-width: 767px) {
+  .dropdown-menu> li> a {
+    color: #fff;
+  }
+}
+@media (min-width: 768px) {
+  .dropdown-menu> li> a {
+    color: #000;
+  }
+}
+.navbar-custom .nav .dropdown-menu li a:hover {
+  color: rgba(1, 1, 1, .7);
+}
+
+.btn-default:active:hover,
+.btn-default.active:hover,
+.open> .dropdown-toggle.btn-default:hover,
+.btn-default:active:focus,
+.btn-default.active:focus,
+.open> .dropdown-toggle.btn-default:focus,
+.btn-default:active.focus,
+.btn-default.active.focus,
+.open> .dropdown-toggle.btn-default.focus {
+  border: 0;
+  color: rgba(255, 255, 255, 0.8);
+  background-color: transparent;
+  border-color: #fff;
+}
+
+/* Useful classes for the research page. */
 .research-box {
-	cursor: pointer;
+  cursor: pointer;
 }
-
 .initially-hidden {
-	display: none;
+  display: none;
 }
-
+.research-navbar-btn-top {
+  margin-top: -10px;
+}
 .research-navbar-btn {
-	margin-top: 5px;
-	margin-bottom: 20px;
-}
-
-.btn-lg {
-    border: 0;
-    color: rgba(255,255,255,1);
-    background-color: transparent;
-}
-
-.btn-lg:hover,
-.btn-lg:focus {
-    border: 0;
-    outline: 0;
-	color: rgba(255,255,255,.8);
-    background-color: transparent;
-}
-
-.flex-caption {
-  width: 96%;
-  padding: 2%;
-  left: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, .5);
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
-  font-size: 14px;
-  line-height: 18px;
+  margin-top: 15px;
+  margin-bottom: 5px;
 }

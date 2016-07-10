@@ -31,10 +31,12 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-  <!-- Linking files for FlexSlider. -->
-  <link rel="stylesheet" href="css/flexslider.css" type="text/css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-  <script src="js/jquery.bsPhotoGallery.js"></script>
+  <!-- jQuery -->
+  <script type='text/javascript' src='unitegallery/js/jquery-11.0.min.js'></script>
+
+  <script type='text/javascript' src='unitegallery/js/unitegallery.min.js'></script>
+  <link rel='stylesheet' href='unitegallery/css/unite-gallery.css' type='text/css' />
+  <script type='text/javascript' src='unitegallery/themes/tiles/ug-theme-tiles.js'></script>
 </head>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
@@ -95,33 +97,28 @@
   </nav>
 
   <!-- Bio section -->
-  <section id="gallery" class="container content-section text-center">
+  <section id="gallery-title" class="container content-section text-left">
     <h1>Gallery</h1>
 
-    <ul class="first">
-      <li>
-        <img alt="Wow so much X-ray!"  src="img/slide1.jpg">
-        <p class="text">Wow so much X-ray!</p>
-      </li>
-      <li>
-        <img alt="Second!" src="img/slide2.jpg">
-      </li>
-      <li>
-        <img "Third!"  src="img/slide3.jpg">
-      </li>
-      <li>
-        <img "Fourth!"  src="img/slide4.jpg">
-      </li>
-    </ul>
+    <div id="gallery">
+      <img alt="Image 1 Title" src="img/slide1.jpg" data-image="img/slide1.jpg" data-description="Image 1 Description" style="display:none">
+      <img alt="Image 2 Title" src="img/slide2.jpg" data-image="img/slide2.jpg" data-description="Image 2 Description" style="display:none">
+      <img alt="Image 3 Title" src="img/slide3.jpg" data-image="img/slide3.jpg" data-description="Image 3 Description" style="display:none">
+      <img alt="Image 4 Title" src="img/slide4.jpg" data-image="img/slide4.jpg" data-description="Image 4 Description" style="display:none">
+      <img alt="Image 1 Title" src="img/slide1.jpg" data-image="img/slide1.jpg" data-description="Image 1 Description" style="display:none">
+      <img alt="Image 2 Title" src="img/slide2.jpg" data-image="img/slide2.jpg" data-description="Image 2 Description" style="display:none">
+      <img alt="Image 3 Title" src="img/slide3.jpg" data-image="img/slide3.jpg" data-description="Image 3 Description" style="display:none">
+      <img alt="Image 4 Title" src="img/slide4.jpg" data-image="img/slide4.jpg" data-description="Image 4 Description" style="display:none">
+      <img alt="Image 1 Title" src="img/slide1.jpg" data-image="img/slide1.jpg" data-description="Image 1 Description" style="display:none">
+      <img alt="Image 2 Title" src="img/slide2.jpg" data-image="img/slide2.jpg" data-description="Image 2 Description" style="display:none">
+      <img alt="Image 3 Title" src="img/slide3.jpg" data-image="img/slide3.jpg" data-description="Image 3 Description" style="display:none">
+      <img alt="Image 4 Title" src="img/slide4.jpg" data-image="img/slide4.jpg" data-description="Image 4 Description" style="display:none">
+    </div>
   </section>
 
-  <!-- Load and initialize bsPhotoGallery -->
-  <script type="text/javascript" charset="utf-8">
-    $(document).ready(function(){
-      $('ul.first').bsPhotoGallery({
-        "classes" : "col-lg-2 col-md-4 col-sm-3 col-xs-4 col-xxs-12",
-        "hasModal" : true
-      });
+  <script type="text/javascript">
+    jQuery(document).ready(function() {
+      jQuery("#gallery").unitegallery();
     });
   </script>
 
@@ -135,4 +132,5 @@
   <script src="js/grayscale.js"></script>
 
 </body>
+
 </html>

@@ -3,6 +3,20 @@ body {
   background-color: #003153;
 }
 
+.pTight {
+  margin: 0 0 0px;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+@media(min-width:768px) {
+  .pTight {
+    margin: 0 0 0px;
+    font-size: 20px;
+    line-height: 1.15;
+  }
+}
+
 /* Spacing between the navbar and page header. */
 @media (max-width: 768px) {
   .content-section {
@@ -140,5 +154,5 @@ body {
 /* Formatting gallery to look like the rest of the page. */
 .ug-lightbox-numbers,
 .ug-textpanel-title {
-  
+
 }

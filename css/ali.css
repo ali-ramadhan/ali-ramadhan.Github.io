@@ -136,3 +136,9 @@ body {
 .publication-box {
   margin-bottom: 15px;
 }
+
+/* Formatting gallery to look like the rest of the page. */
+.ug-lightbox-numbers,
+.ug-textpanel-title {
+  
+}

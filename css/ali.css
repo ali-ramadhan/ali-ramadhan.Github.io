@@ -3,6 +3,24 @@ body {
   background-color: #003153;
 }
 
+.pCV {
+  margin: 0 0 10px;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+@media(min-width:768px) {
+  .pCV {
+    margin: 0 0 10px;
+    font-size: 20px;
+    line-height: 1.15;
+  }
+}
+
+.h3CV {
+  margin: 20px 0 15px;
+}
+
 .pTight {
   margin: 0 0 0px;
   font-size: 18px;

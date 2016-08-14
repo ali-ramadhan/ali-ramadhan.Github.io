@@ -6,11 +6,24 @@ body {
 .pCV {
   margin: 0 0 10px;
   font-size: 18px;
-  line-height: 1.15;
+  line-height: 1.3;
 }
 
 @media(min-width:768px) {
   .pCV {
+    margin: 0 0 10px;
+    font-size: 20px;
+  }
+}
+
+.pCVli {
+  margin: 0 0 10px;
+  font-size: 18px;
+  line-height: 1.15;
+}
+
+@media(min-width:768px) {
+  .pCVli {
     margin: 0 0 10px;
     font-size: 20px;
     line-height: 1.15;

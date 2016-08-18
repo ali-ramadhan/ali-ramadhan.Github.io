@@ -1,6 +1,5 @@
-/* Prussian blue background! */
 body {
-  background-color: #003153;
+  background-color: #003153; /* Prussian blue! */
 }
 
 .pCV {
@@ -34,17 +33,16 @@ body {
   margin: 20px 0 15px;
 }
 
-.pTight {
-  margin: 0 0 0px;
+.tighter {
+  margin: 0 0 10px;
   font-size: 18px;
-  line-height: 1.15;
+  line-height: 1.3;
 }
 
 @media(min-width:768px) {
-  .pTight {
-    margin: 0 0 0px;
+  .tighter {
+    margin: 0 0 10px;
     font-size: 20px;
-    line-height: 1.15;
   }
 }
 

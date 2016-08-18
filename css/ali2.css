@@ -1,0 +1,20 @@
+ol {
+  list-style-type: decimal;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.container {
+  text-align: left;
+}
+
+.project-title {
+  cursor: pointer;
+}
+
+.initially-hidden {
+  display: none;
+}

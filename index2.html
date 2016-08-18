@@ -13,6 +13,11 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+
+    <!-- Personal CSS (mostly overwriting) -->
+    <link href="css/ali2.css" rel="stylesheet" />
+
+    <link rel='icon' href='favicon.ico' type='image/x-icon'/ >
 	</head>
 	<body>
 
@@ -21,8 +26,7 @@
 				<div class="top">
 					<!-- Logo -->
 						<div id="logo">
-							<span class="image avatar48"><img src="images/avatar.jpg" alt="" /></span>
-							<h1 id="title">Ali Ramadhan</h1>
+							<h1 id="title" style="font-size: 32px;">Ali Ramadhan</h1>
               <p>Department of Physics</p>
               <p>University of Waterloo</p>
 						</div>
@@ -37,11 +41,10 @@
 								   <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
 							-->
 							<ul>
-								<li><a href="#top" id="top-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-th">About Me</span></a></li>
+								<li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-motorcycle">About Me</span></a></li>
 								<li><a href="#cv" id="cv-link" class="skel-layers-ignoreHref"><span class="icon fa-user">CV</span></a></li>
-								<li><a href="#research" id="research-link" class="skel-layers-ignoreHref"><span class="icon fa-flask">Research</span></a></li>
-                <!-- <li><a href="#publications" id="publications-link" class="skel-layers-ignoreHref"><span class="icon fa-book">Teaching</span></a></li> -->
+								<li><a href="#research" id="research-link" class="skel-layers-ignoreHref"><span class="icon fa-flask">Research projects</span></a></li>
+                <li><a href="#teaching" id="teaching-link" class="skel-layers-ignoreHref"><span class="icon fa-pencil">Teaching</span></a></li>
                 <li><a href="#publications" id="publications-link" class="skel-layers-ignoreHref"><span class="icon fa-book">Publications</span></a></li>
                 <li><a href="#resources" id="resources-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Resources</span></a></li>
                 <li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
@@ -62,136 +65,183 @@
 
 		<!-- Main -->
 			<div id="main">
-				<!-- Intro -->
-					<section id="top" class="one dark cover">
-						<div class="container">
 
-							<header>
-								<h2 class="alt">Hi this website is under <strong>construction</strong>!</h2>
-								<p>But should be up soon.</p>
-							</header>
+			<!-- About Me -->
+				<section id="about" class="two">
+					<div class="container">
 
-							<footer>
-								<a href="#research" class="button scrolly">Research projects</a>
-							</footer>
+            <div class="row">
 
-						</div>
-					</section>
+              <div class="8u 12u$(mobile)">
+                <header><h2>About Me</h2></header>
 
-				<!-- About Me -->
-					<section id="about" class="three">
-						<div class="container">
-
-							<header>
-								<h2>About Me</h2>
-							</header>
-
-							<a href="#" class="image featured"><img src="images/pic08.jpg" alt="" /></a>
-
-							<p>Tincidunt eu elit diam magnis pretium accumsan etiam id urna. Ridiculus
-							ultricies curae quis et rhoncus velit. Lobortis elementum aliquet nec vitae
-							laoreet eget cubilia quam non etiam odio tincidunt montes. Elementum sem
-							parturient nulla quam placerat viverra mauris non cum elit tempus ullamcorper
-							dolor. Libero rutrum ut lacinia donec curae mus vel quisque sociis nec
-							ornare iaculis.</p>
-
-						</div>
-					</section>
-
-          <!-- Research -->
-  					<section id="research" class="three">
-  						<div class="container" style="text-align:left;">
-
-                <header><h2>Research projects</h2></header>
-
-                <h3>Coulomb explosion imaging</h3>
-                <h3>Easy capped polyyne synthesis</h3>
-                <h3>Shooting molecular movies</h3>
-                <h3>Graphene oxide gels</h3>
-                <h3>Teaching thermodynamics using food and cooking</h3>
-
+                <p>Hi I'm too lazy to write anything yet but here's are a couple of life-changing paragraphs and some chocolate cake. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean condimentum urna id massa molestie, non euismod ante pharetra. Curabitur viverra est consequat metus facilisis, quis consequat metus pretium. Etiam vitae aliquam sem, iaculis cursus lacus.</p>
+                <p>Nunc non facilisis leo. Proin pellentesque ipsum at vestibulum porta. Duis fringilla non libero luctus tempor. Suspendisse semper, arcu et scelerisque sagittis, nibh diam scelerisque turpis, sed laoreet lorem dolor quis odio. Sed faucibus tempus felis laoreet mattis. Duis eu sapien quis eros suscipit suscipit ac rutrum lectus.</p>
               </div>
-            </section>
 
-          <!-- Publications -->
-  					<section id="publications" class="three">
-  						<div class="container" style="text-align:left;">
+              <div class="4u 12u$(mobile)">
+                <img src="img/placeholder-cake.jpg" alt="Placeholder cake">
+              </div>
 
-                <header><h2>Publications</h2></header>
+            </div>
 
-                <h3>Working papers</h3>
-                <ol style="list-style-type:decimal;">
-                  <li>
-                    <b>Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron radiation</b><br>
-                    <u>Ali Ramadhan</u>, Benji Wales, Isabelle Gauthier, Reza Karimi, Michael MacDonald, Lucia Zuin, Joe Sanderson<br>
-                    Revisions submitted (2016).<br>
-                    arXiv: <a href="https://arxiv.org/abs/1606.08789">1606.08789</a> [physics.chem-ph]
-                  </li>
-                </ol>
+					</div>
+				</section>
 
-                <h3>Refereed papers</h3>
-                <ol style="list-style-type:decimal;" start="2">
+        <!-- Research -->
+				<section id="research" class="three">
+					<div class="container">
 
-                  <li>
-                    <b>A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin Films with Tunable Properties</b><br>
-                    Khaled Ibrahim, Mehrdad Irannejad, Mojtaba Hajialamdari, <u>Ali Ramadhan</u>, Kevin Musselman, Joseph Sanderson, Mustafa Yavuz<br>
-                    Published in <i>Advanced Materials Interfaces</i> <b>3</b>, 1500864 (2016).<br>
-                    DOI: <a href="https://dx.doi.org/10.1002/admi.201500864">10.1002/admi.201500864</a>
-                  </li>
+            <header><h2>Research projects</h2></header>
 
-                  <li>
-                    <b>Ultrafast Light Interaction with Graphene Oxide Aqueous Solution</b><br>
-                    K. Ibrahim, M. Irannejad, <u>A. Ramadhan</u>, W. Alayak, J. Sanderson, B. Cui, A. Brzezinski, M. Yavuz<br>
-                    Published in <i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 830-831 (2014).<br>
-                    DOI: <a href="https://dx.doi.org/10.1109/NANO.2014.6968088">10.1109/NANO.2014.6968088</a>
-                  </li>
+            <h3 class="project-title" id="projectTitle1">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Coulomb explosion imaging
+            </h3>
 
-                  <li>
-                    <b>Welding of Au Microwires by Femtosecond Laser Irradiation</b><br>
-                    N. Ly, M. Mayer, <u>A. Ramadhan</u>, and J. Sanderson<br>
-                    Published in <i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 146-149 (2014).<br>
-                    DOI: <a href="https://dx.doi.org/10.1109/NANO.2014.6968136">10.1109/NANO.2014.6968136</a>
-                  </li>
+            <div class="initially-hidden" id="researchDescription1">
+              <p>Etiam sed quam elementum, ullamcorper urna a, lobortis massa. Quisque vel nulla in magna elementum egestas vitae a. la neque nisl, pellentesque sed augue nec, pellentesque efficitur orci. Quisque ornare imperdiet tempus. Fusce suscipit faucibus nunc. Aliquam nec bibendum nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut convallis a nisl nec viverra. Nam scelerisque at nibh et efficitur.</p>
+              <p>Cras commodo sem sed tellus commodo facilisis. Cras sed suscipit sapien. Etiam quis aliquet ex, at mollis lacus. Proin neque ipsum, placerat quis ultrices a, rhoncus a quam. Nulla dui velit, malesuada at metus malesuada, sagittis tincidunt dui. Vivamus at faucibus erat. Nullam nec purus quis nunc facilisis vulputate eget sed sapien. Maecenas lorem justo, hendrerit in arcu at, placerat porta felis. In vitae lacus efficitur, gravida elit quis, fringilla ex.</p>
+            </div>
 
-                  <li>
-                    <b>Coulomb imaging of the concerted and stepwise break up processes of OCS ions in intense femtosecond laser radiation</b><br>
-                    B. Wales, É. Bisson, R. Karimi, S. Beaulieu, <u>A. Ramadhan</u>, M. Giguère, Z. Long, W. Liu, J. Kieffer, F. Légaré, J. Sanderson<br>
-                    Published in <i>Journal of Electron Spectroscopy and Related Phenomena</i> <b>195</b>, 332-336 (2014).<br>
-                    DOI: <a href="https://dx.doi.org/10.1016/j.elspec.2014.05.003">10.1016/j.elspec.2014.05.003</a>
-                  </li>
+            <h3 class="project-title" id="projectTitle2">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Easy capped polyyne synthesis
+            </h3>
 
-                </ol>
-  						</div>
-  					</section>
+            <div class="initially-hidden" id="researchDescription2">
+              <i>We were able to easily control the end-caps in the synthesis of long-chain polyynes by ultrashort laser pulse irradiation.</i>
+              <p>Polyynes are molecules consisting entirely of sp-hybridized carbon bonds with chemical formula (−C≡C−)<sub>n</sub> where <i>n</i> > 1. They may be capped on either end by hydrogen or functional groups which could grant exotic properties.</p>
+              <p>The traditional method of polyyne synthesis, oxidative coupling, is pretty challenging and can be extremely hazardous so</p>
+
+              <p>Etiam sed quam elementum, ullamcorper urna a, lobortis massa. Quisque vel nulla in magna elementum egestas vitae a. la neque nisl, pellentesque sed augue nec, pellentesque efficitur orci. Quisque ornare imperdiet tempus. Fusce suscipit faucibus nunc. Aliquam nec bibendum nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut convallis a nisl nec viverra. Nam scelerisque at nibh et efficitur.</p>
+              <p>Cras commodo sem sed tellus commodo facilisis. Cras sed suscipit sapien. Etiam quis aliquet ex, at mollis lacus. Proin neque ipsum, placerat quis ultrices a, rhoncus a quam. Nulla dui velit, malesuada at metus malesuada, sagittis tincidunt dui. Vivamus at faucibus erat. Nullam nec purus quis nunc facilisis vulputate eget sed sapien. Maecenas lorem justo, hendrerit in arcu at, placerat porta felis. In vitae lacus efficitur, gravida elit quis, fringilla ex.</p>
+            </div>
+
+            <h3 class="project-title" id="projectTitle3">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Shooting molecular movies
+            </h3>
+
+            <div class="initially-hidden" id="researchDescription3">
+              <p>Etiam sed quam elementum, ullamcorper urna a, lobortis massa. Quisque vel nulla in magna elementum egestas vitae a. la neque nisl, pellentesque sed augue nec, pellentesque efficitur orci. Quisque ornare imperdiet tempus. Fusce suscipit faucibus nunc. Aliquam nec bibendum nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut convallis a nisl nec viverra. Nam scelerisque at nibh et efficitur.</p>
+              <p>Cras commodo sem sed tellus commodo facilisis. Cras sed suscipit sapien. Etiam quis aliquet ex, at mollis lacus. Proin neque ipsum, placerat quis ultrices a, rhoncus a quam. Nulla dui velit, malesuada at metus malesuada, sagittis tincidunt dui. Vivamus at faucibus erat. Nullam nec purus quis nunc facilisis vulputate eget sed sapien. Maecenas lorem justo, hendrerit in arcu at, placerat porta felis. In vitae lacus efficitur, gravida elit quis, fringilla ex.</p>
+            </div>
+
+            <h3 class="project-title" id="projectTitle4">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Graphene oxide gels
+            </h3>
+
+            <div class="initially-hidden" id="researchDescription4">
+              <p>Etiam sed quam elementum, ullamcorper urna a, lobortis massa. Quisque vel nulla in magna elementum egestas vitae a. la neque nisl, pellentesque sed augue nec, pellentesque efficitur orci. Quisque ornare imperdiet tempus. Fusce suscipit faucibus nunc. Aliquam nec bibendum nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut convallis a nisl nec viverra. Nam scelerisque at nibh et efficitur.</p>
+              <p>Cras commodo sem sed tellus commodo facilisis. Cras sed suscipit sapien. Etiam quis aliquet ex, at mollis lacus. Proin neque ipsum, placerat quis ultrices a, rhoncus a quam. Nulla dui velit, malesuada at metus malesuada, sagittis tincidunt dui. Vivamus at faucibus erat. Nullam nec purus quis nunc facilisis vulputate eget sed sapien. Maecenas lorem justo, hendrerit in arcu at, placerat porta felis. In vitae lacus efficitur, gravida elit quis, fringilla ex.</p>
+            </div>
+
+            <h3 class="project-title" id="projectTitle5">
+              <i class="fa fa-plus-square" aria-hidden="true"></i>
+              Teaching thermodynamics through food and cooking
+            </h3>
+
+            <div class="initially-hidden" id="researchDescription5">
+              <p>Thermodynamics is one of the oldest and most sacred branches of physics with wide applications in all of science and engineering: black holes.  </p>
+
+              <p>Etiam sed quam elementum, ullamcorper urna a, lobortis massa. Quisque vel nulla in magna elementum egestas vitae a. la neque nisl, pellentesque sed augue nec, pellentesque efficitur orci. Quisque ornare imperdiet tempus. Fusce suscipit faucibus nunc. Aliquam nec bibendum nisi. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Ut convallis a nisl nec viverra. Nam scelerisque at nibh et efficitur.</p>
+              <p>Cras commodo sem sed tellus commodo facilisis. Cras sed suscipit sapien. Etiam quis aliquet ex, at mollis lacus. Proin neque ipsum, placerat quis ultrices a, rhoncus a quam. Nulla dui velit, malesuada at metus malesuada, sagittis tincidunt dui. Vivamus at faucibus erat. Nullam nec purus quis nunc facilisis vulputate eget sed sapien. Maecenas lorem justo, hendrerit in arcu at, placerat porta felis. In vitae lacus efficitur, gravida elit quis, fringilla ex.</p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Publications -->
+				<section id="publications" class="three">
+					<div class="container">
+
+            <header><h2>Publications</h2></header>
+
+            <h3>Working papers</h3>
+            <ol>
+              <li>
+                <b>Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron radiation</b><br>
+                <u>Ali Ramadhan</u>, Benji Wales, Isabelle Gauthier, Reza Karimi, Michael MacDonald, Lucia Zuin, Joe Sanderson<br>
+                Revisions submitted (2016).<br>
+                arXiv: <a href="https://arxiv.org/abs/1606.08789">1606.08789</a> [physics.chem-ph]
+              </li>
+            </ol>
+
+            <h3>Refereed papers</h3>
+            <ol start="2">
+
+              <li>
+                <b>A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin Films with Tunable Properties</b><br>
+                Khaled Ibrahim, Mehrdad Irannejad, Mojtaba Hajialamdari, <u>Ali Ramadhan</u>, Kevin Musselman, Joseph Sanderson, Mustafa Yavuz<br>
+                Published in <i>Advanced Materials Interfaces</i> <b>3</b>, 1500864 (2016).<br>
+                DOI: <a href="https://dx.doi.org/10.1002/admi.201500864">10.1002/admi.201500864</a>
+              </li>
+
+              <li>
+                <b>Ultrafast Light Interaction with Graphene Oxide Aqueous Solution</b><br>
+                K. Ibrahim, M. Irannejad, <u>A. Ramadhan</u>, W. Alayak, J. Sanderson, B. Cui, A. Brzezinski, M. Yavuz<br>
+                Published in <i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 830-831 (2014).<br>
+                DOI: <a href="https://dx.doi.org/10.1109/NANO.2014.6968088">10.1109/NANO.2014.6968088</a>
+              </li>
+
+              <li>
+                <b>Welding of Au Microwires by Femtosecond Laser Irradiation</b><br>
+                N. Ly, M. Mayer, <u>A. Ramadhan</u>, and J. Sanderson<br>
+                Published in <i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 146-149 (2014).<br>
+                DOI: <a href="https://dx.doi.org/10.1109/NANO.2014.6968136">10.1109/NANO.2014.6968136</a>
+              </li>
+
+              <li>
+                <b>Coulomb imaging of the concerted and stepwise break up processes of OCS ions in intense femtosecond laser radiation</b><br>
+                B. Wales, É. Bisson, R. Karimi, S. Beaulieu, <u>A. Ramadhan</u>, M. Giguère, Z. Long, W. Liu, J. Kieffer, F. Légaré, J. Sanderson<br>
+                Published in <i>Journal of Electron Spectroscopy and Related Phenomena</i> <b>195</b>, 332-336 (2014).<br>
+                DOI: <a href="https://dx.doi.org/10.1016/j.elspec.2014.05.003">10.1016/j.elspec.2014.05.003</a>
+              </li>
+
+            </ol>
+					</div>
+				</section>
 
 				<!-- Contact -->
-					<section id="contact" class="four">
-						<div class="container">
+				<section id="contact" class="four">
+					<div class="container">
 
-							<header>
-								<h2>Contact</h2>
-							</header>
+						<header>
+							<h2>Contact</h2>
+						</header>
 
-							<p>Elementum sem parturient nulla quam placerat viverra
-							mauris non cum elit tempus ullamcorper dolor. Libero rutrum ut lacinia
-							donec curae mus. Eleifend id porttitor ac ultricies lobortis sem nunc
-							orci ridiculus faucibus a consectetur. Porttitor curae mauris urna mi dolor.</p>
+						<p>Feel free to get in touch through email (ali.ramadhan-at-uwaterloo-dot-ca) or by using the form here!</p>
 
-							<form method="post" action="#">
-								<div class="row">
-									<div class="6u 12u$(mobile)"><input type="text" name="name" placeholder="Name" /></div>
-									<div class="6u$ 12u$(mobile)"><input type="text" name="email" placeholder="Email" /></div>
-									<div class="12u$">
-										<textarea name="message" placeholder="Message"></textarea>
-									</div>
-									<div class="12u$">
-										<input type="submit" value="Send Message" />
-									</div>
+						<form role="form" method="POST" action="http://formspree.io/ali.ramadhan@uwaterloo.ca">
+              <input type="hidden" name="_next" value="#" />
+              <input type="hidden" name="_subject" value="New message!" />
+              <input type="text" name="_gotcha" style="display:none" />
+
+							<div class="row">
+
+                <div class="6u 12u$(mobile)">
+                  <input type="text" name="name" id="nameInput" placeholder="Name" required>
+                </div>
+
+								<div class="6u$ 12u$(mobile)">
+                  <input type="text" name="email" id="emailInput" placeholder="Email" required>
+                </div>
+
+								<div class="12u$">
+									<textarea name="message" placeholder="Message" required></textarea>
 								</div>
-							</form>
 
-						</div>
-					</section>
+								<div class="12u$" style="text-align: center;">
+                  <input type="submit" name="submit" id="submit" value="Send message">
+								</div>
+
+							</div>
+						</form>
+
+					</div>
+				</section>
 
 			</div>
 
@@ -200,7 +250,7 @@
 
 				<!-- Copyright -->
 					<ul class="copyright">
-						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+						<li>&copy; Ali Ramadhan. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 					</ul>
 
 			</div>
@@ -213,6 +263,39 @@
 			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="assets/js/main.js"></script>
+
+      <script type="text/javascript">
+        $(document).ready(function() {
+
+          var totalDescriptions = 5;
+          var researchDescriptionOpen = [false, false, false, false, false];
+
+          // project title event listener (PTEL)
+          function generatePTEL(j) {
+            return function(event) {
+              if (researchDescriptionOpen[j]) {
+                researchDescriptionOpen[j] = false;
+                $('#researchDescription' + j).hide(500);
+
+                $(this).find($('.fa')).removeClass('fa-minus-square').addClass('fa-plus-square');
+
+                // $('html, body').animate({
+                //     scrollTop: $('#projectTitle' + j).offset().top
+                // }, 'slow');
+              } else {
+                researchDescriptionOpen[j] = true;
+                $('#researchDescription' + j).show(500);
+
+                $(this).find($('.fa')).removeClass('fa-plus-square').addClass('fa-minus-square');
+              }
+            };
+          }
+
+          for (i = 1; i <= totalDescriptions; i++) {
+            $('#projectTitle' + i).on('click', generatePTEL(i));
+          }
+        });
+      </script>
 
 	</body>
 </html>

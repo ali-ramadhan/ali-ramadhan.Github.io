@@ -1,5 +1,5 @@
 ## Design
-- [] Switch to a one page layout with CV on a separate page?
+- [x] Switch to a one page layout with CV on a separate page?
 
 ## Index
 - [] Write a cheesy bio.
@@ -12,7 +12,7 @@
 
 ## Research
 - [] Write descriptions and decide on figures.
-- [] Figure out whether to include 
+- [] Figure out whether to include
 
 ## Gallery
 - [] Figure out whether to keep or not.

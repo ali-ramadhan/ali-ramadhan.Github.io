@@ -19,6 +19,10 @@ img {
   display: none;
 }
 
+.text-justify {
+  text-align: justify;
+}
+
 .tighter-list {
   padding-top: 0px;
 }

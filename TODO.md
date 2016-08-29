@@ -2,8 +2,9 @@
 - [x] Switch to a one page layout with CV on a separate page?
 - [] Change color scheme?
 
-## HTML
-- [] Why are h3 research project headers offset when the one above is open?
+## Bugs
+- [x] Why are h3 research project headers offset when the one above is open?
+- [] Sidebar focusing on wrong section when research descriptions are open.
 
 ## Index
 - [x] Write a cheesy bio.

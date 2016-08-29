@@ -1,5 +1,6 @@
 ## Design
 - [x] Switch to a one page layout with CV on a separate page?
+- [] Change color scheme?
 
 ## HTML
 - [] Why are h3 research project headers offset when the one above is open?

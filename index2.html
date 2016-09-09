@@ -27,7 +27,7 @@
 					<!-- Logo -->
 						<div id="logo" style="text-align: left;">
 							<h1 id="title">Ali Ramadhan</h1>
-              <p>Department of Physics &amp; Astronomy</p>
+              <p>Department of Physics and Astronomy</p>
               <p>University of Waterloo</p>
               <p><a href="cv.pdf"><i class="fa fa-paperclip" aria-hidden="true"></i>&nbsp;Curriculum Vitae</a></p>
 						</div>
@@ -75,7 +75,7 @@
               <div class="row">
 
                 <div class="8u 12u(mobile) text-justify">
-                  <p>Hi I am a graduate student pursuing an accelerated MSc with the Department of Physics &amp; Astronomy at the University of Waterloo. I am interested in the applications of ultrafast lasers, computational modelling, and open science.</p>
+                  <p>Hi I am a graduate student pursuing an accelerated MSc with the Department of Physics &amp; Astronomy at the University of Waterloo. I am interested in the applications of ultrafast lasers, computational modelling. All while adhering to the principles of open science.</p>
 
                   <h3>Recent news</h3>
                   <ul>
@@ -102,9 +102,11 @@
               <div class="text-justify">
                 <header><h2>About Me</h2></header>
 
-                <p>In the lab I use ultrafast lasers to study molecular dynamics, create molecular movies, and synthesize new molecules and materials. For my thesis, I am developing a framework for creating molecular movies from Coulomb explosion imaging experiments. In the spirit of open and reproducible science, I plan to make my data, code, and complete analysis methods publicly available so that other groups may benefit from it.</p>
+                <p>In the lab I use ultrafast lasers to create molecular movies, study molecular dynamics, and synthesize new molecules and materials. For my thesis, I am developing a framework for creating molecular movies from Coulomb explosion imaging experiments. In the spirit of open and reproducible science, I plan to make my data, code, and complete analysis methods publicly available so that other groups may benefit from it.</p>
 
-                <p>Outside the lab I am passionate about teaching and this fall term I am excited to combine my love for food and cooking with teaching thermodynamics! When I am not doing physics, I enjoy cooking new dishes, listening to history podcasts, and coss-country biking.</p>
+                <p>I am passionate about teaching and have recently started Project Lovelace, an online platform for students to learn about scientific computing by solving challenging real-world problems. This fall term I am also excited to combine my love for food and cooking with teaching thermodynamics! I also volunteer with Frontier College developing educational programs for underpriveleged high-school students.</p>
+
+								<p>When I am not doing science, I enjoy cooking new dishes, listening to history podcasts, and coss-country biking.</p>
               </div>
 
             </div>
@@ -445,6 +447,33 @@
                 $('#researchDescription' + j).show(500);
                 $(this).find($('.fa')).removeClass('fa-plus-square').addClass('fa-minus-square');
               }
+
+							var $nav_a = $('#nav a');
+
+							// Scrolly-fy links.
+								$nav_a
+									.scrolly()
+									.on('click', function(e) {
+
+										var t = $(this),
+											href = t.attr('href');
+
+										if (href[0] != '#')
+											return;
+
+										e.preventDefault();
+
+										// Clear active and lock scrollzer until scrolling has stopped
+											$nav_a
+												.removeClass('active')
+												.addClass('scrollzer-locked');
+
+										// Set this link to active
+											t.addClass('active');
+
+									});
+
+							$.scrollzer(['home','about','research','teaching','publications','resources','contact'], { pad: 200, lastHack: true });
             };
           }
 

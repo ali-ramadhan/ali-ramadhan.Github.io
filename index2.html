@@ -234,7 +234,7 @@
 					<div class="container">
 
             <header><h2>Teaching</h2></header>
-						I'm very passionate about teaching and I've been a TA for almost 4 years now, mostly for first-year math and physics courses. This term I am TA'ing thermal physics which I hope to blend with food science! I also volunteer at Frontier College where I tutor high-school immigrant students and develop new educational programs as part of the organizational team.
+						I'm very passionate about teaching and have recently started Lovelace (insert description). I also volunteer at Frontier College where I tutor high-school immigrant students and develop new educational programs as part of the organizational team.
 
             <h3>TA Experience</h3>
 
@@ -419,7 +419,7 @@
 					<ul class="copyright">
 						<li>&copy; Ali Ramadhan. All rights reserved.</li>
             <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            <li>Form: <a href="https://formspree.io/">Formspree</a></li>
+            <li>Contact form: <a href="https://formspree.io/">Formspree</a></li>
 					</ul>
 
 			</div>
@@ -455,33 +455,6 @@
                 $('#researchDescription' + j).show(500);
                 $(this).find($('.fa')).removeClass('fa-plus-square').addClass('fa-minus-square');
               }
-
-							var $nav_a = $('#nav a');
-
-							// Scrolly-fy links.
-								$nav_a
-									.scrolly()
-									.on('click', function(e) {
-
-										var t = $(this),
-											href = t.attr('href');
-
-										if (href[0] != '#')
-											return;
-
-										e.preventDefault();
-
-										// Clear active and lock scrollzer until scrolling has stopped
-											$nav_a
-												.removeClass('active')
-												.addClass('scrollzer-locked');
-
-										// Set this link to active
-											t.addClass('active');
-
-									});
-
-							$.scrollzer(['home','about','research','teaching','publications','resources','contact'], { pad: 200, lastHack: true });
             };
           }
 

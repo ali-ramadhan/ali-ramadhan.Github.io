@@ -13,12 +13,12 @@
 
 ## CV
 - [x] Figure out how to include on one page layout.
-- [] Fully update.
-- [] Rewrite bullet points.
-- [] Include new section on research interests, etc.
+- [x] Fully update.
+- [x] Rewrite bullet points.
+- [x] Include new section on research interests, etc.
 
 ## Research
-- [] Write descriptions and decide on figures.
+- [x] Write descriptions and decide on figures.
 
 ## Gallery
 - [x] Figure out whether to keep or not.

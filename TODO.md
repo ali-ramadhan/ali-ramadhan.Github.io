@@ -1,6 +1,7 @@
 ## Design
 - [x] Switch to a one page layout with CV on a separate page?
 - [] Change color scheme?
+- [] Figure out a good font size and weight.
 
 ## Bugs
 - [x] Why are h3 research project headers offset when the one above is open?
@@ -8,7 +9,7 @@
 
 ## Index
 - [x] Write a cheesy bio.
-- [] Update "Recent News" section with latest 4-5 items.
+- [x] Update "Recent News" section with latest 4-5 items.
 
 ## CV
 - [x] Figure out how to include on one page layout.
@@ -20,8 +21,7 @@
 - [] Write descriptions and decide on figures.
 
 ## Gallery
-- [] Figure out whether to keep or not.
-- [] If yes, load up the photos!
+- [x] Figure out whether to keep or not.
 
 ## Resources
 - [] Decide whether to keep or not.

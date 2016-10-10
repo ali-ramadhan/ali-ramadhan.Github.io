@@ -151,7 +151,7 @@
             <div class="initially-hidden" id="researchDescription1">
               <div class="row">
                 <div class="6u 12u(mobile) text-justify">
-                  <p>The geometries and dynamics of small gas molecules may be studied by Coulomb explosion imaging (CEI), providing a means of directly probing the atomic structure of smaller molecules in the gas phase, a regime where no method is viable. CEI is usually performed using ultrashort pulse lasers with the ultimate goal of "blowing up" the molecule as fast as possible to minimize the disturbance to the molecule and ensure accurate imaging of the atomic structure.</p>
+                  <p>The geometries and dynamics of small gas molecules may be studied by Coulomb explosion imaging (CEI), providing a means of directly probing the atomic structure and dynamics of smaller molecules in the gas phase, a regime where no method is viable. CEI is usually performed using ultrashort pulse lasers with the ultimate goal of "blowing up" the molecule as fast as possible to minimize the disturbance to the molecule and ensure accurate imaging of the atomic structure.</p>
 
 									<p>As a proof of principle, we were able to use single X-ray photons from the Canadian Light Source synchrotron to study the dynamics of dissociative ionization in OCS using CEI. The use of single X-ray photons led to faster ionization and "blow up" compared to ultrashort pulse lasers, showing promise for greater temporal precision in CEI experiments. It also allowed us to identify a surprisingly rich set of ultrafast molecular dynamics for the first time.</p>
                 </div>
@@ -179,14 +179,18 @@
             <div class="initially-hidden" id="researchDescription2">
               <div class="row">
                 <div class="6u 12u(mobile) text-justify">
-									<p>For my thesis, I am developing a rigorous computational framework to create molecular movies using Coulomb explosion imaging, a technique of studying the ultrafast dynamics of small molecules. This is a highly nuanced problem that has only recently been tractable enough to tackle computationally.</p>
+									<p>For my thesis I am developing a rigorous computational framework to create movies of individual molecules undergoing chemical reactions using Coulomb explosion imaging (CEI), a technique of studying the ultrafast dynamics of smaller molecules in the gas phase. While CEI has always promised that atomic structures may be measured, in practice no rigorous method is available and instead the momentum vectors are used. The momentum vectors tell a large part of the story but aren't as satifying to study as the actual structure everyone seeks so a method of retriving the structure is highly desirable.</p>
 
-									<p>Previous analyses are usually done strictly in momentum space for 3-4 atom molecules, however this method will allow for a more satisfying position space analysis that scales up to molecules with several atoms. The main problem of mapping momentum vector measurements to molecular geometries is tackled as a nonconvex optimization problem, making use of recent explosive research activity in machine learning. A Bayesian statistics approach, developed in collaboration with the Department of Statistics and Actuarial Science, is used to interpret the resulting geometries and naturally accounts for measurement uncertainty.</p>
+									<p>The structure may be recovered by attempting to simulate the experiment backwards in time however solving for the molecular geometries constitutes an ill-posed nonconvex optimization problem that is difficult to tackle computationally even for small molecules however I am actively trying different optimization aproaches. I am also collaborating with the Department of Statistics and Actuarial Science on a fully statistical approach using Bayesian inference. Such an approach will allow for the incorperation of measurement uncertainty which every previous study has neglected and may scale well to larger molecules.</p>
 
-									<p>I plan to make our source code and complete analysis methods publicly available as well as tutorials on how the data analysis should be carried out so that other groups may use and improve on it.</p>
+									<!-- <p>I plan to make our source code and complete analysis methods publicly available as well as tutorials on how the data analysis should be carried out so that other groups may use and improve on it.</p> -->
                 </div>
 
                 <div class="6u 12u(mobile)">
+									<img src="img/proton-migration.png">
+									Molecular movie of proton migration in acetylene imaged in momentum space (by other members of my group).
+									<img src="img/rainbow-plot.png">
+									Multiple structures found in searching for molecular geometries showcasing the ill-posed nature of the optimization problem.
                 </div>
               </div>
 
@@ -256,7 +260,7 @@
 
             <h3 class="project-title" id="projectTitle5">
               <i class="fa fa-plus-square" aria-hidden="true"></i>
-              Project Lovelace: Learn science through programming and problem solving
+              Project Lovelace: Teaching science through programming and problem solving
             </h3>
 
             <div class="initially-hidden" id="researchDescription5">

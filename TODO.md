@@ -24,5 +24,5 @@
 - [x] Figure out whether to keep or not.
 
 ## Resources
-- [] Decide whether to keep or not.
+- [x] Decide whether to keep or not.
 - [] Include good reads section?

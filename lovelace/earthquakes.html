@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Project Lovelace</title>
+
+  <style>
+  .Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  .Site-content {
+    flex: 1;
+  }
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+<style>@-webkit-keyframes spinAround{from{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}@keyframes spinAround{from{-webkit-transform:rotate(0);transform:rotate(0)}to{-webkit-transform:rotate(359deg);transform:rotate(359deg)}}.is-divider,.is-divider-vertical{display:block;position:relative;border-top:.1rem solid #dbdbdb;height:.1rem;margin:2rem 0;text-align:center}.is-divider-vertical[data-content]::after,.is-divider[data-content]::after{background:#fff;color:#b5b5b5;content:attr(data-content);display:inline-block;font-size:.75rem;padding:.4rem .8rem;-webkit-transform:translateY(-1.1rem);transform:translateY(-1.1rem);text-align:center}@media screen and (min-width:769px),print{.is-divider-vertical{display:block;flex:none;width:auto;height:auto;padding:2rem;margin:0;position:relative;border-top:none;min-height:2rem}.is-divider-vertical::before{border-left:.1rem solid #dbdbdb;bottom:1rem;content:"";display:block;left:50%;position:absolute;top:1rem;-webkit-transform:translateX(-50%);transform:translateX(-50%)}.is-divider-vertical[data-content]::after{position:absolute;left:50%;top:50%;padding:.1rem;-webkit-transform:translateY(-50%) translateX(-50%);transform:translateY(-50%) translateX(-50%)}}.is-divider-vertical.is-white,.is-divider.is-white{border-top-color:#fff}.is-divider-vertical.is-white[data-content]::after,.is-divider.is-white[data-content]::after{background:#0a0a0a;color:#fff}.is-divider-vertical.is-white::before,.is-divider.is-white::before{border-left-color:#fff}.is-divider-vertical.is-black,.is-divider.is-black{border-top-color:#0a0a0a}.is-divider-vertical.is-black[data-content]::after,.is-divider.is-black[data-content]::after{background:#fff;color:#0a0a0a}.is-divider-vertical.is-black::before,.is-divider.is-black::before{border-left-color:#0a0a0a}.is-divider-vertical.is-light,.is-divider.is-light{border-top-color:#f5f5f5}.is-divider-vertical.is-light[data-content]::after,.is-divider.is-light[data-content]::after{background:#363636;color:#f5f5f5}.is-divider-vertical.is-light::before,.is-divider.is-light::before{border-left-color:#f5f5f5}.is-divider-vertical.is-dark,.is-divider.is-dark{border-top-color:#363636}.is-divider-vertical.is-dark[data-content]::after,.is-divider.is-dark[data-content]::after{background:#f5f5f5;color:#363636}.is-divider-vertical.is-dark::before,.is-divider.is-dark::before{border-left-color:#363636}.is-divider-vertical.is-primary,.is-divider.is-primary{border-top-color:#00d1b2}.is-divider-vertical.is-primary[data-content]::after,.is-divider.is-primary[data-content]::after{background:#fff;color:#00d1b2}.is-divider-vertical.is-primary::before,.is-divider.is-primary::before{border-left-color:#00d1b2}.is-divider-vertical.is-link,.is-divider.is-link{border-top-color:#3273dc}.is-divider-vertical.is-link[data-content]::after,.is-divider.is-link[data-content]::after{background:#fff;color:#3273dc}.is-divider-vertical.is-link::before,.is-divider.is-link::before{border-left-color:#3273dc}.is-divider-vertical.is-info,.is-divider.is-info{border-top-color:#209cee}.is-divider-vertical.is-info[data-content]::after,.is-divider.is-info[data-content]::after{background:#fff;color:#209cee}.is-divider-vertical.is-info::before,.is-divider.is-info::before{border-left-color:#209cee}.is-divider-vertical.is-success,.is-divider.is-success{border-top-color:#23d160}.is-divider-vertical.is-success[data-content]::after,.is-divider.is-success[data-content]::after{background:#fff;color:#23d160}.is-divider-vertical.is-success::before,.is-divider.is-success::before{border-left-color:#23d160}.is-divider-vertical.is-warning,.is-divider.is-warning{border-top-color:#ffdd57}.is-divider-vertical.is-warning[data-content]::after,.is-divider.is-warning[data-content]::after{background:rgba(0,0,0,.7);color:#ffdd57}.is-divider-vertical.is-warning::before,.is-divider.is-warning::before{border-left-color:#ffdd57}.is-divider-vertical.is-danger,.is-divider.is-danger{border-top-color:#ff3860}.is-divider-vertical.is-danger[data-content]::after,.is-divider.is-danger[data-content]::after{background:#fff;color:#ff3860}.is-divider-vertical.is-danger::before,.is-divider.is-danger::before{border-left-color:#ff3860}.is-divider-vertical.is-black-bis,.is-divider.is-black-bis{border-top-color:#121212}.is-divider-vertical.is-black-bis[data-content]::after,.is-divider.is-black-bis[data-content]::after{background:#fff;color:#121212}.is-divider-vertical.is-black-bis::before,.is-divider.is-black-bis::before{border-left-color:#121212}.is-divider-vertical.is-black-ter,.is-divider.is-black-ter{border-top-color:#242424}.is-divider-vertical.is-black-ter[data-content]::after,.is-divider.is-black-ter[data-content]::after{background:#fff;color:#242424}.is-divider-vertical.is-black-ter::before,.is-divider.is-black-ter::before{border-left-color:#242424}.is-divider-vertical.is-grey-darker,.is-divider.is-grey-darker{border-top-color:#363636}.is-divider-vertical.is-grey-darker[data-content]::after,.is-divider.is-grey-darker[data-content]::after{background:#fff;color:#363636}.is-divider-vertical.is-grey-darker::before,.is-divider.is-grey-darker::before{border-left-color:#363636}.is-divider-vertical.is-grey-dark,.is-divider.is-grey-dark{border-top-color:#4a4a4a}.is-divider-vertical.is-grey-dark[data-content]::after,.is-divider.is-grey-dark[data-content]::after{background:#fff;color:#4a4a4a}.is-divider-vertical.is-grey-dark::before,.is-divider.is-grey-dark::before{border-left-color:#4a4a4a}.is-divider-vertical.is-grey,.is-divider.is-grey{border-top-color:#7a7a7a}.is-divider-vertical.is-grey[data-content]::after,.is-divider.is-grey[data-content]::after{background:#fff;color:#7a7a7a}.is-divider-vertical.is-grey::before,.is-divider.is-grey::before{border-left-color:#7a7a7a}.is-divider-vertical.is-grey-light,.is-divider.is-grey-light{border-top-color:#b5b5b5}.is-divider-vertical.is-grey-light[data-content]::after,.is-divider.is-grey-light[data-content]::after{background:#fff;color:#b5b5b5}.is-divider-vertical.is-grey-light::before,.is-divider.is-grey-light::before{border-left-color:#b5b5b5}.is-divider-vertical.is-grey-lighter,.is-divider.is-grey-lighter{border-top-color:#dbdbdb}.is-divider-vertical.is-grey-lighter[data-content]::after,.is-divider.is-grey-lighter[data-content]::after{background:rgba(0,0,0,.7);color:#dbdbdb}.is-divider-vertical.is-grey-lighter::before,.is-divider.is-grey-lighter::before{border-left-color:#dbdbdb}.is-divider-vertical.is-white-ter,.is-divider.is-white-ter{border-top-color:#f5f5f5}.is-divider-vertical.is-white-ter[data-content]::after,.is-divider.is-white-ter[data-content]::after{background:rgba(0,0,0,.7);color:#f5f5f5}.is-divider-vertical.is-white-ter::before,.is-divider.is-white-ter::before{border-left-color:#f5f5f5}.is-divider-vertical.is-white-bis,.is-divider.is-white-bis{border-top-color:#fafafa}.is-divider-vertical.is-white-bis[data-content]::after,.is-divider.is-white-bis[data-content]::after{background:rgba(0,0,0,.7);color:#fafafa}.is-divider-vertical.is-white-bis::before,.is-divider.is-white-bis::before{border-left-color:#fafafa}
+</style>
+
+<!-- MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});
+</script>
+<script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS_CHTML"></script>
+
+<style type="text/css" media="screen">
+#editor {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+</style>
+</head>
+
+<body class="Site">
+  <nav class="navbar is-transparent is-dark">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://bulma.io">
+        <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+      </a>
+      <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+
+    <div id="navbarExampleTransparentExample" class="navbar-menu">
+      <div class="navbar-start">
+        <a class="navbar-item" href="http://projectlovelace.net/problems/">Problems</a>
+        <a class="navbar-item" href="http://projectlovelace.net/about/">FAQ</a>
+        <a class="navbar-item" href="http://projectlovelace.net/contact/">Feedback</a>
+      </div>
+
+      <div class="navbar-end">
+        <div class="navbar-item">
+          <div class="dropdown">
+            <div class="dropdown-trigger">
+              <button class="button is-info" aria-haspopup="true" aria-controls="dropdown-menu">
+                <i class="fas fa-laptop"></i>&nbsp;&nbsp;
+                <span>PolarizedPoutine</span>
+                <span class="icon is-small">
+                  <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </button>
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+              <div class="dropdown-content">
+                <a href="#" class="dropdown-item">Profile</a>
+                <a href="#" class="dropdown-item">Submissions</a>
+                <a href="#" class="dropdown-item">Progress</a>
+                <hr class="dropdown-divider">
+                <a href="#" class="dropdown-item">Log out</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="Site-content">
+    <section classs="section">
+      <br>
+      <h1 class="title is-2 has-text-centered">Finding earthquake epicenters</h1>
+      <h3 class="subtitle is-5 has-text-centered is-italic"><strong>Useful to know</strong>: trigonometry, circles.</h3>
+
+      <div class="tabs is-centered is-boxed">
+        <ul>
+          <li class="is-active">
+            <a>
+              <span class="icon is-small"><i class="fas fa-align-justify" aria-hidden="true"></i></span>
+              <span>Description</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"><i class="fas fa-history" aria-hidden="true"></i></span>
+              <span>Submissions</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"><i class="fas fa-book" aria-hidden="true"></i></span>
+              <span>Notes and references</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"><i class="far fa-comments" aria-hidden="true"></i></span>
+              <span>Forum</span>
+            </a>
+          </li>
+          <li>
+            <a>
+              <span class="icon is-small"><i class="fas fa-check-double" aria-hidden="true"></i></span>
+              <span>Solution</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="container">
+        <p class="has-text-justified">
+          An earthquake occurs at some unknown location $(x,y), -100 &lt; x,y &lt; 100$ where $x,y$ are in kilometers (km). Modeling the Earth 's surface as a flat 2D plane, the earthquake emits seismic waves which travel through the Earth and are detected by three
+          seismographs. Given the arrival times of the seismic waves, and the locations of the three seismographs, determine the earthquake's source or epicenter $(x,y)$. Assume the seismic waves travel at a constant 6 km/s. (We 're also assuming that
+          the earthquake happens very close to the surface and that the seismographs are close to each other so the Earth's curvature is negligible.)<br><br> Just for a mathy lorem ipsum here is the Navier-Stokes equation in a non-inertial
+          reference frame<br>
+          <div class="has-text-centered">
+            $\displaystyle \rho \frac{D \mathbf{u}}{D t} = - \nabla \bar{p} + \mu \, \nabla^2 \mathbf u + \tfrac13 \mu \,\nabla (\nabla\cdot\mathbf{u}) + \rho\mathbf{g} - \rho \left(2\mathbf\Omega\times\mathbf u + \mathbf\Omega\times\mathbf\Omega\times\mathbf x +
+            \frac{d\mathbf U}{dt} + \frac{d\mathbf \Omega}{dt}\times\mathbf x\right)$
+          </div>
+          where $\mathbf x$ and $\mathbf u$ are measured in the non-inertial frame. The first term in the parenthesis represents Coriolis acceleration, the second term is due to centripetal force, the third is due to the linear acceleration of $K'$ with respect
+          to $K$ and the fourth term is due to the angular acceleration of $K'$ with respect to $K$.
+        </p>
+        <br>
+        <p>
+          <strong>Input</strong>: The $x$ and $y$-coordinates of the seismograph (in kilometers) and the arrival times of the seismic waves.
+        </p>
+        <br>
+        <p>
+          <strong>Output</strong>: The $(x,y)$ coordinate of the earthquake in kilometers.
+        </p>
+        <br>
+
+        <article class="message">
+          <div class="message-header">
+            <p>Example input</p>
+          </div>
+          <div class="message-body" style="font-family: monospace; text-align: justify">
+            8.382 -58.003 12.860 -13.590 73.976 22.847 77.291 7.508 5.767
+          </div>
+        </article>
+
+        <article class="message">
+          <div class="message-header">
+            <p>Example output</p>
+          </div>
+          <div class="message-body" style="font-family: monospace; text-align: justify">
+            79.0674 -27.0524
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <br>
+
+    <div class="container">
+    <div class="columns">
+      <div class="column is-three-quarters" style="position: relative;">
+        <div id="editor">def earthquake_epicenter_2d(x1, y1, t1, x2, y2, t2, x3, y3, t3):
+    pass
+    return (x0, y0)</div>
+      </div>
+      
+      <div class="is-divider-vertical" data-content="OR"></div>
+      
+      <div class="column is-one-quarter">
+        <div class="container">
+          <div class="file has-name is-boxed">
+            <label class="file-label">
+              <input class="file-input" type="file" name="resume">
+              <span class="file-cta">
+                <span class="file-icon">
+                  <i class="fas fa-upload"></i>
+                </span>
+                <span class="file-label">
+                  Upload file
+                </span>
+              </span>
+              <span class="file-name">
+                earthquake_2d_69420.py
+              </span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <br><br>
+  </main>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>
+        <strong>Footer</strong> inserted here. Made with <a href="https://bulma.io/">Bulma</a>. Project Lovelace content is licensed under a Creative Commons (<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>) license.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Ace Editor -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js" type="text/javascript" charset="utf-8"></script>
+
+<script>
+  var editor = ace.edit("editor");
+  editor.setTheme("ace/theme/eclipse");
+  editor.session.setMode("ace/mode/python");
+  editor.resize();
+</script>
+
+</body>
+
+</html>

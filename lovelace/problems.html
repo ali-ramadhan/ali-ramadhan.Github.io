@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Lovelace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  </head>
+
+  <body class="Site">
+    <nav class="navbar is-transparent is-dark">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </a>
+        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="http://projectlovelace.net/problems/">Problems</a>
+          <a class="navbar-item" href="http://projectlovelace.net/about/">FAQ</a>
+          <a class="navbar-item" href="http://projectlovelace.net/contact/">Feedback</a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="dropdown is-active">
+              <div class="dropdown-trigger">
+                <button class="button is-info" aria-haspopup="true" aria-controls="dropdown-menu">
+                  <i class="fas fa-laptop"></i>&nbsp;&nbsp;
+                  <span>PolarizedPoutine</span>
+                  <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                  </span>
+                </button>
+              </div>
+              <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <a href="#" class="dropdown-item">Profile</a>
+                  <a href="#" class="dropdown-item">Submissions</a>
+                  <a href="#" class="dropdown-item">Progress</a>
+                  <hr class="dropdown-divider">
+                  <a href="#" class="dropdown-item">Log out</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="Site-content">
+      <br>
+      <section classs="section">
+        <div class="columns is-centered">
+          <div class="column is-narrow">
+            <table class="table is-hoverable">
+              <thead>
+                <tr>
+                  <th><abbr title="Problem ID">#</abbr></th>
+                  <th></th>
+                  <th>Problem</th>
+                  <th>Solved by</th>
+                  <th><abbr title="Higher = more math and scientific knowledge required">Difficulty</abbr></th>
+                  <th><abbr title="Higher = more time needed to code up a solution">Timesink</abbr></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>1</th>
+                  <th><i class="fas fa-check has-text-success"></i></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Rocket science</a>
+                    <span class="tag is-info">Physics</span>
+                  </td>
+                  <td>12,831</td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>2</th>
+                  <th><i class="fas fa-check has-text-success"></i></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Habitable exoplanets</a>
+                    <span class="tag is-black">Astronomy</span>
+                  </td>
+                  <td>10,447</td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>3</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Chaos</a>
+                    <span class="tag is-warning">Math</span>
+                  </td>
+                  <td>8,923</td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>4</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">DNA transcription</a>
+                    <span class="tag is-primary">Biology</span>
+                  </td>
+                  <td>9,121</td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="1" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>5</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Caesar cipher</a>
+                    <span class="tag">Computer science</span>
+                  </td>
+                  <td>5,043</td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>6</th>
+                  <th><i class="fas fa-check has-text-success"></i></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Colorful resistors</a>
+                    <span class="tag">Engineering</span>
+                  </td>
+                  <td>5,616</td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>7</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Correlation does not imply causation</a>
+                    <span class="tag is-warning">Math</span>
+                  </td>
+                  <td>3,274</td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>8</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Molecular mass calculator</a>
+                    <span class="tag is-danger">Chemistry</span>
+                  </td>
+                  <td>4,148</td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>9</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">El Niño intensities</a>
+                    <span class="tag is-success">Earth science</span>
+                  </td>
+                  <td>3,980</td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>10</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Game of life</a>
+                    <span class="tag is-primary">Biology</span>
+                  </td>
+                  <td>2,692</td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                  <td><progress class="progress is-warning" value="5" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>11</th>
+                  <th><i class="fas fa-check has-text-success"></i></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Finding earthquake epicenters</a>
+                    <span class="tag is-success">Earth science</span>
+                  </td>
+                  <td>3,684</td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="2" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>12</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Convex chocolate chip cookies</a>
+                    <span class="tag is-warning">Math</span>
+                  </td>
+                  <td>2,401</td>
+                  <td><progress class="progress is-warning" value="5" max="15"></progress></td>
+                  <td><progress class="progress is-success" value="3" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>13</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Enigma machine</a>
+                    <span class="tag">Computer science</span>
+                  </td>
+                  <td>3,684</td>
+                  <td><progress class="progress is-warning" value="6" max="15"></progress></td>
+                  <td><progress class="progress is-warning" value="7" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>14</th>
+                  <th></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Neuron on fire</a>
+                    <span class="tag is-primary">Biology</span>
+                  </td>
+                  <td>1,809</td>
+                  <td><progress class="progress is-warning" value="8" max="15"></progress></td>
+                  <td><progress class="progress is-warning" value="6" max="15"></progress></td>
+                </tr>
+                <tr>
+                  <th>15</th>
+                  <th><i class="fas fa-check has-text-success"></i></th>
+                  <td>
+                    <a href="http://projectlovelace.net/problems/">Fixing the first weather forecast</a>
+                    <span class="tag is-success">Earth science</span>
+                  </td>
+                  <td>320</td>
+                  <td><progress class="progress is-danger" value="11" max="15"></progress></td>
+                  <td><progress class="progress is-warning" value="9" max="15"></progress></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+              <a class="pagination-previous">Previous</a>
+              <a class="pagination-next">Next page</a>
+              <ul class="pagination-list">
+                <li><a class="pagination-link" aria-label="Goto page 1">1</a></li>
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                <li><a class="pagination-link" aria-label="Goto page 45">6</a></li>
+                <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">7</a></li>
+                <li><a class="pagination-link" aria-label="Goto page 47">8</a></li>
+                <li><span class="pagination-ellipsis">&hellip;</span></li>
+                <li><a class="pagination-link" aria-label="Goto page 86">13</a></li>
+              </ul>
+            </nav>
+
+          </div>
+        </div>
+      </section>
+
+      <br><br>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+          <strong>Footer</strong> inserted here. Made with <a href="https://bulma.io/">Bulma</a>. Project Lovelace content is licensed under a Creative Commons (<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>) license.
+        </p>
+      </div>
+    </footer>
+  </body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Project Lovelace</title>
+    
+    <style>
+      .Site {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      .Site-content {
+        flex: 1;
+      }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  </head>
+
+  <body class="Site">
+    <nav class="navbar is-transparent is-dark">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://bulma.io">
+          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        </a>
+        <div class="navbar-burger burger" data-target="navbarExampleTransparentExample">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+
+      <div id="navbarExampleTransparentExample" class="navbar-menu">
+        <div class="navbar-start">
+          <a class="navbar-item" href="http://projectlovelace.net/problems/">Problems</a>
+          <a class="navbar-item" href="http://projectlovelace.net/about/">FAQ</a>
+          <a class="navbar-item" href="http://projectlovelace.net/contact/">Feedback</a>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="field is-grouped">
+              <p class="control">
+                <a class="bd-tw-button button" href="projectlovelace.net/login/">
+                  <span class="icon">
+                    <i class="fas fa-sign-in-alt"></i>
+                  </span>
+                  <span>Log in</span>
+                </a>
+              </p>
+              <p class="control">
+                <a class="button is-info" href="http://projectlovelace.net/register/">
+                  <span class="icon">
+                    <i class="fas fa-user-plus"></i>
+                  </span>
+                  <span>Register</span>
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="Site-content">
+      <section classs="section">
+        <div class="container">
+            <br>
+            <h1 class="title is-spaced is-size-1-desktop is-size-2-tablet is-size-3-mobile">About Project Lovelace</h1>
+
+          <p class="is-spaced">
+            <strong>What exactly is Project Lovelace?</strong><br>
+            Project Lovelace is an open online platform for learning about science and
+            developing computational thinking through programming and problem solving.
+            It is a collection of computational science problems and tutorials taken
+            from all branches of the natural, social, and mathematical sciences. Each
+            problem teaches a scientific application (e.g. locating earthquakes, DNA
+            splicing) and requires the use of scientific insight and some programming
+            skills to solve. Tutorials teach computational methods that students and
+            researchers may find useful (e.g. solving differential equations, Bayesian
+            inference) and may be required knowledge for some problems.
+            Lovelace draws inspiration from similar projects such as <a href="https://projecteuler.net/" target="_blank">Project Euler</a> and
+            <a href="http://rosalind.info/" target="_blank">Rosalind</a>.
+          </p>
+          <br>
+          <p>
+            <strong>Who was Ada Lovelace?</strong><br>
+            Brief mention. Link to YouTube documentary and NYT obit.
+          </p>
+          <br>
+          <p>
+            <strong>Where's the best place to start?</strong><br>
+            Overview of different kinds of problems. Depends on your skill level.
+          </p>
+          <br>
+          <p>
+            <strong>Do I need to know a lot of science and math?</strong><br>
+            We try to go for some mathy and some non-mathy problems. Math is unavoidable in scientific computing. But we'll try to give an intro
+            and link to good resources so that you can solve the problem on your own.
+          </p>
+          <br>
+          <p>
+            <strong>Why make another programming website when there are so many others?</strong><br>
+            Project Euler is basically for recreational math nerds. Problems are very well thought out and you can learn a lot, but somewhat contrived.
+            Other websites like Leetcode (and many others) just teach super boring and generic algorithms that may be most useful for technical interviews
+            but not so much in the real world. Since there are so many interesting real-world/applied problems in all branches of science we think this is
+            a really good opportunity to learn both science and programming at the same time.
+          </p>
+          <br>
+          <p>
+            <strong>Can I post my solutions online?</strong><br>
+            We think the most enjoyable part of solving the problems is that moment when you figure out how to finally solve it. Spending the time
+            and effort on problem solving is what makes you a better scientist and programmer. So in an ideal world everyone would figure out each
+            problem themselves, maximizing their learning. But people will always post their solutions online no matter what we say, and some people
+            can learn from solutions especially after being stuck for a while, so all we ask is that if you do post your solution online that you
+            post quality work: well-documented and efficient code that others can learn from by following your code. A lot of our problems are well-known
+            and not neccessarily original so there are probably already many solutions posted online for those.
+            <br><br>
+            To differentiate between users who submit their own solutions and users who copy and paste code we'll be implementing a plagiarism detector
+            that compares your submission to other submissions. 
+          </p>
+          <br>
+          <p>
+            <strong>I don't like something, or have a suggestion or idea for a new problem, or something is broken.</strong><br>
+            Feedback page.
+          </p>
+        </div>
+      </section>
+
+      <br><br>
+    </main>
+
+    <footer class="footer">
+      <div class="content has-text-centered">
+        <p>
+        <strong>Footer</strong> inserted here. Made with <a href="https://bulma.io/">Bulma</a>. Project Lovelace content is licensed under a
+        Creative Commons (<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY NC SA 4.0</a>) license.
+        </p>
+      </div>
+    </footer>
+  </body>
+
+</html>

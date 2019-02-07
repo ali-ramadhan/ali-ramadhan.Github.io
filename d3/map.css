@@ -4,12 +4,19 @@
 	stroke-width: 0.5;
 }
 
-.circles {
-	fill: #3c373d;
+.continent:hover {
+	fill: green;
+	opacity: 0.5;
 }
 
-.labels {
-	font-family: sans-serif;
-	font-size: 11px;
-	fill: #3c373d;
+div.tooltip {
+	position: absolute;
+	text-align: center;
+	width: 120px;
+	height: 12px;
+	padding: 2px;
+	font: 12px sans-serif;
+	background: #fff;
+	border: 0px;
+	pointer-events: none;
 }

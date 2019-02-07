@@ -1,3 +1,7 @@
+.svg-content {
+	background-color: transparent;
+}
+
 .continent {
 	fill: #f0e4dd;
 	stroke: #e0cabc;

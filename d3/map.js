@@ -11,7 +11,7 @@ var tooltip = d3.select("body").append("div")
     .style("opacity", 0);
 
 // load data  
-var worldmap = d3.json("d3/NNA_lakes.geojson");
+var worldmap = d3.json("NNA_lakes.geojson");
 
 Promise.all([worldmap]).then(function(values){    
   // draw map

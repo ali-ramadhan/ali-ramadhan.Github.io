@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" type="text/css" href="d3/map.css">
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
     <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 
@@ -110,9 +111,7 @@
       <!-- About Me -->
         <section id="about" class="three">
           <div class="container">
-
             <div class="row">
-
               <div class="text-justify">
                 <header><h2>About me</h2></header>
 
@@ -122,10 +121,9 @@
 
                 <p>When not doing science I'm probably baking and trying to cook new dishes (still sort of science!).</p>
               </div>
-
             </div>
-
           </div>
+          <div id="container" class="svg-container"></div>
         </section>
 
         <!-- Research -->
@@ -543,5 +541,7 @@
           }
         });
       </script>
+      <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+      <script type="text/javascript" src="d3/map.js"></script>
   </body>
 </html>

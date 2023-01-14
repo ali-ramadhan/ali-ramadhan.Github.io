@@ -103,7 +103,7 @@
 
                 <div class="8u 12u(mobile) text-justify">
 
-                  <div id="video-outer-box">
+                  <div id="video-outer-box" style="position: relative">
                     <!-- <button style="position: absolute; margin: 10" id="btnPlay">PLAY</button> -->
 
                     <div id="video-title" style="text-align: center">Temperature</div>
@@ -113,6 +113,9 @@
                           <source src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4">
                       </video>
                     </div>
+
+                    <i id="left-arrow" class="fa fa-chevron-left" aria-hidden="true" style="position: absolute; top: 50%; left: 5%; cursor: pointer;"></i>
+                    <i id="right-arrow" class="fa fa-chevron-right" aria-hidden="true" style="position: absolute; top: 50%; left: 95%; cursor: pointer;"></i>
 
                     <div id="video-caption" style="text-align: center"></div>
 

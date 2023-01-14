@@ -97,11 +97,40 @@ let video_sources = {
     'temperature': "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4"
 }
 
-let videoSelect = document.getElementById('video-select');
+let videos = [
+    {
+        "title": "Temperature",
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4"
+    },
+    {
+        "title": "Precipitation",
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm"
+    }
+]
 
-videoSelect.addEventListener('change', (event) => {
+let currentVideo = 0;
+
+function selectVideo(n) {
     video.pause();
-    videoTitle.innerHTML = videoSelect.value;
-    video.src = video_sources[videoSelect.value]
-    video.play();
+    videoTitle.innerHTML = videos[n]["title"];
+    video.src = videos[n]["src"];
+    video.play();    
+}
+
+let leftArrow = document.getElementById('left-arrow');
+let rightArrow = document.getElementById('right-arrow');
+
+// Proper modulo function. % is actually the remainder function.
+function mod(n, m) {
+    return ((n % m) + m) % m;
+}
+
+leftArrow.addEventListener('click', (event) => {
+    currentVideo = mod(currentVideo - 1, videos.length);
+    selectVideo(currentVideo);
+});
+
+rightArrow.addEventListener('click', (event) => {
+    currentVideo = mod(currentVideo + 1, videos.length);
+    selectVideo(currentVideo);
 });

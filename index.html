@@ -18,8 +18,11 @@
     <link rel="stylesheet" href="assets/css/main.css" />
     <link rel="stylesheet" type="text/css" href="d3/map.css">
 
-    <!-- <style src="video-sphere.css"></style> -->
     <script src="video-sphere.js" type="module"></script>
+    <link rel="stylesheet" type="text/css" href="video-sphere.css" />
+
+    <script src="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.css">
 
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
     <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
@@ -45,6 +48,7 @@
         <div class="top">
           <!-- Logo -->
             <div id="logo" style="text-align: left;">
+              <img src="img/ali-ramadhan.jpg" style="width: 50%; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;" alt="Placeholder photo" />
               <h1 id="title">Ali Ramadhan</h1>
               <p>Department of Earth, Atmospheric and Planetary Sciences</p>
               <p>Massachusetts Institute of Technology</p>
@@ -93,32 +97,37 @@
 
               <div class="row">
 
-                <div class="9u 12u(mobile) text-justify">
+                <div class="4u 12u(mobile) text-justify">
+                  <p><b>Under construction...</b><br> Hi I <strike>am</strike> was a graduate student pursuing an M.Sc. in Physics at the University of Waterloo. I played with lasers, exploded molecules, and tried to make molecular movies. Now I'm interested in climate modeling ("physics on a computer but with <b><i>jobs</i></b> at the end!") but I know nothing about the climate right now.</p>
+                </div>
 
-                  <div id="video-sphere-box" style="height: 600px; width: 800px;">
-                    <button style="position: absolute; margin: 10" id="btnPlay">PLAY</button>
+                <div class="8u 12u(mobile) text-justify">
 
-                    <video id="video" loop crossorigin="anonymous" style="display:none">
-                        <source src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm">
-                    </video>
+                  <div id="video-outer-box">
+                    <!-- <button style="position: absolute; margin: 10" id="btnPlay">PLAY</button> -->
+
+                    <div id="video-title" style="text-align: center">Temperature</div>
+
+                    <div id="video-inner-box">
+                      <video id="video" crossorigin="anonymous" style="display:none" width="800" height="600" autoplay muted loop>
+                          <source src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4">
+                      </video>
+                    </div>
+
+                    <div id="video-caption" style="text-align: center"></div>
+
                   </div>
 
-                  <p><b>Under construction...</b><br> Hi I <strike>am</strike> was a graduate student pursuing an M.Sc. in Physics at the University of Waterloo. I played with lasers, exploded molecules, and tried to make molecular movies. Now I'm interested in climate modeling ("physics on a computer but with <b><i>jobs</i></b> at the end!") but I know nothing about the climate right now.</p>
-
-                  <h3>Recent news</h3>
-                  <ul>
-                    <li>My MSc thesis on trying to create molecular movies is <a href="https://uwspace.uwaterloo.ca/handle/10012/12190" target="_blank">online</a>.</li>
-                    <li>Our paper on controlling end-caps in polyynes was published in <a href="http://doi.org/10.1016/j.carbon.2017.03.096" target="_blank">Carbon</a>.</li>
-                    <li><a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a> is now online (in super pre-alpha)!</li>
-                    <li>Our paper on ultrafast molecular dynamics was published in <a href="http://dx.doi.org/10.1088/0953-4075/49/21/215602" target="_blank">J. Phys. B</a>.</li>
-                    <li>Our paper on synthesizing graphene oxide gels was published in <a href="https://dx.doi.org/10.1002/admi.201500864" target="_blank">Advanced Materials Interfaces</a>.</li>
-                    <!-- <li>I gave a talk at Photonics North 2016 in Québec City. <a href="files/Photonics-North-2016-presentation.pdf" target="_blank">[slides]</a></li> -->
-                  </ul>
                 </div>
 
-                <div class="3u 12u(mobile)">
+                  <!-- <select id="video-select">
+                    <option value="precipitation">Precipitation</option>
+                    <option value="temperature">Temperature</option>
+                  </select> -->
+
+                <!-- <div class="3u 12u(mobile)">
                   <img src="img/ali-ramadhan.jpg" style="-webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;" alt="Placeholder photo">
-                </div>
+                </div> -->
 
               </div>
 
@@ -600,14 +609,5 @@
         });
     </script>
 
-  <script type="text/javascript">
-    video.addEventListener('timeupdate', function (){
-        putOverlay();
-    });
-    function putOverlay(){                  
-        console.log(video.currentTime);
-        console.log("another frame");
-    }
-  </script>
   </body>
 </html>

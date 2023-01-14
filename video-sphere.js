@@ -92,11 +92,6 @@ video.addEventListener('timeupdate', function () {
     videoCaption.innerHTML = `Frame ${frameNum}`;
 });
 
-let video_sources = {
-    'precipitation': "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm",
-    'temperature': "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4"
-}
-
 let videos = [
     {
         "title": "Temperature",

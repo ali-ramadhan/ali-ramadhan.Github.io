@@ -1,11 +1,35 @@
-#vide-title-text {
-	position: absolute;
-	right: 250px;
-  	color: white;
-  	font-size: 20px;
-  	align-self: center;
+#video-outer-box {
+	position: relative;	
 }
 
 #canvas-video-sphere {
 	margin: auto;
+}
+
+#video {
+	display: none;
+	width: 800px;
+	height: 600px;
+}
+
+#video-title {
+	text-align: center;
+}
+
+#video-caption {
+	text-align: center;
+}
+
+#left-arrow {
+	position: absolute;
+	top: 50%;
+	left: 5%;
+	cursor: pointer;
+}
+
+#right-arrow {
+	position: absolute;
+	top: 50%;
+	left: 95%;
+	cursor: pointer;
 }

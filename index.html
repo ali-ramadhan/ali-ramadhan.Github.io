@@ -7,610 +7,730 @@
 -->
 
 <html>
-  <head>
-    <title>Ali Ramadhan</title>
 
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+  <title>Ali Ramadhan</title>
 
-    <link rel="icon" href="/favicon.svg" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <link rel="stylesheet" type="text/css" href="d3/map.css">
+  <link rel="icon" href="/favicon.svg" />
 
-    <script src="video-sphere.js" type="module"></script>
-    <link rel="stylesheet" type="text/css" href="video-sphere.css" />
+  <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" type="text/css" href="d3/map.css">
 
-    <script src="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.css">
+  <script src="video-sphere.js" type="module"></script>
+  <link rel="stylesheet" type="text/css" href="video-sphere.css" />
 
-    <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-    <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-    <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+  <script src="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/dat.gui@0.7.7/build/dat.gui.css">
 
-    <!-- Personal CSS (mostly overwriting) -->
-    <link href="assets/css/custom.css" rel="stylesheet" />
+  <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+  <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+  <!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109849589-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+  <!-- Personal CSS (mostly overwriting) -->
+  <link href="personal-website.css" rel="stylesheet" />
 
-      gtag('config', 'UA-109849589-1');
-    </script>
-  </head>
-  <body>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109849589-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-109849589-1');
+  </script>
+</head>
 
-    <!-- Header -->
-      <div id="header">
-        <div class="top">
-          <!-- Logo -->
-            <div id="logo" style="text-align: left;">
-              <img src="img/ali-ramadhan.jpg" style="width: 50%; -webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;" alt="Placeholder photo" />
-              <h1 id="title">Ali Ramadhan</h1>
-              <p>Department of Earth, Atmospheric and Planetary Sciences</p>
-              <p>Massachusetts Institute of Technology</p>
-              <p><a href="files/CV-Ali-Ramadhan.pdf"><i class="fa fa-cube" aria-hidden="true"></i>&nbsp;Curriculum Vitae</a></p>
-            </div>
+<body>
 
-          <!-- Nav -->
-            <nav id="nav">
-              <!--
+  <!-- Header -->
+  <div id="header">
+    <div class="top">
+      <!-- Logo -->
+      <div id="logo">
+        <img id="personal-photo" src="img/ali-ramadhan.jpg" alt="Personal photo" />
+        <h1 id="title">Ali Ramadhan</h1>
+        <p>Department of Earth, Atmospheric and Planetary Sciences</p>
+        <p>Massachusetts Institute of Technology</p>
+        <p><a href="files/CV-Ali-Ramadhan.pdf"><i class="fa fa-cube" aria-hidden="true"></i>&nbsp;Curriculum Vitae</a>
+        </p>
+      </div>
+
+      <!-- Nav -->
+      <nav id="nav">
+        <!--
                 Prologue's nav expects links in one of two formats:
                 1. Hash link (scrolls to a different section within the page)
                    <li><a href="#foobar" id="foobar-link" class="icon fa-whatever-icon-you-want skel-layers-ignoreHref"><span class="label">Foobar</span></a></li>
                 2. Standard link (sends the user to another page/site)
                    <li><a href="http://foobar.tld" id="foobar-link" class="icon fa-whatever-icon-you-want"><span class="label">Foobar</span></a></li>
               -->
-              <ul>
-                <li><a href="#home" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a></li>
-                <li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-bicycle">About me</span></a></li>
-                <li><a href="#research" id="research-link" class="skel-layers-ignoreHref"><span class="icon fa-flask">Research projects</span></a></li>
-                <li><a href="#teaching" id="teaching-link" class="skel-layers-ignoreHref"><span class="icon fa-pencil">Teaching</span></a></li>
-                <li><a href="#publications" id="publications-link" class="skel-layers-ignoreHref"><span class="icon fa-book">Publications</span></a></li>
-                <li><a href="#resources" id="resources-link" class="skel-layers-ignoreHref"><span class="icon fa-cutlery">Resources</span></a></li>
-                <li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span class="icon fa-envelope">Contact</span></a></li>
-              </ul>
-            </nav>
+        <ul>
+          <li><a href="#home" id="home-link" class="skel-layers-ignoreHref"><span class="icon fa-home">Home</span></a>
+          </li>
+          <li><a href="#about" id="about-link" class="skel-layers-ignoreHref"><span class="icon fa-bicycle">About
+                me</span></a></li>
+          <li><a href="#research" id="research-link" class="skel-layers-ignoreHref"><span class="icon fa-flask">Research
+                projects</span></a></li>
+          <li><a href="#teaching" id="teaching-link" class="skel-layers-ignoreHref"><span
+                class="icon fa-pencil">Teaching</span></a></li>
+          <li><a href="#publications" id="publications-link" class="skel-layers-ignoreHref"><span
+                class="icon fa-book">Publications</span></a></li>
+          <li><a href="#resources" id="resources-link" class="skel-layers-ignoreHref"><span
+                class="icon fa-cutlery">Resources</span></a></li>
+          <li><a href="#contact" id="contact-link" class="skel-layers-ignoreHref"><span
+                class="icon fa-envelope">Contact</span></a></li>
+        </ul>
+      </nav>
 
-        </div>
+    </div>
 
-        <div class="bottom">
-          <!-- Social Icons -->
-            <ul class="icons">
-              <li><a href="mailto:alir@mit.edu" target="_blank" class="icon fa-envelope"><span class="label">Email</span></a></li>
-              <li><a href="https://www.linkedin.com/in/ali-ramadhan" target="_blank" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
-              <li><a href="https://scholar.google.ca/citations?hl=en&user=a47O4mMAAAAJ&view_op=list_works&sortby=pubdate" target="_blank" class="icon fa-google"><span class="label">Google Scholar</span></a></li>
-              <li><a href="https://github.com/ali-ramadhan" target="_blank" class="icon fa-github"><span class="label">Github</span></a></li>
-            </ul>
+    <div class="bottom">
+      <!-- Social Icons -->
+      <ul class="icons">
+        <li><a href="mailto:alir@mit.edu" target="_blank" class="icon fa-envelope"><span class="label">Email</span></a>
+        </li>
+        <li><a href="https://www.linkedin.com/in/ali-ramadhan" target="_blank" class="icon fa-linkedin"><span
+              class="label">LinkedIn</span></a></li>
+        <li><a href="https://scholar.google.ca/citations?hl=en&user=a47O4mMAAAAJ&view_op=list_works&sortby=pubdate"
+            target="_blank" class="icon fa-google"><span class="label">Google Scholar</span></a></li>
+        <li><a href="https://github.com/ali-ramadhan" target="_blank" class="icon fa-github"><span
+              class="label">Github</span></a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div id="main">
+
+    <!-- Home -->
+    <section id="home" class="two">
+      <div class="container">
+        <div class="row">
+          <div class="4u 12u(mobile) text-justify">
+            <p><b>Under construction...</b><br> Hi I <strike>am</strike> was a graduate student pursuing an M.Sc. in
+              Physics at the University of Waterloo. I played with lasers, exploded molecules, and tried to make
+              molecular movies. Now I'm interested in climate modeling ("physics on a computer but with
+              <b><i>jobs</i></b> at the end!") but I know nothing about the climate right now.</p>
+          </div>
+          <div class="8u 12u(mobile) text-justify">
+            <div id="video-outer-box">
+
+              <div id="video-title">Temperature</div>
+
+              <div id="video-inner-box">
+                <video id="video" crossorigin="anonymous" autoplay muted loop>
+                  <source src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4">
+                </video>
+              </div>
+
+              <i id="left-arrow" class="fa fa-chevron-left" aria-hidden="true"></i>
+              <i id="right-arrow" class="fa fa-chevron-right" aria-hidden="true"></i>
+
+              <div id="video-caption"></div>
+            </div>
+          </div>
         </div>
       </div>
-
-    <!-- Main -->
-      <div id="main">
-
-        <!-- Home -->
-          <section id="home" class="two">
-            <div class="container">
-
-              <div class="row">
-
-                <div class="4u 12u(mobile) text-justify">
-                  <p><b>Under construction...</b><br> Hi I <strike>am</strike> was a graduate student pursuing an M.Sc. in Physics at the University of Waterloo. I played with lasers, exploded molecules, and tried to make molecular movies. Now I'm interested in climate modeling ("physics on a computer but with <b><i>jobs</i></b> at the end!") but I know nothing about the climate right now.</p>
-                </div>
-
-                <div class="8u 12u(mobile) text-justify">
-
-                  <div id="video-outer-box" style="position: relative">
-                    <!-- <button style="position: absolute; margin: 10" id="btnPlay">PLAY</button> -->
-
-                    <div id="video-title" style="text-align: center">Temperature</div>
-
-                    <div id="video-inner-box">
-                      <video id="video" crossorigin="anonymous" style="display:none" width="800" height="600" autoplay muted loop>
-                          <source src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4">
-                      </video>
-                    </div>
-
-                    <i id="left-arrow" class="fa fa-chevron-left" aria-hidden="true" style="position: absolute; top: 50%; left: 5%; cursor: pointer;"></i>
-                    <i id="right-arrow" class="fa fa-chevron-right" aria-hidden="true" style="position: absolute; top: 50%; left: 95%; cursor: pointer;"></i>
-
-                    <div id="video-caption" style="text-align: center"></div>
-
-                  </div>
-
-                </div>
-
-                  <!-- <select id="video-select">
-                    <option value="precipitation">Precipitation</option>
-                    <option value="temperature">Temperature</option>
-                  </select> -->
-
-                <!-- <div class="3u 12u(mobile)">
-                  <img src="img/ali-ramadhan.jpg" style="-webkit-border-radius: 10px; -moz-border-radius: 10px; border-radius: 10px;" alt="Placeholder photo">
-                </div> -->
-
-              </div>
-
-            </div>
-          </section>
-
-      <!-- About Me -->
-        <section id="about" class="three">
-          <div class="container">
-            <div class="row">
-              <div class="text-justify">
-                <header><h2>About me</h2></header>
-
-                <p>In the lab I use short laser pulses to create molecular movies and synthesize new materials. Related collaborations have led me to the <a href="http://www.lightsource.ca/" target="_blank">Canadian Light Source</a> synchrotron to blow up little molecules with X-rays and to Tokyo Metropolitan University to control the synthesis of polyyne molecules. For my thesis and current project, I am developing a rigorous computational framework to create movies of individual molecules undergoing chemical reactions using Bayesian inference.</p>
-
-                <p>I am passionate about teaching and have recently started working on <a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a>, an open online platform for developing computational thinking in science majors throughout the undergraduate curriculum. I also volunteer with <a href="http://www.frontiercollege.ca/" target="_blank">Frontier College</a> developing and running educational math programs for elementary and middle-school students.</p>
-
-                <p>When not doing science I'm out on my motorcycle! I'm trying to visit all 49 continental states (sorry Hawaii!) and the 12 Canadian provinces accessible by road (sorry Nunavut!) before graduating. I'll be updating my progress on the map below once I figure out how to include photos from each state/province in the tooltips. I might try to see how many of the 31 Mexican states I can visit once I pick up some basic Spanish.</p>
-              </div>
-            </div>
-          </div>
-          <div id="container" class="svg-container"></div>
-        </section>
-
-        <!-- Research -->
-        <section id="research" style="background-color: #fff; background-image: none;">
-          <div class="container">
-
-            <header><h2>Research projects</h2></header>
-
-            <h3>Experience</h3>
-
-            <div class="row">
-              <div class="2u 4u(mobile)">Sep 2016 - Present</div>
-              <div class="10u 8u(mobile)">Graduate research assistant, University of Waterloo, <i>Department of Physics and Astronomy</i></div>
-            </div>
-
-            <div class="row">
-              <div class="2u 4u(mobile) tighter-list">Aug 2013-Aug 2016</div>
-              <div class="10u 8u(mobile) tighter-list">Research assistant, University of Waterloo, <i>Department of Physics and Astronomy</i></div>
-            </div>
-
-            <div class="row">
-              <div class="2u 4u(mobile) tighter-list">Jan-Apr 2014</div>
-              <div class="10u 8u(mobile) tighter-list">Research assistant, Tokyo Metropolitan University, <i>Department of Chemistry</i></div>
-            </div>
-
-            <div class="row">
-              <div class="2u 4u(mobile) tighter-list">Jan-Apr 2013</div>
-              <div class="10u 8u(mobile) tighter-list">Bioinformatics specialist, Ontario Institute for Cancer Research, <i>Informatics and Bio-computing</i></div>
-            </div>
-
-            <br>
-
-            <h3>Projects</h3>
-
-            <h3 class="project-title" id="projectTitle1">
-              <i class="fa fa-plus-square" aria-hidden="true"></i>
-              Ultrafast molecular dynamics probed by synchrotron radiation
-            </h3>
-
-            <div class="initially-hidden" id="researchDescription1">
-              <div class="row">
-                <div class="6u 12u(mobile) text-justify">
-                  <p>The geometries and dynamics of small gas molecules may be studied by Coulomb explosion imaging (CEI), providing a means of directly probing the atomic structure and dynamics of smaller molecules in the gas phase, a regime where no method is viable. CEI is usually performed using ultrashort laser pulses (~10<sup>−15</sup> s) with the ultimate goal of "blowing up" the molecule as fast as possible to minimize the disturbance to the molecule and ensure accurate imaging of the atomic structure.</p>
-
-                  <p>As a proof of principle, we were able to use single X-ray photons from the Canadian Light Source synchrotron to study the dynamics of dissociative ionization in OCS using CEI. The use of single X-ray photons led to faster ionization and "blow up" compared to short laser pulses, showing promise for greater temporal precision in CEI experiments. It also allowed us to identify a surprisingly rich set of ultrafast molecular dynamics for the first time.</p>
-                </div>
-                <div class="6u 12u(mobile)">
-                  <img src="img/OCS-111-dalitz-plots.png">
-                  <img src="img/dalitz-plots-y-projection.png">
-                </div>
-              </div>
-
-              <h4>Publications</h4>
-              <ul>
-                <li>
-                  <b>Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron radiation</b>, <u>A. Ramadhan</u>, B. Wales, I. Gauthier, R. Karimi, M. MacDonald, L. Zuin, J. Sanderson, <a href="http://dx.doi.org/10.1088/0953-4075/49/21/215602" target="_blank"><i>Journal of Physics B: Atomic, Molecular, and Optical Physics</i> <b>49</b>, 215602 (2016)</a>. <a href="https://arxiv.org/abs/1606.08789" target="_blank">[arXiv]</a>
-                </li>
-              </ul>
-
-              <!-- <br> -->
-            </div>
-
-            <h3 class="project-title" id="projectTitle2">
-              <i class="fa fa-plus-square" aria-hidden="true"></i>
-              Molecular Motion Movies and Geometry Reconstruction Using Bayesian Statistics (MMMGRUBS)
-            </h3>
-
-            <div class="initially-hidden" id="researchDescription2">
-              <div class="row">
-                <div class="6u 12u(mobile) text-justify">
-                  <p>Have you ever seen a molecule bend or participate in a chemical reaction? If so, probably not directly: single molecules are notoriously hard to observe for any length of time. For my thesis I am developing a rigorous computational framework to create movies of individual molecules undergoing chemical reactions using Coulomb explosion imaging (CEI), a technique of studying the ultrafast dynamics of smaller molecules in the gas phase. While CEI has always promised that atomic structures may be measured, in practice no rigorous method is available and instead the momentum vectors are studied. The momentum vectors tell a large part of the story but aren't as satisfying to study as the actual structure everyone seeks so a method of retrieving the structure is highly desirable.</p>
-
-                  <p>The structure may be recovered by attempting to simulate the CEI experiment backwards in time; however, solving for the molecular geometries constitutes an ill-posed nonconvex optimization problem that is difficult to tackle computationally even for small molecules. I am actively trying different optimization approaches and also collaborating with the Department of Statistics and Actuarial Science on a fully statistical approach using Bayesian inference. So far the statistical approach seems more promising as it will allow for the inclusion of measurement uncertainty which every previous study has neglected and seems to scale well to larger molecules.</p>
-                </div>
-
-                <div class="6u 12u(mobile)">
-                  <img src="img/proton-migration.png">
-                  Molecular movie of proton migration in acetylene imaged in momentum space (by other members of my group).
-                  <img src="img/rainbow-plot.png">
-                  Multiple (two) structures found in searching for molecular geometries showcasing the ill-posed nature of the optimization problem.
-                </div>
-              </div>
-
-              <br>
-            </div>
-
-            <h3 class="project-title" id="projectTitle3">
-              <i class="fa fa-plus-square" aria-hidden="true"></i>
-              Easy end-cap control in polyyne synthesis
-            </h3>
-
-            <div class="initially-hidden" id="researchDescription3">
-              <div class="row">
-                <div class="6u 12u(mobile) text-justify">
-                  <p>The traditional synthesis method for polyynes, an allotrope of carbon with chemical structure (−C≡C−)<sub>n</sub>, is a challenging and dangerous multistep procedure that provides little control over the their end-caps. Yet polyynes are of great interest in interstellar chemistry and especially in nanotechnology as potential elements for molecular machines and carbon cluster precursors. Their end-caps may endow them with extra functionality and so a safe and controllable synthesis procedure is highly desirable.</p>
-
-                  <p>By irradiating different liquid solvents with short laser pulses, we are able to easily synthesize long-chain polyynes and demonstrate end-cap control for methyl caps. Using high-performance liquid chromatography (HPLC), we have confirmed the synthesis of polyynes up to C<sub>18</sub>H<sub>2</sub> and methyl-capped polyynes up to HC<sub>14</sub>CH<sub>3</sub>. This opens the possibility for controlling the synthesis of other polyyne molecules and their efficient mass production.</p>
-                </div>
-
-                <div class="6u 12u(mobile)">
-                  <img src="img/polyyne-irradiation-setup.png">
-                  <img src="img/polyyne-irradiation-HPLC.png">
-                </div>
-              </div>
-
-              <h4>Publications</h4>
-              <ul>
-                <li>
-                  <b>First evidence of end-cap control in the synthesis of long-chain polyynes by intense ultrashort laser pulse irradiation</b>, <u>A. Ramadhan</u>, M. Wesolowski, T. Wakabayashi, H. Shiromaru, T. Fujino, T. Kodama, W. Duley, J. Sanderson, Submitted (2016). Preprint available at <a href="https://arxiv.org/abs/1612.00320" target="_blank">arXiv:1612.00320 [physics.chem-ph]</a>.
-                </li>
-              </ul>
-
-              <!-- <br> -->
-            </div>
-
-            <h3 class="project-title" id="projectTitle4">
-              <i class="fa fa-plus-square" aria-hidden="true"></i>
-              Synthesis of graphene oxide gels and thin films with tunable properties
-            </h3>
-
-            <div class="initially-hidden" id="researchDescription4">
-              <div class="row">
-                <div class="6u 12u(mobile) text-justify">
-                  <p>Graphene has attracted an enormous amount of attention over the past decade owing to its peculiar properties and vast applicability. However, large-scale single layers of pristine graphene are difficult to obtain and thus much research has focused on graphene oxide gels which may be used to produce high-quality graphene. These gels have their own applications too, such as drug delivery and sensor engineering. To satisfy the large demand for graphene oxide gels, an efficient production method is highly desirable.</p>
-
-                  <p>By irradiating aqueous graphene oxide with femtosecond laser pulses, we were able to convert the solution into a gel with physical and chemical properties comparable with those of a monolayer graphene sheet. We were also able to control the properties of the synthesized gel by simply tuning the laser pulse's properties allowing for the production of different gels suitable for building nano-sized graphene photodetectors and transistors.</p>
-                </div>
-
-                <div class="6u 12u(mobile)">
-                  <img src="img/graphne-oxide-gel-setup.png" style="display: block; margin-left: auto; margin-right: auto;">
-                  <img src="img/graphne-oxide-gel-sem.jpg">
-                </div>
-              </div>
-
-              <h4>Publications</h4>
-              <ul>
-                <li>
-                  <b>Different sensing mechanisms and operation stability enhancement in a reduced graphene oxide gel and PMMA hybrid photodetector</b>, D. Alsaedi, M. Irannejad, K Ibrahim, <u>A. Ramadhan</u>, J. Sanderson, A. Almutairi, K. Mussleman, O. Rahami, M. Yavuz, Submitted (2016).
-                </li>
-                <li>
-                  <b>A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin Films with Tunable Properties</b>, K. Ibrahim, M. Irannejad, M. Hajialamdari, <u>A. Ramadhan</u>, K. Musselman, J. Sanderson, M. Yavuz, <a href="https://dx.doi.org/10.1002/admi.201500864" target="_blank"><i>Advanced Materials Interfaces</i> <b>3</b>, 1500864 (2016)</a>.
-                </li>
-                <li>
-                  <b>Ultrafast Light Interaction with Graphene Oxide Aqueous Solution</b>, K. Ibrahim, M. Irannejad, <u>A. Ramadhan</u>, W. Alayak, J. Sanderson, B. Cui, A. Brzezinski, M. Yavuz, <a href="https://dx.doi.org/10.1109/NANO.2014.6968088" target="_blank"><i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 830-831 (2014)</a>.
-                </li>
-              </ul>
-
-              <!-- <br> -->
-            </div>
-
-            <h3 class="project-title" id="projectTitle5">
-              <i class="fa fa-plus-square" aria-hidden="true"></i>
-              Project Lovelace: Developing computational thinking in science students
-            </h3>
-
-            <div class="initially-hidden" id="researchDescription5">
-              <div class="row">
-                <div class="8u 12u(mobile) text-justify">
-                  <p><a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a> is an open online platform for learning about science and developing computational thinking through programming and problem solving. It is a collection of computational science problems and tutorials taken from all branches of the natural, social, and mathematical sciences. Each problem teaches a scientific application (e.g. locating earthquakes, DNA splicing) and requires the use of scientific insight and some programming skills to solve. Tutorials teach computational methods that students and researchers may find useful (e.g. solving differential equations, Bayesian inference) and may be required knowledge for some problems.</p>
-
-                  <p>While Project Lovelace is still in development, we are deploying the website and the problems one by one throughout the winter in preparation for a pilot run in April 2017. In addition to the website's recreational aspect we ultimately hope that the problems and tutorials may be used in undergraduate courses, especially to complement courses that lack a computational portion as computational methods have become ubiquitous in almost every field of science.</p>
-                </div>
-                <div class="4u 12u(mobile)">
-                  <img src="img/ada-lovelace-portrait.jpg" style="display: block; margin-left: auto; margin-right: auto;">
-                  The name commemorates <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank">Ada Lovelace</a> who proposed the first algorithm to be run on a computer in the 1840's.
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- Teaching -->
-        <section id="teaching" class="two">
-          <div class="container">
-
-            <header><h2>Teaching</h2></header>
-            <p>I am passionate about teaching and have recently started working on <a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a>, an open online platform for developing computational thinking in science majors throughout the undergraduate curriculum. I also volunteer with <a href="http://www.frontiercollege.ca/" target="_blank">Frontier College</a> developing and running educational math programs for elementary and middle-school students.</p>
-
-            <h3>TA Experience</h3>
-
-            <div class="row">
-              <div class="1u 2u(mobile)">2016</div>
-              <div class="11u 10u(mobile)">Graduate Teaching Assistant, <i>Thermal Physics</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2016</div>
-              <div class="11u 10u(mobile) tighter-list">Drop-in Tutor (4x), <i>Calculus II</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2015</div>
-              <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant, <i>Electricity &amp; Magnetism I</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2015</div>
-              <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant, <i>Discrete Mathematics</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2015</div>
-              <div class="11u 10u(mobile) tighter-list">Drop-in Tutor (2x), <i>Electricity &amp; Magnetism I</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2014</div>
-              <div class="11u 10u(mobile) tighter-list">Drop-in Tutor, <i>Linear Algebra I</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2014</div>
-              <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant (2x), <i>Calculus II</i>, University of Waterloo</div>
-            </div>
-
-            <div class="row">
-              <div class="1u 2u(mobile) tighter-list">2013</div>
-              <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant, <i>Linear Algebra I</i>, University of Waterloo</div>
-            </div>
-
-            <br>
-
-            <h3>Other Experience</h3><br>
-
-            <div class="row">
-              <div class="2u 4u(mobile) tighter-list">Oct 2016 - Present</div>
-              <div class="10u 8u(mobile) tighter-list">Project Lead, <i>Project Lovelace</i></div>
-            </div>
-
-            <div class="row">
-              <div class="2u 4u(mobile) tighter-list">Jan 2015 - Present</div>
-              <div class="10u 8u(mobile) tighter-list">Organizational Team Member and Tutor, <i>Frontier College (Canadian literacy organization)</i></div>
-            </div>
-
-            <div class="row">
-              <div class="2u 4u(mobile) tighter-list">May 2012 - Present</div>
-              <div class="10u 8u(mobile) tighter-list">Private Tutor, <i>Independent and through AccessAbility Services</i>, University of Waterloo</div>
-            </div>
-
-          </div>
-        </section>
-
-        <!-- Publications -->
-        <section id="publications" class="three">
-          <div class="container">
-
-            <header><h2>Publications</h2></header>
-
-            <!-- <h3>Working papers</h3> -->
-
-            <h3>Refereed papers</h3>
-            <ol start="1">
-              <li>
-                <b>Synthesis of hydrogen- and methyl-capped long-chain polyynes by intense ultrashort laser pulse irradiation of toluene</b><br>
-                <u>A. Ramadhan</u>, M. Wesolowski, T. Wakabayashi, H. Shiromaru, T. Fujino, T. Kodama, W. Duley, J. Sanderson<br>
-                <a href="http://doi.org/10.1016/j.carbon.2017.03.096" target="_blank"><i>Carbon</i> <b>118</b>, 680–685 (2017)</a>. <a href="https://arxiv.org/abs/1612.00320" target="_blank">[arXiv:1612.00320]</a>
-              </li>
-
-              <br>
-
-              <li>
-                <b>Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron radiation</b><br>
-                <u>A. Ramadhan</u>, B. Wales, I. Gauthier, R. Karimi, M. MacDonald, L. Zuin, J. Sanderson<br>
-                <a href="http://dx.doi.org/10.1088/0953-4075/49/21/215602" target="_blank"><i>Journal of Physics B: Atomic, Molecular, and Optical Physics</i> <b>49</b>, 215602 (2016)</a>. <a href="https://arxiv.org/abs/1606.08789" target="_blank">[arXiv:1606.08789]</a>
-              </li>
-
-              <br>
-
-              <li>
-                <b>A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin Films with Tunable Properties</b><br>
-                K. Ibrahim, M. Irannejad, M. Hajialamdari, <u>A. Ramadhan</u>, K. Musselman, J. Sanderson, M. Yavuz<br>
-                <a href="https://dx.doi.org/10.1002/admi.201500864" target="_blank"><i>Advanced Materials Interfaces</i> <b>3</b>, 1500864 (2016)</a>.
-              </li>
-
-              <br>
-
-              <li>
-                <b>Ultrafast Light Interaction with Graphene Oxide Aqueous Solution</b><br>
-                K. Ibrahim, M. Irannejad, <u>A. Ramadhan</u>, W. Alayak, J. Sanderson, B. Cui, A. Brzezinski, M. Yavuz<br>
-                <a href="https://dx.doi.org/10.1109/NANO.2014.6968088" target="_blank"><i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 830–831 (2014)</a>.
-              </li>
-
-              <br>
-
-              <li>
-                <b>Welding of Au Microwires by Femtosecond Laser Irradiation</b><br>
-                N. Ly, M. Mayer, <u>A. Ramadhan</u>, and J. Sanderson<br>
-                <a href="https://dx.doi.org/10.1109/NANO.2014.6968136" target="_blank"><i>Proceedings of the 14th IEEE International Conference on Nanotechnology</i>, 146–149 (2014)</a>.
-              </li>
-
-              <br>
-
-              <li>
-                <b>Coulomb imaging of the concerted and stepwise break up processes of OCS ions in intense femtosecond laser radiation</b><br>
-                B. Wales, É. Bisson, R. Karimi, S. Beaulieu, <u>A. Ramadhan</u>, M. Giguère, Z. Long, W. Liu, J. Kieffer, F. Légaré, J. Sanderson<br>
-                <a href="https://dx.doi.org/10.1016/j.elspec.2014.05.003" target="_blank"><i>Journal of Electron Spectroscopy and Related Phenomena</i> <b>195</b>, 332–336 (2014)</a>.
-              </li>
-
-            </ol>
-          </div>
-        </section>
-
-        <!-- Resources -->
-        <section id="resources" class="two">
-          <div class="container">
-
-            <header><h2>Resources</h2></header>
-
-            <ul>
-              <li>
-                <a href="files/jaynes-cummings-model.pdf" target="_blank"><b>Jaynes-Cummings Model</b></a>: Lecture slides I presented as part of a graduate course on nonlinear optics.
-              </li>
-
-              <li>
-                <a href="files/the-energy-gap-in-nuclear-matter.pdf" target="_blank"><b>The energy gap in nuclear matter</b></a>: A paper I wrote as part of a particle physics course.
-              </li>
-
-              <li>Coming soon: I have a bunch of teaching material to upload. I should probably upload my neater class notes as well.</li>
-            </ul>
-
-          </div>
-        </section>
-
-        <!-- Contact -->
-        <section id="contact" class="four">
-          <div class="container">
-
+    </section>
+
+    <!-- About Me -->
+    <section id="about" class="three">
+      <div class="container">
+        <div class="row">
+          <div class="text-justify">
             <header>
-              <h2>Contact</h2>
+              <h2>About me</h2>
             </header>
 
-            <p>Feel free to get in touch through email [alir(ατ)mit.edu] or by using the form here!</p>
+            <p>In the lab I use short laser pulses to create molecular movies and synthesize new materials. Related
+              collaborations have led me to the <a href="http://www.lightsource.ca/" target="_blank">Canadian Light
+                Source</a> synchrotron to blow up little molecules with X-rays and to Tokyo Metropolitan University to
+              control the synthesis of polyyne molecules. For my thesis and current project, I am developing a rigorous
+              computational framework to create movies of individual molecules undergoing chemical reactions using
+              Bayesian inference.</p>
 
-            <form role="form" method="POST" action="http://formspree.io/a3ramadhan@gmail.com">
-              <input type="hidden" name="_next" value="#" />
-              <input type="hidden" name="_subject" value="New message!" />
-              <input type="text" name="_gotcha" style="display:none" />
+            <p>I am passionate about teaching and have recently started working on <a href="http://projectlovelace.net/"
+                target="_blank">Project Lovelace</a>, an open online platform for developing computational thinking in
+              science majors throughout the undergraduate curriculum. I also volunteer with <a
+                href="http://www.frontiercollege.ca/" target="_blank">Frontier College</a> developing and running
+              educational math programs for elementary and middle-school students.</p>
 
-              <div class="row">
-
-                <div class="6u 12u$(mobile)">
-                  <input type="text" name="name" id="nameInput" placeholder="Name" required>
-                </div>
-
-                <div class="6u$ 12u$(mobile)">
-                  <input type="text" name="email" id="emailInput" placeholder="Email" required>
-                </div>
-
-                <div class="12u$">
-                  <textarea name="message" placeholder="Message" required></textarea>
-                </div>
-
-                <div class="12u$" style="text-align: center;">
-                  <input type="submit" name="submit" id="submit" value="Send message">
-                </div>
-
-              </div>
-            </form>
-
+            <p>When not doing science I'm out on my motorcycle! I'm trying to visit all 49 continental states (sorry
+              Hawaii!) and the 12 Canadian provinces accessible by road (sorry Nunavut!) before graduating. I'll be
+              updating my progress on the map below once I figure out how to include photos from each state/province in
+              the tooltips. I might try to see how many of the 31 Mexican states I can visit once I pick up some basic
+              Spanish.</p>
           </div>
-        </section>
-
+        </div>
       </div>
+      <div id="container" class="svg-container"></div>
+    </section>
 
-    <!-- Footer -->
-      <div id="footer">
+    <!-- Research -->
+    <section id="research">
+      <div class="container">
 
-        <!-- Copyright -->
-          <ul class="copyright">
-            <li>&copy; Ali Ramadhan. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-            <li>Contact form: <a href="https://formspree.io/">Formspree</a></li>
+        <header>
+          <h2>Research projects</h2>
+        </header>
+
+        <h3>Experience</h3>
+
+        <div class="row">
+          <div class="2u 4u(mobile)">Sep 2016 - Present</div>
+          <div class="10u 8u(mobile)">Graduate research assistant, University of Waterloo, <i>Department of Physics and
+              Astronomy</i></div>
+        </div>
+
+        <div class="row">
+          <div class="2u 4u(mobile) tighter-list">Aug 2013-Aug 2016</div>
+          <div class="10u 8u(mobile) tighter-list">Research assistant, University of Waterloo, <i>Department of Physics
+              and Astronomy</i></div>
+        </div>
+
+        <div class="row">
+          <div class="2u 4u(mobile) tighter-list">Jan-Apr 2014</div>
+          <div class="10u 8u(mobile) tighter-list">Research assistant, Tokyo Metropolitan University, <i>Department of
+              Chemistry</i></div>
+        </div>
+
+        <div class="row">
+          <div class="2u 4u(mobile) tighter-list">Jan-Apr 2013</div>
+          <div class="10u 8u(mobile) tighter-list">Bioinformatics specialist, Ontario Institute for Cancer Research,
+            <i>Informatics and Bio-computing</i></div>
+        </div>
+
+        <br>
+
+        <h3>Projects</h3>
+
+        <h3 class="project-title" id="projectTitle1">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Ultrafast molecular dynamics probed by synchrotron radiation
+        </h3>
+
+        <div class="initially-hidden" id="researchDescription1">
+          <div class="row">
+            <div class="6u 12u(mobile) text-justify">
+              <p>The geometries and dynamics of small gas molecules may be studied by Coulomb explosion imaging (CEI),
+                providing a means of directly probing the atomic structure and dynamics of smaller molecules in the gas
+                phase, a regime where no method is viable. CEI is usually performed using ultrashort laser pulses
+                (~10<sup>−15</sup> s) with the ultimate goal of "blowing up" the molecule as fast as possible to
+                minimize the disturbance to the molecule and ensure accurate imaging of the atomic structure.</p>
+
+              <p>As a proof of principle, we were able to use single X-ray photons from the Canadian Light Source
+                synchrotron to study the dynamics of dissociative ionization in OCS using CEI. The use of single X-ray
+                photons led to faster ionization and "blow up" compared to short laser pulses, showing promise for
+                greater temporal precision in CEI experiments. It also allowed us to identify a surprisingly rich set of
+                ultrafast molecular dynamics for the first time.</p>
+            </div>
+            <div class="6u 12u(mobile)">
+              <img src="img/OCS-111-dalitz-plots.png">
+              <img src="img/dalitz-plots-y-projection.png">
+            </div>
+          </div>
+
+          <h4>Publications</h4>
+          <ul>
+            <li>
+              <b>Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron
+                radiation</b>, <u>A. Ramadhan</u>, B. Wales, I. Gauthier, R. Karimi, M. MacDonald, L. Zuin, J.
+              Sanderson, <a href="http://dx.doi.org/10.1088/0953-4075/49/21/215602" target="_blank"><i>Journal of
+                  Physics B: Atomic, Molecular, and Optical Physics</i> <b>49</b>, 215602 (2016)</a>. <a
+                href="https://arxiv.org/abs/1606.08789" target="_blank">[arXiv]</a>
+            </li>
           </ul>
 
+          <!-- <br> -->
+        </div>
+
+        <h3 class="project-title" id="projectTitle2">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Molecular Motion Movies and Geometry Reconstruction Using Bayesian Statistics (MMMGRUBS)
+        </h3>
+
+        <div class="initially-hidden" id="researchDescription2">
+          <div class="row">
+            <div class="6u 12u(mobile) text-justify">
+              <p>Have you ever seen a molecule bend or participate in a chemical reaction? If so, probably not directly:
+                single molecules are notoriously hard to observe for any length of time. For my thesis I am developing a
+                rigorous computational framework to create movies of individual molecules undergoing chemical reactions
+                using Coulomb explosion imaging (CEI), a technique of studying the ultrafast dynamics of smaller
+                molecules in the gas phase. While CEI has always promised that atomic structures may be measured, in
+                practice no rigorous method is available and instead the momentum vectors are studied. The momentum
+                vectors tell a large part of the story but aren't as satisfying to study as the actual structure
+                everyone seeks so a method of retrieving the structure is highly desirable.</p>
+
+              <p>The structure may be recovered by attempting to simulate the CEI experiment backwards in time; however,
+                solving for the molecular geometries constitutes an ill-posed nonconvex optimization problem that is
+                difficult to tackle computationally even for small molecules. I am actively trying different
+                optimization approaches and also collaborating with the Department of Statistics and Actuarial Science
+                on a fully statistical approach using Bayesian inference. So far the statistical approach seems more
+                promising as it will allow for the inclusion of measurement uncertainty which every previous study has
+                neglected and seems to scale well to larger molecules.</p>
+            </div>
+
+            <div class="6u 12u(mobile)">
+              <img src="img/proton-migration.png">
+              Molecular movie of proton migration in acetylene imaged in momentum space (by other members of my group).
+              <img src="img/rainbow-plot.png">
+              Multiple (two) structures found in searching for molecular geometries showcasing the ill-posed nature of
+              the optimization problem.
+            </div>
+          </div>
+
+          <br>
+        </div>
+
+        <h3 class="project-title" id="projectTitle3">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Easy end-cap control in polyyne synthesis
+        </h3>
+
+        <div class="initially-hidden" id="researchDescription3">
+          <div class="row">
+            <div class="6u 12u(mobile) text-justify">
+              <p>The traditional synthesis method for polyynes, an allotrope of carbon with chemical structure
+                (−C≡C−)<sub>n</sub>, is a challenging and dangerous multistep procedure that provides little control
+                over the their end-caps. Yet polyynes are of great interest in interstellar chemistry and especially in
+                nanotechnology as potential elements for molecular machines and carbon cluster precursors. Their
+                end-caps may endow them with extra functionality and so a safe and controllable synthesis procedure is
+                highly desirable.</p>
+
+              <p>By irradiating different liquid solvents with short laser pulses, we are able to easily synthesize
+                long-chain polyynes and demonstrate end-cap control for methyl caps. Using high-performance liquid
+                chromatography (HPLC), we have confirmed the synthesis of polyynes up to C<sub>18</sub>H<sub>2</sub> and
+                methyl-capped polyynes up to HC<sub>14</sub>CH<sub>3</sub>. This opens the possibility for controlling
+                the synthesis of other polyyne molecules and their efficient mass production.</p>
+            </div>
+
+            <div class="6u 12u(mobile)">
+              <img src="img/polyyne-irradiation-setup.png">
+              <img src="img/polyyne-irradiation-HPLC.png">
+            </div>
+          </div>
+
+          <h4>Publications</h4>
+          <ul>
+            <li>
+              <b>First evidence of end-cap control in the synthesis of long-chain polyynes by intense ultrashort laser
+                pulse irradiation</b>, <u>A. Ramadhan</u>, M. Wesolowski, T. Wakabayashi, H. Shiromaru, T. Fujino, T.
+              Kodama, W. Duley, J. Sanderson, Submitted (2016). Preprint available at <a
+                href="https://arxiv.org/abs/1612.00320" target="_blank">arXiv:1612.00320 [physics.chem-ph]</a>.
+            </li>
+          </ul>
+
+          <!-- <br> -->
+        </div>
+
+        <h3 class="project-title" id="projectTitle4">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Synthesis of graphene oxide gels and thin films with tunable properties
+        </h3>
+
+        <div class="initially-hidden" id="researchDescription4">
+          <div class="row">
+            <div class="6u 12u(mobile) text-justify">
+              <p>Graphene has attracted an enormous amount of attention over the past decade owing to its peculiar
+                properties and vast applicability. However, large-scale single layers of pristine graphene are difficult
+                to obtain and thus much research has focused on graphene oxide gels which may be used to produce
+                high-quality graphene. These gels have their own applications too, such as drug delivery and sensor
+                engineering. To satisfy the large demand for graphene oxide gels, an efficient production method is
+                highly desirable.</p>
+
+              <p>By irradiating aqueous graphene oxide with femtosecond laser pulses, we were able to convert the
+                solution into a gel with physical and chemical properties comparable with those of a monolayer graphene
+                sheet. We were also able to control the properties of the synthesized gel by simply tuning the laser
+                pulse's properties allowing for the production of different gels suitable for building nano-sized
+                graphene photodetectors and transistors.</p>
+            </div>
+
+            <div class="6u 12u(mobile)">
+              <img id="graphene-setup-img" src="img/graphne-oxide-gel-setup.png">
+              <img src="img/graphne-oxide-gel-sem.jpg">
+            </div>
+          </div>
+
+          <h4>Publications</h4>
+          <ul>
+            <li>
+              <b>Different sensing mechanisms and operation stability enhancement in a reduced graphene oxide gel and
+                PMMA hybrid photodetector</b>, D. Alsaedi, M. Irannejad, K Ibrahim, <u>A. Ramadhan</u>, J. Sanderson, A.
+              Almutairi, K. Mussleman, O. Rahami, M. Yavuz, Submitted (2016).
+            </li>
+            <li>
+              <b>A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin
+                Films with Tunable Properties</b>, K. Ibrahim, M. Irannejad, M. Hajialamdari, <u>A. Ramadhan</u>, K.
+              Musselman, J. Sanderson, M. Yavuz, <a href="https://dx.doi.org/10.1002/admi.201500864"
+                target="_blank"><i>Advanced Materials Interfaces</i> <b>3</b>, 1500864 (2016)</a>.
+            </li>
+            <li>
+              <b>Ultrafast Light Interaction with Graphene Oxide Aqueous Solution</b>, K. Ibrahim, M. Irannejad, <u>A.
+                Ramadhan</u>, W. Alayak, J. Sanderson, B. Cui, A. Brzezinski, M. Yavuz, <a
+                href="https://dx.doi.org/10.1109/NANO.2014.6968088" target="_blank"><i>Proceedings of the 14th IEEE
+                  International Conference on Nanotechnology</i>, 830-831 (2014)</a>.
+            </li>
+          </ul>
+
+          <!-- <br> -->
+        </div>
+
+        <h3 class="project-title" id="projectTitle5">
+          <i class="fa fa-plus-square" aria-hidden="true"></i>
+          Project Lovelace: Developing computational thinking in science students
+        </h3>
+
+        <div class="initially-hidden" id="researchDescription5">
+          <div class="row">
+            <div class="8u 12u(mobile) text-justify">
+              <p><a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a> is an open online platform
+                for learning about science and developing computational thinking through programming and problem
+                solving. It is a collection of computational science problems and tutorials taken from all branches of
+                the natural, social, and mathematical sciences. Each problem teaches a scientific application (e.g.
+                locating earthquakes, DNA splicing) and requires the use of scientific insight and some programming
+                skills to solve. Tutorials teach computational methods that students and researchers may find useful
+                (e.g. solving differential equations, Bayesian inference) and may be required knowledge for some
+                problems.</p>
+
+              <p>While Project Lovelace is still in development, we are deploying the website and the problems one by
+                one throughout the winter in preparation for a pilot run in April 2017. In addition to the website's
+                recreational aspect we ultimately hope that the problems and tutorials may be used in undergraduate
+                courses, especially to complement courses that lack a computational portion as computational methods
+                have become ubiquitous in almost every field of science.</p>
+            </div>
+            <div class="4u 12u(mobile)">
+              <img id="lovelace-img" src="img/ada-lovelace-portrait.jpg">
+              The name commemorates <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank">Ada
+                Lovelace</a> who proposed the first algorithm to be run on a computer in the 1840's.
+            </div>
+          </div>
+        </div>
+
       </div>
+    </section>
 
-    <!-- Scripts -->
-      <script src="assets/js/jquery.min.js"></script>
-      <script src="assets/js/jquery.scrolly.min.js"></script>
-      <script src="assets/js/jquery.scrollzer.min.js"></script>
-      <script src="assets/js/skel.min.js"></script>
-      <script src="assets/js/util.js"></script>
-      <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-      <script src="assets/js/main.js"></script>
+    <!-- Teaching -->
+    <section id="teaching" class="two">
+      <div class="container">
 
-      <!-- Expandable research project descriptions. -->
-      <script type="text/javascript">
-        $(document).ready(function() {
+        <header>
+          <h2>Teaching</h2>
+        </header>
+        <p>I am passionate about teaching and have recently started working on <a href="http://projectlovelace.net/"
+            target="_blank">Project Lovelace</a>, an open online platform for developing computational thinking in
+          science majors throughout the undergraduate curriculum. I also volunteer with <a
+            href="http://www.frontiercollege.ca/" target="_blank">Frontier College</a> developing and running
+          educational math programs for elementary and middle-school students.</p>
 
-          var totalDescriptions = 5;
-          var researchDescriptionOpen = [false, false, false, false, false];
+        <h3>TA Experience</h3>
 
-          // project title event listener (PTEL)
-          function generatePTEL(j) {
-            return function(event) {
-              if (researchDescriptionOpen[j]) {
-                researchDescriptionOpen[j] = false;
-                $('#researchDescription' + j).hide(500);
-                $(this).find($('.fa')).removeClass('fa-minus-square').addClass('fa-plus-square');
+        <div class="row">
+          <div class="1u 2u(mobile)">2016</div>
+          <div class="11u 10u(mobile)">Graduate Teaching Assistant, <i>Thermal Physics</i>, University of Waterloo</div>
+        </div>
 
-                // $('html, body').animate({
-                //     scrollTop: $('#projectTitle' + j).offset().top
-                // }, 'slow');
-              } else {
-                researchDescriptionOpen[j] = true;
-                $('#researchDescription' + j).show(500);
-                $(this).find($('.fa')).removeClass('fa-plus-square').addClass('fa-minus-square');
-              }
-            };
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2016</div>
+          <div class="11u 10u(mobile) tighter-list">Drop-in Tutor (4x), <i>Calculus II</i>, University of Waterloo</div>
+        </div>
+
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2015</div>
+          <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant, <i>Electricity &amp; Magnetism
+              I</i>, University of Waterloo</div>
+        </div>
+
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2015</div>
+          <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant, <i>Discrete Mathematics</i>,
+            University of Waterloo</div>
+        </div>
+
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2015</div>
+          <div class="11u 10u(mobile) tighter-list">Drop-in Tutor (2x), <i>Electricity &amp; Magnetism I</i>, University
+            of Waterloo</div>
+        </div>
+
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2014</div>
+          <div class="11u 10u(mobile) tighter-list">Drop-in Tutor, <i>Linear Algebra I</i>, University of Waterloo</div>
+        </div>
+
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2014</div>
+          <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant (2x), <i>Calculus II</i>,
+            University of Waterloo</div>
+        </div>
+
+        <div class="row">
+          <div class="1u 2u(mobile) tighter-list">2013</div>
+          <div class="11u 10u(mobile) tighter-list">Undergraduate Teaching Assistant, <i>Linear Algebra I</i>,
+            University of Waterloo</div>
+        </div>
+
+        <br>
+
+        <h3>Other Experience</h3><br>
+
+        <div class="row">
+          <div class="2u 4u(mobile) tighter-list">Oct 2016 - Present</div>
+          <div class="10u 8u(mobile) tighter-list">Project Lead, <i>Project Lovelace</i></div>
+        </div>
+
+        <div class="row">
+          <div class="2u 4u(mobile) tighter-list">Jan 2015 - Present</div>
+          <div class="10u 8u(mobile) tighter-list">Organizational Team Member and Tutor, <i>Frontier College (Canadian
+              literacy organization)</i></div>
+        </div>
+
+        <div class="row">
+          <div class="2u 4u(mobile) tighter-list">May 2012 - Present</div>
+          <div class="10u 8u(mobile) tighter-list">Private Tutor, <i>Independent and through AccessAbility Services</i>,
+            University of Waterloo</div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications" class="three">
+      <div class="container">
+
+        <header>
+          <h2>Publications</h2>
+        </header>
+
+        <!-- <h3>Working papers</h3> -->
+
+        <h3>Refereed papers</h3>
+        <ol start="1">
+          <li>
+            <b>Synthesis of hydrogen- and methyl-capped long-chain polyynes by intense ultrashort laser pulse
+              irradiation of toluene</b><br>
+            <u>A. Ramadhan</u>, M. Wesolowski, T. Wakabayashi, H. Shiromaru, T. Fujino, T. Kodama, W. Duley, J.
+            Sanderson<br>
+            <a href="http://doi.org/10.1016/j.carbon.2017.03.096" target="_blank"><i>Carbon</i> <b>118</b>, 680–685
+              (2017)</a>. <a href="https://arxiv.org/abs/1612.00320" target="_blank">[arXiv:1612.00320]</a>
+          </li>
+
+          <br>
+
+          <li>
+            <b>Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron
+              radiation</b><br>
+            <u>A. Ramadhan</u>, B. Wales, I. Gauthier, R. Karimi, M. MacDonald, L. Zuin, J. Sanderson<br>
+            <a href="http://dx.doi.org/10.1088/0953-4075/49/21/215602" target="_blank"><i>Journal of Physics B: Atomic,
+                Molecular, and Optical Physics</i> <b>49</b>, 215602 (2016)</a>. <a
+              href="https://arxiv.org/abs/1606.08789" target="_blank">[arXiv:1606.08789]</a>
+          </li>
+
+          <br>
+
+          <li>
+            <b>A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin Films
+              with Tunable Properties</b><br>
+            K. Ibrahim, M. Irannejad, M. Hajialamdari, <u>A. Ramadhan</u>, K. Musselman, J. Sanderson, M. Yavuz<br>
+            <a href="https://dx.doi.org/10.1002/admi.201500864" target="_blank"><i>Advanced Materials Interfaces</i>
+              <b>3</b>, 1500864 (2016)</a>.
+          </li>
+
+          <br>
+
+          <li>
+            <b>Ultrafast Light Interaction with Graphene Oxide Aqueous Solution</b><br>
+            K. Ibrahim, M. Irannejad, <u>A. Ramadhan</u>, W. Alayak, J. Sanderson, B. Cui, A. Brzezinski, M. Yavuz<br>
+            <a href="https://dx.doi.org/10.1109/NANO.2014.6968088" target="_blank"><i>Proceedings of the 14th IEEE
+                International Conference on Nanotechnology</i>, 830–831 (2014)</a>.
+          </li>
+
+          <br>
+
+          <li>
+            <b>Welding of Au Microwires by Femtosecond Laser Irradiation</b><br>
+            N. Ly, M. Mayer, <u>A. Ramadhan</u>, and J. Sanderson<br>
+            <a href="https://dx.doi.org/10.1109/NANO.2014.6968136" target="_blank"><i>Proceedings of the 14th IEEE
+                International Conference on Nanotechnology</i>, 146–149 (2014)</a>.
+          </li>
+
+          <br>
+
+          <li>
+            <b>Coulomb imaging of the concerted and stepwise break up processes of OCS ions in intense femtosecond laser
+              radiation</b><br>
+            B. Wales, É. Bisson, R. Karimi, S. Beaulieu, <u>A. Ramadhan</u>, M. Giguère, Z. Long, W. Liu, J. Kieffer, F.
+            Légaré, J. Sanderson<br>
+            <a href="https://dx.doi.org/10.1016/j.elspec.2014.05.003" target="_blank"><i>Journal of Electron
+                Spectroscopy and Related Phenomena</i> <b>195</b>, 332–336 (2014)</a>.
+          </li>
+
+        </ol>
+      </div>
+    </section>
+
+    <!-- Resources -->
+    <section id="resources" class="two">
+      <div class="container">
+
+        <header>
+          <h2>Resources</h2>
+        </header>
+
+        <ul>
+          <li>
+            <a href="files/jaynes-cummings-model.pdf" target="_blank"><b>Jaynes-Cummings Model</b></a>: Lecture slides I
+            presented as part of a graduate course on nonlinear optics.
+          </li>
+
+          <li>
+            <a href="files/the-energy-gap-in-nuclear-matter.pdf" target="_blank"><b>The energy gap in nuclear
+                matter</b></a>: A paper I wrote as part of a particle physics course.
+          </li>
+
+          <li>Coming soon: I have a bunch of teaching material to upload. I should probably upload my neater class notes
+            as well.</li>
+        </ul>
+
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="four">
+      <div class="container">
+
+        <header>
+          <h2>Contact</h2>
+        </header>
+
+        <p>Feel free to get in touch through email [alir(ατ)mit.edu] or by using the form here!</p>
+
+        <form role="form" method="POST" action="http://formspree.io/a3ramadhan@gmail.com">
+          <input type="hidden" name="_next" value="#" />
+          <input type="hidden" name="_subject" value="New message!" />
+          <input type="text" name="_gotcha" style="display:none" />
+
+          <div class="row">
+
+            <div class="6u 12u$(mobile)">
+              <input type="text" name="name" id="nameInput" placeholder="Name" required>
+            </div>
+
+            <div class="6u$ 12u$(mobile)">
+              <input type="text" name="email" id="emailInput" placeholder="Email" required>
+            </div>
+
+            <div class="12u$">
+              <textarea name="message" placeholder="Message" required></textarea>
+            </div>
+
+            <div class="12u$" style="text-align: center;">
+              <input type="submit" name="submit" id="submit" value="Send message">
+            </div>
+
+          </div>
+        </form>
+
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <div id="footer">
+
+    <!-- Copyright -->
+    <ul class="copyright">
+      <li>&copy; Ali Ramadhan. All rights reserved.</li>
+      <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+      <li>Contact form: <a href="https://formspree.io/">Formspree</a></li>
+    </ul>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/js/jquery.scrolly.min.js"></script>
+  <script src="assets/js/jquery.scrollzer.min.js"></script>
+  <script src="assets/js/skel.min.js"></script>
+  <script src="assets/js/util.js"></script>
+  <!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+  <script src="assets/js/main.js"></script>
+
+  <!-- Expandable research project descriptions. -->
+  <script type="text/javascript">
+    $(document).ready(function () {
+
+      var totalDescriptions = 5;
+      var researchDescriptionOpen = [false, false, false, false, false];
+
+      // project title event listener (PTEL)
+      function generatePTEL(j) {
+        return function (event) {
+          if (researchDescriptionOpen[j]) {
+            researchDescriptionOpen[j] = false;
+            $('#researchDescription' + j).hide(500);
+            $(this).find($('.fa')).removeClass('fa-minus-square').addClass('fa-plus-square');
+
+            // $('html, body').animate({
+            //     scrollTop: $('#projectTitle' + j).offset().top
+            // }, 'slow');
+          } else {
+            researchDescriptionOpen[j] = true;
+            $('#researchDescription' + j).show(500);
+            $(this).find($('.fa')).removeClass('fa-plus-square').addClass('fa-minus-square');
           }
+        };
+      }
 
-          for (i = 1; i <= totalDescriptions; i++) {
-            $('#projectTitle' + i).on('click', generatePTEL(i));
-          }
-        });
-      </script>
+      for (i = 1; i <= totalDescriptions; i++) {
+        $('#projectTitle' + i).on('click', generatePTEL(i));
+      }
+    });
+  </script>
 
-      <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
-      <script type="text/javascript">
-        var w = 1400;
-        var h = 700;
-        var svg = d3.select("div#container").append("svg").attr("preserveAspectRatio", "xMinYMin meet").style("background-color","#c9e8fd")
-                    .attr("viewBox", "0 0 " + w + " " + h)
-                    .classed("svg-content", true);
-        var projection = d3.geoAzimuthalEquidistant().translate([w/2, h/2]).scale(500).center([0, 50]).rotate([90, 0, 0]);
-        var path = d3.geoPath().projection(projection);
+  <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+  <script type="text/javascript">
+    var w = 1400;
+    var h = 700;
+    var svg = d3.select("div#container").append("svg").attr("preserveAspectRatio", "xMinYMin meet").style("background-color", "#c9e8fd")
+      .attr("viewBox", "0 0 " + w + " " + h)
+      .classed("svg-content", true);
+    var projection = d3.geoAzimuthalEquidistant().translate([w / 2, h / 2]).scale(500).center([0, 50]).rotate([90, 0, 0]);
+    var path = d3.geoPath().projection(projection);
 
-        var tooltip = d3.select("body").append("div") 
-            .attr("class", "tooltip")       
+    var tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+
+    // load data  
+    var worldmap = d3.json("d3/NNA_lakes.geojson");
+
+    Promise.all([worldmap]).then(function (values) {
+      // draw map
+      svg.selectAll("path")
+        .data(values[0].features)
+        .enter()
+        .append("path")
+        .attr("class", "continent")
+        .attr("d", path)
+        .on("mouseover", function (d) {
+          tooltip.transition()
+            .duration(200)
+            .style("opacity", .8);
+          tooltip.html(d.properties.woe_name)
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY - 28) + "px");
+        })
+        .on("mouseout", function (d) {
+          tooltip.transition()
+            .duration(500)
             .style("opacity", 0);
-
-        // load data  
-        var worldmap = d3.json("d3/NNA_lakes.geojson");
-
-        Promise.all([worldmap]).then(function(values){    
-          // draw map
-          svg.selectAll("path")
-             .data(values[0].features)
-             .enter()
-             .append("path")
-             .attr("class","continent")
-             .attr("d", path)
-             .on("mouseover", function(d) {
-                tooltip.transition()
-                .duration(200)
-                .style("opacity", .8);
-                tooltip.html(d.properties.woe_name)
-                .style("left", (d3.event.pageX) + "px")
-                .style("top", (d3.event.pageY - 28) + "px");
-             })          
-             .on("mouseout", function(d) {
-                tooltip.transition()
-                .duration(500)
-                .style("opacity", 0);
-             });
         });
-    </script>
+    });
+  </script>
 
-  </body>
+</body>
+
 </html>

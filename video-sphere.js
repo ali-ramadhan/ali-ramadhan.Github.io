@@ -26,8 +26,9 @@ let canvasElement = video_sphere_box.appendChild(renderer.domElement);
 canvasElement.setAttribute("id", "canvas-video-sphere");
 
 let controls = new OrbitControls(camera, renderer.domElement);
-// controls.enableZoom = false;
-// controls.enablePan = false;
+controls.enableRotate = true;
+controls.enableZoom = false;
+controls.enablePan = false;
 
 let g = new THREE.SphereGeometry(1, 128, 64);
 g.rotateY(-0.5 * Math.PI);
@@ -172,8 +173,8 @@ let [x_BOS, y_BOS, z_BOS] = latlon2xyz(lat_BOS, lon_BOS);
 
 console.log(`BOS = (lat=${lat_BOS}, lon=${lon_BOS}) -> (x=${x_BOS}, y=${y_BOS}, z=${z_BOS})`)
 
-const axesHelper = new THREE.AxesHelper(2);
-scene.add(axesHelper);
+// const axesHelper = new THREE.AxesHelper(2);
+// scene.add(axesHelper);
 
 const _geo = new THREE.CircleGeometry(0.05, 25);
 const _mat = new THREE.MeshBasicMaterial({color: 0xFF0000, transparent: true, opacity: 0.5});
@@ -181,13 +182,6 @@ const _mesh = new THREE.Mesh(_geo, _mat);
 _mesh.position.set(x_BOS, y_BOS, z_BOS);
 _mesh.lookAt(1.1*x_BOS, 1.1*y_BOS, 1.1*z_BOS);
 scene.add(_mesh);
-
-const p = document.createElement('p');
-p.className = "tooltip";
-const pContainer = document.createElement("div");
-pContainer.appendChild(p);
-const cPointLabel = new CSS2DObject(pContainer);
-scene.add(cPointLabel);
 
 const mousePos = new THREE.Vector2();
 const raycaster = new THREE.Raycaster();
@@ -197,18 +191,45 @@ window.addEventListener("mousemove", function(e) {
     mousePos.x = ((e.clientX - canvasBounds.left) / (canvasBounds.right - canvasBounds.left)) * 2 - 1;
     mousePos.y = -((e.clientY - canvasBounds.top) / (canvasBounds.bottom - canvasBounds.top)) * 2 + 1;
 
-    console.log(`client = (x=${e.clientX}, y=${e.clientY}}) | mousePos = (x=${mousePos.x}, y=${mousePos.y})`)
+    // console.log(`client = (x=${e.clientX}, y=${e.clientY}}) | mousePos = (x=${mousePos.x}, y=${mousePos.y})`)
 
     raycaster.setFromCamera(mousePos, camera);
 
     const intersects = raycaster.intersectObject(_mesh);
 
-    console.log(`intersecting ${intersects.length} things`)
+    // console.log(`intersecting ${intersects.length} things`);
+
+    let tooltip = document.getElementById("video-tooltip");
 
     if (intersects.length > 0) {
-         p.ClassName = "tooltip show";
-         p.textContent = "Hello!!";
+        tooltip.style.zIndex = 10;
+        tooltip.style.display = "inline-block";
+        tooltip.style.position = "absolute";
+        tooltip.style.left = (e.pageX + 15) + 'px';
+        tooltip.style.top = e.pageY + 'px';
+        tooltip.style.background = "rgba(255, 255, 255, 0.9)";
+        tooltip.style.border = "1px solid black";
+        tooltip.style.borderRadius = "5px";
+        tooltip.style.padding = "0.3em";
+        tooltip.style.width = "400px";
+
+        let tooltipTitle = "Tooltip title goes here";
+        let tooltipText = "<b>Lorem ipsum</b> dolor sit amet, <i>consectetur adipiscing elit</i>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+
+        let tooltipTitleDiv = document.createElement("div");
+        let tooltipTextDiv = document.createElement("div");
+
+        tooltipTitleDiv.style.fontSize = "large";
+        tooltipTitleDiv.style.fontWeight = "bold";
+        tooltipTitleDiv.style.lineHeight = 1.2;
+        tooltipTitleDiv.innerHTML = tooltipTitle;
+
+        tooltipTextDiv.style.fontSize = "medium";
+        tooltipTextDiv.style.lineHeight = 1;
+        tooltipTextDiv.innerHTML = tooltipText;
+
+        tooltip.replaceChildren(tooltipTitleDiv, tooltipTextDiv);
     } else {
-        p.textContent = "Find me!!";
+        tooltip.style.display = "none";
     }
 });

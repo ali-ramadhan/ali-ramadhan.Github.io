@@ -151,12 +151,26 @@ function cosd(theta) {
     return Math.cos(deg2rad(theta));
 }
 
-let lat_BOS = 42.3601;
-let lon_BOS = -71.0589;
+function latlon2xyz(lat, lon) {
+    let x = sind(90 - lat) * cosd(90 - lon);
+    let y = sind(90 - lat) * sind(90 - lon);
+    let z = cosd(90 - lat);
 
-let x_BOS = sind(lat_BOS) * cosd(lon_BOS);
-let y_BOS = sind(lat_BOS) * sind(lon_BOS);
-let z_BOS = cosd(lat_BOS);
+    // The north pole of the three.js sphere corresponds to 0, 0 degrees.
+    // So we apply +90 degree rotation about the x-axis.
+    let x2 = x;
+    let y2 = z;
+    let z2 = y;
+    
+    return [x2, y2, z2];
+}
+
+let lat_BOS = 42; // 42.3601;
+let lon_BOS = -71; // -71.0589;
+
+let [x_BOS, y_BOS, z_BOS] = latlon2xyz(lat_BOS, lon_BOS);
+
+console.log(`BOS = (lat=${lat_BOS}, lon=${lon_BOS}) -> (x=${x_BOS}, y=${y_BOS}, z=${z_BOS})`)
 
 const axesHelper = new THREE.AxesHelper(2);
 scene.add(axesHelper);
@@ -164,8 +178,8 @@ scene.add(axesHelper);
 const _geo = new THREE.CircleGeometry(0.05, 25);
 const _mat = new THREE.MeshBasicMaterial({color: 0xFF0000, transparent: true, opacity: 0.5});
 const _mesh = new THREE.Mesh(_geo, _mat);
-// _mesh.position.set(0, 0.5, 1);
 _mesh.position.set(x_BOS, y_BOS, z_BOS);
+_mesh.lookAt(1.1*x_BOS, 1.1*y_BOS, 1.1*z_BOS);
 scene.add(_mesh);
 
 const p = document.createElement('p');
@@ -193,10 +207,8 @@ window.addEventListener("mousemove", function(e) {
 
     if (intersects.length > 0) {
          p.ClassName = "tooltip show";
-         cPointLabel.position.set(0, 0, 2);
          p.textContent = "Hello!!";
     } else {
-        cPointLabel.position.set(0, 0, 1);
         p.textContent = "Find me!!";
     }
 });

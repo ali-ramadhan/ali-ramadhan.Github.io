@@ -2,14 +2,15 @@
 
 import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
 import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js";
-import {CSS2DRenderer, CSS2DObject} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/renderers/CSS2DRenderer.js";
 
-// three.js setup
+/////
+///// three.js setup
+/////
 
 let scene = new THREE.Scene();
 
-let video_width = 800
-let video_height = 600
+let video_width = 800;
+let video_height = 600;
 
 let camera = new THREE.PerspectiveCamera(60, video_width / video_height, 1, 1000);
 camera.position.set(0, 0, 2);
@@ -30,18 +31,10 @@ controls.enableRotate = true;
 controls.enableZoom = false;
 controls.enablePan = false;
 
-let g = new THREE.SphereGeometry(1, 128, 64);
-g.rotateY(-0.5 * Math.PI);
-let m = new THREE.MeshBasicMaterial();
-let o = new THREE.Mesh(g, m);
-scene.add(o);
-
-const labelRenderer = new CSS2DRenderer();
-labelRenderer.setSize(window.innerWidth, window.innerHeight);
-labelRenderer.domElement.style.position = "absolute";
-labelRenderer.domElement.style.top = "0px";
-labelRenderer.domElement.style.pointerEvents = "none";
-document.body.appendChild(labelRenderer.domElement);
+let sphere = new THREE.SphereGeometry(1, 128, 64);
+let sphereMeshMaterial = new THREE.MeshBasicMaterial();
+let sphereMesh = new THREE.Mesh(sphere, sphereMeshMaterial);
+scene.add(sphereMesh);
 
 window.addEventListener("resize", onWindowResize);
 
@@ -49,7 +42,6 @@ animate();
 
 function animate() {
     requestAnimationFrame(animate);
-    labelRenderer.render(scene, camera);
     renderer.render(scene, camera);
 }
 
@@ -58,18 +50,20 @@ function onWindowResize() {
     camera.updateProjectionMatrix();
 
     renderer.setSize(video_width, video_height);
-    labelRenderer.setSize(this.window.innerWidth, this.window.innerHeight);
 }
 
-// dat.gui setup
+/////
+///// dat.gui setup
+/////
 
-var options = {
+let gui = new dat.GUI();
+
+let options = {
     playback_rate: 1.0,
 };
 
-var gui = new dat.GUI();
+let video_options = gui.addFolder('Video');
 
-var video_options = gui.addFolder('Video');
 video_options.add(options, 'playback_rate', 0.0, 5.0, 0.1).name('Playback rate')
     .onChange(
         function () {
@@ -80,7 +74,9 @@ video_options.add(options, 'playback_rate', 0.0, 5.0, 0.1).name('Playback rate')
 
 video_options.open();
 
-// video sphere setup
+/////
+///// video sphere setup
+/////
 
 let video = document.getElementById('video');
 video.play();
@@ -88,8 +84,8 @@ video.defaultPlaybackRate = 1.0;
 video.playbackRate = options.playback_rate;
 
 let videoTex = new THREE.VideoTexture(video);
-m.map = videoTex;
-m.needsUpdate = true;
+sphereMeshMaterial.map = videoTex;
+sphereMeshMaterial.needsUpdate = true;
 
 let videoTitle = document.getElementById("video-title");
 let videoCaption = document.getElementById("video-caption");
@@ -97,9 +93,16 @@ let videoCaption = document.getElementById("video-caption");
 // Saved all videos at 24 FPS so that 1 second video time = 1 day simulation time.
 const framerate = 24;
 
+Date.prototype.addHours = function(h) {
+    this.setTime(this.getTime() + (h*60*60*1000));
+    return this;
+}
+
 video.addEventListener('timeupdate', function () {
+    let dateStart = new Date("2015-08-01T00:00:00");
     let frameNum = Math.floor(framerate * video.currentTime);
-    videoCaption.innerHTML = `Frame ${frameNum}`;
+    let dateFrame = dateStart.addHours(frameNum);
+    videoCaption.textContent = `${dateFrame.toISOString().slice(0, -8)}Z`;
 });
 
 let videos = [
@@ -152,13 +155,13 @@ function cosd(theta) {
     return Math.cos(deg2rad(theta));
 }
 
+// The north pole of the three.js sphere corresponds to 0, 0 degrees.
+// So we apply +90 degree rotation about the x-axis.
 function latlon2xyz(lat, lon) {
-    let x = sind(90 - lat) * cosd(90 - lon);
-    let y = sind(90 - lat) * sind(90 - lon);
+    let x = sind(90 - lat) * cosd(-lon);
+    let y = sind(90 - lat) * sind(-lon);
     let z = cosd(90 - lat);
 
-    // The north pole of the three.js sphere corresponds to 0, 0 degrees.
-    // So we apply +90 degree rotation about the x-axis.
     let x2 = x;
     let y2 = z;
     let z2 = y;

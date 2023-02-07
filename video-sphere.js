@@ -140,17 +140,24 @@ let gui = new dat.GUI();
 
 let options = {
     playback_rate: 1.0,
+    show_caption: false
 };
 
-let video_options = gui.addFolder('Video');
+let video_options = gui.addFolder('Video options');
 
-video_options.add(options, 'playback_rate', 0.0, 5.0, 0.1).name('Playback rate')
-    .onChange(
-        function () {
-            let video = document.getElementById('video');
-            video.playbackRate = options.playback_rate;
-        }
-    )
+video_options.add(options, 'playback_rate', 0.0, 5.0, 0.1).name('Playback rate').onChange(function () {
+    let video = document.getElementById('video');
+    video.playbackRate = options.playback_rate;
+})
+
+video_options.add(options, 'show_caption').name('Show timestamp').onChange(function () {
+    let videoCaption = document.getElementById("video-caption");
+    if (options.show_caption) {
+        videoCaption.style.display = "block";
+    } else {
+        videoCaption.style.display = "none";
+    }
+})
 
 video_options.open();
 

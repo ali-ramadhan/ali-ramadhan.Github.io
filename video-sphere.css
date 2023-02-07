@@ -18,6 +18,7 @@
 
 #video-caption {
 	text-align: center;
+	display: none;
 }
 
 #left-arrow {
@@ -33,3 +34,11 @@
 	left: 95%;
 	cursor: pointer;
 }
+
+/*
+ * dat.gui
+ */
+
+ .c div input {
+	font-size: 100%;
+  }

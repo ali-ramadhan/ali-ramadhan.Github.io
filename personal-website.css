@@ -1,3 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/*
+ * Entire page
+ */
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16pt;
+  font-weight: normal;
+  font-weight: 400;
+  color: #444444;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #444444;
+}
+
+strong, b {
+  font-weight: 600;
+  color: #444444;
+}
+
+input, textarea, select {
+  font-weight: 400;
+  color: #444444;
+}
+
 ol {
   list-style-type: decimal;
 }
@@ -15,6 +44,55 @@ img {
   text-align: left;
 }
 
+/*
+ * Nav + logo
+ */
+
+#logo {
+  text-align: left;
+}
+
+#logo h1 {
+  font-size: 18pt;
+}
+
+#logo p {
+  font-size: 14pt;
+}
+
+#personal-photo {
+  width: 75%;
+  border-radius: 10px;
+}
+
+#nav {
+  font-size: 18pt;
+}
+
+#nav ul li a:hover {
+  color: #fff;
+}
+
+#nav ul li a:hover span:before {
+  color: #e27689;
+}
+
+/*
+#nav ul li a.active {
+  background: rgba(0,0,0,0.25);
+  box-shadow: inset 0 0 0.5em 0 rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+#nav ul li a.active span:before{
+  color: #e27689;
+}
+*/
+
+/*
+ * Project descriptions
+ */
+
 .project-title {
   font-size: 1.3em;
   cursor: pointer;
@@ -30,17 +108,6 @@ img {
 
 .tighter-list {
   padding-top: 0px;
-}
-
-#logo {
-  text-align: left;
-}
-
-#personal-photo {
-  width: 50%;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
 }
 
 #research {

@@ -11,6 +11,7 @@ let videos = [
     {
         "title": "Temperature",
         "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4",
+        "dateStart": new Date("2015-08-01T00:00:00"),
         "tooltips": {
             "Boston": {
                 "latitude": 42.3601,
@@ -31,7 +32,24 @@ let videos = [
 
     {
         "title": "Precipitation",
-        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm"
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm",
+        "dateStart": new Date("2020-03-14T00:00:00"),
+        "tooltips": {
+            "Edmonton": {
+                "latitude": 53.5461,
+                "longitude": -113.4937,
+                "color": "green",
+                "title": "Edmonton!!!",
+                "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+            },
+            "Vegas": {
+                "latitude": 19.4326,
+                "longitude": -99.1332,
+                "color": "brown",
+                "title": "Mexico City",
+                "text": "<b>Lorem ipsum</b> dolor sit amet, <i>consectetur adipiscing elit</i>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+            }
+        }
     }
 ]
 
@@ -59,9 +77,10 @@ function cosd(theta) {
     return Math.cos(deg2rad(theta));
 }
 
-Date.prototype.addHours = function(h) {
-    this.setTime(this.getTime() + (h*60*60*1000));
-    return this;
+function addHours(d, h) {
+    let d2 = structuredClone(d);
+    d2.setTime(d2.getTime() + (h*60*60*1000));
+    return d2;
 }
 
 /////
@@ -140,7 +159,6 @@ video_options.open();
 /////
 
 let video = document.getElementById('video');
-video.play();
 video.defaultPlaybackRate = 1.0;
 video.playbackRate = options.playback_rate;
 
@@ -148,24 +166,41 @@ let videoTex = new THREE.VideoTexture(video);
 sphereMeshMaterial.map = videoTex;
 sphereMeshMaterial.needsUpdate = true;
 
-let videoTitle = document.getElementById("video-title");
-let videoCaption = document.getElementById("video-caption");
-
-video.addEventListener('timeupdate', function () {
-    let dateStart = new Date("2015-08-01T00:00:00");
-    let frameNum = Math.floor(videoFramerate * video.currentTime);
-    let dateFrame = dateStart.addHours(frameNum);
-    videoCaption.textContent = `${dateFrame.toISOString().slice(0, -8)}Z`;
-});
-
-let currentVideo = 0;
+let tooltipMeshGroup = new THREE.Group();
 
 function selectVideo(n) {
     video.pause();
+
+    let videoTitle = document.getElementById("video-title");
     videoTitle.innerHTML = videos[n]["title"];
+    
     video.src = videos[n]["src"];
-    video.play();    
+    video.play();
+
+    tooltipMeshGroup.clear();
+
+    for (const [name, tooltip] of Object.entries(videos[n]["tooltips"])) {
+        let tooltipLatitude = tooltip["latitude"];
+        let tooltipLongitude = tooltip["longitude"];
+    
+        let [tooltipX, tooltipY, tooltipZ] = latlon2xyz(tooltipLatitude, tooltipLongitude);
+    
+        let tooltipGeometry = new THREE.CircleGeometry(0.05, 25);
+        let tooltipMaterial = new THREE.MeshBasicMaterial({color: tooltip["color"], transparent: true, opacity: 0.5});
+        let tooltipMesh = new THREE.Mesh(tooltipGeometry, tooltipMaterial);
+    
+        tooltipMesh.name = name;
+        tooltipMesh.position.set(tooltipX, tooltipY, tooltipZ);
+        tooltipMesh.lookAt(1.1*tooltipX, 1.1*tooltipY, 1.1*tooltipZ); // Make the circle flat on the sphere.
+    
+        tooltipMeshGroup.add(tooltipMesh);
+    }
+    
+    scene.add(tooltipMeshGroup);
 }
+
+let currentVideo = 0;
+selectVideo(0);
 
 let leftArrow = document.getElementById('left-arrow');
 let rightArrow = document.getElementById('right-arrow');
@@ -180,6 +215,17 @@ rightArrow.addEventListener('click', (event) => {
     selectVideo(currentVideo);
 });
 
+function updateVideoCaption() {
+    let dateStart = videos[currentVideo]["dateStart"];
+    let frameNum = Math.floor(videoFramerate * video.currentTime);
+    let dateFrame = addHours(dateStart, frameNum);
+
+    let videoCaption = document.getElementById("video-caption");
+    videoCaption.textContent = `${dateFrame.toISOString().slice(0, -8)}Z`;
+}
+
+setInterval(updateVideoCaption, 1000 / videoFramerate);
+
 // Convert geographical (lat, lon) corresponds to (x, y, z) three.js coordinates on our sphere.
 function latlon2xyz(lat, lon) {
     let x = sind(90 - lat) * cosd(-lon);
@@ -189,27 +235,6 @@ function latlon2xyz(lat, lon) {
     // Switching y and z corresponds to a +90 degree rotation around the x-axis.
     return [x, z, y];
 }
-
-let tooltipMeshGroup = new THREE.Group();
-
-for (const [name, tooltip] of Object.entries(videos[0]["tooltips"])) {
-    let tooltipLatitude = tooltip["latitude"];
-    let tooltipLongitude = tooltip["longitude"];
-
-    let [tooltipX, tooltipY, tooltipZ] = latlon2xyz(tooltipLatitude, tooltipLongitude);
-
-    let tooltipGeometry = new THREE.CircleGeometry(0.05, 25);
-    let tooltipMaterial = new THREE.MeshBasicMaterial({color: tooltip["color"], transparent: true, opacity: 0.5});
-    let tooltipMesh = new THREE.Mesh(tooltipGeometry, tooltipMaterial);
-
-    tooltipMesh.name = name;
-    tooltipMesh.position.set(tooltipX, tooltipY, tooltipZ);
-    tooltipMesh.lookAt(1.1*tooltipX, 1.1*tooltipY, 1.1*tooltipZ); // Make the circle flat on the sphere.
-
-    tooltipMeshGroup.add(tooltipMesh);
-}
-
-scene.add(tooltipMeshGroup);
 
 const raycaster = new THREE.Raycaster();
 
@@ -238,8 +263,8 @@ window.addEventListener("mousemove", function(e) {
         tooltip.style.padding = "0.3em";
         tooltip.style.width = "400px";
 
-        let tooltipTitle = videos[0]["tooltips"][tooltipName]["title"];
-        let tooltipText = videos[0]["tooltips"][tooltipName]["text"];
+        let tooltipTitle = videos[currentVideo]["tooltips"][tooltipName]["title"];
+        let tooltipText = videos[currentVideo]["tooltips"][tooltipName]["text"];
 
         let tooltipTitleDiv = document.createElement("div");
         let tooltipTextDiv = document.createElement("div");

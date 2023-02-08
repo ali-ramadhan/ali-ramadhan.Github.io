@@ -49,7 +49,7 @@ img {
  */
 
 #logo {
-  text-align: left;
+  text-align: center;
 }
 
 #logo h1 {
@@ -69,8 +69,20 @@ img {
   font-size: 18pt;
 }
 
+#nav h1 {
+  font-size: 16pt;
+  font-weight: 600;
+  color: white;
+  padding-right: 1.5em;
+}
+
+#nav ul li a {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
 #nav ul li a:hover {
-  color: #fff;
+  color: white;
 }
 
 #nav ul li a:hover span:before {
@@ -125,4 +137,14 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+/*
+ * Publications
+ */
+
+.paper-link {
+  font-family: monospace;
+  font-weight: 600;
+  color: #e27689;
 }

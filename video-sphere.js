@@ -140,7 +140,8 @@ let gui = new dat.GUI();
 
 let options = {
     playback_rate: 1.0,
-    show_caption: false
+    show_caption: false,
+    show_colorbar: false
 };
 
 let video_options = gui.addFolder('Video options');
@@ -156,6 +157,15 @@ video_options.add(options, 'show_caption').name('Show timestamp').onChange(funct
         videoCaption.style.display = "block";
     } else {
         videoCaption.style.display = "none";
+    }
+})
+
+video_options.add(options, 'show_colorbar').name('Show colorbar').onChange(function () {
+    let colorbar = document.getElementById("colorbar");
+    if (options.show_colorbar) {
+        colorbar.style.display = "block";
+    } else {
+        colorbar.style.display = "none";
     }
 })
 

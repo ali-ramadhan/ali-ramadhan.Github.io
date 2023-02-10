@@ -112,6 +112,43 @@ img {
 */
 
 /*
+ * Image fading stage
+ * Source: https://www.the-art-of-web.com/css/fading-slideshow-no-jquery/
+ */
+
+#stage {
+  margin: 1em auto;
+  width: 382px;
+  height: 292px;
+}
+
+#stage div {
+  position: absolute;
+}
+
+#stage div img {
+  padding: 10px;
+}
+
+#stage div:nth-of-type(1) {
+  animation-name: fader;
+  animation-delay: 1s;
+  animation-duration: 0.25s;
+  z-index: 20;
+}
+#stage div:nth-of-type(2) {
+  z-index: 10;
+}
+#stage div:nth-of-type(n+3) {
+  display: none;
+}
+
+@keyframes fader {
+  from { opacity: 1.0; }
+  to   { opacity: 0.0; }
+}
+
+/*
  * Project descriptions
  */
 

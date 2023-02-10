@@ -40,8 +40,18 @@ img {
   max-height: 100%;
 }
 
+* {
+  scroll-behavior: smooth !important;
+}
+
 .container {
   text-align: left;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /*
@@ -106,12 +116,14 @@ img {
  */
 
 .project-title {
-  font-size: 1.3em;
+  font-size: 18pt;
   cursor: pointer;
+  padding-left: 0.5em;
 }
 
 .initially-hidden {
   display: none;
+  padding-left: 0.5em;
 }
 
 .text-justify {

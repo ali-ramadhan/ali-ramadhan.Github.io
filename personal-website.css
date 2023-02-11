@@ -116,30 +116,31 @@ img {
  * Source: https://www.the-art-of-web.com/css/fading-slideshow-no-jquery/
  */
 
-#stage {
+.stage {
   margin: 1em auto;
-  width: 382px;
-  height: 292px;
+  min-height: 400px;
 }
 
-#stage div {
+.stage div {
   position: absolute;
 }
 
-#stage div img {
+.stage div img {
   padding: 10px;
+  height: 100%;
+  max-height: 400px;
 }
 
-#stage div:nth-of-type(1) {
+.stage div:nth-of-type(1) {
   animation-name: fader;
   animation-delay: 1s;
   animation-duration: 0.25s;
   z-index: 20;
 }
-#stage div:nth-of-type(2) {
+.stage div:nth-of-type(2) {
   z-index: 10;
 }
-#stage div:nth-of-type(n+3) {
+.stage div:nth-of-type(n+3) {
   display: none;
 }
 

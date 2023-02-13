@@ -54,6 +54,10 @@ img {
   margin-right: auto;
 }
 
+#main > section.three {
+  background-color: white;
+}
+
 /*
  * Nav + logo
  */
@@ -193,8 +197,11 @@ img {
  * Publications
  */
 
-.paper-link {
-  font-family: monospace;
-  font-weight: 600;
-  color: #e27689;
+.button {
+  color: black;
+  font-size: 14pt;
+  line-height: 1;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 5px;
 }

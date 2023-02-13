@@ -12,6 +12,7 @@ let videos = [
         "title": "Temperature",
         "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4",
         "dateStart": new Date("2015-08-01T00:00:00"),
+        "colorbar": "img/colorbars/temperature_colorbar.png",
         "tooltips": {
             "Boston": {
                 "latitude": 42.3601,
@@ -34,6 +35,7 @@ let videos = [
         "title": "Precipitation",
         "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm",
         "dateStart": new Date("2020-03-14T00:00:00"),
+        "colorbar": "img/colorbars/precipitation_colorbar.png",
         "tooltips": {
             "Edmonton": {
                 "latitude": 53.5461,
@@ -193,6 +195,9 @@ function selectVideo(n) {
     
     video.src = videos[n]["src"];
     video.play();
+
+    let colorbar = document.getElementById("colorbar");
+    colorbar.src = videos[n]["colorbar"];
 
     tooltipMeshGroup.clear();
 

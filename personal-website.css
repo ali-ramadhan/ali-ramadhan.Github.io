@@ -117,35 +117,70 @@ img {
 */
 
 /*
- * Image fading stage
+ * Research areas
+ */
+
+ .research-area {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+/*
+ * Image fading slideshow
  * Source: https://www.the-art-of-web.com/css/fading-slideshow-no-jquery/
  */
 
-.stage {
-  margin: 1em auto;
+ .right-aligned {
+  margin-left: auto;
+}
+
+.left-aligned {
+  margin-right: auto;
+}
+
+.figure {
+  width: 400px;
+  height: 400px;
+  padding: 10px 10px;
+}
+
+.research-description {
+  width: 50%;
+  min-width: 400px;
+}
+
+.slideshow {
   min-height: 400px;
 }
 
-.stage div {
+.slideshow div {
   position: absolute;
-}
-
-.stage div img {
   padding: 10px;
-  height: 100%;
-  max-height: 400px;
+  width: 400px;
+  height: 400px;
 }
 
-.stage div:nth-of-type(1) {
+/* .slideshow div img {
+  width: inherit;
+  height: inherit;
+} */
+
+.slideshow div:nth-of-type(1) {
   animation-name: fader;
-  animation-delay: 1s;
-  animation-duration: 0.25s;
+  animation-delay: 5s;
+  animation-duration: 1.5s;
   z-index: 20;
 }
-.stage div:nth-of-type(2) {
+
+.slideshow div:nth-of-type(2) {
   z-index: 10;
 }
-.stage div:nth-of-type(n+3) {
+
+.slideshow div:nth-of-type(n+3) {
   display: none;
 }
 

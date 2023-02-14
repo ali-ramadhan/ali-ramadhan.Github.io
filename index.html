@@ -122,9 +122,9 @@
           </div>
         </div>
 
-        <div class="row slideshow-row">
-          <div class="6u 12u(mobile)">
-            <div class="stage" id="stage1">
+        <div class="row research-area">
+          <div class="figure right-aligned">
+            <div class="slideshow" id="slideshow1">
               <div><img src="img/Oceananigans-free-convection.png" /></div>
               <div><img src="img/Oceananigans-eddying-channel.png" /></div>
               <div><img src="img/Oceananigans-cubed-sphere-rossby-haurwitz.png " /></div>
@@ -133,19 +133,19 @@
               <!-- Screenshot of Julia code? -->
             </div>
           </div>
-          <div class="6u 12u(mobile)">
+          <div class="research-description">
             <h4>Ocean model development</h4>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
+            <p>Original developer of Oceananigans, a fast, friendly, and flexible Julia package for computational fluid dynamics on CPUs and GPUs. Developed as the ocean component for the Climate Modeling Alliance. Worked on implementing features such as GPU support, MPI, etc. Already used in 20+ publications by institutes around the world.</p>
           </div>
         </div>
 
-        <div class="row ">
-          <div class="6u 12u(mobile)">
+        <div class="row research-area">
+          <div class="research-description">
             <h4>Capturing missing physics in climate models using machine learning</h4>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
           </div>
-          <div class="6u 12u(mobile)">
-            <div class="stage" id="stage2">
+          <div class="figure left-aligned">
+            <div class="slideshow" id="slideshow2">
               <div><img src="img/NDE-architecture.png" /></div>
               <div><img src="img/NDE-free-convection-training-parameter-space.png" /></div>
               <div><img src="img/NDE-in-a-double-gyre.png" /></div>
@@ -154,28 +154,28 @@
           </div>
         </div>
 
-        <div class="row">
-          <div class="6u 12u(mobile)">
-            <div class="stage" id="stage3">
+        <div class="row research-area">
+          <div class="figure right-aligned">
+            <div class="slideshow" id="slideshow3">
               <div><img src="img/Europa-ocean-model-schematic.png" /></div>
               <div><img src="img/Europa-ocean-model-zonal-velocity.png" /></div>
               <div><img src="img/Antarctic-meltwater-domain-schematic.jpg" /></div>
             </div>
           </div>
-          <div class="6u 12u(mobile)">
+          <div class="research-description">
             <h4>Fluid dynamics on Earth and other planets</h4>
             Using Oceananigans in collaboration with others I 
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
           </div>
         </div>
 
-        <div class="row">
-          <div class="6u 12u(mobile)">
+        <div class="row research-area">
+          <div class="research-description">
             <h4>Southern Ocean dynamics</h4>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
           </div>
-          <div class="6u 12u(mobile)">
-            <div class="stage" id="stage4">
+          <div class="figure left-aligned">
+            <div class="slideshow" id="slideshow4">
               <div><img src="img/Southern-Ocean-surface-stress-JAS.png" /></div>
               <div><img src="img/Southern-Ocean-sea-ice-zone-MOC-schematic.png" /></div>
             </div>
@@ -577,9 +577,9 @@
       // Please acknowledge use of this code by including this header.
       
       for (let n = 1; n <= 4; n++) {
-        let stage = document.getElementById(`stage${n}`);
-        let arr = stage.getElementsByTagName("div");
-        let fadeComplete = function(e) { stage.appendChild(arr[0]); };
+        let slideshow = document.getElementById(`slideshow${n}`);
+        let arr = slideshow.getElementsByTagName("div");
+        let fadeComplete = function(e) { slideshow.appendChild(arr[0]); };
         for(let i = 0; i < arr.length; i++) {
           arr[i].addEventListener("animationend", fadeComplete, false);
         }

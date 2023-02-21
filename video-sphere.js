@@ -9,28 +9,37 @@ import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/
 
 let videos = [
     {
+        "title": "Surface air temperature",
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_vp9_good_crf42.webm",
+        "dateStart": new Date("2018-12-01T00:00:00"),
         "framePeriod": 3600,
         "colorbar": "img/colorbars/temperature_colorbar.png",
         "tooltips": {
-            "Boston": {
-                "latitude": 42.3601,
-                "longitude": -71.0589,
-                "color": "purple",
-                "title": "Tooltip title goes here",
-                "text": "<b>Lorem ipsum</b> dolor sit amet, <i>consectetur adipiscing elit</i>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-            },
-            "Vegas": {
-                "latitude": 36.1716,
-                "longitude": -115.1391,
+            "Mankato, KS": {
+                "latitude": 39.78723,
+                "longitude": -98.21005,
                 "color": "red",
-                "title": "Second tooltip title goes here",
-                "text": "<b>Lorem ipsum</b> dolor sit amet, <i>consectetur adipiscing elit</i>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+                "title": "The diurnal cycle",
+                "text": `As the sun pass over land it heats up the atmosphere. Looking at the surface air temperature, it almost looks like a beating heart.
+                        Peak daily temperatures usually occur 3-4 hours after high noon.
+                        The diurnal cycle is especially prominent in high desert regions such as the Tibetan and Andean Plateaus.`
+            },
+            "Polar Vortex": {
+                "latitude": 82.4987,
+                "longitude": -123.11934,
+                "color": "gold",
+                "title": "The polar vortex",
+                "text": `Strong circumpolar winds encircle the North Pole high up in the stratosphere (15-50 km high), trapping a huge mass of cold air.
+                        This feature of the atmosphere's circulation is called the polar vortex and another one exists at the South Pole too as well as on some other planets!
+                        The polar vortex can weaken allowing the Arctic air to escape and bring frigid temperatures to Canada and the United States like it did on December 30, 2018.`
             }
         }
     },
 
     {
         "title": "Precipitation",
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precipitation_vp9_good_crf54.webm",
+        "dateStart": new Date("2017-08-16T00:00:00"),
         "framePeriod": 3600,
         "colorbar": "img/colorbars/precipitation_colorbar.png",
         "tooltips": {
@@ -49,6 +58,24 @@ let videos = [
                 "text": "<b>Lorem ipsum</b> dolor sit amet, <i>consectetur adipiscing elit</i>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
             }
         }
+    },
+
+    {
+        "title": "Sea surface temperature",
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/sst_vp9_good_crf32.webm",
+        "dateStart": new Date("2019-01-01T00:00:00"),
+        "framePeriod": 24 * 3600,
+        "colorbar": "img/colorbars/sst_colorbar.png",
+        "tooltips": {}
+    },
+
+    {
+        "title": "Ocean current speed",
+        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/ocean_speed_vp9_good_crf32.webm",
+        "dateStart": new Date("2020-01-01T00:00:00"),
+        "framePeriod": 24 * 3600,
+        "colorbar": "img/colorbars/ocean_speed_colorbar.png",
+        "tooltips": {}
     }
 ]
 

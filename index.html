@@ -74,8 +74,8 @@
   <!-- Main -->
   <div id="main">
 
-    <!-- Home -->
-    <section id="home" class="two">
+    <!-- About -->
+    <section id="about" class="two">
       <div class="container">
         <div class="row">
           <div class="4u 12u(mobile) text-justify">
@@ -135,14 +135,35 @@
           </div>
           <div class="research-description">
             <h4>Ocean model development</h4>
-            <p>Original developer of Oceananigans, a fast, friendly, and flexible Julia package for computational fluid dynamics on CPUs and GPUs. Developed as the ocean component for the Climate Modeling Alliance. Worked on implementing features such as GPU support, MPI, etc. Already used in 20+ publications by institutes around the world.</p>
+            <p>
+              My work has involved developing ocean models for climate modeling.
+              I am the original developer of <a href="https://github.com/CliMA/Oceananigans.jl" target="_blank">Oceananigans.jl</a>, a fast, friendly, and flexible Julia package for
+              computational fluid dynamics on CPUs and GPUs <a href="#oceananigans-paper">(Ramadhan et al., 2020)</a>.
+              Oceananigans.jl serves as the ocean component for the next-generation climate model being developed by the <a href="https://clima.caltech.edu/" target="_blank">Climate Modeling Alliance</a>.
+              I led development of the first release and implemented features to turn it into a fully-fledged ocean model.
+              I also worked on
+            </p>
+            <ul>
+              <li>implementing support for GPUs with CUDA and distributed computing with MPI,</li>
+              <li>supporting global ocean modeling on conformal cubed sphere grids,</li>
+              <li>collaborating with researchers to accelerate research at several institutions,</li>
+              <li>building comprehensive test suites with robust continuous integration pipelines,</li>
+              <li>and writing extensive documentation and tutorials.</li>
+            </ul>
           </div>
         </div>
 
         <div class="row research-area">
           <div class="research-description">
             <h4>Capturing missing physics in climate models using machine learning</h4>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
+            <p>
+              Even with today's immense computational resources, climate models cannot resolve every cloud in the atmosphere or eddying swirl in the ocean.
+              However, collectively these small-scale turbulent processes play a key role in setting Earth's climate.
+              The problem is that they are not well-represented in climate models.
+              <br>
+              My research takes simple yet robust models of these turbulent processes and augments the partial differential equations they solve with neural networks.
+              The augmented models are trained using resolved simulations of the turbulent process generated using Oceananigans.jl so the neural networks learn the missing physics <a href="#ndes-paper">(Ramadhan et al., 2023)</a>.
+            </p>
           </div>
           <div class="figure left-aligned">
             <div class="slideshow" id="slideshow2">
@@ -160,19 +181,28 @@
               <div><img src="img/Europa-ocean-model-schematic.png" /></div>
               <div><img src="img/Europa-ocean-model-zonal-velocity.png" /></div>
               <div><img src="img/Antarctic-meltwater-domain-schematic.jpg" /></div>
+              <div><img src="img/Oceananigans-KPP-parameters-MCMC.png" /></div>
             </div>
           </div>
           <div class="research-description">
             <h4>Fluid dynamics on Earth and other planets</h4>
-            Using Oceananigans in collaboration with others I 
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
+            <p>
+              In collaboration with oceanographers at MIT, we have leveraged Oceananigans.jl to tackle research problems requiring the speedup provided by GPUs.
+              For example, we have <a href="#uq-paper">fit oceanic convection models using Bayesian inference</a>, <a href="#antarctic-meltwater-paper">accurately modeled meltwater from Antarctic ice shelves</a>,
+              and even <a href="#icy-moons-paper">investigated the circulation of subsurface oceans on icy moons</a> such as Jupiter's <a href="https://en.wikipedia.org/wiki/Europa_(moon)#Subsurface_ocean">Europa</a>
+              and Saturn's <a href="https://en.wikipedia.org/wiki/Enceladus#Subsurface_water_ocean">Enceladus</a>.
+          </p>
           </div>
         </div>
 
         <div class="row research-area">
           <div class="research-description">
             <h4>Southern Ocean dynamics</h4>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce mi purus, placerat et mauris nec, rutrum feugiat mi. Vivamus pellentesque commodo mauris quis ultricies. Curabitur sed tellus ac libero mattis eleifend. Fusce vulputate accumsan orci, in ullamcorper mauris interdum a. Suspendisse lacinia nibh a fermentum placerat. Maecenas gravida erat risus, varius consectetur ligula dapibus eget. Pellentesque posuere, nisi vel faucibus vestibulum, magna ipsum feugiat leo, quis aliquam sem arcu eu dui. Fusce iaculis est nec facilisis tincidunt. 
+            <p>
+              I have done some work on bringing in a dynamical perspective to how the Southern Ocean's meridional overturning circulation interacts with the ocean surface and sea ice around Antarctica <a href="#antarctic-siz-paper">(Ramadhan et al., 2022)</a>.
+              This was done by inferring surface stress patterns from decades of observational satellite data.
+              We also investigated trends that may explain patterns and rates of Antarctic land ice loss and sea level rise.
+            </p>
           </div>
           <div class="figure left-aligned">
             <div class="slideshow" id="slideshow4">
@@ -181,6 +211,27 @@
             </div>
           </div>
         </div>
+
+        <div class="row research-area">
+          <div class="figure right-aligned">
+            <div class="slideshow" id="slideshow5">
+              <div><img src="img/Lagrangian-microbes-rock-paper-scissors-interaction.png" /></div>
+              <div><img src="img/Lagrangian-microbes-dynamics.png" /></div>
+            </div>
+          </div>
+          <div class="research-description">
+            <h4>Idealized modeling of the ecological dynamics of marine microbes</h4>
+            <p>
+              Marine microbial communities lie at the bottom of the oceanic food web sustaining all marine animal life.
+              The geographical structure of these microbial communities, and thus oceanic biodiversity, is set by short-range ecological interactions.
+              To investigate how these interactions affect biodiversity, we utilized an agent-based modeling approach in which millions of marine microbes are modeled as
+              particles that are advected by surface ocean currents derived from satellite observations.
+              The interaction was modeled using an imbalanced probabilistic rock-paper-scissors game leading to the reproduction of observed ecological phenomena.
+          </p>
+          </div>
+        </div>
+
+        <br>
 
         <h3>Old projects</h3>
 
@@ -356,7 +407,7 @@
         </div>
 
         <ol reversed>
-          <li>
+          <li id="ndes-paper">
             <b>Capturing missing physics in climate model parameterizations using neural differential equations</b><br>
             <u>A. Ramadhan</u>, J. C. Marshall, A. N. Souza, X. K. Lee, U. Piterbarg, A. Hillier, G. L. Wagner, C. Rackauckas, C. Hill, J.-M. Campin, R. Ferrari<br>
             Submitted to <i>Journal of Advances in Modeling Earth Systems</i> (2023).
@@ -378,20 +429,20 @@
           </li>
 
           <li>
-            <b>Observations of Upwelling and Downwelling Around Antarctica Mediated by Sea Ice</b><br>
+            <b id="antarctic-siz-paper">Observations of Upwelling and Downwelling Around Antarctica Mediated by Sea Ice</b><br>
             <u>A. Ramadhan</u>, J. Marshall, G. Meneghello, L. Illari, K. Speer<br>
             <i>Frontiers in Marine Science</i> <b>9</b>, 864808 (2022).
             <a href="https://doi.org/10.3389/fmars.2022.864808" target="_blank" class="button">doi</a>
           </li>
 
-          <li>
+          <li id="icy-moons-paper">
             <b>Exploring Ocean Circulation on Icy Moons Heated From Below</b><br>
             S. Bire, W. Kang, <u>A. Ramadhan</u>, J.-M. Campin, J. Marshall<br>
             <i>Journal of Geophysical Research: Planets</i> <b>127</b>, e2021JE007025 (2022).
             <a href="https://doi.org/10.1029/2021JE007025" target="_blank" class="button">doi</a>
           </li>
 
-          <li>
+          <li id="antarctic-meltwater-paper">
             <b>On the Settling Depth of Meltwater Escaping from beneath Antarctic Ice Shelves</b><br>
             C. W. Arnscheidt, J. Marshall, P. Dutrieux, C. D. Rye, <u>A. Ramadhan</u><br>
             <i>Journal of Physical Oceanography</i> <b>51</b>(7), 2257–2270 (2021).
@@ -406,14 +457,14 @@
           </li>
 
           <li>
-            <b>Uncertainty Quantification of Ocean Parameterizations: Application to the K-Profile-Parameterization for Penetrative Convection</b><br>
+            <b id="uq-paper">Uncertainty Quantification of Ocean Parameterizations: Application to the K-Profile-Parameterization for Penetrative Convection</b><br>
             A. N. Souza, G. L. Wagner, <u>A. Ramadhan</u>, B. Allen, V. Churavy, J. Schloss, J. Campin, C. Hill, A. Edelman, J. Marshall, G. Flierl, R. Ferrari<br>
             <i>Journal of Advances in Modeling Earth Systems</i> <b>12</b>, e2020MS002108 (2020).
             <a href="https://doi.org/10.1029/2020MS002108" target="_blank" class="button">doi</a>
             <a href="https://doi.org/10.1002/essoar.10502546.3" target="_blank" class="button">ESSOAr</a>
           </li>
 
-          <li>
+          <li id="oceananigans-paper">
             <b>Oceananigans.jl: Fast and friendly geophysical fluid dynamics on GPUs</b><br>
             <u>A. Ramadhan</u>, G. L. Wagner, C. Hill, J.-M. Campin, V. Churavy, T. Besard, A. Souza, A. Edelman, R. Ferrari, J. Marshall<br>
             <i>Journal of Open Source Software</i> <b>5</b>(53) 2018 (2020).
@@ -576,7 +627,7 @@
       // Original JavaScript code by Chirp Internet: chirpinternet.eu
       // Please acknowledge use of this code by including this header.
       
-      for (let n = 1; n <= 4; n++) {
+      for (let n = 1; n <= 5; n++) {
         let slideshow = document.getElementById(`slideshow${n}`);
         let arr = slideshow.getElementsByTagName("div");
         let fadeComplete = function(e) { slideshow.appendChild(arr[0]); };

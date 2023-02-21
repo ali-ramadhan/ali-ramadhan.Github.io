@@ -153,6 +153,18 @@ img {
   min-width: 400px;
 }
 
+.research-description p {
+  font-size: 14pt;
+  line-height: 1.6;
+  margin-bottom: 0.5em;
+}
+
+.research-description ul {
+  font-size: 14pt;
+  line-height: 1.6;
+  padding-left: 1.5em;
+}
+
 .slideshow {
   min-height: 400px;
 }

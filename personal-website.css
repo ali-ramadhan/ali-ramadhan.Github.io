@@ -59,6 +59,15 @@ img {
   background-image: none;
 }
 
+#about-me-text {
+  line-height: 1.5;
+}
+
+#about-me-text p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 /*
  * Nav + logo
  */

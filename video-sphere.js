@@ -9,9 +9,7 @@ import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/
 
 let videos = [
     {
-        "title": "Temperature",
-        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature.mp4",
-        "dateStart": new Date("2015-08-01T00:00:00"),
+        "framePeriod": 3600,
         "colorbar": "img/colorbars/temperature_colorbar.png",
         "tooltips": {
             "Boston": {
@@ -33,8 +31,7 @@ let videos = [
 
     {
         "title": "Precipitation",
-        "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precip.webm",
-        "dateStart": new Date("2020-03-14T00:00:00"),
+        "framePeriod": 3600,
         "colorbar": "img/colorbars/precipitation_colorbar.png",
         "tooltips": {
             "Edmonton": {
@@ -79,9 +76,9 @@ function cosd(theta) {
     return Math.cos(deg2rad(theta));
 }
 
-function addHours(d, h) {
+function addSeconds(d, s) {
     let d2 = structuredClone(d);
-    d2.setTime(d2.getTime() + (h*60*60*1000));
+    d2.setTime(d2.getTime() + (1000*s));
     return d2;
 }
 
@@ -116,6 +113,8 @@ controls.enablePan = false;
 let sphere = new THREE.SphereGeometry(1, 128, 64);
 let sphereMeshMaterial = new THREE.MeshBasicMaterial();
 let sphereMesh = new THREE.Mesh(sphere, sphereMeshMaterial);
+
+// sphere.rotateX(Math.PI / 4); // Center on North America.
 scene.add(sphereMesh);
 
 window.addEventListener("resize", onWindowResize);
@@ -239,8 +238,9 @@ rightArrow.addEventListener('click', (event) => {
 
 function updateVideoCaption() {
     let dateStart = videos[currentVideo]["dateStart"];
+    let framePeriod = videos[currentVideo]["framePeriod"];
     let frameNum = Math.floor(videoFramerate * video.currentTime);
-    let dateFrame = addHours(dateStart, frameNum);
+    let dateFrame = addSeconds(dateStart, frameNum * framePeriod);
 
     let videoCaption = document.getElementById("video-caption");
     videoCaption.textContent = `${dateFrame.toISOString().slice(0, -8)}Z`;

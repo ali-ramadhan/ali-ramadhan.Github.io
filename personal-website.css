@@ -1,0 +1,264 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+
+/*
+ * Entire page
+ */
+
+body {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-size: 16pt;
+  font-weight: normal;
+  font-weight: 400;
+  color: #444444;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: #444444;
+}
+
+strong, b {
+  font-weight: 600;
+  color: #444444;
+}
+
+input, textarea, select {
+  font-weight: 400;
+  color: #444444;
+}
+
+ol {
+  list-style-type: decimal;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+* {
+  scroll-behavior: smooth !important;
+}
+
+.container {
+  text-align: left;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#main > section.three {
+  background-color: white;
+  background-image: none;
+}
+
+#about-me-text {
+  line-height: 1.5;
+}
+
+#about-me-text p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+/*
+ * Nav + logo
+ */
+
+#logo {
+  text-align: center;
+}
+
+#logo h1 {
+  font-size: 18pt;
+}
+
+#logo p {
+  font-size: 14pt;
+}
+
+#personal-photo {
+  width: 75%;
+  border-radius: 10px;
+}
+
+#nav {
+  font-size: 18pt;
+}
+
+#nav h1 {
+  font-size: 16pt;
+  font-weight: 600;
+  color: white;
+  padding-right: 1.5em;
+}
+
+#nav ul li a {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+#nav ul li a:hover {
+  color: white;
+}
+
+#nav ul li a:hover span:before {
+  color: #e27689;
+}
+
+/*
+#nav ul li a.active {
+  background: rgba(0,0,0,0.25);
+  box-shadow: inset 0 0 0.5em 0 rgba(0,0,0,0.25);
+  color: #fff;
+}
+
+#nav ul li a.active span:before{
+  color: #e27689;
+}
+*/
+
+/*
+ * Research areas
+ */
+
+ .research-area {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+}
+
+/*
+ * Image fading slideshow
+ * Source: https://www.the-art-of-web.com/css/fading-slideshow-no-jquery/
+ */
+
+ .right-aligned {
+  margin-left: auto;
+}
+
+.left-aligned {
+  margin-right: auto;
+}
+
+.figure {
+  width: 400px;
+  height: 400px;
+  padding: 10px 10px;
+}
+
+.research-description {
+  width: 50%;
+  min-width: 400px;
+}
+
+.research-description p {
+  font-size: 14pt;
+  line-height: 1.6;
+  margin-bottom: 0.5em;
+}
+
+.research-description ul {
+  font-size: 14pt;
+  line-height: 1.6;
+  padding-left: 1.5em;
+}
+
+.slideshow {
+  min-height: 400px;
+}
+
+.slideshow div {
+  position: absolute;
+  padding: 10px;
+  width: 400px;
+  height: 400px;
+}
+
+/* .slideshow div img {
+  width: inherit;
+  height: inherit;
+} */
+
+.slideshow div:nth-of-type(1) {
+  animation-name: fader;
+  animation-delay: 5s;
+  animation-duration: 1.5s;
+  z-index: 20;
+}
+
+.slideshow div:nth-of-type(2) {
+  z-index: 10;
+}
+
+.slideshow div:nth-of-type(n+3) {
+  display: none;
+}
+
+@keyframes fader {
+  from { opacity: 1.0; }
+  to   { opacity: 0.0; }
+}
+
+/*
+ * Project descriptions
+ */
+
+.project-title {
+  font-size: 18pt;
+  cursor: pointer;
+  padding-left: 0.5em;
+}
+
+.initially-hidden {
+  display: none;
+  padding-left: 0.5em;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.tighter-list {
+  padding-top: 0px;
+}
+
+#research {
+  background-color: #fff;
+  background-image: none;
+}
+
+#grephene-setup-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#lovelace-img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*
+ * Publications
+ */
+
+.button {
+  color: black;
+  font-size: 14pt;
+  line-height: 1;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px 5px;
+}

@@ -197,7 +197,7 @@ video_options.add(options, 'show_colorbar').name('Show colorbar').onChange(funct
     }
 })
 
-video_options.open();
+// video_options.open();
 
 /////
 ///// video sphere setup
@@ -218,7 +218,7 @@ function selectVideo(n) {
 
     let videoTitle = document.getElementById("video-title");
     videoTitle.innerHTML = videos[n]["title"];
-    
+
     video.src = videos[n]["src"];
     video.play();
 
@@ -230,20 +230,20 @@ function selectVideo(n) {
     for (const [name, tooltip] of Object.entries(videos[n]["tooltips"])) {
         let tooltipLatitude = tooltip["latitude"];
         let tooltipLongitude = tooltip["longitude"];
-    
+
         let [tooltipX, tooltipY, tooltipZ] = latlon2xyz(tooltipLatitude, tooltipLongitude);
-    
+
         let tooltipGeometry = new THREE.CircleGeometry(0.05, 25);
         let tooltipMaterial = new THREE.MeshBasicMaterial({color: tooltip["color"], transparent: true, opacity: 0.5});
         let tooltipMesh = new THREE.Mesh(tooltipGeometry, tooltipMaterial);
-    
+
         tooltipMesh.name = name;
         tooltipMesh.position.set(tooltipX, tooltipY, tooltipZ);
         tooltipMesh.lookAt(1.1*tooltipX, 1.1*tooltipY, 1.1*tooltipZ); // Make the circle flat on the sphere.
-    
+
         tooltipMeshGroup.add(tooltipMesh);
     }
-    
+
     scene.add(tooltipMeshGroup);
 }
 
@@ -280,7 +280,7 @@ function latlon2xyz(lat, lon) {
     let x = sind(90 - lat) * cosd(-lon);
     let y = sind(90 - lat) * sind(-lon);
     let z = cosd(90 - lat);
-    
+
     // Switching y and z corresponds to a +90 degree rotation around the x-axis.
     return [x, z, y];
 }

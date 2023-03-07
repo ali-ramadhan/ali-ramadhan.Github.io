@@ -15,7 +15,8 @@ let videos = [
         "framePeriod": 3600,
         "colorbar": "img/colorbars/temperature_colorbar.png",
         "tooltips": {
-            "Mankato, KS": {
+            "Diurnal cycle": {
+                // GPS @ Mankato, KS: Very close to the geographical center of the contiguous states.
                 "latitude": 39.78723,
                 "longitude": -98.21005,
                 "color": "red",
@@ -25,13 +26,34 @@ let videos = [
                         The diurnal cycle is especially prominent in high desert regions such as the Tibetan and Andean Plateaus.`
             },
             "Polar Vortex": {
-                "latitude": 82.4987,
-                "longitude": -123.11934,
+                "latitude": 82.4987, // Same latitude as Alert, NU
+                "longitude": -123.11934, // Same longitude as Vancouver, BC
                 "color": "gold",
                 "title": "The polar vortex",
                 "text": `Strong circumpolar winds encircle the North Pole high up in the stratosphere (15-50 km high), trapping a huge mass of cold air.
                         This feature of the atmosphere's circulation is called the polar vortex and another one exists at the South Pole too as well as on some other planets!
                         The polar vortex can weaken allowing the Arctic air to escape and bring frigid temperatures to Canada and the United States like it did on December 30, 2018.`
+            },
+            "Extratropics": {
+                // GPS @ 10° south of Adak, AK.
+                "latitude": 41.87395,
+                "longitude": -176.63402,
+                "color": "red",
+                "title": "Extratropical weather",
+                "text": `The weather of the extratropics is highly variable due to the constant clashing of cold polar air masses from the north and warm tropical air masses from the south,
+                         which leads to the creation of weather fronts. The jet stream flows eastward driving weather patterns and storms towards the east as well.
+                         You can see this here as the temperature patterns get advected eastward.`
+            },
+            "Tropics": {
+                // GPS @ 30° west of Managua, Nicaragua
+                "latitude": 12.13282,
+                "longitude": -116.2504,
+                "color": "green",
+                "title": "Tropical weather",
+                "text": `The weather of the tropics is less variable than the extratropics.
+                         This is due to the relatively constant amount of solar radiation they receive throughout the year.
+                         The warm ocean also provides a constant source of warm moist air which inhibits weather systems from forming.
+                         You can still get powerful thunderstorms and monsoons over land, but the tropical ocean is pretty quiet.`
             }
         }
     },
@@ -43,20 +65,49 @@ let videos = [
         "framePeriod": 3600,
         "colorbar": "img/colorbars/precipitation_colorbar.png",
         "tooltips": {
-            "Edmonton": {
-                "latitude": 53.5461,
-                "longitude": -113.4937,
+            "Hurricane Harvey": {
+                // GPS @ Rockport, TX where Hurricane Harvey made landfall.
+                "latitude": 28.02077,
+                "longitude": -97.05601,
                 "color": "green",
-                "title": "Edmonton!!!",
-                "text": "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                "title": "Hurricane Harvey",
+                "text": `Here you can see where Hurricane Harvey made landfall near Rockport, Texas on August 25, 2017.
+                         It was a Category 4 hurricane with maximum sustained winds of 130 mph, making it the strongest hurricane to hit the United States since Hurricane Charley in 2004.
+                         It dumped over 40 inches of rain in some areas and caused an estimated $125 billion in damage, making it one of the costliest hurricanes in U.S. history.`
             },
-            "Vegas": {
-                "latitude": 19.4326,
-                "longitude": -99.1332,
+            "ITCZ": {
+                // GPS @ 20° west of Cartago, Costa Rica
+                "latitude": 9.86444,
+                "longitude": -83.91944,
                 "color": "brown",
-                "title": "Mexico City",
-                "text": "<b>Lorem ipsum</b> dolor sit amet, <i>consectetur adipiscing elit</i>, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
+                "title": "The InterTropical Convergence Zone (ITCZ)",
+                "text": `The Intertropical Convergence Zone (ITCZ) is a region near the equator where trade winds from the northern and southern hemispheres converge.
+                         This leads to high precipitation rates, especially visible here over the Pacific.
+                         The ITCZ is a critical source of precipitation for many equatorial regions and drives ocean currents.
+                         It's location and intensity is sensitive to changes in climate and is expected to shift in response to climate change.`
+            },
+            "Tropical precipitation": {
+                // GPS @ Mbuji-Mayi, Democratic Republic of the Congo
+                "latitude": -6.13603,
+                "longitude": 23.58979,
+                "color": "brown",
+                "title": "Tropical precipitation",
+                "text": `Powerful thunderstorms tend to form near the equator due to the abundance of warm moist air, intense solar radiation, and atmospheric convergence of the trade winds.
+                         You can see this happening almost every day over the Congo basin.`
+            },
+            "Orographic precipitation": {
+                // GPS @ Prince Rupert, BC
+                "latitude": 54.31507,
+                "longitude": -130.32098,
+                "color": "brown",
+                "title": "Orographic precipitation",
+                "text": `Here the prevailing winds bring moist air from the Pacific Ocean and over the Rocky Mountains, where it cools and condenses into clouds as it rises.
+                         This leads to heavy precipitation, especially over the coastal Pacific Northwest due to the how steep the mountains are and how close they are to the coast.
+                         You can see several storms hitting the coast and dissipating before they get a chance to penetrate inland.`
             }
+            // Monsoons?
+            // Another tropical cyclone over China?
+            // Another one hitting Baja California?
         }
     },
 
@@ -66,7 +117,28 @@ let videos = [
         "dateStart": new Date("2019-01-01T00:00:00"),
         "framePeriod": 24 * 3600,
         "colorbar": "img/colorbars/sst_colorbar.png",
-        "tooltips": {}
+        "tooltips": {
+            "Gulf stream": {
+                // GPS @ 10° east of Cambridge, MA
+                "latitude": 42.3751,
+                "longitude":  -71.10561,
+                "color": "gold",
+                "title": "The Gulf Stream",
+                "text": `Here you can see the Gulf Stream, a warm ocean current that flows from the Gulf of Mexico to the North Atlantic.
+                         By transporting warm water from the tropics to higher latitudes, it moderates the climate of Western Europe.
+                         You can see the strong temperature gradient between the cold waters of the North Atlantic and warmer waters southward.`
+            },
+            "ACC": {
+                // GPS @ Marion Island, South Africa
+                "latitude": -46.90337,
+                "longitude": 37.75452,
+                "color": "gold",
+                "title": "The Antarctic Circumpolar Current (ACC)",
+                "text": `Strong eastward winds encircle Antarctica clockwise and without any land to stop them the winds spin up the strongest ocean current on Earth.
+                         The ACC acts as a barrier to the mixing of warm and cold waters, allowing the Antarctic to maintain its huge ice sheet.
+                         You can see the strong temperature gradient between the cold waters of the Southern Ocean and warmer waters northward.`
+            }
+        }
     },
 
     {
@@ -75,7 +147,37 @@ let videos = [
         "dateStart": new Date("2020-01-01T00:00:00"),
         "framePeriod": 24 * 3600,
         "colorbar": "img/colorbars/ocean_speed_colorbar.png",
-        "tooltips": {}
+        "tooltips": {
+            "Gulf stream": {
+                // GPS @ 10° east of Cambridge, MA
+                "latitude": 42.3751,
+                "longitude":  -71.10561,
+                "color": "gold",
+                "title": "The Gulf Stream",
+                "text": `Here you can see the Gulf Stream, a warm ocean current that flows from the Gulf of Mexico to the North Atlantic.
+                         By transporting warm water from the tropics to higher latitudes, it moderates the climate of Western Europe.`
+            },
+            "ACC": {
+                // GPS @ Marion Island, South Africa
+                "latitude": 0,
+                "longitude": 37.75452,
+                "color": "gold",
+                "title": "The Antarctic Circumpolar Current",
+                "text": `Strong eastward winds encircle Antarctica clockwise and without any land to stop them the winds spin up the strongest ocean current on Earth.
+                         The ACC acts as a barrier to the mixing of warm and cold waters, allowing the Antarctic to maintain its huge ice sheet.`
+            },
+            "Agulhaus rings": {
+                // GPS @ Cape Town, South Africa
+                "latitude": -33.92584,
+                "longitude": 18.42322,
+                "color": "gold",
+                "title": "Agulhaus rings",
+                "text": `Agulhas rings are large, swirling masses of water that are shed from the Agulhas Current off the coast of South Africa.
+                         The rings transport warm, salty water and nutrients from the Indian Ocean into the Atlantic Ocean. They also look pretty.`
+            },
+            // Kuroshio?
+            // Gyres?
+        }
     }
 ]
 

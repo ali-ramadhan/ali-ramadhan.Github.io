@@ -28,61 +28,14 @@ title: Ali Ramadhan
 
   {% include footer.html %}
 
-  <!-- Scripts -->
   <script src="/assets/js/jquery.min.js"></script>
   <script src="/assets/js/jquery.scrolly.min.js"></script>
   <script src="/assets/js/jquery.scrollzer.min.js"></script>
   <script src="/assets/js/skel.min.js"></script>
   <script src="/assets/js/util.js"></script>
   <script src="/assets/js/main.js"></script>
-
-  <!-- Expandable research project descriptions. -->
-  <script type="text/javascript">
-    $(document).ready(function () {
-
-      var totalDescriptions = 5;
-      var researchDescriptionOpen = [false, false, false, false, false];
-
-      // project title event listener (PTEL)
-      function generatePTEL(j) {
-        return function (event) {
-          if (researchDescriptionOpen[j]) {
-            researchDescriptionOpen[j] = false;
-            $('#researchDescription' + j).hide(500);
-            $(this).find($('.fa')).removeClass('fa-minus-square').addClass('fa-plus-square');
-          } else {
-            researchDescriptionOpen[j] = true;
-            $('#researchDescription' + j).show(500);
-            $(this).find($('.fa')).removeClass('fa-plus-square').addClass('fa-minus-square');
-          }
-        };
-      }
-
-      for (i = 1; i <= totalDescriptions; i++) {
-        $('#projectTitle' + i).on('click', generatePTEL(i));
-      }
-    });
-  </script>
-
-  <script type="text/javascript">
-
-    window.addEventListener("DOMContentLoaded", function(e) {
-
-      // Original JavaScript code by Chirp Internet: chirpinternet.eu
-      // Please acknowledge use of this code by including this header.
-
-      for (let n = 1; n <= 5; n++) {
-        let slideshow = document.getElementById(`slideshow${n}`);
-        let arr = slideshow.getElementsByTagName("div");
-        let fadeComplete = function(e) { slideshow.appendChild(arr[0]); };
-        for(let i = 0; i < arr.length; i++) {
-          arr[i].addEventListener("animationend", fadeComplete, false);
-        }
-      }
-
-    }, false);
-
-  </script>
+  <script src="/assets/js/expandable_descriptions.js"></script>
+  <script src="/assets/js/slideshow.js"></script>
 
 </body>
 

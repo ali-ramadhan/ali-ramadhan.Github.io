@@ -1,0 +1,57 @@
+.post-title {
+    font-size: 3rem;
+    font-weight: 600;
+    line-height: 1.5em;
+}
+
+.post-date {
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1.5em;
+}
+
+p {
+    margin: 0.5em 0;
+}
+
+#main > section {
+    background-color: white;
+    background-image: none;
+}
+
+img.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*
+ * Code blocks
+ */
+
+pre {
+    overflow-x: auto; /* add scrollbars to wide code blocks*/
+}
+
+code {
+    font-family: monospace;
+    font-size: inherit;
+    border-radius: 0.5em;
+    position: relative;
+    font-size: 0.75em;
+    line-height: 1.5em;
+}
+
+label {
+    position: absolute;
+    color: lightgray;
+    top: 0px;
+    right: 0px;
+    padding: 2px 4px;
+    font-family: monospace;
+    text-transform: uppercase;
+    font-size: 1em;
+    line-height: 1.5em;
+    background-color: darkslategray;
+    border-bottom-left-radius: .375em;
+}

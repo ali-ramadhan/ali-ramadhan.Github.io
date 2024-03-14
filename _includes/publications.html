@@ -24,7 +24,9 @@
           {% case publication.status %}
             {% when "published" %}
               <i>{{ publication.journal }}</i>
-              <b>{{ publication.volume }}</b>{% if publication.subvolume %}({{ publication.subvolume }}){% endif %},
+              {% if publication.volume %}
+                <b>{{ publication.volume }}</b>{% if publication.subvolume %}({{ publication.subvolume }}){% endif %},
+              {% endif %}
               {{ publication.pages }}
               ({{ publication.year }}).
             {% when "submitted" %}

@@ -3,10 +3,37 @@ layout: post
 title: Loading weather data into PostgreSQL and TimescaleDB as fast as possible
 ---
 
-* Show a frame from the ERA5 temperature movie.
-* Show a time series from one location?
+Data TODO:
+* Run parallel tool benchmarks. Can only run timescaledb-parallel-copy since pg_bulkload doesn't do multithreading.
 
 ## What are we even doing?
+
+We have _tons_ of weather data we can analyze to look for signals of climate change.
+Include? The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality.
+ERA5 now has data stretching back to 1940.
+Global snapshots of variables like temperature or precipitation. The dataset has ~727k snapshots for each variable.
+Long timeseries for each grid point. The dataset has ~1 million such time series for each variable.
+We might want to look at localized temporal patterns, e.g. how much warmer is Dallas these days compared to previous decades? Is Dallas getting drier or wetter?
+We might want to look for geospatial patterns.
+We might want to look at both: e.g. how much warmer is Chile? Is it getting cloudier in the Japanese province of Sapporo?
+Instead of using climate model predictions, which can have lots of uncertainty but do have lots of singal, why not dig into this trove of past weather data to answer questions about climate change.
+The data is distributed as NetCDF files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
+You might want to run this kind of analysis in many places so we need _fast_queries.
+I'm hoping that PostgreSQL with TimescaleDB can be great for analyzing weather time series. And with PostGIS we'll be able to run fast temporal-geospatial queries too. But to get there we first need to load all this data into Postgres and this is what this post is about.
+
+| ![Temperature](/img/insert_benchmarks/temperature_figure.png){: .centered width="100%"} |
+|:--:|
+| *Temperature.* |
+
+| ![Temperature](/img/insert_benchmarks/precipitation_figure.png){: .centered width="100%"} |
+|:--:|
+| *Precipitation.* |
+
+| ![Temperature](/img/insert_benchmarks/zoom_plot_temperature_Durban.png){: .centered width="100%"} |
+|:--:|
+| *Temperature in Durban.* |
+
+
 
 * I want to analyze ERA5 data using complex queries _quickly_. Maybe temporal queries at first, i.e. acting on time series then spatiotemporal later.
 * What's ERA5?
@@ -21,7 +48,8 @@ title: Loading weather data into PostgreSQL and TimescaleDB as fast as possible
 
 ## What's the data?
 
-* 1036800 locations
+* 727,080 snapshots in time.
+* 1,036,800 locations
 * How much data? How many rows? The data stretches back to 1940 so that's roughly (83 years) * (24*365 hours per year) * (360/0.25 * 180/0.25 grid points) ≈ 754 billions rows.
 
 ```sql
@@ -38,6 +66,8 @@ create table (
     snowfall float4
 );
 ```
+
+And before you scream about the third normal form, yes I have both a `location_id` column and `latitude` and `longitude` columns for now so I can benchmark whether spatial queries benefit from a normalized `locations` table.
 
 ## Starting with just the `insert` statement
 
@@ -93,7 +123,7 @@ insert into weather (
     (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
 ```
 
-| ![Insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png){: .centered width="80%"} |
+| ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png){: .centered width="80%"} |
 |:--:|
 | *Blue bars show the insert rate into a regular PostgreSQL table, while orange bars show the insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
@@ -104,10 +134,31 @@ This is an order-of-magnitude improvement but at ~30k inserts per second, we're 
 
 ## Upgrading to the `copy` statement
 
-| ![Insert benchmarks](/img/insert_benchmarks/benchmarks_copy.png){: .centered width="80%"} |
+| ![Copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png){: .centered width="80%"} |
 |:--:|
 | *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
+## Parallel `copy`
+
+| ![Parallel copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_copy.png){: .centered width="80%"} |
+|:--:|
+| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+
+## `copy` at scale
+
+| ![Copy at scale benchmarks](/img/insert_benchmarks/benchmarks_copy_at_scale.png){: .centered width="80%"} |
+|:--:|
+| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+
+## Tools
+
+| ![Tool benchmarks](/img/insert_benchmarks/benchmarks_tools.png){: .centered width="80%"} |
+|:--:|
+| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+
+## Appendix: Source code
+
+* Link to https://github.com/ali-ramadhan/how-much-climate-change/tree/main/benchmark_data_loading or spawn off a new repo just for this?
 
 ## Appendix: Benchmarking methodology
 
@@ -125,7 +176,6 @@ Software:
 
 * Mention hardware and environment.
 * Mention how a fresh Docker container was spun up for each benchmark.
-
 
 ## Appendix: Notes
 

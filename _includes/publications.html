@@ -10,6 +10,32 @@
     </div>
 
     <ol reversed class="indented-list">
+      {% for publication in site.data.publications %}
+        <li id="{{ publication.id }}">
+          <b>{{ publication.title }}</b><br>
+          {% for author in publication.authors %}
+            {% if author == "A. Ramadhan" %}
+              <u>{{ author }}</u>{% unless forloop.last %}, {% endunless %}
+            {% else %}
+              {{ author }}{% unless forloop.last %}, {% endunless %}
+            {% endif %}
+          {% endfor %}
+          <br>
+          {% case publication.status %}
+            {% when "submitted" %}
+              Submitted to <i>{{ publication.journal }}</i> ({{ publication.year }}).
+            {% when "published" %}
+
+            {% else %}
+          {% endcase %}
+          {% for link in publication.links %}
+            <a href="{{ link.url }}" target="_blank" class="button">{{ link.type }}</a>
+          {% endfor %}
+        </li>
+      {% endfor %}
+    </ol>
+
+    <ol reversed class="indented-list">
       <li id="ndes-paper">
         <b>Capturing missing physics in climate model parameterizations using neural differential equations</b><br>
         <u>A. Ramadhan</u>, J. C. Marshall, A. N. Souza, X. K. Lee, U. Piterbarg, A. Hillier, G. L. Wagner, C. Rackauckas, C. Hill, J.-M. Campin, R. Ferrari<br>

@@ -1,11 +1,11 @@
 .post-title {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: 600;
     line-height: 1.5em;
 }
 
 .post-date {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     line-height: 1.5em;
 }
@@ -37,17 +37,23 @@ img.centered {
     margin-right: auto;
 }
 
-ol > li, ul > li {
+.toc-list > li, ul > li {
     margin-left: 10px;
 }
 
 .toc-list {
-  list-style-type: decimal;
+    list-style-type: decimal;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 }
 
 .toc-sublist {
-  list-style-type: lower-alpha;
-  margin: 0;
+    list-style-type: lower-alpha;
+    margin-left: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /*
@@ -61,10 +67,12 @@ pre {
 code {
     font-family: monospace;
     font-size: inherit;
-    border-radius: 0.5em;
     position: relative;
     font-size: 0.75em;
     line-height: 1.5em;
+    border-radius: 0.3em;
+    padding: 2px 6px;
+    background: rgba(169, 169, 169, 0.5);
 }
 
 label {

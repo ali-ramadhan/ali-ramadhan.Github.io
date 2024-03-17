@@ -33,6 +33,9 @@ GEM
       webrick (~> 1.7)
     jekyll-sass-converter (3.0.0)
       sass-embedded (~> 1.54)
+    jekyll-toc (0.18.0)
+      jekyll (>= 3.9)
+      nokogiri (~> 1.12)
     jekyll-watch (2.2.1)
       listen (~> 3.0)
     kramdown (2.4.0)
@@ -44,9 +47,12 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     mercenary (0.4.0)
+    nokogiri (1.15.6-x86_64-linux)
+      racc (~> 1.4)
     pathutil (0.16.2)
       forwardable-extended (~> 2.6)
     public_suffix (5.0.4)
+    racc (1.7.3)
     rake (13.1.0)
     rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
@@ -67,6 +73,7 @@ PLATFORMS
 
 DEPENDENCIES
   jekyll (~> 4.3)
+  jekyll-toc (~> 0.18.0)
 
 BUNDLED WITH
    2.4.22

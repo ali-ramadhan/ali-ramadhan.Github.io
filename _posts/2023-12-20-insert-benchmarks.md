@@ -1,56 +1,52 @@
 ---
 layout: post
-title: Loading weather data into PostgreSQL and TimescaleDB as fast as possible
+title: "Building a weather data warehouse part I: Benchmarking loading 80 years of global weather data into PostgreSQL and TimescaleDB as fast as possible"
+toc: true
 ---
 
-Data TODO:
-* Run parallel tool benchmarks. Can only run timescaledb-parallel-copy since pg_bulkload doesn't do multithreading.
+# What are we even doing?
 
-## What are we even doing?
+## Why build a weather data warehouse?
 
-We have _tons_ of weather data we can analyze to look for signals of climate change.
-Include? The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality.
-ERA5 now has data stretching back to 1940.
-Global snapshots of variables like temperature or precipitation. The dataset has ~727k snapshots for each variable.
-Long timeseries for each grid point. The dataset has ~1 million such time series for each variable.
-We might want to look at localized temporal patterns, e.g. how much warmer is Dallas these days compared to previous decades? Is Dallas getting drier or wetter?
-We might want to look for geospatial patterns.
-We might want to look at both: e.g. how much warmer is Chile? Is it getting cloudier in the Japanese province of Sapporo?
-Instead of using climate model predictions, which can have lots of uncertainty but do have lots of singal, why not dig into this trove of past weather data to answer questions about climate change.
-The data is distributed as NetCDF files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
-You might want to run this kind of analysis in many places so we need _fast_queries.
-I'm hoping that PostgreSQL with TimescaleDB can be great for analyzing weather time series. And with PostGIS we'll be able to run fast temporal-geospatial queries too. But to get there we first need to load all this data into Postgres and this is what this post is about.
+We have _tons_ of weather data we can analyze to look for signals of climate change. In particular, I'm interested in figuring out how much climate change we've _already_ had. This questions is maybe best answered by looking at historical weather data.
 
-| ![Temperature](/img/insert_benchmarks/temperature_figure.png){: .centered width="100%"} |
-|:--:|
-| *Temperature.* |
+It's pretty common to look at climate model projections and think about future climate change, but there are plenty of anecdotes about how the weather isn't what it used to be.
 
-| ![Temperature](/img/insert_benchmarks/precipitation_figure.png){: .centered width="100%"} |
-|:--:|
-| *Precipitation.* |
+We might want to look at localized temporal statistics: how much warmer is Dallas these days compared to previous decades? Is Dallas getting drier or wetter? Does it receive fewer but more intense storms?
+We might want to look at geospatial-temporal statistics: how much warmer is Chile? Are all parts of Chile warming or are there regions that are cooling? Is it getting cloudier in the Japanese province of Sapporo?
 
-| ![Temperature](/img/insert_benchmarks/zoom_plot_temperature_Durban.png){: .centered width="100%"} |
-|:--:|
-| *Temperature in Durban.* |
+It would be cool if we could query a weather data warehouse to answer these questions, potentially for _many_ places. I also have zero budget, so I think it would be cool to try building the data warehouse on a local machine using PostgreSQL with TimescaleDB. I don't know anything about them so it should be a good learning experience but it sounds like together they can be great for analyzing weather time series. And if we add PostGIS we'll be able to run temporal-geospatial queries too.
 
+To get there though we first need to load all this data into Postgres and this is what this post is about. Initial attempts at loading the data seemed slow so I wanted to investigate how to do this fast, leading me down this rabbit hole.
 
-
-* I want to analyze ERA5 data using complex queries _quickly_. Maybe temporal queries at first, i.e. acting on time series then spatiotemporal later.
-* What's ERA5?
-* It comes as NetCDF files. What's that?
-* Can analyze them using xarray, dask, Pangeo stack, etc.
-* But this is slow because the data is chunked in time. So reading a time series from disk can be extremely slow.
-* I want to see if PostgreSQL can help. And TimescaleDB looks promising. Also good opportunity to learn both.
-* Initial attempts at loading the data seemed slow so I wanted to investigate how to do this fast, leading me down this rabbit hole.
-* Found some existing articles on this but not satisfied. Should I say this?
-* Are we building a data warehouse? Maybe, I don't even know.
-* Is a relational database even appropriate for gridded weather data? No idea, but TimescaleDB makes a good point.
+Are we building a data warehouse? Maybe, I don't even know. Is a relational database even appropriate for gridded weather data? No idea, but TimescaleDB makes a good point.
 
 ## What's the data?
 
-* 727,080 snapshots in time.
-* 1,036,800 locations
-* How much data? How many rows? The data stretches back to 1940 so that's roughly (83 years) * (24*365 hours per year) * (360/0.25 * 180/0.25 grid points) ≈ 754 billions rows.
+We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with ERA5 _reanalysis_ data. It's our best estimate of the state of the Earth's weather. The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality. Here are two snapshots of what this data looks like for at one point in time.
+
+| ![Temperature](/img/insert_benchmarks/temperature_figure.png){: .centered width="100%"} |
+|:--:|
+| *Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC. Move closer to title?* |
+
+| ![Temperature](/img/insert_benchmarks/precipitation_figure.png){: .centered width="100%"} |
+|:--:|
+| *Global snapshot of precipitation rate at 2018-12-04 04:00:00 UTC.* |
+
+So the data covers the entire globe at 0.25 degree resolution, and stretches back in time to 1940 with hourly resolution. Here's what a time series of temperature looks like at one location.
+
+| ![Temperature](/img/insert_benchmarks/zoom_plot_temperature_Durban.png){: .centered width="100%"} |
+|:--:|
+| *Time series of surface temperature near Durban, South Africa.* |
+
+Hourly data stretching back to 1940 is 727,080 snapshots in time for each variable like temperature, precipitation, cloud cover, wind speed, etc. And at 0.25 degree resolution we have 1,036,080 locations. Together that's 753,836,544,000 or ~754 billion rows of data if indexed by time and location. That's a good amount of data. And as I found out, it's not trivial to quickly shove this data into a relational database, much less be able to query it quickly.
+
+I'm not sure if a relational database is the best way to work with this kind of clean, regular data. But I find it cumbersome to work with and query in the form in which it is distributed. The data is distributed as NetCDF[^1] files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
+Can analyze them using xarray, dask, Pangeo stack, etc.
+
+[^1]: Explain NetCDF.
+
+For this post we'll just load in temperature, zonal and meridional wind speeds, total cloud cover, precipitation, and snowfall for each time and location so we'll use this table schema:
 
 ```sql
 create table (
@@ -67,11 +63,17 @@ create table (
 );
 ```
 
-And before you scream about the third normal form, yes I have both a `location_id` column and `latitude` and `longitude` columns for now so I can benchmark whether spatial queries benefit from a normalized `locations` table.
+And before you mention database normalization, yes I have both a `location_id` column and `latitude` and `longitude` columns. It's for later benchmarking whether spatial queries benefit from a normalized `locations` table.
+
+# The `insert` statement
 
 ## Starting with just the `insert` statement
 
 * Explain what an insert does under the hood. Why is it slow?
+
+Write-Ahead Logging[^2] (or WAL)
+
+[^2]: Explain WAL.
 
 This looks something like
 
@@ -87,7 +89,8 @@ insert into weather (
     total_cloud_cover,
     total_precipitation,
     snowfall
-) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+) values ('1995-03-10 16:00:00+00', 346441, -30, 30.25, 15.466888,
+          -2.0585022, 0.25202942, 0.9960022, 0.007845461, 0);
 ```
 
 although if you have a Pandas dataframe, you could just use `df.to_sql` with the `chunksize=1` kwarg.
@@ -105,6 +108,8 @@ Well, at only ~3000 inserts per second, we're gonna have to wait ~8 years for al
 
 * Explain what a multi-valued insert does under the hood. Why is it faster than a regular insert?
 
+Write-Ahead Logging (or WAL)
+
 ```sql
 insert into weather (
     time,
@@ -118,9 +123,12 @@ insert into weather (
     total_precipitation,
     snowfall
 ) values
-    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s),
-    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s),
-    (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+    ('1995-03-02 04:00:00+00', 346444, -30, 31, 21.54013,
+     7.1091003, 5.9887085, 1, 2.7820282, 0),
+    ('1995-03-02 05:00:00+00', 346444, -30, 31, 21.596466,
+     7.0369415, 6.2397766, 0.95751953, 2.1944494, 0),
+    ('1995-03-02 06:00:00+00', 346444, -30, 31, 21.660583,
+     6.303482, 6.017273, 0.88571167, 1.9253268, 0);
 ```
 
 | ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png){: .centered width="80%"} |
@@ -131,6 +139,8 @@ insert into weather (
 * Talk about chunksize. What is used? Is there a sweet spot?
 
 This is an order-of-magnitude improvement but at ~30k inserts per second, we're still gonna have to wait ~0.8 years or almost 10 months for all the data to load.
+
+# The `copy` statement
 
 ## Upgrading to the `copy` statement
 
@@ -150,17 +160,32 @@ This is an order-of-magnitude improvement but at ~30k inserts per second, we're 
 |:--:|
 | *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
-## Tools
+# Tools
 
 | ![Tool benchmarks](/img/insert_benchmarks/benchmarks_tools.png){: .centered width="80%"} |
 |:--:|
 | *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
-## Appendix: Source code
+tpc: We did 256 hours to see if it could keep up. Performance for the first minute (~50M rows?) could be really good (over 3 million rows inserted per second!) but it would always drop so sustained performance is lower.
+tpc with lots of workers: bottleneck seemed to be the SSD where all the workers were writing to the DB, not the HDD where the data was being read from.
+
+# So what's the best method?
+
+Figure out which tool is best. How many hours/days/weeks to load the data?
+What's the theoretical maximum based on SSD speed?
+
+They mention that the largest tables ran into several TBs, and they would have soon topped the max IOPS supported by RDS. RDS for PostgreSQL peaks at 256,000 IOPS for a 64 TB volume.
+We're already doing better than this on older hardware.
+
+At a sustained ~500k inserts per second, we're waiting 17~18 days which is not bad.
+
+# Appendices
+
+## Source code
 
 * Link to https://github.com/ali-ramadhan/how-much-climate-change/tree/main/benchmark_data_loading or spawn off a new repo just for this?
 
-## Appendix: Benchmarking methodology
+## Benchmarking methodology
 
 Hardware:
 * CPU: 2x 12-core Intel Xeon Silver 4214
@@ -177,6 +202,6 @@ Software:
 * Mention hardware and environment.
 * Mention how a fresh Docker container was spun up for each benchmark.
 
-## Appendix: Notes
+# Footnotes
 
-1. Wanted to try benchmarking SQLAlchemy ORM but: Can't do SQLAlchemy ORM as ORM requires a primary key, but Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables. Partitioned look-ups cannot support a primary key.
+Wanted to try benchmarking SQLAlchemy ORM but: Can't do SQLAlchemy ORM as ORM requires a primary key, but Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables. Partitioned look-ups cannot support a primary key.

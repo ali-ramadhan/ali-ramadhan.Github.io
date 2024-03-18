@@ -4,6 +4,10 @@ title: "Building a weather data warehouse part I: Benchmarking loading 80 years 
 toc: true
 ---
 
+| ![Temperature](/img/insert_benchmarks/temperature_figure.png) |
+|:--:|
+| *Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC.* |
+
 # What are we even doing?
 
 ## Why build a weather data warehouse?
@@ -26,10 +30,6 @@ Are we building a data warehouse? Maybe, I don't even know. Is a relational data
 We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with ERA5 _reanalysis_ data[^era5-explanation]. It's our best estimate of the state of the Earth's weather. The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality. Here are two snapshots of what this data looks like for at one point in time.
 
 [^era5-explanation]: https://en.wikipedia.org/wiki/ECMWF_re-analysis
-
-| ![Temperature](/img/insert_benchmarks/temperature_figure.png){: .centered width="100%"} |
-|:--:|
-| *Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC. Move closer to title?* |
 
 | ![Temperature](/img/insert_benchmarks/precipitation_figure.png){: .centered width="100%"} |
 |:--:|
@@ -113,7 +113,7 @@ How many rows can we actually insert per second using single-row inserts? I foun
 
 | ![Insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png) |
 |:--:|
-| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark inserted 20k rows and was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
 I benchmarked inserting into a regular Postgres table and a TimescaleDB hypertable[^hypertable-explanation].
 
@@ -128,8 +128,6 @@ Well, at best we're only getting ~3000 inserts per second with single-row insert
 ## Multi-valued `insert`
 
 * Explain what a multi-valued insert does under the hood. Why is it faster than a regular insert?
-
-Write-Ahead Logging (or WAL)
 
 ```sql
 insert into weather (
@@ -152,9 +150,9 @@ insert into weather (
      6.303482, 6.017273, 0.88571167, 1.9253268, 0);
 ```
 
-| ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png){: .centered width="80%"} |
+| ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png) |
 |:--:|
-| *Blue bars show the insert rate into a regular PostgreSQL table, while orange bars show the insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+| *Blue bars show the insert rate into a regular PostgreSQL table, while orange bars show the insert rate into a TimescaleDB hypertable. Each benchmark inserted 100k rows and was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
 * Explain why psycopg3 is fast and why sqlalchemy is slow.
 * Talk about chunksize. What is used? Is there a sweet spot?
@@ -204,21 +202,46 @@ At a sustained ~500k inserts per second, we're waiting 17~18 days which is not b
 
 ## Source code
 
-* Link to https://github.com/ali-ramadhan/how-much-climate-change/tree/main/benchmark_data_loading or spawn off a new repo just for this?
+Link to https://github.com/ali-ramadhan/how-much-climate-change/tree/main/benchmark_data_loading or spawn off a new repo just for this?
 
 ## Benchmarking methodology
+
+The hardware used is roughly 5 years old so newer hardware should be able to beat these benchmarks.
 
 Hardware:
 * CPU: 2x 12-core Intel Xeon Silver 4214
 * RAM: 16x 16 GiB Samsung M393A2K40CB2-CTD ECC DDR4 2666 MT/s
 * SSD: Intel SSDPEKNW020T8 2 TB NvME
 
-The hardware used is roughly 5 years old so newer hardware should be able to beat these benchmarks.
-
 Software:
 * Ubuntu with Linux kernel 5.15
-* PostgreSQL
-* TimescaleDB
+* PostgreSQL 15.5
+* TimescaleDB 2.13.0
+
+Postgres configuration:
+```plaintext
+timescaledb_weather | shared_buffers = 64144MB
+timescaledb_weather | effective_cache_size = 192434MB
+timescaledb_weather | maintenance_work_mem = 2047MB
+timescaledb_weather | work_mem = 13684kB
+timescaledb_weather | timescaledb.max_background_workers = 16
+timescaledb_weather | max_worker_processes = 67
+timescaledb_weather | max_parallel_workers_per_gather = 24
+timescaledb_weather | max_parallel_workers = 48
+timescaledb_weather | Writing backup to:
+timescaledb_weather | /tmp/timescaledb_tune.backup202403180500
+timescaledb_weather |
+timescaledb_weather | Recommendations based on 250.57 GB of available memory and 48 CPUs for PostgreSQL 15
+timescaledb_weather | wal_buffers = 16MB
+timescaledb_weather | min_wal_size = 512MB
+timescaledb_weather | default_statistics_target = 100
+timescaledb_weather | random_page_cost = 1.1
+timescaledb_weather | checkpoint_completion_target = 0.9
+timescaledb_weather | max_locks_per_transaction = 512
+timescaledb_weather | autovacuum_max_workers = 10
+timescaledb_weather | autovacuum_naptime = 10
+timescaledb_weather | effective_io_concurrency = 256
+```
 
 * Mention hardware and environment.
 * Mention how a fresh Docker container was spun up for each benchmark.

@@ -30,7 +30,7 @@ p {
     margin: 0.5em 0;
 }
 
-ol, ul {
+.post-body ol, .post-body ul {
     margin-left: 1em;
 }
 
@@ -45,10 +45,6 @@ img.centered {
     margin-right: auto;
 }
 
-.toc-list > li, ul > li {
-    margin-left: 10px;
-}
-
 .toc-list {
     list-style-type: decimal;
     margin-left: 2em;
@@ -57,11 +53,19 @@ img.centered {
     margin-bottom: 1em;
 }
 
+.toc-list > li {
+    margin-left: 1em;
+}
+
 .toc-sublist {
     list-style-type: lower-alpha;
     margin-left: 2em;
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.toc-sublist > li {
+    margin-left: 1em;
 }
 
 /*

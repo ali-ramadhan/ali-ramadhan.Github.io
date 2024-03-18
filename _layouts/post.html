@@ -26,9 +26,15 @@ show_profile_picture: false
         <div class="row">
           <div class="2u 12u(mobile)"></div>
           <div class="8u 12u(mobile)">
-            <div class="post-title"><i>{{ page.title }}</i></div>
-            <div class="post-date"><i>{{ page.date | date: "%-d %B %Y" }}</i></div>
-            {{ content | toc }}
+            <div class="post-title">
+              <i>{{ page.title }}</i>
+            </div>
+            <div class="post-date">
+              <i>{{ page.date | date: "%-d %B %Y" }}</i>
+            </div>
+            <div class="post-body">
+              {{ content | toc }}
+            </div>
           </div>
           <div class="2u 12u(mobile)"></div>
         </div>

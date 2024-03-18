@@ -23,7 +23,9 @@ Are we building a data warehouse? Maybe, I don't even know. Is a relational data
 
 ## What's the data?
 
-We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with ERA5 _reanalysis_ data. It's our best estimate of the state of the Earth's weather. The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality. Here are two snapshots of what this data looks like for at one point in time.
+We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with ERA5 _reanalysis_ data[^era5-explanation]. It's our best estimate of the state of the Earth's weather. The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality. Here are two snapshots of what this data looks like for at one point in time.
+
+[^era5-explanation]: https://en.wikipedia.org/wiki/ECMWF_re-analysis
 
 | ![Temperature](/img/insert_benchmarks/temperature_figure.png){: .centered width="100%"} |
 |:--:|
@@ -41,10 +43,10 @@ So the data covers the entire globe at 0.25 degree resolution, and stretches bac
 
 Hourly data stretching back to 1940 is 727,080 snapshots in time for each variable like temperature, precipitation, cloud cover, wind speed, etc. And at 0.25 degree resolution we have 1,036,080 locations. Together that's 753,836,544,000 or ~754 billion rows of data if indexed by time and location. That's a good amount of data. And as I found out, it's not trivial to quickly shove this data into a relational database, much less be able to query it quickly.
 
-I'm not sure if a relational database is the best way to work with this kind of clean, regular data. But I find it cumbersome to work with and query in the form in which it is distributed. The data is distributed as NetCDF[^1] files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
+I'm not sure if a relational database is the best way to work with this kind of clean, regular data. But I find it cumbersome to work with and query in the form in which it is distributed. The data is distributed as NetCDF[^netcdf-explanation] files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
 Can analyze them using xarray, dask, Pangeo stack, etc.
 
-[^1]: Explain NetCDF.
+[^netcdf-explanation]: Explain NetCDF.
 
 For this post we'll just load in temperature, zonal and meridional wind speeds, total cloud cover, precipitation, and snowfall for each time and location so we'll use this table schema:
 
@@ -67,15 +69,9 @@ And before you mention database normalization, yes I have both a `location_id` c
 
 # The `insert` statement
 
-## Starting with just the `insert` statement
+## Starting with just the single-row `insert` statement
 
-* Explain what an insert does under the hood. Why is it slow?
-
-Write-Ahead Logging[^2] (or WAL)
-
-[^2]: Explain WAL.
-
-This looks something like
+The simplest way to load data into a table is by using the `insert` command to insert a single row. This looks something like
 
 ```sql
 insert into weather (
@@ -93,16 +89,41 @@ insert into weather (
           -2.0585022, 0.25202942, 0.9960022, 0.007845461, 0);
 ```
 
-although if you have a Pandas dataframe, you could just use `df.to_sql` with the `chunksize=1` kwarg.
+and so you can just loop over all the ERA5 data and do this. Unfortunately it is quite slow for populating a data warehouse as it does more than just insert data:
 
-| ![Insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png){: .centered width="80%"} |
+1. Postgres needs to parse the statement, validate table and column names, and plan the best way to execute it.
+2. Postgres may need to lock the table to ensure data integrity.
+3. The data is written to a buffer as Postgres uses a Write-Ahead Logging[^wal-explanation] (or WAL) system where changes are recorded in a log before writing them to the database for data durability and crash recovery.
+4. Data from the buffer is actually inserted into the table on disk (which may involve navigating through and updating indexes).
+5. If the `insert` statement is part of a transaction[^transaction-explanation] that is comitted, then the changes are made permanent.
+
+So there's a lot of overhead associated with inserting single rows, especially if each `insert` gets its own transaction.
+
+[^wal-explanation]: Explain WAL.
+
+[^transaction-explanation]: Explain transactions.
+
+How many rows can we actually insert per second using single-row inserts? I found three[^orm-explanation] ways to do it from Python so let's benchmark all three:
+
+1. Pandas' `df.to_sql()` function with the `chunksize=1` keyword argument to force single-row inserts.
+2. Psycopg3
+3. SQLAlchemy
+
+[^orm-explanation]: I wanted to try benchmarking SQLAlchemy ORM but: Can't do SQLAlchemy ORM as ORM requires a primary key, but Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables. Partitioned look-ups cannot support a primary key.
+
+| ![Insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png) |
 |:--:|
 | *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
 
-* Explain why we're seeing differences.
-* Explain why inserting into TimescaleDB is slower.
+I benchmarked inserting into a regular Postgres table and a TimescaleDB hypertable[^hypertable-explanation].
 
-Well, at only ~3000 inserts per second, we're gonna have to wait ~8 years for all the data to load.
+[^hypertable-explanation]: Explain TimescaleDB hypertables.
+
+Pandas and psycopg3 perform similarly, with a slight edge to psycopg3. SQLAlchemy is the slowest even though we're not using its Object-Relational Mapping (ORM) tool. This may because it introduces extra overhead with session management and compiled SQL expressions.
+
+Inserting into TimescaleDB is a bit slower perhaps because it needs to figure out which chunk to insert the data into.
+
+Well, at best we're only getting ~3000 inserts per second with single-row inserts at which rate we're gonna have to wait ~8 years for all the data to load. There must be a faster way.
 
 ## Multi-valued `insert`
 
@@ -204,4 +225,5 @@ Software:
 
 # Footnotes
 
-Wanted to try benchmarking SQLAlchemy ORM but: Can't do SQLAlchemy ORM as ORM requires a primary key, but Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables. Partitioned look-ups cannot support a primary key.
+* footnotes will be placed here. This line is necessary
+{:footnotes}

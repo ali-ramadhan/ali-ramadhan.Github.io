@@ -10,6 +10,10 @@
     line-height: 1.5em;
 }
 
+h1, h2 {
+    margin-top: 1em;
+}
+
 h1 {
     font-size: 2rem;
     font-weight: 600;
@@ -24,6 +28,10 @@ h2 {
 
 p {
     margin: 0.5em 0;
+}
+
+ol, ul {
+    margin-left: 1em;
 }
 
 #main > section {
@@ -65,14 +73,22 @@ pre {
 }
 
 code {
+    position: relative;
     font-family: monospace;
     font-size: inherit;
-    position: relative;
-    font-size: 0.75em;
-    line-height: 1.5em;
+    line-height: inherit;
     border-radius: 0.3em;
     padding: 2px 6px;
-    background: rgba(169, 169, 169, 0.5);
+    background: rgba(169, 169, 169, 0.4);
+}
+
+pre code.hljs {
+    position: relative;
+    font-family: monospace;
+    font-size: inherit;
+    font-size: 0.8em;
+    line-height: 1.4em;
+    border-radius: 0.3em;
 }
 
 label {

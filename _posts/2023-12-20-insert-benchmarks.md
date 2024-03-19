@@ -27,9 +27,9 @@ Are we building a data warehouse? Maybe, I don't even know. Is a relational data
 
 ## What's the data?
 
-We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with ERA5 _reanalysis_ data[^era5-explanation]. It's our best estimate of the state of the Earth's weather. The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, the data should match it closely. And where we do not have weather observations, the data should match the climatology, i.e. the statistics should match reality. Here are two snapshots of what this data looks like for at one point in time.
+We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with the ERA5 climate reanalysis product[^era5-explanation]. It's our best estimate of the state of the Earth's weather. The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, ERA5 should match it closely. And where we do not have any weather observations, ERA5 will be physically consistent and should match the climatology, i.e. weather statistics should match reality. At the top is a snapshot of what ERA5 temperature looks like and below is a snapshot of precipitation.
 
-[^era5-explanation]: https://en.wikipedia.org/wiki/ECMWF_re-analysis
+[^era5-explanation]: ERA5 is the latest [climate reanalysis](https://en.wikipedia.org/wiki/Atmospheric_reanalysis) product produced by the [ECMWF re-analysis](https://en.wikipedia.org/wiki/ECMWF_re-analysis) project.
 
 | ![Temperature](/img/insert_benchmarks/precipitation_figure.png){: .centered width="100%"} |
 |:--:|
@@ -46,7 +46,7 @@ Hourly data stretching back to 1940 is 727,080 snapshots in time for each variab
 I'm not sure if a relational database is the best way to work with this kind of clean, regular data. But I find it cumbersome to work with and query in the form in which it is distributed. The data is distributed as NetCDF[^netcdf-explanation] files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
 Can analyze them using xarray, dask, Pangeo stack, etc.
 
-[^netcdf-explanation]: Explain NetCDF.
+[^netcdf-explanation]: [NetCDF](https://en.wikipedia.org/wiki/NetCDF) (Network Common Data Form) files are ubiquitous in distributing output data from weather and climate models. They typically store multi-dimensional arrays for each variable output along with enough metadata that you don't need to refer to external documentation to use the data. The good ones do this at least.
 
 For this post we'll just load in temperature, zonal and meridional wind speeds, total cloud cover, precipitation, and snowfall for each time and location so we'll use this table schema:
 
@@ -93,23 +93,23 @@ and so you can just loop over all the ERA5 data and do this. Unfortunately it is
 
 1. Postgres needs to parse the statement, validate table and column names, and plan the best way to execute it.
 2. Postgres may need to lock the table to ensure data integrity.
-3. The data is written to a buffer as Postgres uses a Write-Ahead Logging[^wal-explanation] (or WAL) system where changes are recorded in a log before writing them to the database for data durability and crash recovery.
+3. The data is written to a buffer as Postgres uses a write-ahead logging[^wal-explanation] (or WAL) system.
 4. Data from the buffer is actually inserted into the table on disk (which may involve navigating through and updating indexes).
-5. If the `insert` statement is part of a transaction[^transaction-explanation] that is comitted, then the changes are made permanent.
+5. If the `insert` statement is part of a transaction[^transaction-explanation] that is committed, then the changes are made permanent.
 
 So there's a lot of overhead associated with inserting single rows, especially if each `insert` gets its own transaction.
 
-[^wal-explanation]: Explain WAL.
+[^wal-explanation]: [Write-ahead logging](https://en.wikipedia.org/wiki/Write-ahead_logging) is how Postgres ensures data integrity and database recovery after crashes. All committed transactions are recorded in a WAL file before being applied to the database. In the event of a crash or power failure, the database can recover all committed transactions from the WAL file so the database can always be brought back to a consistent, uncorrupted state.
 
-[^transaction-explanation]: Explain transactions.
+[^transaction-explanation]: [Postgres transactions](https://www.postgresql.org/docs/current/tutorial-transactions.html) execute multiple operations as a single atomic unit of work so that either all operations execute successfully (and are written to WAL on disk), or none are applied. This ensures the database is always in a consistent state even if something goes wrong in the middle of a transaction.
 
-How many rows can we actually insert per second using single-row inserts? I found three[^orm-explanation] ways to do it from Python so let's benchmark all three:
+How many rows can we actually insert per second using single-row inserts? After loading the data from NetCDF into a pandas dataframe I found three[^orm-explanation] ways to insert the data into Postgres from Python so let's benchmark all three:
 
-1. Pandas' `df.to_sql()` function with the `chunksize=1` keyword argument to force single-row inserts.
-2. Psycopg3
-3. SQLAlchemy
+1. pandas: You can insert data straight from a dataframe using the `df.to_sql()` function with the `chunksize=1` keyword argument to force single-row inserts.
+2. psycopg3: You can use [parameterized queries](https://www.psycopg.org/psycopg3/docs/basic/params.html) to protect against [SQL injection](https://en.wikipedia.org/wiki/SQL_injection), not that it's a risk here (yet) but it's good to practice safety I guess. All inserts are part of one transaction that is committed at the end.
+3. SQLAlchemy: You can use named parameters in a parameterized query to prevent SQL injection attacks.
 
-[^orm-explanation]: I wanted to try benchmarking SQLAlchemy ORM but: Can't do SQLAlchemy ORM as ORM requires a primary key, but Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables. Partitioned look-ups cannot support a primary key.
+[^orm-explanation]: I wanted to try a fourth method using SQLAlchemy's Object Relational Mapper (ORM) which maps rows in a database to Python objects. But, the ORM requires a primary key and Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables and partitioned lookups cannot support a primary key. ORM was probably going to be the slowest at inserting due to extra overhead anyways.
 
 | ![Insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png) |
 |:--:|
@@ -117,17 +117,19 @@ How many rows can we actually insert per second using single-row inserts? I foun
 
 I benchmarked inserting into a regular Postgres table and a TimescaleDB hypertable[^hypertable-explanation].
 
-[^hypertable-explanation]: Explain TimescaleDB hypertables.
+[^hypertable-explanation]: TimescaleDB hypertables automatically partition data by time into _chunks_ and have extra features that make working with time-series data easier and faster.
 
-Pandas and psycopg3 perform similarly, with a slight edge to psycopg3. SQLAlchemy is the slowest even though we're not using its Object-Relational Mapping (ORM) tool. This may because it introduces extra overhead with session management and compiled SQL expressions.
+Pandas and psycopg3 perform similarly, with a slight edge to psycopg3. SQLAlchemy is the slowest even though we're not using its ORM tool. This may because it introduces extra overhead with its abstractions around session management and compiled SQL expressions.
 
-Inserting into TimescaleDB is a bit slower perhaps because it needs to figure out which chunk to insert the data into.
+TODO: Check how SQLAlchemy is committing transaction.
 
-Well, at best we're only getting ~3000 inserts per second with single-row inserts at which rate we're gonna have to wait ~8 years for all the data to load. There must be a faster way.
+Inserting into a Timescale hypertable is a bit slower. This is maybe because rows are being inserted into a hypertable with chunks so there may be some overhead there, even if there's only one chunk which should be true since this benchmark only inserts 20k rows. There may also be additional overhead with transactions in Timescale.
+
+So at best we're only getting ~3000 inserts per second with single-row inserts at which rate we're gonna have to wait ~8 years for all the data to load. There must be a faster way.
 
 ## Multi-valued `insert`
 
-* Explain what a multi-valued insert does under the hood. Why is it faster than a regular insert?
+You can insert multiple rows with one `insert` statement. This is called a multi-valued or bulk insert and looks like this:
 
 ```sql
 insert into weather (
@@ -150,6 +152,8 @@ insert into weather (
      6.303482, 6.017273, 0.88571167, 1.9253268, 0);
 ```
 
+This is faster for a few reasons. There's less network overhead as each single-row insert requires a network round trip for each row inserted. Postgres also only has to parse and plan once. Multi-row inserts can also be further optimized when it comes to updating indexes. It seems that you can bulk insert as many rows as you want as long as they fit in memory (or get too big that it's detrimental).
+
 | ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png) |
 |:--:|
 | *Blue bars show the insert rate into a regular PostgreSQL table, while orange bars show the insert rate into a TimescaleDB hypertable. Each benchmark inserted 100k rows and was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
@@ -157,7 +161,7 @@ insert into weather (
 * Explain why psycopg3 is fast and why sqlalchemy is slow.
 * Talk about chunksize. What is used? Is there a sweet spot?
 
-This is an order-of-magnitude improvement but at ~30k inserts per second, we're still gonna have to wait ~0.8 years or almost 10 months for all the data to load.
+With multi-row inserts there's an order-of-magnitude improvement but at ~30k inserts per second, we're still gonna have to wait ~0.8 years or almost 10 months for all the data to load.
 
 # The `copy` statement
 
@@ -187,6 +191,10 @@ This is an order-of-magnitude improvement but at ~30k inserts per second, we're 
 
 tpc: We did 256 hours to see if it could keep up. Performance for the first minute (~50M rows?) could be really good (over 3 million rows inserted per second!) but it would always drop so sustained performance is lower.
 tpc with lots of workers: bottleneck seemed to be the SSD where all the workers were writing to the DB, not the HDD where the data was being read from.
+
+# Unlogged tables
+
+Can benchmark inserting into an unlogged hypertable. Then benchmark doing that and then turning the table into a hypertable?
 
 # So what's the best method?
 

@@ -73,7 +73,7 @@ img.centered {
  */
 
 pre {
-    overflow-x: auto; /* add scrollbars to wide code blocks*/
+    overflow-x: auto; /* add scrollbars to wide code blocks */
 }
 
 code {

@@ -4,6 +4,8 @@ title: "Building a weather data warehouse part I: Benchmarking loading 80 years 
 toc: true
 ---
 
+GitHub discussion link
+
 | ![Temperature](/img/insert_benchmarks/temperature_figure.png) |
 |:--:|
 | *Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC.* |
@@ -175,7 +177,7 @@ We have the option of saving data from NetCDF files as CSV files then using `cop
 
 When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` we account for the time it takes to construct the list of tuples, one for each row.
 
-| ![Copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png){: .centered width="80%"} |
+| ![Copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png) |
 |:--:|
 | *Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 day of ERA5 data) and was run 10 times.* |
 
@@ -187,7 +189,7 @@ At ~100k inserts/second we're still talking about ~3 months to load all the data
 
 When inserting _many_ rows, it is important that the insert rate can be sustained. To look at this, we can insert hundreds of millions of rows and watch for fluctuations or drops in the insert rate.
 
-| ![Copy at scale benchmarks](/img/insert_benchmarks/benchmarks_copy_at_scale.png){: .centered width="80%"} |
+| ![Copy at scale benchmarks](/img/insert_benchmarks/benchmarks_copy_at_scale.png) |
 |:--:|
 | *For this benchmark, rows were inserted in 744 batches of 1,038,240 rows for a total of ~772 million rows. The dots show the insert rate for each batch while the solid lines show a 10-batch rolling mean.* |
 
@@ -197,34 +199,59 @@ It seems that, at least with one worker, we don't see huge drops in insert rates
 
 Inserting data with `copy` is fast but can we speed it up by executing multiple `copy` operations in parallel?
 
-| ![Parallel copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_copy.png){: .centered width="80%"} |
+| ![Parallel copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_copy.png) |
 |:--:|
 | *Each benchmark inserted 128 hours of ERA5 data (~133 million rows).* |
 
+Looks like performance plateaus after 16 workers. But can the 800k inserts/sec rate into a regular table with 16 workers actually be sustained? I ran this benchmark with 31 days worth of ERA5 data (~772 million rows) and saw an overall insert rate of ~325k inserts/sec so it seems that the sustained rate is quite a bit lower. I probably should have run the above benchmark using more data.
+
 # Tools
+
+## `pg_bulkload` and `timescaledb-parallel-copy`
 
 Beyond the `copy` statement, there are external tools for loading large amounts of data into Postgres. I'll benchmark two of them, [pg_bulkload](https://github.com/ossc-db/pg_bulkload) and [timescaledb-parallel-copy](https://github.com/timescale/timescaledb-parallel-copy).
 
-| ![Tool benchmarks](/img/insert_benchmarks/benchmarks_tools.png){: .centered width="80%"} |
+| ![Tool benchmarks](/img/insert_benchmarks/benchmarks_tools.png) |
 |:--:|
 | *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+
+In these benchmarks the CSV files were already create so for a fair comparison we should compare these insert rates with the "copy rate" from the `copy` benchmarks.
+
+pgb: Looks like it's just a bit faster than `copy`, but does seem quite a bit faster for inserting into a hypertable.
 
 tpc: We did 256 hours to see if it could keep up. Performance for the first minute (~50M rows?) could be really good (over 3 million rows inserted per second!) but it would always drop so sustained performance is lower.
 tpc with lots of workers: bottleneck seemed to be the SSD where all the workers were writing to the DB, not the HDD where the data was being read from.
 
-# Unlogged tables
+## Multiple workers with `timescaledb-parallel-copy`
 
-Can benchmark inserting into an unlogged hypertable. Then benchmark doing that and then turning the table into a hypertable?
+| ![Tool benchmarks](/img/insert_benchmarks/benchmarks_parallel_tpc.png) |
+|:--:|
+| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+
+# What else can we try?
+
+There are a couple of other things we can try to speed up inserts that I won't try here, but are basically some form of tweaking [Postgres' non-durable settings](https://www.postgresql.org/docs/current/non-durability.html).
+
+You can insert data into an unlogged table that generates no WAL and gets truncated upon crash recovery but is faster to write into.[^unlogged-explanation] While inserting into an unlogged table might be fast, you still have to convert it to a regular logged table afterwards which can be a [slow single-threaded process](https://dba.stackexchange.com/a/195829). And hypertables cannot be unlogged, so if you want a hypertable you need to further convert/migrate the regular logged table to a hypertable which can also be slow.
+
+[^unlogged-explanation]:
+
+Some extra performance can be squeezed out of tweaking non-durable settings specifically for loading data following suggestions by [Craig Ringer on StackOverflow](https://stackoverflow.com/a/12207237). Some of the settings can be dangerous for database integrity in the event of a crash though. So I won't be following them as I can't guarantee I won't experience a power failure in the weeks it will take to load the data.
 
 # So what's the best method?
 
-* Pick the fastest method (probably with 16 workers?) and throw all the extras at it, e.g. tuning the config?
+The best method will insert data directly into a hypertable and do so using multiple workers. The sweet spot seems to be 12~16 workers on my system.
+
+Inserting data into a regular table then converting it to a hypertable and migrating the data will probably always be slower as the conversion/migration process is slow and seems to be single-threaded. For example, inserting ~772 million rows into a regular table with psycopg3's copy and 16 workers took ~40 minutes (~325k inserts/sec) but converting the resulting table to a hypertable took another ~31 minutes for a total of ~71 minutes. But inserting the data straight into a hypertable just took ~53 minutes (~242k inserts/sec).
 
 Figure out which tool is best. How many hours/days/weeks to load the data?
-What's the theoretical maximum based on SSD speed?
+
+Want faster inserts? Probably upgrade hardware. Nice enterprise-grade NvME SSD, lots of DDR5 RAM.
 
 They mention that the largest tables ran into several TBs, and they would have soon topped the max IOPS supported by RDS. RDS for PostgreSQL peaks at 256,000 IOPS for a 64 TB volume.
 We're already doing better than this on older hardware.
+
+I'd be curious how ClickHouse performs on these benchmarks. My impression is that it would probably be faster out of the box. But I want to learn PostgreSQL and love the fact that TimescaleDB is just a Postgres extension.
 
 At a sustained ~500k inserts per second, we're waiting 17~18 days which is not bad.
 
@@ -234,47 +261,45 @@ At a sustained ~500k inserts per second, we're waiting 17~18 days which is not b
 
 Link to https://github.com/ali-ramadhan/how-much-climate-change/tree/main/benchmark_data_loading or spawn off a new repo just for this?
 
+Just rename this repo to belong to this blog post lol?
+
 ## Benchmarking methodology
 
-The hardware used is roughly 5 years old so newer hardware should be able to beat these benchmarks.
+To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. Data was read from a HDD and the database was stored on an NvME SSd. The hardware used is roughly 5 years old so newer hardware should be able to beat these benchmarks.
 
 Hardware:
 * CPU: 2x 12-core Intel Xeon Silver 4214
 * RAM: 16x 16 GiB Samsung M393A2K40CB2-CTD ECC DDR4 2666 MT/s
 * SSD: Intel SSDPEKNW020T8 2 TB NvME
+* HDD: Seagate Exos X16 14TB 7200 RPM 256MB Cache
 
 Software:
-* Ubuntu with Linux kernel 5.15
+* Ubuntu 20.04 with Linux kernel 5.15
 * PostgreSQL 15.5
 * TimescaleDB 2.13.0
 
-Postgres configuration:
-```plaintext
-timescaledb_weather | shared_buffers = 64144MB
-timescaledb_weather | effective_cache_size = 192434MB
-timescaledb_weather | maintenance_work_mem = 2047MB
-timescaledb_weather | work_mem = 13684kB
-timescaledb_weather | timescaledb.max_background_workers = 16
-timescaledb_weather | max_worker_processes = 67
-timescaledb_weather | max_parallel_workers_per_gather = 24
-timescaledb_weather | max_parallel_workers = 48
-timescaledb_weather | Writing backup to:
-timescaledb_weather | /tmp/timescaledb_tune.backup202403180500
-timescaledb_weather |
-timescaledb_weather | Recommendations based on 250.57 GB of available memory and 48 CPUs for PostgreSQL 15
-timescaledb_weather | wal_buffers = 16MB
-timescaledb_weather | min_wal_size = 512MB
-timescaledb_weather | default_statistics_target = 100
-timescaledb_weather | random_page_cost = 1.1
-timescaledb_weather | checkpoint_completion_target = 0.9
-timescaledb_weather | max_locks_per_transaction = 512
-timescaledb_weather | autovacuum_max_workers = 10
-timescaledb_weather | autovacuum_naptime = 10
-timescaledb_weather | effective_io_concurrency = 256
+Postgres configuration chosen by `timescaledb-tune`:
 ```
+shared_buffers = 64144MB
+effective_cache_size = 192434MB
+maintenance_work_mem = 2047MB
+work_mem = 13684kB
+timescaledb.max_background_workers = 16
+max_worker_processes = 67
+max_parallel_workers_per_gather = 24
+max_parallel_workers = 48
 
-* Mention hardware and environment.
-* Mention how a fresh Docker container was spun up for each benchmark.
+Recommendations based on 250.57 GB of available memory and 48 CPUs for PostgreSQL 15
+wal_buffers = 16MB
+min_wal_size = 512MB
+default_statistics_target = 100
+random_page_cost = 1.1
+checkpoint_completion_target = 0.9
+max_locks_per_transaction = 512
+autovacuum_max_workers = 10
+autovacuum_naptime = 10
+effective_io_concurrency = 256
+```
 
 # Footnotes
 
@@ -283,3 +308,4 @@ timescaledb_weather | effective_io_concurrency = 256
 
 * Explain why you wants to just benchmark insert rates without indexes.
 * Did WAL checkpointing degrade performance anywhere?
+* Note the existence of https://www.postgresql.org/docs/current/populate.html

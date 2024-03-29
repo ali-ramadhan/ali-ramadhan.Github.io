@@ -2,6 +2,9 @@ url: "http://aliramadhan.me" # the base hostname & protocol for your site, e.g. 
 baseurl: "" # the subpath of your site, e.g. /blog
 title: "Ali Ramadhan" # the name of your site, e.g. ACME Corp.
 
+markdown: kramdown
+highlighter: none  # We will just highlight.js
+
 plugins:
   - jekyll-toc
 

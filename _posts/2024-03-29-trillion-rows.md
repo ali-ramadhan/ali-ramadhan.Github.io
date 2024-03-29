@@ -2,7 +2,7 @@
 layout: post
 title: "Building a weather data warehouse part I: Loading a trillion rows of weather data into TimescaleDB"
 toc: true
-github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discussions
+github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discussions/2
 ---
 
 <figure class="centered" markdown="block">
@@ -412,19 +412,19 @@ autovacuum_naptime = 10
 effective_io_concurrency = 256
 ```
 
-We then set
+For benchmarking I set the WAL size:
 
 ```plaintext
 min_wal_size = 4GB
 max_wal_size = 16GB
 ```
 
-for fsync off:
+And for the `fsync` off benchmarks I set:
 
-```
--c max_wal_size=32GB
--c fsync=off
--c full_page_writes=off
+```plaintext
+max_wal_size = 32GB
+fsync = off
+full_page_writes = off
 ```
 
 # Footnotes

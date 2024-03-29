@@ -14,6 +14,8 @@ GitHub discussion link
 
 ## Why build a weather data warehouse?
 
+I think it would be cool to have historical weather data from around the world to analyze.
+
 We have _tons_ of weather data we can analyze to look for signals of climate change. In particular, I'm interested in figuring out how much climate change we've _already_ had. This questions is maybe best answered by looking at historical weather data.
 
 It's pretty common to look at climate model projections and think about future climate change, but there are plenty of anecdotes about how the weather isn't what it used to be.
@@ -91,15 +93,17 @@ insert into weather (
           -2.0585022, 0.25202942, 0.9960022, 0.007845461, 0);
 ```
 
-and so you can just loop over all the ERA5 data and do this. Unfortunately it is quite slow for populating a data warehouse as it does more than just insert data:
+and so you can just loop over all the data doing this row-by-row. Unfortunately it is quite slow as quite a bit goes on behind the scenes here:
 
 1. Postgres needs to parse the statement, validate table and column names, and plan the best way to execute it.
-2. Postgres may need to lock the table to ensure data integrity.
+2. Postgres may need to lock the table to ensure data integrity.[^mvcc-explanation]
 3. The data is written to a buffer as Postgres uses a write-ahead logging[^wal-explanation] (or WAL) system.
-4. Data from the buffer is actually inserted into the table on disk (which may involve navigating through and updating indexes).
+4. Data from the buffer is actually inserted into the table on disk (which may involve navigating through and updating indexes, but we won't have any here).
 5. If the `insert` statement is part of a transaction[^transaction-explanation] that is committed, then the changes are made permanent.
 
 So there's a lot of overhead associated with inserting single rows, especially if each `insert` gets its own transaction.
+
+[^mvcc-explanation]: Postgres may need to perform a full table lock for some operations that modify the entire table. But for row-level operations no locking is necessary as Postgres uses [multiversion concurrency control](https://en.wikipedia.org/wiki/Multiversion_concurrency_control) (MVCC) to allow multiple transactions to operate on the database concurrently. Each transaction sees a version of the database as it was when the transaction began.
 
 [^wal-explanation]: [Write-ahead logging](https://en.wikipedia.org/wiki/Write-ahead_logging) is how Postgres ensures data integrity and database recovery after crashes. All committed transactions are recorded in a WAL file before being applied to the database. In the event of a crash or power failure, the database can recover all committed transactions from the WAL file so the database can always be brought back to a consistent, uncorrupted state.
 
@@ -109,9 +113,9 @@ How many rows can we actually insert per second using single-row inserts? After 
 
 1. **pandas**: You can insert data straight from a dataframe using the `df.to_sql()` function with the `chunksize=1` keyword argument to force single-row inserts.
 2. **psycopg3**: You can use [parameterized queries](https://www.psycopg.org/psycopg3/docs/basic/params.html) to protect against [SQL injection](https://en.wikipedia.org/wiki/SQL_injection), not that it's a risk here (yet) but it's good to practice safety I guess. All inserts are part of one transaction that is committed at the end.
-3. **SQLAlchemy**: You can use named parameters in a parameterized query to prevent SQL injection attacks.
+3. **SQLAlchemy**: You can similarly use named parameters in a parameterized query to prevent SQL injection attacks.
 
-[^orm-explanation]: I wanted to try a fourth method using SQLAlchemy's Object Relational Mapper (ORM) which maps rows in a database to Python objects. But, the ORM requires a primary key and Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables and partitioned lookups cannot support a primary key. ORM was probably going to be the slowest at inserting due to extra overhead anyways.
+[^orm-explanation]: I wanted to try a fourth method using SQLAlchemy's [Object Relational Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) (ORM) which maps rows in a database to Python objects. But, the ORM requires a primary key and Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables and partitioned lookups cannot support a primary key. ORM was probably going to be the slowest at inserting due to extra overhead anyways.
 
 | ![Insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png) |
 |:--:|
@@ -121,11 +125,9 @@ I benchmarked inserting into a regular Postgres table and a TimescaleDB hypertab
 
 [^hypertable-explanation]: TimescaleDB hypertables automatically partition data by time into _chunks_ and have extra features that make working with time-series data easier and faster.
 
-Pandas and psycopg3 perform similarly, with a slight edge to psycopg3. SQLAlchemy is the slowest even though we're not using its ORM tool. This may because it introduces extra overhead with its abstractions around session management and compiled SQL expressions.
+Pandas and psycopg3 perform similarly, with a slight edge to psycopg3. SQLAlchemy is the slowest even though we're not using its ORM tool. This may be because it introduces extra overhead with its abstractions around session management and compiled SQL expressions.
 
-TODO: Check how SQLAlchemy is committing transaction.
-
-Inserting into a Timescale hypertable is a bit slower. This is maybe because rows are being inserted into a hypertable with chunks so there may be some overhead there, even if there's only one chunk which should be true since this benchmark only inserts 20k rows. There may also be additional overhead with transactions in Timescale.
+Inserting into a Timescale hypertable is a bit slower. This is maybe because rows are being inserted into a hypertable with chunks so there may be some overhead there, even if there's only one chunk.
 
 So at best we're only getting ~3000 inserts per second with single-row inserts at which rate we're gonna have to wait ~8 years for all the data to load 🦥 There must be a faster way.
 
@@ -156,12 +158,13 @@ insert into weather (
 
 This is faster for a few reasons. There's less network overhead as each single-row insert requires a network round trip for each row inserted. Postgres also only has to parse and plan once. Multi-row inserts can also be further optimized when it comes to updating indexes. It seems that you can bulk insert as many rows as you want as long as they fit in memory (or get too big that it's detrimental).
 
+In pandas it sounds like you can do this by passing the `method="multi"` keyword argument to the `df.to_sql()` function but I found this to be a bit slower than single-row inserts with `chunksize=1`. So I just didn't set a method or chunk size and supposedly all rows will be written at once, and it was faster. With psycopg3 you can construct a list of tuples, one for each row, and insert them all at once. With SQLAlchemy it's a dict of tuples.
+
 | ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png) |
 |:--:|
 | *This time each benchmark inserted 100k rows and was run 10 times* |
 
-* Explain why psycopg3 is fast and why sqlalchemy is slow.
-* Talk about chunksize. What is used? Is there a sweet spot?
+Now there's a clear winner with psycopg3 at 25~30k inserts/sec. I'm not sure why psycopg3 is faster but it looks like pandas is [using dictionaries to insert](https://github.com/pandas-dev/pandas/blob/a671b5a8bf5dd13fb19f0e88edc679bc9e15c673/pandas/io/sql.py#L938-L968) which can be slower than just plain tuples. SQLAlchemy might be extra slow slow here because of additional overhead like with single-row inserts and I also passed it dictionaries.
 
 With multi-row inserts there's an order-of-magnitude improvement but at ~30k inserts per second, we're still gonna have to wait ~0.8 years or almost 10 months for all the data to load 🐢
 
@@ -171,11 +174,19 @@ With multi-row inserts there's an order-of-magnitude improvement but at ~30k ins
 
 For loading in larger amounts of data, Postgres has the `copy` statement allowing us to insert rows from a CSV file or from a binary file.[^copy-binary-note] `copy` is faster than multi-row inserts as `copy` as Postgres reads data straight from the file and optimizes parsing, planning, and WAL usage knowing there is a lot of data to load.
 
-[^copy-binary-note]: Explain why you didn't try this.
+[^copy-binary-note]: Binary is _usually_ a more compact representation for floats and timestamps than plaintext so I was hoping to also benchmark `copy` with the binary format thinking it might be much faster. Unfortunately the [format Postgres expects](https://www.postgresql.org/docs/current/sql-copy.html) seems non-trivial and I couldn't easily find a library that would give me the binary I needed. And [Nick Babcock](https://nickb.dev/blog/disecting-the-postgres-bulk-insert-and-binary-format/) actually found that binary is no faster than csv, so it didn't seem worth trying.
 
-We have the option of saving data from NetCDF files as CSV files then using `copy csv`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space that it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and piping it straight into Postgres using psycopg3's `cusor.copy()` function.
+Once you have a CSV file it's as simple as
 
-When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` we account for the time it takes to construct the list of tuples, one for each row.
+```sql
+copy weather from some_big.csv delimiter ',' csv header;
+```
+
+and with psycopg3 you can actually skip writing CSV files to disk and directly pass a list of tuples, one per row, to a `psycopg3.cursor.copy()`.
+
+We have the option of saving data from NetCDF files as CSV files then using `copy`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space that it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and directly passing a list of tuples straight into Postgres using a `psycopg3.cursor.copy()` object.
+
+When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` we account for the time it takes to construct the list of tuples.
 
 | ![Copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png) |
 |:--:|

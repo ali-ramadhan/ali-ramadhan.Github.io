@@ -7,7 +7,7 @@ github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discus
 
 <figure class="centered" markdown="block">
 
-![global surface temperature snapshot](/img/insert_benchmarks/temperature_figure.png)
+![global surface temperature snapshot](/img/trillion_rows/temperature_figure.png)
 
 <figcaption>Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC.</figcaption>
 
@@ -39,7 +39,7 @@ The data is output from a climate model run that is constrained to match weather
 
 <figure class="centered" markdown="block">
 
-![global precipitation snapshot](/img/insert_benchmarks/precipitation_figure.png)
+![global precipitation snapshot](/img/trillion_rows/precipitation_figure.png)
 
 <figcaption>Global snapshot of precipitation rate at 2018-12-04 04:00:00 UTC.</figcaption>
 
@@ -49,7 +49,7 @@ ERA5 covers the entire globe at 0.25 degree resolution, and stretches back in ti
 
 <figure class="centered width-80" markdown="block">
 
-![temperature time series](/img/insert_benchmarks/zoom_plot_temperature_Durban.png)
+![temperature time series](/img/trillion_rows/zoom_plot_temperature_Durban.png)
 
 <figcaption>Time series of surface temperature near Durban, South Africa.</figcaption>
 
@@ -128,7 +128,7 @@ How many rows can we actually insert per second using single-row inserts? After 
 
 <figure class="centered width-80" markdown="block">
 
-![single-row insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png)
+![single-row insert benchmarks](/img/trillion_rows/benchmarks_insert.png)
 
 <figcaption>
     Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark inserted 20k rows and was repeated 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.
@@ -177,7 +177,7 @@ In pandas it sounds like you can do this by passing the `method="multi"` keyword
 
 <figure class="centered width-80" markdown="block">
 
-![multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png)
+![multi-valued insert benchmarks](/img/trillion_rows/benchmarks_multi_insert.png)
 
 <figcaption>This time each benchmark inserted 100k rows and was repeated 10 times.</figcaption>
 
@@ -207,7 +207,7 @@ When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a
 
 <figure class="centered width-80" markdown="block">
 
-![copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png)
+![copy benchmarks](/img/trillion_rows/benchmarks_copy.png)
 
 <figcaption>
     Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 day of ERA5 data) and was repeated 10 times.
@@ -225,7 +225,7 @@ When inserting _many_ rows, Postgres may encounter bottlenecks so it's important
 
 <figure class="centered width-80" markdown="block">
 
-![copy at scale benchmarks](/img/insert_benchmarks/benchmarks_copy_at_scale.png)
+![copy at scale benchmarks](/img/trillion_rows/benchmarks_copy_at_scale.png)
 
 <figcaption>
     For this benchmark, rows were inserted in 744 batches of 1,038,240 rows for a total of ~772 million rows. The overall insert rate is plotted. The dots show the insert rate for each batch while the solid lines show a 10-batch rolling mean.
@@ -241,7 +241,7 @@ Inserting data with `copy` is fast but can we speed it up by executing multiple 
 
 <figure class="centered width-80" markdown="block">
 
-![parallel copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_copy.png)
+![parallel copy benchmarks](/img/trillion_rows/benchmarks_parallel_copy.png)
 
 <figcaption>
     The overall insert rate is plotted as a function of the number of workers. Each benchmark inserted 128 hours of ERA5 data (~133 million rows).
@@ -261,7 +261,7 @@ Beyond the `copy` statement, there are external tools for loading large amounts 
 
 <figure class="centered width-80" markdown="block">
 
-![tools benchmarks](/img/insert_benchmarks/benchmarks_tools.png)
+![tools benchmarks](/img/trillion_rows/benchmarks_tools.png)
 
 <figcaption>
     Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 day of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.
@@ -277,7 +277,7 @@ timescaledb-parallel-copy lets you specify the number of workers inserting data 
 
 <figure class="centered width-80" markdown="block">
 
-![timescaledb-parallel-copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_tpc.png)
+![timescaledb-parallel-copy benchmarks](/img/trillion_rows/benchmarks_parallel_tpc.png)
 
 <figcaption>
     The insert rate as a function of the number of rows inserted. In this benchmark the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the `copy` benchmarks. Each benchmark inserted 256 hours of ERA5 data (~266 million rows). Note the vertical log scale.
@@ -305,7 +305,7 @@ We want to end up with a hypertable but it seems like inserting into a regular t
 
 <figure class="centered width-50" markdown="block">
 
-![table conversion time](/img/insert_benchmarks/conversion_time.png)
+![table conversion time](/img/trillion_rows/conversion_time.png)
 
 <figcaption>
     Blue bars show the wall clock time taken to insert data into the table and the orange bar shows the time taken to convert the regular table into a hypertable.
@@ -319,7 +319,7 @@ Now that we've concluded we want to be inserting data into a hypertable, let's t
 
 <figure class="centered" markdown="block">
 
-![benchmarks summary](/img/insert_benchmarks/benchmarks_summary.png)
+![benchmarks summary](/img/trillion_rows/benchmarks_summary.png)
 
 <figcaption>
     Sustained hypertable insert rates including overhead (e.g. writing CSV files or constructing tuples) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.

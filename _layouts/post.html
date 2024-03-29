@@ -32,6 +32,11 @@ show_profile_picture: false
             <div class="post-date">
               <i>{{ page.date | date: "%-d %B %Y" }}</i>
             </div>
+            <div>
+              {% if page.github_discussion %}
+                <a href="{{ page.github_discussion }}" target="_blank" class="button">GitHub Discussion</a>
+              {% endif %}
+            </div>
             <div class="post-body">
               {{ content | toc }}
             </div>

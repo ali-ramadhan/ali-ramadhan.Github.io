@@ -23,20 +23,11 @@ If we had a huge weather data warehouse we could query it to figure out whether 
 
 But to do this analysis globally we need to make the data warehouse fast, and there's a lot of data. The first step is to load the data into a database of some kind. Even though I have no experience with PostgreSQL I want to load the data into Postgres and use TimescaleDB to speed up time-based queries and eventually PostGIS to speed up geospatial queries.
 
-To get there though we first need to load all this data into Postgres and this is what this post is about. Initial attempts at loading the data seemed slow so I wanted to investigate how to do this fast, leading me down a rabbit hole and me writing this.
+To get there though we first need to load all this data into Postgres and this is what this post is about. Initial attempts at loading the data seemed slow so I wanted to investigate how to do this fast, leading me down a rabbit hole and me writing this.[^postgres-guide]
+
+[^postgres-guide]: The Postgres documentation does have a nice list of performance tips for [populating a database](https://www.postgresql.org/docs/current/populate.html) but I wanted some benchmarks and to include some external tools as well.
 
 Are we building a data warehouse? Maybe, I don't even know. Is a relational database even appropriate for gridded weather data? No idea but we'll find out.
-
-<!--
-We might want to look at localized temporal statistics: how much warmer is Dallas these days compared to previous decades? Is Dallas getting drier or wetter? Does it receive fewer but more intense storms?
-We might want to look at geospatial-temporal statistics: how much warmer is Chile? Are all parts of Chile warming or are there regions that are cooling? Is it getting cloudier in the Japanese province of Sapporo? 
-
-It would be cool if we could query a weather data warehouse to answer these questions, potentially for _many_ places. I also have zero budget, so I think it would be cool to try building the data warehouse on a local machine using PostgreSQL with TimescaleDB. I don't know anything about them so it should be a good learning experience but it sounds like together they can be great for analyzing weather time series. And if we add PostGIS we'll be able to run temporal-geospatial queries too.
-
-To get there though we first need to load all this data into Postgres and this is what this post is about. Initial attempts at loading the data seemed slow so I wanted to investigate how to do this fast, leading me down this rabbit hole.
-
-Are we building a data warehouse? Maybe, I don't even know. Is a relational database even appropriate for gridded weather data? No idea, but TimescaleDB makes a good point.
--->
 
 ## What's the data?
 
@@ -44,7 +35,7 @@ We are not working with actual weather observations. They are great, but can be 
 
 The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, ERA5 should match it closely. And where we do not have any weather observations, ERA5 will be physically consistent and should match the climatology, i.e. the simulated weather's statistics should match reality. At the top of this page is a snapshot of what global surface temperature looks like and below is a snapshot of global precipitation.
 
-[^era5-explanation]: ERA5 is the latest [climate reanalysis](https://en.wikipedia.org/wiki/Atmospheric_reanalysis) product produced by the [ECMWF re-analysis](https://en.wikipedia.org/wiki/ECMWF_re-analysis) project.
+[^era5-explanation]: ERA5 is the latest [climate reanalysis](https://en.wikipedia.org/wiki/Atmospheric_reanalysis) product produced by the [ECMWF re-analysis](https://en.wikipedia.org/wiki/ECMWF_re-analysis) project. ECMWF is the European Centre for Medium-Range Weather Forecasts.
 
 <figure class="centered" markdown="block">
 
@@ -69,11 +60,6 @@ Hourly data stretching back to 1940 is 727,080 snapshots in time for each variab
 The data is distributed as NetCDF[^netcdf-explanation] files indexed by time which makes it quick and easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. It takes like 20~30 minutes to pull out temperature data for one location to make the plot above! Complex geospatial queries, especially over time, will be slow and difficult to perform. Packages like [xarray](https://xarray.dev/) and [dask](https://www.dask.org/) (and efforts by [Pangeo](https://pangeo.io/)) speed things up but it's still a slow process.
 
 [^netcdf-explanation]: [NetCDF](https://en.wikipedia.org/wiki/NetCDF) (Network Common Data Form) files are ubiquitous in distributing output data from weather and climate models. They typically store multi-dimensional arrays for each variable output along with enough metadata that you don't need to refer to external documentation to use the data. The good ones do this at least.
-
-<!--
-I'm not sure if a relational database is the best way to work with this kind of clean, regular data. But I find it cumbersome to work with and query in the form in which it is distributed. The data is distributed as NetCDF[^netcdf-explanation] files indexed by time which makes it easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. Complex geospatial queries, especially over time, will be slow and difficult to perform.
-Can analyze them using xarray, dask, Pangeo stack, etc.
--->
 
 We'll just load in temperature, zonal and meridional wind speeds, total cloud cover, precipitation, and snowfall for each time and location so we'll use this table schema:
 
@@ -207,7 +193,7 @@ With multi-row inserts there's an order-of-magnitude improvement but at ~30k ins
 
 For loading in larger amounts of data, Postgres has the `copy` statement allowing us to insert rows from a CSV file or from a binary file.[^copy-binary-note] `copy` is faster than multi-row inserts as `copy` as Postgres reads data straight from the file and optimizes parsing, planning, and WAL usage knowing there is a lot of data to load.
 
-[^copy-binary-note]: Binary is _usually_ a more compact representation for floats and timestamps than plaintext so I was hoping to also benchmark `copy` with the binary format thinking it might be much faster. Unfortunately the [format Postgres expects](https://www.postgresql.org/docs/current/sql-copy.html) seems non-trivial and I couldn't easily find a library that would give me the binary I needed. And [Nick Babcock](https://nickb.dev/blog/disecting-the-postgres-bulk-insert-and-binary-format/) actually found that binary is no faster than csv, so it didn't seem worth trying.
+[^copy-binary-note]: Binary is _usually_ a more compact representation for floats and timestamps than plaintext so I was hoping to also benchmark `copy` with the binary format thinking it might be much faster. Unfortunately the [format Postgres expects](https://www.postgresql.org/docs/current/sql-copy.html) seems non-trivial and I couldn't easily find a library that would give me the binary I needed. And [Nick Babcock](https://nickb.dev/blog/disecting-the-postgres-bulk-insert-and-binary-format/) actually found that binary is no faster than csv, so it didn't seem worth trying. For reference, 31 days of ERA5 data takes up 7.8 GiB in NetCDF form and 71 GiB in CSV form.
 
 Once you have a CSV file it's as simple as
 
@@ -309,9 +295,7 @@ There are a couple of other things we can try to speed up inserts, but are basic
 
 Some extra performance can be squeezed out of tweaking non-durable settings specifically for loading data following suggestions by [Craig Ringer on StackOverflow](https://stackoverflow.com/a/12207237). Some of the settings can be dangerous for database integrity in the event of a crash though. The main settings to change are turning off `fsync` to avoid flushing data to disk and also turning off `full_page_writes` to avoid guarding against partial page writes.
 
-You can also insert data into an unlogged table that generates no WAL and gets truncated upon crash recovery but is faster to write into.[^unlogged-explanation] While inserting into an unlogged table might be fast, you still have to convert it to a regular logged table afterwards which can be a [slow single-threaded process](https://dba.stackexchange.com/a/195829). And hypertables cannot be unlogged, so if you want a hypertable you need to further convert/migrate the regular logged table to a hypertable which can also be slow.
-
-[^unlogged-explanation]:Explained unlogged tables.
+You can also insert data into an unlogged table that generates no WAL and gets truncated upon crash recovery but is faster to write into. While inserting into an unlogged table might be fast, you still have to convert it to a regular logged table afterwards which can be a [slow single-threaded process](https://dba.stackexchange.com/a/195829). And hypertables cannot be unlogged, so if you want a hypertable you need to further convert/migrate the regular logged table to a hypertable which can also be slow.
 
 # So what's the best method?
 
@@ -370,9 +354,7 @@ Just rename this repo to belong to this blog post lol?
 
 ## Benchmarking methodology
 
-To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. Data was read from a HDD and the database was stored on an NvME SSd.
-
-TODO: What was on which drive?
+To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. No storage was persisted between Docker containers. Data including NetCDF and CSV files were read from a HDD and the database was stored on an NvME SSD.
 
 Hardware:
 
@@ -431,11 +413,3 @@ full_page_writes = off
 
 * footnotes will be placed here. This line is necessary
 {:footnotes}
-
-* Explain why you wants to just benchmark insert rates without indexes.
-* Did WAL checkpointing degrade performance anywhere?
-* Note the existence of https://www.postgresql.org/docs/current/populate.html
-
---- TODO
-
-Explain how you measured t_csv_16workers < 32workers.

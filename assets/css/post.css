@@ -68,6 +68,40 @@ img.centered {
     margin-left: 1em;
 }
 
+.centered {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.width-50 {
+    width: 50%;
+}
+
+.width-60 {
+    width: 60%;
+}
+
+.width-80 {
+    width: 80%;
+}
+
+figure > p {
+    margin: 0;
+    padding: 0;
+}
+
+figure > p > img {
+    display: block;
+}
+
+figure > figcaption {
+    text-align: center;
+    font-style: italic;
+    font-size: 0.9em;
+    line-height: 1.5em;
+}
+
 /*
  * Code blocks
  */

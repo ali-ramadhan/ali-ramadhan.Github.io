@@ -6,9 +6,13 @@ toc: true
 
 GitHub discussion link
 
-| ![Temperature](/img/insert_benchmarks/temperature_figure.png) |
-|:--:|
-| *Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC.* |
+<figure class="centered" markdown="block">
+
+![global surface temperature snapshot](/img/insert_benchmarks/temperature_figure.png)
+
+<figcaption>Global snapshot of surface temperature at 2018-12-04 04:00:00 UTC.</figcaption>
+
+</figure>
 
 # What are we even doing?
 
@@ -43,15 +47,23 @@ The data is output from a climate model run that is constrained to match weather
 
 [^era5-explanation]: ERA5 is the latest [climate reanalysis](https://en.wikipedia.org/wiki/Atmospheric_reanalysis) product produced by the [ECMWF re-analysis](https://en.wikipedia.org/wiki/ECMWF_re-analysis) project.
 
-| ![Temperature](/img/insert_benchmarks/precipitation_figure.png){: .centered width="100%"} |
-|:--:|
-| *Global snapshot of precipitation rate at 2018-12-04 04:00:00 UTC.* |
+<figure class="centered" markdown="block">
+
+![global precipitation snapshot](/img/insert_benchmarks/precipitation_figure.png)
+
+<figcaption>Global snapshot of precipitation rate at 2018-12-04 04:00:00 UTC.</figcaption>
+
+</figure>
 
 ERA5 covers the entire globe at 0.25 degree resolution, and stretches back in time to 1940 with hourly resolution. Here's what a time series of temperature looks like at one location.
 
-| ![Temperature](/img/insert_benchmarks/zoom_plot_temperature_Durban.png){: .centered width="100%"} |
-|:--:|
-| *Time series of surface temperature near Durban, South Africa.* |
+<figure class="centered width-80" markdown="block">
+
+![temperature time series](/img/insert_benchmarks/zoom_plot_temperature_Durban.png)
+
+<figcaption>Time series of surface temperature near Durban, South Africa.</figcaption>
+
+</figure>
 
 Hourly data stretching back to 1940 is 727,080 snapshots in time for each variable like temperature, precipitation, cloud cover, wind speed, etc. And at 0.25 degree resolution we have 1,036,080 locations. Together that's 753,836,544,000 or ~754 billion rows of data if indexed by time and location. That's a good amount of data. And as I found out, it's not trivial to quickly shove this data into a relational database, much less be able to query it quickly.
 
@@ -129,9 +141,15 @@ How many rows can we actually insert per second using single-row inserts? After 
 
 [^orm-explanation]: I wanted to try a fourth method using SQLAlchemy's [Object Relational Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) (ORM) which maps rows in a database to Python objects. But, the ORM requires a primary key and Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables and partitioned lookups cannot support a primary key. ORM was probably going to be the slowest at inserting due to extra overhead anyways.
 
-| ![Insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png) |
-|:--:|
-| *Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark inserted 20k rows and was run 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.* |
+<figure class="centered width-80" markdown="block">
+
+![single-row insert benchmarks](/img/insert_benchmarks/benchmarks_insert.png)
+
+<figcaption>
+    Blue bars show the median insert rate into a regular PostgreSQL table, while orange bars show the median insert rate into a TimescaleDB hypertable. Each benchmark inserted 20k rows and was repeated 10 times. The error bars show the range of insert rates given by the 10th and 90th percentiles.
+</figcaption>
+
+</figure>
 
 I benchmarked inserting into a regular Postgres table and a TimescaleDB hypertable[^hypertable-explanation].
 
@@ -172,9 +190,13 @@ This is faster for a few reasons. There's less network overhead as each single-r
 
 In pandas it sounds like you can do this by passing the `method="multi"` keyword argument to the `df.to_sql()` function but I found this to be a bit slower than single-row inserts with `chunksize=1`. So I just didn't set a method or chunk size and supposedly all rows will be written at once, and it was faster. With psycopg3 you can construct a list of tuples, one for each row, and insert them all at once. With SQLAlchemy it's a dict of tuples.
 
-| ![Multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png) |
-|:--:|
-| *This time each benchmark inserted 100k rows and was run 10 times* |
+<figure class="centered width-80" markdown="block">
+
+![multi-valued insert benchmarks](/img/insert_benchmarks/benchmarks_multi_insert.png)
+
+<figcaption>This time each benchmark inserted 100k rows and was repeated 10 times.</figcaption>
+
+</figure>
 
 Now there's a clear winner with psycopg3 at 25~30k inserts/sec. I'm not sure why psycopg3 is faster but it looks like pandas is [using dictionaries to insert](https://github.com/pandas-dev/pandas/blob/a671b5a8bf5dd13fb19f0e88edc679bc9e15c673/pandas/io/sql.py#L938-L968) which can be slower than just plain tuples. SQLAlchemy might be extra slow slow here because of additional overhead like with single-row inserts and I also passed it dictionaries.
 
@@ -198,9 +220,15 @@ We have the option of saving data from NetCDF files as CSV files then using `cop
 
 When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` we account for the time it takes to construct the list of tuples, one for each row.
 
-| ![Copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png) |
-|:--:|
-| *Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 day of ERA5 data) and was run 10 times.* |
+<figure class="centered width-80" markdown="block">
+
+![copy benchmarks](/img/insert_benchmarks/benchmarks_copy.png)
+
+<figcaption>
+    Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 day of ERA5 data) and was repeated 10 times.
+</figcaption>
+
+</figure>
 
 We see that `copy csv` can actually insert close to 400k rows per second, but that is if you already have the CSV file ready to go. Including overhead, both `copy csv` and psycopg3 can manage around 100k inserts/second.
 
@@ -210,9 +238,15 @@ At ~100k inserts/second we're still talking about ~3 months to load all the data
 
 When inserting _many_ rows, Postgres may encounter bottlenecks so it's important that the insert rate can be sustained. To look at this, we can insert hundreds of millions of rows and watch for fluctuations in the insert rate.
 
-| ![Copy at scale benchmarks](/img/insert_benchmarks/benchmarks_copy_at_scale.png) |
-|:--:|
-| *For this benchmark, rows were inserted in 744 batches of 1,038,240 rows for a total of ~772 million rows. The overall insert rate is plotted. The dots show the insert rate for each batch while the solid lines show a 10-batch rolling mean.* |
+<figure class="centered width-80" markdown="block">
+
+![copy at scale benchmarks](/img/insert_benchmarks/benchmarks_copy_at_scale.png)
+
+<figcaption>
+    For this benchmark, rows were inserted in 744 batches of 1,038,240 rows for a total of ~772 million rows. The overall insert rate is plotted. The dots show the insert rate for each batch while the solid lines show a 10-batch rolling mean.
+</figcaption>
+
+</figure>
 
 It seems that, at least with one worker, we don't see huge drops in insert rates although `copy csv` shows frequent drops and seems more susceptible to fluctuations than copying with `psycopg3`. With `psycopg3` there isn't much of a difference between copying into a regular table or hypertable.
 
@@ -220,9 +254,15 @@ It seems that, at least with one worker, we don't see huge drops in insert rates
 
 Inserting data with `copy` is fast but can we speed it up by executing multiple `copy` operations in parallel? Using the joblib package we can execute multiple `copy` statements or psycopg3 cursors in parallel.
 
-| ![Parallel copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_copy.png) |
-|:--:|
-| *The overall insert rate is plotted as a function of the number of workers. Each benchmark inserted 128 hours of ERA5 data (~133 million rows).* |
+<figure class="centered width-80" markdown="block">
+
+![parallel copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_copy.png)
+
+<figcaption>
+    The overall insert rate is plotted as a function of the number of workers. Each benchmark inserted 128 hours of ERA5 data (~133 million rows).
+</figcaption>
+
+</figure>
 
 Inserting data into a single table is not super parallelizable so it looks like performance plateaus after 16 workers. But can the 800k inserts/sec rate into a regular table with 16 workers actually be sustained? I ran this benchmark with 31 days worth of ERA5 data (~772 million rows) and saw an overall insert rate of ~325k inserts/sec so it seems that the sustained rate is quite a bit lower.[^why-no-plot]
 
@@ -234,9 +274,15 @@ Inserting data into a single table is not super parallelizable so it looks like 
 
 Beyond the `copy` statement, there are external tools for loading large amounts of data into Postgres. I'll benchmark two of them, [pg_bulkload](https://github.com/ossc-db/pg_bulkload) and [timescaledb-parallel-copy](https://github.com/timescale/timescaledb-parallel-copy).
 
-| ![Tool benchmarks](/img/insert_benchmarks/benchmarks_tools.png) |
-|:--:|
-| *Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 day of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the `copy` benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.* |
+<figure class="centered width-80" markdown="block">
+
+![tools benchmarks](/img/insert_benchmarks/benchmarks_tools.png)
+
+<figcaption>
+    Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 day of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.
+</figcaption>
+
+</figure>
 
 At first it would seem that pg_bulkload is much faster, however, this is because by default it bypasses the shared buffers and skips WAL logging so data recovery following a crash may not be possible while timescaledb-parallel-copy does not and does things more safely. On a level playing field with `fsync` off (see next section for an explanation) timescaledb-parallel-copy with multiple workers beats out pg_bulkload.
 
@@ -244,9 +290,15 @@ At first it would seem that pg_bulkload is much faster, however, this is because
 
 timescaledb-parallel-copy lets you specify the number of workers inserting data in parallel. Let's see how much performance we can squeeze out with more workers, and if that performance can be sustained.
 
-| ![Tool benchmarks](/img/insert_benchmarks/benchmarks_parallel_tpc.png) |
-|:--:|
-| *The insert rate as a function of the number of rows inserted. In this benchmark the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the `copy` benchmarks. Each benchmark inserted 256 hours of ERA5 data (~266 million rows). Note the vertical log scale.* |
+<figure class="centered width-80" markdown="block">
+
+![timescaledb-parallel-copy benchmarks](/img/insert_benchmarks/benchmarks_parallel_tpc.png)
+
+<figcaption>
+    The insert rate as a function of the number of rows inserted. In this benchmark the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the `copy` benchmarks. Each benchmark inserted 256 hours of ERA5 data (~266 million rows). Note the vertical log scale.
+</figcaption>
+
+</figure>
 
 Initial performance looks great! But eventually, before 100 million rows on my system, a bottleneck is reached and the insert rate tanks before picking back up in waves. The maximum sustained insert rate is around 600~700k inserts/sec for regular tables and ~300k for hypertables. The bottleneck seemed to be the SSD where all the workers were writing to the DB, not the HDD where the data was being read from.
 
@@ -264,21 +316,33 @@ You can also insert data into an unlogged table that generates no WAL and gets t
 
 # So what's the best method?
 
-**Short answer: The best method will insert data directly into a hypertable and do so using multiple workers. The sweet spot seems to be 12~16 workers on my system.**
+**Short answer: Use psycopg3 to directly copy data into a hypertable. If you already have CSV files then use timescaledb-parallel-copy. For parallelization the sweet spot seems to be 12~16 workers on my system.**
 
 We want to end up with a hypertable but it seems like inserting into a regular table is faster. So is it faster to insert into a regular table then convert it to a hypertable? Or is it faster to just insert data straight into a hypertable?
 
-| ![Table conversion time](/img/insert_benchmarks/conversion_time.png) |
-|:--:|
-| *Blue bars show the wall clock time taken to insert data into the table and the orange bar shows the time taken to convert the regular table into a hypertable.* |
+<figure class="centered width-50" markdown="block">
+
+![table conversion time](/img/insert_benchmarks/conversion_time.png)
+
+<figcaption>
+    Blue bars show the wall clock time taken to insert data into the table and the orange bar shows the time taken to convert the regular table into a hypertable.
+</figcaption>
+
+</figure>
 
 A quick test with inserting ~772 million rows with psycopg3's copy and 16 workers shows that inserting data into a hypertable is faster as it takes roughly 75% of the time in this case. This may not always be the case but inserting into a regular table then converting it to a hypertable and migrating the data will probably always be slower as the conversion/migration process is not super fast and seems to be single-threaded.
 
 Now that we've concluded we want to be inserting data into a hypertable, let's take a look at the all hypertable insert rates we've considered in one plot.
 
-| ![Benchmarks summary](/img/insert_benchmarks/benchmarks_summary.png) |
-|:--:|
-| *Sustained hypertable insert rates including overhead (e.g. writing CSV files or constructing tuples) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.* |
+<figure class="centered" markdown="block">
+
+![benchmarks summary](/img/insert_benchmarks/benchmarks_summary.png)
+
+<figcaption>
+    Sustained hypertable insert rates including overhead (e.g. writing CSV files or constructing tuples) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.
+</figcaption>
+
+</figure>
 
 So what can we conclude?
 

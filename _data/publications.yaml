@@ -1,0 +1,433 @@
+- id: ndes-paper
+  title: Capturing missing physics in climate model parameterizations using neural differential equations
+  authors:
+    - A. Ramadhan
+    - J. C. Marshall
+    - A. N. Souza
+    - X. K. Lee
+    - U. Piterbarg
+    - A. Hillier
+    - G. L. Wagner
+    - C. Rackauckas
+    - C. Hill
+    - J.-M. Campin
+    - R. Ferrari
+  status: submitted
+  journal: Journal of Advances in Modeling Earth Systems
+  year: 2023
+  links:
+    - type: ESSOAr
+      url: https://doi.org/10.1002/essoar.10512533.1
+    - type: pdf
+      url: files/papers/Ramadhan%20et%20al,%202023,%20Capturing%20missing%20physics%20in%20climate%20model%20parameterizations%20using%20neural%20differential%20equations.pdf
+
+- id: oceananigans-scaling-paper
+  title: "Oceananigans.jl: A model that achieves breakthrough resolution, memory and energy efficiency in global ocean simulations"
+  authors:
+    - S. Silvestri
+    - G. Wagner
+    - C. Hill
+    - M. R. Ardakani
+    - J. Blaschke
+    - J.-M. Campin
+    - V. Churavy
+    - N. Constantinou
+    - A. Edelman
+    - J. Marshall
+    - A. Ramadhan
+    - A. Souza
+    - R. Ferrari
+  status: arxiv
+  arxiv: arXiv:2309.06662 [physics.ao-ph]
+  year: 2023
+  links:
+    - type: arXiv
+      url: https://arxiv.org/abs/2309.06662
+
+- id: catke-paper
+  title: "CATKE: a turbulent-kinetic-energy-based parameterization for ocean microturbulence with dynamic convective adjustment"
+  authors:
+    - G. L. Wagner
+    - A. Hillier
+    - N. C. Constantinou
+    - S. Silvestri
+    - A. Souza
+    - K. Burns
+    - A. Ramadhan
+    - C. Hill
+    - J.-M. Campin
+    - J. Marshall
+    - R. Ferrari
+  status: arxiv
+  arxiv: 2306.13204 [physics.ao-ph]
+  year: 2023
+  links:
+    - type: arXiv
+      url: https://arxiv.org/abs/2306.13204
+
+- id: icy-moon-plumes-paper
+  title: Divergent behavior of hydrothermal plumes in fresh versus salty icy ocean worlds
+  authors:
+    - S. Bire
+    - T. Mittal
+    - W. Kang
+    - A. Ramadhan
+    - P. Tuckman
+    - C. R. German
+    - A. M. Thurnherr
+    - J. C. Marshall
+  status: submitted
+  journal: "Journal of Geophysical Research: Planets"
+  year: 2023
+  links:
+    - type: ESSOAr
+      url: https://doi.org/10.22541/essoar.167397346.61500980/v1
+    - type: pdf
+      url: files/papers/Bire%20et%20al,%202023,%20Divergent%20behavior%20of%20hydrothermal%20plumes%20in%20fresh%20versus%20salty%20icy%20ocean%20worlds.pdf
+
+- id: toi-1075b-paper
+  title: "TOI-1075 b: A Dense, Massive, Ultra-short-period Hot Super-Earth Straddling the Radius Gap"
+  authors: Z. Essack, A. Shporer, J. A. Burt, et al. (including <u>A. Ramadhan</u>)
+  status: published
+  journal: The Astronomical Journal
+  volume: 165
+  subvolume: 2
+  pages: 47
+  year: 2023
+  links:
+    - type: doi
+      url: https://doi.org/10.3847/1538-3881/ac9c5b
+    - type: pdf
+      url: files/papers/Essack%20et%20al,%202023,%20The%20Astronomical%20Journal,%20TOI-1075%20b%20A%20Dense,%20Massive,%20Ultra-short-period%20Hot%20Super-Earth%20Straddling%20the%20Radius%20Gap.pdf
+
+- id: geometry-reconstruction-paper
+  title: Approaches for constraining uncertainty and degeneracy in geometry reconstruction of molecules from simulated Coulomb explosion data
+  authors:
+    - A. Tian
+    - A. Ramadhan
+    - M. Nooijen
+    - S. V. Pantazi
+    - R. Karimi
+    - J. H. Sanderson
+  status: published
+  journal: Computer Physics Communications
+  volume: 297
+  pages: 109074
+  year: 2023
+  links:
+    - type: doi
+      url: https://doi.org/10.1016/j.cpc.2023.109074
+
+- id: antarctic-siz-paper
+  title: Observations of Upwelling and Downwelling Around Antarctica Mediated by Sea Ice
+  authors:
+    - A. Ramadhan
+    - J. Marshall
+    - G. Meneghello
+    - L. Illari
+    - K. Speer
+  status: published
+  journal: Frontiers in Marine Science
+  volume: 9
+  pages: 864808
+  year: 2022
+  links:
+    - type: doi
+      url: https://doi.org/10.3389/fmars.2022.864808
+    - type: pdf
+      url: files/papers/Ramadhan%20et%20al,%202022,%20Frontiers%20in%20Marine%20Science,%20Observations%20of%20Upwelling%20and%20Downwelling%20Around%20Antarctica%20Mediated%20by%20Sea%20Ice.pdf
+
+- id: icy-moons-paper
+  title: Exploring Ocean Circulation on Icy Moons Heated From Below
+  authors:
+    - S. Bire
+    - W. Kang
+    - A. Ramadhan
+    - J.-M. Campin
+    - J. Marshall
+  status: published
+  journal: "Journal of Geophysical Research: Planets"
+  volume: 127
+  pages: e2021JE007025
+  year: 2022
+  links:
+    - type: doi
+      url: https://doi.org/10.1029/2021JE007025
+    - type: pdf
+      url: files/papers/Bire%20et%20al,%202022,%20Journal%20of%20Geophysical%20Research%20Planets,%20Exploring%20Ocean%20Circulation%20on%20Icy%20Moons%20Heated%20From%20Below.pdf
+    - type: news
+      url: https://eos.org/research-spotlights/dynamics-of-ocean-worlds-likely-controlled-by-their-rotation
+
+- id: antarctic-meltwater-paper
+  title: On the Settling Depth of Meltwater Escaping from beneath Antarctic Ice Shelves
+  authors:
+    - C. W. Arnscheidt
+    - J. Marshall
+    - P. Dutrieux
+    - C. D. Rye
+    - A. Ramadhan
+  status: published
+  journal: Journal of Physical Oceanography
+  volume: 51
+  subvolume: 7
+  pages: 2257–2270
+  year: 2021
+  links:
+    - type: doi
+      url: https://doi.org/10.1175/JPO-D-20-0286.1
+    - type: pdf
+      url: files/papers/Arnscheidt%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20%20On%20the%20Settling%20Depth%20of%20Meltwater%20Escaping%20from%20beneath%20Antarctic%20Ice%20Shelves.pdf
+
+- id: niw-swell-paper
+  title: Near-Inertial Waves and Turbulence Driven by the Growth of Swell
+  authors:
+    - G. L. Wagner
+    - G. P. Chini
+    - A. Ramadhan
+    - B. Gallet
+    - R. Ferrari
+  status: published
+  journal: Journal of Physical Oceanography
+  volume: 51
+  subvolume: 5
+  pages: 1337–1351
+  year: 2021
+  links:
+    - type: doi
+      url: https://doi.org/10.1175/JPO-D-20-0178.1
+    - type: pdf
+      url: files/papers/Wagner%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20Near-Inertial%20Waves%20and%20Turbulence%20Driven%20by%20the%20Growth%20of%20Swell.pdf
+
+- id: uq-paper
+  title: "Uncertainty Quantification of Ocean Parameterizations: Application to the K-Profile-Parameterization for Penetrative Convection"
+  authors:
+    - A. N. Souza
+    - G. L. Wagner
+    - A. Ramadhan
+    - B. Allen
+    - V. Churavy
+    - J. Schloss
+    - J. Campin
+    - C. Hill
+    - A. Edelman
+    - J. Marshall
+    - G. Flierl
+    - R. Ferrari
+  status: published
+  journal: Journal of Advances in Modeling Earth Systems
+  volume: 12
+  pages: e2020MS002108
+  year: 2020
+  links:
+    - type: doi
+      url: https://doi.org/10.1029/2020MS002108
+    - type: pdf
+      url: files/papers/Souza%20et%20al,%202020,%20Journal%20of%20Advances%20in%20Modeling%20Earth%20Systems,%20Uncertainty%20Quantification%20of%20Ocean%20Parameterizations.pdf
+
+- id: oceananigans-paper
+  title: "Oceananigans.jl: Fast and friendly geophysical fluid dynamics on GPUs"
+  authors:
+    - A. Ramadhan
+    - G. L. Wagner
+    - C. Hill
+    - J.-M. Campin
+    - V. Churavy
+    - T. Besard
+    - A. Souza
+    - A. Edelman
+    - R. Ferrari
+    - J. Marshall
+  status: published
+  journal: Journal of Open Source Software
+  volume: 5
+  subvolume: 53
+  pages: 2018
+  year: 2020
+  links:
+    - type: doi
+      url: https://doi.org/10.21105/joss.02018
+    - type: pdf
+      url: files/papers/Ramadhan%20et%20al,%202020,%20Journal%20of%20Open%20Source%20Software,%20Oceananigans.jl%20Fast%20and%20friendly%20geophysical%20fluid%20dynamics%20on%20GPUs.pdf
+
+- id: udes-sciml-paper
+  title: Universal Differential Equations for Scientific Machine Learning
+  authors:
+    - C. Rackauckas
+    - Y. Ma
+    - J. Martensen
+    - C. Warner
+    - K. Zubov
+    - R. Supekar
+    - D. Skinner
+    - A. Ramadhan
+    - A. Edelman
+  status: arxiv
+  arxiv: 2001.04385v4 [cs.LG]
+  year: 2020
+  links:
+    - type: arXiv
+      url: https://arxiv.org/abs/2001.04385
+    - type: pdf
+      url: files/papers/Rackauckas%20et%20al,%202020,%20arXiv,%20Universal%20Differential%20Equations%20for%20Scientific%20Machine%20Learning.pdf
+
+- id: msc-thesis
+  title: Molecular movies and geometry reconstruction using Coulomb explosion imaging
+  authors: A. Ramadhan
+  status: thesis
+  info: Master's thesis, University of Waterloo
+  year: 2017
+  links:
+    - type: uri
+      url: http://hdl.handle.net/10012/12190
+    - type: pdf
+      url: https://uwspace.uwaterloo.ca/bitstream/handle/10012/12190/Ramadhan_Ali.pdf
+
+- id: xray-dosimetry-paper
+  title: X-Ray Dosimetry During Low-Intensity Femtosecond Laser Ablation of Molybdenum in Ambient Conditions
+  authors:
+    - M. J. Wesolowski
+    - C. C. Scott
+    - B. Wales
+    - A. Ramadhan
+    - S. Al-Tuairqi
+    - S. N. Wanasundara
+    - K. S. Karim
+    - J. H. Sanderson
+    - C. A. Wesolowski
+    - P. S. Babyn
+  status: published
+  journal: IEEE Transactions on Nuclear Science
+  volume: 64
+  pages: 2519–2522
+  year: 2017
+  links:
+    - type: doi
+      url: https://doi.org/10.1109/TNS.2017.2739156
+    - type: pdf
+      url: files/papers/Wesolowski%20et%20al,%202017,%20IEEE%20Transactions%20on%20Nuclear%20Science,%20X-Ray%20Dosimetry%20During%20Low-Intensity%20Femtosecond%20Laser%20Ablation%20of%20Molybdenum%20in%20Ambient%20Conditions.pdf
+
+- id: polyyne-paper
+  title: Synthesis of hydrogen- and methyl-capped long-chain polyynes by intense ultrashort laser pulse irradiation of toluene
+  authors:
+    - A. Ramadhan
+    - M. Wesolowski
+    - T. Wakabayashi
+    - H. Shiromaru
+    - T. Fujino
+    - T. Kodama
+    - W. Duley
+    - J. Sanderson
+  status: published
+  journal: Carbon
+  volume: 118
+  pages: 680–685
+  year: 2017
+  links:
+    - type: doi
+      url: http://doi.org/10.1016/j.carbon.2017.03.096
+    - type: pdf
+      url: files/papers/Ramadhan%20et%20al,%202017,%20Carbon,%20Synthesis%20of%20hydrogen-%20and%20methyl-capped%20long-chain%20polyynes%20by%20intense%20ultrashort%20laser%20pulse.pdf
+
+- id: synchrotron-paper
+  title: Ultrafast molecular dynamics of dissociative ionization in OCS probed by soft X-ray synchrotron radiation
+  authors:
+    - A. Ramadhan
+    - B. Wales
+    - I. Gauthier
+    - R. Karimi
+    - M. MacDonald
+    - L. Zuin
+    - J. Sanderson
+  status: published
+  journal: "Journal of Physics B: Atomic, Molecular, and Optical Physics"
+  volume: 49
+  pages: 215602
+  year: 2016
+  links:
+    - type: doi
+      url: http://doi.org/10.1088/0953-4075/49/21/215602
+    - type: pdf
+      url: files/papers/Ramadhan%20et%20al,%202016,%20Journal%20of%20Physics%20B%20Atomic,%20Molecular%20and%20Optical%20Physics,%20Ultrafast%20molecular%20dynamics%20of%20dissociative%20ionization%20in%20OCS%20probed%20by%20soft%20x-ray%20synchrotron.pdf
+
+- id: graphene-paper
+  title: A Novel Femtosecond Laser-Assisted Method for the Synthesis of Reduced Graphene Oxide Gels and Thin Films with Tunable Properties
+  authors:
+    - K. Ibrahim
+    - M. Irannejad
+    - M. Hajialamdari
+    - A. Ramadhan
+    - K. Musselman
+    - J. Sanderson
+    - M. Yavuz
+  status: published
+  journal: Advanced Materials Interfaces
+  volume: 3
+  pages: 1500864
+  year: 2016
+  links:
+    - type: doi
+      url: https://doi.org/10.1002/admi.201500864
+    - type: pdf
+      url: files/papers/Ibrahim%20et%20al,%202016,%20Advanced%20Materials%20Interfaces,%20A%20
+
+- id: graphene-conference-paper
+  title: Ultrafast Light Interaction with Graphene Oxide Aqueous Solution
+  authors:
+    - K. Ibrahim
+    - M. Irannejad
+    - A. Ramadhan
+    - W. Alayak
+    - J. Sanderson
+    - B. Cui
+    - A. Brzezinski
+    - M. Yavuz
+  status: published
+  journal: Proceedings of the 14th IEEE International Conference on Nanotechnology
+  pages: 830–831
+  year: 2014
+  links:
+    - type: doi
+      url: https://doi.org/10.1109/NANO.2014.6968088
+    - type: pdf
+      url: files/papers/Ibrahim%20et%20al,%202014,%20Proceedings%20of%20the%2014th%20IEEE%20International%20Conference%20on%20Nanotechnology,%20Ultrafast%20light%20interaction%20with%20Graphene%20oxide%20aqueous%20solution.pdf
+
+- id: microwire-welding-paper
+  title: Welding of Au Microwires by Femtosecond Laser Irradiation
+  authors:
+    - N. Ly
+    - M. Mayer
+    - A. Ramadhan
+    - J. Sanderson
+  status: published
+  journal: Proceedings of the 14th IEEE International Conference on Nanotechnology
+  pages: 146–149
+  year: 2014
+  links:
+    - type: doi
+      url: https://dx.doi.org/10.1109/NANO.2014.6968136
+    - type: pdf
+      url: files/papers/Ly%20et%20al,%202014,%20Proceedings%20of%20the%2014th%20IEEE%20International%20Conference%20on%20Nanotechnology,%20Welding%20of%20Au%20microwires%20by%20femtosecond%20laser%20irradiation.pdf
+
+- id: ocs-cei-paper
+  title:  Coulomb imaging of the concerted and stepwise break up processes of OCS ions in intense femtosecond laser radiation
+  authors:
+    - B. Wales
+    - É. Bisson
+    - R. Karimi
+    - S. Beaulieu
+    - A. Ramadhan
+    - M. Giguère
+    - Z. Long, W. Liu
+    - J. Kieffer
+    - F. Légaré
+    - J. Sanderson
+  status: published
+  journal: Journal of Electron Spectroscopy and Related Phenomena
+  volume: 195
+  pages: 332–336
+  year: 2014
+  links:
+    - type: doi
+      url: https://dx.doi.org/10.1016/j.elspec.2014.05.003
+    - type: pdf
+      url: files/papers/Wales%20et%20al,%202014,%20Journal%20of%20Electron%20Spectroscopy%20and%20Related%20Phenomena,%20Coulomb%20imaging%20of%20the%20concerted%20and%20stepwise%20break%20up%20processes%20of%20OCS%20ions%20in%20intense%20femtosecond.pdf

@@ -1,3 +1,8 @@
 # Video output
 *.mp4
 *.webm
+
+# Jekyll
+.jekyll-metadata
+.jekyll-cache/
+_site/

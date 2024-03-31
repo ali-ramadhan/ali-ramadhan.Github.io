@@ -354,9 +354,7 @@ At a sustained ~462k inserts per second, we're waiting ~20 days for our ~754 bil
 
 ## Source code
 
-Link to https://github.com/ali-ramadhan/how-much-climate-change/tree/main/benchmark_data_loading or spawn off a new repo just for this?
-
-Just rename this repo to belong to this blog post lol?
+The code used to download the ERA5 data, create the tables, insert/copy data, run benchmarks, and plot figures is at the [timescaledb-insert-benchmarks](https://github.com/ali-ramadhan/timescaledb-insert-benchmarks) repository.
 
 ## Benchmarking methodology
 

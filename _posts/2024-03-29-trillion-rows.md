@@ -348,7 +348,7 @@ Some closing thoughts:
 2. I know the general wisdom is to just dump this data into Snowflake or BigQuery and get fast analytics for relatively cheap. But I like working with my own hardware and learning this way. Plus I have no real budget for this project.
 3. I'd be curious how ClickHouse performs on these benchmarks. My impression is that it would probably be faster out of the box. But I want to learn PostgreSQL and like the fact that TimescaleDB is just a Postgres extension so I went with TimescaleDB.
 
-At a sustained ~462k inserts per second, we're waiting ~20 days for our ~754 billion rows which is not bad I guess. It's less time than it took me to write this post.
+At a sustained ~462k inserts per second, we're waiting ~20 days for our ~754 billion rows which is not bad I guess 🐨 It's less time than it took me to write this post.
 
 # Appendices
 

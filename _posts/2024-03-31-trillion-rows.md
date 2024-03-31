@@ -259,7 +259,7 @@ Inserting data into a single table is not super parallelizable so it looks like 
 
 # Tools
 
-## `pg_bulkload` and `timescaledb-parallel-copy`
+## pg_bulkload and timescaledb-parallel-copy
 
 Beyond the `copy` statement, there are external tools for loading large amounts of data into Postgres. I'll benchmark two of them, [pg_bulkload](https://github.com/ossc-db/pg_bulkload) and [timescaledb-parallel-copy](https://github.com/timescale/timescaledb-parallel-copy).
 
@@ -275,7 +275,7 @@ Beyond the `copy` statement, there are external tools for loading large amounts 
 
 At first it would seem that pg_bulkload is much faster, however, this is because by default it bypasses the shared buffers and skips WAL logging so data recovery following a crash may not be possible while timescaledb-parallel-copy does not and does things more safely. On a level playing field with `fsync` off (see next section for an explanation) timescaledb-parallel-copy with multiple workers beats out pg_bulkload.
 
-## Multiple workers with `timescaledb-parallel-copy`
+## Multiple workers with timescaledb-parallel-copy
 
 timescaledb-parallel-copy lets you specify the number of workers inserting data in parallel. Let's see how much performance we can squeeze out with more workers, and if that performance can be sustained.
 
@@ -284,7 +284,7 @@ timescaledb-parallel-copy lets you specify the number of workers inserting data 
 ![timescaledb-parallel-copy benchmarks](/img/trillion_rows/benchmarks_parallel_tpc.png)
 
 <figcaption>
-    The insert rate as a function of the number of rows inserted. In this benchmark the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the `copy` benchmarks. Each benchmark inserted 256 hours of ERA5 data (~266 million rows). Note the vertical log scale.
+    The insert rate as a function of the number of rows inserted. In this benchmark the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. Each benchmark inserted 256 hours of ERA5 data (~266 million rows). Note the vertical log scale.
 </figcaption>
 
 </figure>

@@ -2,5 +2,6 @@ url: "https://aliramadhan.me"
 baseurl: ""
 title: "Ali Ramadhan"
 
-markdown: kramdown
-highlighter: none  # We will use highlight.js
+kramdown:
+  syntax_highlighter_opts:
+    disable : true  # We will use highlight.js

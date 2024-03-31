@@ -19,23 +19,23 @@ github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discus
 
 I think it would be cool to have historical weather data from around the world to analyze for signals of climate change we've _already_ had rather than think about potential future change.
 
-If we had a huge weather data warehouse we could query it to figure out whether Dallas is actually warmer or stormier these days and exactly how is it warmer (heat waves, winter highs, etc.). Or whether Chile is warming or getting cloudier as a whole, which could be region-specific. We could do this kind of analysis for every city or region on Earth to find out which places have already experienced the most climate change and what kind of change.
+If we had a huge weather data warehouse we could query it to figure out whether Jakarta is actually warmer or stormier these days and exactly how is it warmer (heat waves, winter highs, etc.). Or whether Chile is warming or getting cloudier as a whole, which could be region-specific. We could do this kind of analysis for every city or region on Earth to find out which places have already experienced the most climate change and what kind of change.
 
-But to do this analysis globally we need to make the data warehouse fast, and there's a lot of data. The first step is to load the data into a database of some kind. Even though I have no experience with PostgreSQL I want to load the data into Postgres and use TimescaleDB to speed up time-based queries and eventually PostGIS to speed up geospatial queries.
+But to do this analysis globally we need to make querying the data warehouse fast, and there's a lot of data. The first step is to load the data into a database of some kind. I'm going to try using PostgreSQL here. It should be a good learning experience and using TimescaleDB to speed up time-based queries and eventually PostGIS to speed up geospatial queries seems promising.
 
 To get there though we first need to load all this data into Postgres and this is what this post is about. Initial attempts at loading the data seemed slow so I wanted to investigate how to do this fast, leading me down a rabbit hole and me writing this.[^postgres-guide]
 
-[^postgres-guide]: The Postgres documentation does have a nice list of performance tips for [populating a database](https://www.postgresql.org/docs/current/populate.html) but I wanted some benchmarks and to include some external tools as well.
+[^postgres-guide]: The Postgres documentation does have a nice list of performance tips for [populating a database](https://www.postgresql.org/docs/current/populate.html) but I wanted some benchmarks and to consider some external tools as well.
 
-Are we building a data warehouse? Maybe, I don't even know. Is a relational database even appropriate for gridded weather data? No idea but we'll find out.
+Are we building a data warehouse? I think so...? Is a relational database even appropriate for gridded weather data? No idea but we'll find out.
 
 ## What's the data?
 
-We are not working with actual weather observations. They are great, but can be sparse in certain regions. Instead, we will be working with the ERA5 climate reanalysis product[^era5-explanation]. It's our best estimate of the historical state of the Earth's weather and is widely used in weather and climate research.
+We are not working with actual weather observations. They are great, but can be sparse in certain regions especially in the past. Instead, we will be working with the ERA5 climate reanalysis product[^era5-explanation]. It's our best estimate of the historical state of the Earth's weather and is widely used in weather and climate research.
+
+[^era5-explanation]: ERA5 is the latest [climate reanalysis](https://en.wikipedia.org/wiki/Atmospheric_reanalysis) product produced by the [ECMWF re-analysis](https://en.wikipedia.org/wiki/ECMWF_re-analysis) project. ECMWF is the [European Centre for Medium-Range Weather Forecasts](https://en.wikipedia.org/wiki/European_Centre_for_Medium-Range_Weather_Forecasts).
 
 The data is output from a climate model run that is constrained to match weather observations. So where we have lots of weather observations, ERA5 should match it closely. And where we do not have any weather observations, ERA5 will be physically consistent and should match the climatology, i.e. the simulated weather's statistics should match reality. At the top of this page is a snapshot of what global surface temperature looks like and below is a snapshot of global precipitation.
-
-[^era5-explanation]: ERA5 is the latest [climate reanalysis](https://en.wikipedia.org/wiki/Atmospheric_reanalysis) product produced by the [ECMWF re-analysis](https://en.wikipedia.org/wiki/ECMWF_re-analysis) project. ECMWF is the European Centre for Medium-Range Weather Forecasts.
 
 <figure class="centered" markdown="block">
 
@@ -45,7 +45,7 @@ The data is output from a climate model run that is constrained to match weather
 
 </figure>
 
-ERA5 covers the entire globe at 0.25 degree resolution, and stretches back in time to 1940 with hourly resolution. Here's what a time series of temperature looks like at one location.
+Here's what a time series of temperature looks like at one location.
 
 <figure class="centered width-80" markdown="block">
 
@@ -55,11 +55,11 @@ ERA5 covers the entire globe at 0.25 degree resolution, and stretches back in ti
 
 </figure>
 
-Hourly data stretching back to 1940 is 727,080 snapshots in time for each variable like temperature, precipitation, cloud cover, wind speed, etc. And at 0.25 degree resolution we have 1,036,080 locations. Together that's 753,836,544,000 or ~754 billion rows of data if indexed by time and location. That's a good amount of data. And as I found out, it's not trivial to quickly shove this data into a relational database, much less be able to query it quickly.
+ERA5 covers the entire globe at 0.25 degree resolution, and stretches back in time to 1940 with hourly resolution. Hourly data stretching back to 1940 is 727,080 snapshots in time for each variable like temperature, precipitation, cloud cover, wind speed, etc. A regularly-spaced latitude-longitude grid at 0.25 degree resolution has 1,038,240 grid points or locations (1440 longitudes and 721 latitudes including both poles). Together that's 753,836,544,000 or ~754 billion rows of data if indexed by time and location. That's a good amount of data. And as I found out, it's not trivial to quickly shove this data into a relational database, much less be able to query it quickly.
 
-The data is distributed as NetCDF[^netcdf-explanation] files indexed by time which makes it quick and easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. It takes like 20~30 minutes to pull out temperature data for one location to make the plot above! Complex geospatial queries, especially over time, will be slow and difficult to perform. Packages like [xarray](https://xarray.dev/) and [dask](https://www.dask.org/) (and efforts by [Pangeo](https://pangeo.io/)) speed things up but it's still a slow process.
+The ERA5 data is distributed as NetCDF[^netcdf-explanation] files. You can query an API for the data or download it from certain providers but generally each file contains data for a day, a month, or a year. This chunking by time makes it quick and easy to query the dataset at single points in time, but looking at temporal patterns is very slow as many files need to be read to pull out a single time series. It takes like 20~30 minutes to pull out temperature data for one location to make the plot above! Complex geospatial queries, especially over time, will be slow and difficult to perform. Packages like [xarray](https://xarray.dev/) and [dask](https://www.dask.org/) (and efforts by [Pangeo](https://pangeo.io/)) speed things up but it's still a slow process.
 
-[^netcdf-explanation]: [NetCDF](https://en.wikipedia.org/wiki/NetCDF) (Network Common Data Form) files are ubiquitous in distributing output data from weather and climate models. They typically store multi-dimensional arrays for each variable output along with enough metadata that you don't need to refer to external documentation to use the data. The good ones do this at least.
+[^netcdf-explanation]: [NetCDF](https://en.wikipedia.org/wiki/NetCDF) (Network Common Data Form) files are ubiquitous in distributing model output in climate science, atmospheric science, and oceanography. They typically store multi-dimensional arrays for each variable output along with enough metadata that you don't need to refer to external documentation to understand and use the data. The good ones do this at least.
 
 We'll just load in temperature, zonal and meridional wind speeds, total cloud cover, precipitation, and snowfall for each time and location so we'll use this table schema:
 
@@ -78,7 +78,7 @@ create table weather (
 );
 ```
 
-And before you mention database normalization, yes I have both a `location_id` column and `latitude` and `longitude` columns. It's for later benchmarking whether spatial queries benefit from a normalized `locations` table.
+And before you mention database normalization, yes I have both a `location_id` column and `latitude` and `longitude` columns. It's for later benchmarking with queries and indexes.
 
 # The `insert` statement
 
@@ -171,9 +171,9 @@ insert into weather (
      6.303482, 6.017273, 0.88571167, 1.9253268, 0);
 ```
 
-This is faster for a few reasons. There's less network overhead as each single-row insert requires a network round trip for each row inserted. Postgres also only has to parse and plan once. Multi-row inserts can also be further optimized when it comes to updating indexes. It seems that you can bulk insert as many rows as you want as long as they fit in memory (or get too big that it's detrimental).
+This is faster for a few reasons. There's less network overhead as each single-row insert requires a network round trip for each row inserted. Postgres also only has to parse and plan once. Multi-row inserts can also be further optimized when it comes to updating indexes. It seems that you can bulk insert as many rows as you want as long as they fit in memory.
 
-In pandas it sounds like you can do this by passing the `method="multi"` keyword argument to the `df.to_sql()` function but I found this to be a bit slower than single-row inserts with `chunksize=1`. So I just didn't set a method or chunk size and supposedly all rows will be written at once, and it was faster. With psycopg3 you can construct a list of tuples, one for each row, and insert them all at once. With SQLAlchemy it's a dict of tuples.
+In pandas it sounds like you can do this by passing the `method="multi"` keyword argument to the `df.to_sql()` function but I found this to be a bit slower than single-row inserts with `chunksize=1`. So I just didn't set a method or chunk size and supposedly all rows will be written at once, and it was faster. With psycopg3 you can construct or stream a list of tuples, one for each row, and insert them all at once. With SQLAlchemy it's a dict of tuples.
 
 <figure class="centered width-80" markdown="block">
 
@@ -191,9 +191,9 @@ With multi-row inserts there's an order-of-magnitude improvement but at ~30k ins
 
 ## Upgrading to the `copy` statement
 
-For loading in larger amounts of data, Postgres has the `copy` statement allowing us to insert rows from a CSV file or from a binary file.[^copy-binary-note] `copy` is faster than multi-row inserts as `copy` as Postgres reads data straight from the file and optimizes parsing, planning, and WAL usage knowing there is a lot of data to load.
+For loading in larger amounts of data, Postgres has the `copy` statement allowing us to insert rows from a CSV file or from a binary file.[^copy-binary-note] `copy` is faster than multi-row inserts as Postgres reads data straight from the file and optimizes parsing, planning, and WAL usage knowing there is a lot of data to load.
 
-[^copy-binary-note]: Binary is _usually_ a more compact representation for floats and timestamps than plaintext so I was hoping to also benchmark `copy` with the binary format thinking it might be much faster. Unfortunately the [format Postgres expects](https://www.postgresql.org/docs/current/sql-copy.html) seems non-trivial and I couldn't easily find a library that would give me the binary I needed. And [Nick Babcock](https://nickb.dev/blog/disecting-the-postgres-bulk-insert-and-binary-format/) actually found that binary is no faster than csv, so it didn't seem worth trying. For reference, 31 days of ERA5 data takes up 7.8 GiB in NetCDF form and 71 GiB in CSV form.
+[^copy-binary-note]: Binary is _usually_ a more compact representation for floats and timestamps than plaintext so I was hoping to also benchmark `copy` with the binary format thinking it might be much faster. Unfortunately the [format Postgres expects](https://www.postgresql.org/docs/current/sql-copy.html) seems non-trivial and I couldn't easily find a library that would give me the binary format I needed. And [Nick Babcock](https://nickb.dev/blog/disecting-the-postgres-bulk-insert-and-binary-format/) actually found that binary is no faster than csv, so it didn't seem worth trying. For reference, 31 days of ERA5 data takes up 7.8 GiB in NetCDF form and 71 GiB in CSV form.
 
 Once you have a CSV file it's as simple as
 
@@ -201,9 +201,9 @@ Once you have a CSV file it's as simple as
 copy weather from some_big.csv delimiter ',' csv header;
 ```
 
-We have the option of saving data from NetCDF files as CSV files then using `copy csv`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space that it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and piping it straight into Postgres using psycopg3's `cusor.copy()` function.
+We have the option of saving data from NetCDF files as CSV files then using `copy`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space that it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and streaming it straight into Postgres using psycopg3's `cusor.copy()` function.
 
-When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` we account for the time it takes to construct the list of tuples, one for each row.
+When benchmarking `copy` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` if we stream a list of tuples then the only overhead is creating the cursor and tuple generator.
 
 <figure class="centered width-80" markdown="block">
 
@@ -215,25 +215,27 @@ When benchmarking `copy csv` vs. `psycopg3.cursor.copy()` we are starting with a
 
 </figure>
 
-We see that `copy csv` can actually insert close to 400k rows per second, but that is if you already have the CSV file ready to go. Including overhead, both `copy csv` and psycopg3 can manage around 100k inserts/second.
+We see that `copy` can actually insert close to 400k rows per second, but that is if you already have the CSV file ready to go. Including overhead, both `copy` and psycopg3 can manage around 100k inserts/second with psycopg3 being a bit faster. For some reason there seems to be no difference between regular table and hypertable performance for psycopg3.
 
 At ~100k inserts/second we're still talking about ~3 months to load all the data 🐌
 
 ## Sustaining `copy` insert rates
 
-When inserting _many_ rows, Postgres may encounter bottlenecks so it's important that the insert rate can be sustained. To look at this, we can insert hundreds of millions of rows and watch for fluctuations in the insert rate.
+When inserting _many_ rows, Postgres may encounter bottlenecks[^write-bottlenecks] so it's important that the insert rate can be sustained. To look at this, we can insert hundreds of millions of rows and watch for fluctuations in the insert rate.
+
+[^write-bottlenecks]: Bottlenecks include the disk being overloaded with writes, usually made worse when the WAL and row insertion are competing for disk I/O. Autovacuuming, which removes dead rows, can also compete for I/O although when populating a database we can ensure that there won't be any duplicates so this could potentially be turned off. Postgres also periodically performs checkpoints to flush all outstanding WAL data to disk. Heavy writes can lead to more checkpoints and more competitinon for I/O.
 
 <figure class="centered width-80" markdown="block">
 
 ![copy at scale benchmarks](/img/trillion_rows/benchmarks_copy_at_scale.png)
 
 <figcaption>
-    For this benchmark, rows were inserted in 744 batches of 1,038,240 rows for a total of ~772 million rows. The overall insert rate is plotted. The dots show the insert rate for each batch while the solid lines show a 10-batch rolling mean.
+    For this benchmark, rows were inserted in 744 batches of 1,038,240 rows for a total of ~772 million rows. The overall insert rate is plotted. The dots show the insert rate for each batch while the solid lines show a 10-batch rolling mean. The straight horizontal lines show the mean insert rate over the entire benchmark. Note that the lines orange and blue straight lines are right on top of each other.
 </figcaption>
 
 </figure>
 
-It seems that, at least with one worker, we don't see huge drops in insert rates although `copy csv` shows frequent drops and seems more susceptible to fluctuations than copying with `psycopg3`. With `psycopg3` there isn't much of a difference between copying into a regular table or hypertable.
+It seems that, at least with one worker, we don't see huge drops in insert rates although `copy csv` shows frequent drops and seems more susceptible to fluctuations. psycopg3 is generally faster and interestingly there isn't much of a difference between copying into a regular table or hypertable.
 
 ## Parallel `copy`
 
@@ -249,9 +251,9 @@ Inserting data with `copy` is fast but can we speed it up by executing multiple 
 
 </figure>
 
-Inserting data into a single table is not super parallelizable so it looks like performance plateaus after 16 workers. But can the 800k inserts/sec rate into a regular table with 16 workers actually be sustained? I ran this benchmark with 31 days worth of ERA5 data (~772 million rows) and saw an overall insert rate of ~325k inserts/sec so it seems that the sustained rate is quite a bit lower.[^why-no-plot]
+Inserting data into a single table is not super parallelizable so it looks like performance generally plateaus after 16 workers.[^better-parallel-benchmark]
 
-[^why-no-plot]: I probably should have run the parallel `copy` benchmarks using more rows to measure a sustained rate. I wish there was an easy way to keep track of the total number of rows when inserting many rows in parallel but querying the row count seems very slow as Postgres is busy. I guess I could log a timestamp every time a worker inserted a batch of rows.
+[^better-parallel-benchmark]: I probably should have run the parallel `copy` benchmarks using more rows to measure a better sustained rate. I wish there was an easy way to keep track of the total number of rows when inserting many rows in parallel but querying the row count seems very slow as Postgres is busy. I guess I could log a timestamp every time a worker inserted a batch of rows. Also wish I repeated this benchmark but it takes quite a while to run.
 
 # Tools
 
@@ -285,7 +287,7 @@ timescaledb-parallel-copy lets you specify the number of workers inserting data 
 
 </figure>
 
-Initial performance looks great! But eventually, before 100 million rows on my system, a bottleneck is reached and the insert rate tanks before picking back up in waves. The maximum sustained insert rate is around 600~700k inserts/sec for regular tables and ~300k for hypertables. The bottleneck seemed to be the SSD where all the workers were writing to the DB, not the HDD where the data was being read from.
+Initial performance looks great! But eventually, before 100 million rows on my system, a bottleneck is reached and the insert rate tanks before picking back up in waves. The maximum sustained insert rate is around 600~700k inserts/sec for regular tables and ~300k for hypertables.
 
 pg_bulkload doesn't let you specify the number of threads or workers, but does have a `writer=parallel` option which uses multiple threads to do data reading, parsing and writing in parallel. We'll look at its insert rate later.
 
@@ -313,7 +315,7 @@ We want to end up with a hypertable but it seems like inserting into a regular t
 
 </figure>
 
-A quick test with inserting ~772 million rows with psycopg3's copy and 16 workers shows that inserting data into a hypertable is faster as it takes roughly 75% of the time in this case. This may not always be the case but inserting into a regular table then converting it to a hypertable and migrating the data will probably always be slower as the conversion/migration process is not super fast and seems to be single-threaded.
+A quick test with inserting ~772 million rows with psycopg3's copy and 16 workers shows that inserting data into a hypertable is faster as it takes roughly 80% of the time in this case. This may not always be the case but inserting into a regular table then converting it to a hypertable and migrating the data will probably always be slower as the conversion/migration process is not super fast and seems to be single-threaded.
 
 Now that we've concluded we want to be inserting data into a hypertable, let's take a look at the all hypertable insert rates we've considered in one plot.
 
@@ -322,25 +324,27 @@ Now that we've concluded we want to be inserting data into a hypertable, let's t
 ![benchmarks summary](/img/trillion_rows/benchmarks_summary.png)
 
 <figcaption>
-    Sustained hypertable insert rates including overhead (e.g. writing CSV files or constructing tuples) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.
+    Sustained hypertable insert rates including overhead (writing CSV files) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.
 </figcaption>
 
 </figure>
 
+For pg_bulkload with a single worker the the `writer=buffered` option was used. For multiple workers, the `writer=buffered` and `multi_process=yes` options were used. Then for multiple workers with fsync off, the `writer=parallel` option was used.
+
 So what can we conclude?
 
-1. At least on my hardware it seems there's a ceiling of ~100k sustained inserts/sec when using a single worker with protections on.
-2. You can use multiple workers to increase the sustained insert rate by ~2.5x up to ~250k inserts/sec while still being protected.
-3. The insertion process is not very parallelizable so the sweet spot is 4-16 workers. The benchmarks use 32 workers to maximize insert rates but 32 feels past the point of diminishing returns just to squeeze out a few extra inserts.
+1. At least on my hardware it seems there's a ceiling of ~140k sustained inserts/sec with overhead when using a single worker with protections on. pg_bulkload wins here by quite a bit.
+2. You can use multiple workers to increase the sustained insert rate up to ~250k inserts/sec with psycopg3's copy cursor while still being protected.
+3. The insertion process is not very parallelizable so the sweet spot is 4-16 workers. The benchmarks used 32 workers to maximize insert rates.
 4. If you're okay living a bit dangerously you can turn off fsync and sustain an insert rate of ~462k inserts/sec with psycopg3! You'll also squeeze out a bit more performance out of timescaledb-parallell-copy.
-5. Be careful when using pg_bulkload as it disables `fsync` by default. When compared more fairly, timescaledb-parallel-copy is a bit faster.
-6. These conclusions assume you need to do extra work to convert data to CSV files which is why psycopg3 was the clear winner, although it does seem pretty fast. If you're starting with CSV files timescaledb-parallel-copy might be faster (and quicker to set up).
+5. Be careful when using pg_bulkload as it disables `fsync` by default.
+6. These conclusions assume you need to do extra work to convert data to CSV files which is why psycopg3 was the clear winner, although it does seem pretty fast. If you're starting with CSV files timescaledb-parallel-copy is probably faster (and quicker to set up).
 
 Some closing thoughts:
 
-1. Want even faster inserts? You should probably upgrade your hardware. A nice enterprise-grade NvME SSD and lots of high-speed DDR5 RAM will probably help a lot. I used hardware that is roughly 5 years old so newer hardware should be able to easily beat these benchmarks.
-2. I like working with my own hardware (and can't afford cloud resources for personal use) but I found it interesting that Amazon's RDS for PostgreSQL only gives you 3000 IOPS by default and even the largest 64 TB volume gives you 256,000 IOPS. Comment on https://aws.amazon.com/blogs/database/optimized-bulk-loading-in-amazon-rds-for-postgresql/ ?
-3. I'd be curious how ClickHouse performs on these benchmarks. My impression is that it would probably be faster out of the box. But I want to learn PostgreSQL and love the fact that TimescaleDB is just a Postgres extension so I went with TimescaleDB.
+1. Want even faster inserts? You should probably upgrade your hardware. A nice enterprise-grade NvME SSD and lots of high-speed DDR5 RAM will help a lot. I used hardware that is roughly 5 years old so newer hardware should be able to easily beat these benchmarks.
+2. I know the general wisdom is to just dump this data into Snowflake or BigQuery and get fast analytics for relatively cheap. But I like working with my own hardware and learning this way. Plus I have no real budget for this project.
+3. I'd be curious how ClickHouse performs on these benchmarks. My impression is that it would probably be faster out of the box. But I want to learn PostgreSQL and like the fact that TimescaleDB is just a Postgres extension so I went with TimescaleDB.
 
 At a sustained ~462k inserts per second, we're waiting ~20 days for our ~754 billion rows which is not bad I guess. It's less time than it took me to write this post.
 

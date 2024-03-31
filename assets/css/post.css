@@ -45,7 +45,7 @@ img.centered {
     margin-right: auto;
 }
 
-.toc-list {
+#markdown-toc {
     list-style-type: decimal;
     margin-left: 2em;
     margin-right: 2em;
@@ -53,19 +53,11 @@ img.centered {
     margin-bottom: 1em;
 }
 
-.toc-list > li {
-    margin-left: 1em;
-}
-
-.toc-sublist {
+#markdown-toc > li > ol {
     list-style-type: lower-alpha;
     margin-left: 2em;
     margin-top: 0;
     margin-bottom: 0;
-}
-
-.toc-sublist > li {
-    margin-left: 1em;
 }
 
 .centered {

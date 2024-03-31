@@ -1,9 +1,11 @@
 ---
 layout: post
 title: "Building a weather data warehouse part I: Loading a trillion rows of weather data into TimescaleDB"
-toc: true
 github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discussions/2
 ---
+
+1. Do not remove this line (it will not be displayed)
+{:toc}
 
 <figure class="centered" markdown="block">
 

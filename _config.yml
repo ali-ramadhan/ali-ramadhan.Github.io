@@ -3,18 +3,4 @@ baseurl: "" # the subpath of your site, e.g. /blog
 title: "Ali Ramadhan" # the name of your site, e.g. ACME Corp.
 
 markdown: kramdown
-highlighter: none  # We will just highlight.js
-
-plugins:
-  - jekyll-toc
-
-toc:
-  min_level: 1
-  max_level: 2
-  ordered_list: yes
-  no_toc_section_class: no_toc_section
-  list_id: toc
-  list_class: toc-list
-  sublist_class: toc-sublist
-  item_class: toc-entry
-  item_prefix: toc-
+highlighter: none  # We will use highlight.js

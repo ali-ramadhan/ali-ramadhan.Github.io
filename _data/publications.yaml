@@ -278,7 +278,7 @@
   year: 2017
   links:
     - type: uri
-      url: http://hdl.handle.net/10012/12190
+      url: https://hdl.handle.net/10012/12190
     - type: pdf
       url: https://uwspace.uwaterloo.ca/bitstream/handle/10012/12190/Ramadhan_Ali.pdf
 
@@ -324,7 +324,7 @@
   year: 2017
   links:
     - type: doi
-      url: http://doi.org/10.1016/j.carbon.2017.03.096
+      url: https://doi.org/10.1016/j.carbon.2017.03.096
     - type: pdf
       url: files/papers/Ramadhan%20et%20al,%202017,%20Carbon,%20Synthesis%20of%20hydrogen-%20and%20methyl-capped%20long-chain%20polyynes%20by%20intense%20ultrashort%20laser%20pulse.pdf
 
@@ -345,7 +345,7 @@
   year: 2016
   links:
     - type: doi
-      url: http://doi.org/10.1088/0953-4075/49/21/215602
+      url: https://doi.org/10.1088/0953-4075/49/21/215602
     - type: pdf
       url: files/papers/Ramadhan%20et%20al,%202016,%20Journal%20of%20Physics%20B%20Atomic,%20Molecular%20and%20Optical%20Physics,%20Ultrafast%20molecular%20dynamics%20of%20dissociative%20ionization%20in%20OCS%20probed%20by%20soft%20x-ray%20synchrotron.pdf
 

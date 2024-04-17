@@ -2,6 +2,7 @@
 layout: post
 title: "Building a weather data warehouse part I: Loading a trillion rows of weather data into TimescaleDB"
 github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discussions/2
+hacker_news: https://news.ycombinator.com/item?id=40051191
 ---
 
 1. Do not remove this line (it will not be displayed)

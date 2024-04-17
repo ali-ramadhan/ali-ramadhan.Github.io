@@ -36,6 +36,9 @@ show_profile_picture: false
               {% if page.github_discussion %}
                 <a href="{{ page.github_discussion }}" target="_blank" class="button">GitHub Discussion</a>
               {% endif %}
+              {% if page.hacker_news %}
+                <a href="{{ page.hacker_news }}" target="_blank" class="button">Hacker News</a>
+              {% endif %}
             </div>
             <div class="post-body">
               {{ content }}

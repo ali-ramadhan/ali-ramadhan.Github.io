@@ -1,0 +1,28 @@
+AIC (Akaike Information Criterion), BIC (Bayesian Information Criterion), and HQIC (Hannan-Quinn Information Criterion) are all model selection criteria used to compare and select the best model among a set of candidate models. They assess the goodness of fit while penalizing model complexity to avoid overfitting. The main differences lie in how they penalize the number of parameters in the model.
+
+1. AIC (Akaike Information Criterion):
+   - Formula: AIC = 2k - 2ln(L), where k is the number of parameters and L is the maximum likelihood estimate.
+   - AIC penalizes the number of parameters less strongly compared to BIC and HQIC.
+   - It tends to favor more complex models and may select models with a higher number of parameters.
+   - AIC is asymptotically efficient, meaning it selects the model that minimizes the mean squared error of prediction as the sample size approaches infinity.
+
+2. BIC (Bayesian Information Criterion):
+   - Formula: BIC = k * ln(n) - 2ln(L), where k is the number of parameters, n is the sample size, and L is the maximum likelihood estimate.
+   - BIC penalizes the number of parameters more strongly than AIC, especially for larger sample sizes.
+   - It tends to favor simpler models and may select models with fewer parameters compared to AIC.
+   - BIC is consistent, meaning it selects the true model with probability approaching 1 as the sample size approaches infinity, assuming the true model is among the candidate models.
+
+3. HQIC (Hannan-Quinn Information Criterion):
+   - Formula: HQIC = 2k * ln(ln(n)) - 2ln(L), where k is the number of parameters, n is the sample size, and L is the maximum likelihood estimate.
+   - HQIC lies between AIC and BIC in terms of penalizing model complexity.
+   - It balances the strengths of AIC and BIC, providing a middle ground between efficiency and consistency.
+   - HQIC is consistent, similar to BIC, but with a slower rate of convergence.
+
+When to use each criterion:
+- AIC is preferred when the goal is to minimize the prediction error and select a model with good predictive performance. It is useful when the true model is complex or when the sample size is relatively small compared to the number of parameters.
+- BIC is preferred when the goal is to identify the true model structure and when the sample size is large. It is useful when the true model is simple and the focus is on model interpretation rather than prediction.
+- HQIC can be used as a compromise between AIC and BIC when the sample size is moderate and there is uncertainty about the complexity of the true model.
+
+In practice, it is common to calculate all three criteria and compare the results. If the criteria agree on the best model, that model can be selected with more confidence. If they disagree, it may be worth considering the specific goals of the analysis (prediction vs. interpretation) and the sample size to make a decision.
+
+It's important to note that these criteria are relative measures and should be used to compare models within the same set of candidate models. Lower values of AIC, BIC, and HQIC indicate better models.

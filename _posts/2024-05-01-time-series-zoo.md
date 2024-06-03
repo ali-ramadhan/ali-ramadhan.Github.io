@@ -4,6 +4,8 @@ title: "Touring a mini-zoo of time series and forecasting methods"
 enable_mathjax: true
 ---
 
+Let's talk about the Dickey-Fuller test, (obviously?) introduced by [Dickey & Fuller (1979)](#dickey1979).
+
 A footnote about computing critical values of distributions.[^critical-values-t] [^critical-values-chi-squared] [^critical-values-f]
 
 [^critical-values-t]: To compute the critical value $t_c$ for a $t$-distribution with $\nu$ degrees of freedom for the purpose of performing a $t$-test at a significance level of $\alpha$, you can use the formula $\displaystyle t_c = \sqrt{\frac{\nu}{I_{2\alpha}^{-1}(\frac{\nu}{2}, \frac{1}{2})} - \nu}$ where $I^{-1}$ is the inverse of the [_regularized incomplete beta function_](https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function), implemented in Mathematica as [`InverseBetaRegularized`](https://reference.wolfram.com/language/ref/InverseBetaRegularized.html).
@@ -20,3 +22,14 @@ Mention the exact kind of test. Move these footnotes to their own appendix? Link
 
 * footnotes will be placed here. This line is necessary
 {:footnotes}
+
+# References
+
+<div class="references">
+
+<div id="dickey1979">
+<span style="font-variant: small-caps">Dickey, D. A., & Fuller, W. A. (1979).</span>
+Distribution of the estimators for autoregressive time series with a unit root. <i>Journal of the American Statistical Association</i>, <b>74</b>(366a), 427-431. <a href="https://doi.org/10.1080%2F01621459.1979.10482531" target="_blank" class="button">doi</a>
+</div>
+
+</div>

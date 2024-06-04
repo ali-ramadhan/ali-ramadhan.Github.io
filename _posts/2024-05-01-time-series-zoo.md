@@ -4,6 +4,31 @@ title: "Touring a mini-zoo of time series and forecasting methods"
 enable_mathjax: true
 ---
 
+1. Do not remove this line (it will not be displayed)
+{:toc}
+
+
+# What are we even doing?
+
+* Explain that forecasting is only possible by capturing the underlying process.
+* Explain that we're doing one-shot learning and that some of these may benefit from external predictors.
+* Also we want to make some $h$-horizon forecast and act on it.
+* Explain that some can be used to make longer-term forecasts (e.g. AR) while some are only good for short-term.
+
+# The time series zoo
+
+# Trend-cycle decompositions
+
+## Classical or naive decomposition
+
+## X13-ARIMA-SEATS
+
+## STL
+
+# Stationarity and unit root tests
+
+## Augmented Dickey-Fuller test
+
 Let's talk about the Dickey-Fuller test, (obviously?) introduced by [Dickey & Fuller (1979)](#dickey1979).
 
 A footnote about computing critical values of distributions.[^critical-values-t] [^critical-values-chi-squared] [^critical-values-f]
@@ -18,6 +43,29 @@ This is only very tangentially related to the Dickey-Fuller test but I couldn't 
 
 Mention the exact kind of test. Move these footnotes to their own appendix? Link it to the ADF test more closely?
 
+## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
+
+# Analyzing each time series
+
+* Look at trend-cycle decompositions and stationarity for each time series.
+* We're looking for something stationary to predict in each? Depends on the method I guess.
+
+# Time series forecasting methods
+
+## Exponential smoothing (Damped? Holt-Winters')
+
+## Autoregressive?
+
+## Moving average?
+
+## ARIMA
+
+## TBATS?
+
+## Prophet
+
+# Forecasting time series!
+
 # Footnotes
 
 * footnotes will be placed here. This line is necessary
@@ -29,7 +77,7 @@ Mention the exact kind of test. Move these footnotes to their own appendix? Link
 
 <div id="dickey1979">
 <span style="font-variant: small-caps">Dickey, D. A., & Fuller, W. A. (1979).</span>
-Distribution of the estimators for autoregressive time series with a unit root. <i>Journal of the American Statistical Association</i>, <b>74</b>(366a), 427-431. <a href="https://doi.org/10.1080%2F01621459.1979.10482531" target="_blank" class="button">doi</a>
+Distribution of the estimators for autoregressive time series with a unit root. <i>Journal of the American Statistical Association</i> <b>74</b>(366a), 427-431. <a href="https://doi.org/10.1080%2F01621459.1979.10482531" target="_blank" class="button">doi</a>
 </div>
 
 </div>

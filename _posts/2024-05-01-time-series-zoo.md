@@ -102,7 +102,7 @@ Mention the exact kind of test. Move these footnotes to their own appendix? Link
 <div id="henderson1916">
   <span class="ref-author-list">Henderson, R. (1916)</span>
   Note on Graduation by Adjusted Average. <i>Transactions of the American Society of Actuaries</i> <b>17</b>, 43–48.
-  <a href="https://archive.org/details/transactions17actuuoft/page/42/mode/2up" target="_blank" class="button">pdf</a>
+  <a href="/files/time-series-zoo/Henderson (1916), Note on Graduation by Adjusted Average, Transactions of the American Society of Actuaries.pdf" target="_blank" class="button">pdf</a>
   <a href="https://archive.org/details/transactions17actuuoft/page/42/mode/2up" target="_blank" class="button">source</a>
 </div>
 
@@ -115,7 +115,7 @@ Mention the exact kind of test. Move these footnotes to their own appendix? Link
 <div id="macaulay1931">
   <span class="ref-author-list">Macaulay, F. R. (1931)</span>
   <i>The Smoothing of Time Series</i>. National Bureau of Economic Research. 169 pp.
-  <a href="https://www.nber.org/books-and-chapters/smoothing-time-series" target="_blank" class="button">pdf</a>
+  <a href="/files/time-series-zoo/Macaulay (1931), The Smoothing of Time Series, National Bureau of Economic Research.pdf" target="_blank" class="button">pdf</a>
   <a href="https://www.nber.org/books-and-chapters/smoothing-time-series" target="_blank" class="button">source</a>
 </div>
 

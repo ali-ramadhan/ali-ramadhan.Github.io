@@ -60,3 +60,16 @@ Several tests are used to determine whether a time series has a unit root, imply
 ### Dealing with Unit Roots
 
 If a unit root is present, analysts often difference the series—subtract the previous value from the current value—to achieve stationarity. This transformation is critical for making the series suitable for many standard time series analysis techniques and forecasting models, which assume or require stationarity.
+
+---
+
+X-11 methods, including X-13ARIMA-SEATS, were originally developed for economic time series, particularly for seasonal adjustment of economic data like GDP, employment, and trade. These methods are designed to handle time series with trend, seasonal, and calendar effects, which are common in economic data.
+
+However, the application of X-11 methods is not limited to economic time series. They can be used on any time series data that exhibits similar characteristics, such as trend, seasonality, and calendar effects. In fact, X-11 methods have been applied to various non-economic fields, such as:
+
+    Environmental studies: X-11 methods have been used to analyze air pollution, water quality, and other environmental variables that may have seasonal patterns.
+    Energy consumption: Electricity and gas consumption data often exhibit strong seasonal patterns, making X-11 methods suitable for analyzing and forecasting energy demand.
+    Transportation: X-11 methods have been applied to traffic volume data, which can have seasonal and calendar effects.
+    Health and medicine: Some health-related data, such as hospital admissions or disease incidence, may have seasonal patterns that can be analyzed using X-11 methods.
+
+While X-11 methods can be applied to non-economic time series, it is essential to consider the specific characteristics of the data and the purpose of the analysis. If the time series exhibits trend, seasonality, and calendar effects similar to economic data, then X-11 methods may be appropriate. However, if the data has different patterns or requires alternative modeling approaches, other time series analysis techniques may be more suitable.

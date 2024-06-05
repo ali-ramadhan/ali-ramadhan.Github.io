@@ -134,3 +134,11 @@ label {
     background-color: darkslategray;
     border-bottom-left-radius: .375em;
 }
+
+/*
+ * References
+ */
+
+.ref-author-list {
+    font-variant: small-caps;
+}

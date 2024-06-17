@@ -50,15 +50,49 @@ Sunspots are cold dark spots on the solar surface caused by concentrations of ma
 ## Multivariate ENSO Index
 {:.no_toc}
 
-ENSO is the El Niño-Southern Oscillation, the name scientists use for El Niño. The other part of the climate oscillation, the Southern Oscillation, is a see-saw shift in surface air pressure between the eastern and western halves of the Pacific. When pressure rises in the east, it falls in the west and vice versa. In the 1950's scientists realized that El Niño and the Southern Oscillation were parts of the same event. 
+ENSO is the [El Niño-Southern Oscillation](https://en.wikipedia.org/wiki/El_Ni%C3%B1o%E2%80%93Southern_Oscillation). It's a large scale pattern of warm sea surface temperatures in the tropical Pacific Ocean during El Niño, and cold during La Niña, with worldwide effects. It's the strongest [climate oscillation](https://en.wikipedia.org/wiki/Climate_variability_and_change#Oscillations) and the most prominent source of inter-annual variability.
 
- The Multivariate ENSO Index (MEI) is a method used to characterize the intensity of an ENSO event using a single number. The MEI accounts for sea level pressure, zonal and meridional components of the surface wind, sea surface temperature, surface air temperature and cloudiness.
-
-Those variations have an irregular pattern but do have some semblance of cycles.
+The Multivariate ENSO Index (MEI) is a method used to characterize the intensity of an ENSO event [(Wolter & Timlin, 2011)](#wolter2011). Like other climate oscillations, ENSO is quasi-periodic with a period of 2-7 years making it difficult to forecast. While Earth's climate is a chaotic system, convolutional neural networks looking at sea surface temperature and oceanic heat content in the Pacific can provide skillful forecasts with a lead time of 1.5 years and older methods can go up to a year [(Ham et al., 2019)](#ham2019). This suggests that we may be able to forecast a year out, but a forecast based solely on the MEI (like what we're doing) might not actually be skillful.
 
 ## Durban temperature
+{:.no_toc}
 
-## 
+This is an hourly time series of surface air temperature near Durban, South Africa from 1940-2023 obtained from the ERA5 climate reanalysis product. It has many more observations than the previous time series so . There are multiple scales of seasonality and variability from the diurnal cycle and day-to-day variability of weather to the seasonal cycle and inter-annual variability, with potentially signals of climate change on top.
+
+## Global price of wheat
+{:.no_toc}
+
+This is the global price of wheat for each month since 1990. The underlying generating process behind this time series is the entire global economy so there's probably no hope of being able to forecast this with any significant lead. But it's worth seeing what the forecasts look like, maybe we can identify some false positives. It might also be worth seeing if we can successfully make short-term forecasts.
+
+## USD-JPY exchange rate
+{:.no_toc}
+
+Daily exchange rate since 2005. Same comments as above.
+
+## LW stock price
+{:.no_toc}
+
+This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during March 2024 trading hours at a resolution of a few minutes. The above comments on unpredictibility still hold, but what might be interesting here is whether we are able to make forecasts on what the stock price does in the second half of the trading day given we know what it did in the first.
+
+## ERCOT
+{:.no_toc}
+
+This is the hourly electrical load in Texas for each control area served by ERCOT (Electric Reliability Council of Texas) between 2004-2023. There are multiple scales of seasonality and variability again with a long-term increasing trend.
+
+## Transformer oil temperature
+{:.no_toc}
+
+Electrical load and oil temperature at 15-minute and 1-hour intervals from two electricity transformers in China.
+
+## Cheese sales
+{:.no_toc}
+
+Store-level scanner data of cheese sales at Dominick's Finer Foods, a now-defunct grocery store chain in the Chicago area, from 1989-1994. We will be looking at and forecasting chain-wide weekly cheese sales.
+
+## Uber pickups
+{:.no_toc}
+
+Uber pickups from January to June 2015 in New York City. We'll be looking at and forecasting hourly pickups.
 
 # Time series decomposition
 
@@ -171,6 +205,12 @@ online textbook, python book?
   <a href="https://doi.org/10.1080%2F01621459.1979.10482531" target="_blank" class="button">doi</a>
 </div>
 
+<div id="dickey1979">
+  <span class="ref-author-list">Ham, Y. G., Kim, J. H. & Luo, J. J. (2019).</span>
+  Deep learning for multi-year ENSO forecasts. <i>Nature</i> <b>573</b>, 568–572.
+  <a href="https://doi.org/10.1038/s41586-019-1559-7" target="_blank" class="button">doi</a>
+</div>
+
 <div id="henderson1916">
   <span class="ref-author-list">Henderson, R. (1916)</span>
   Note on Graduation by Adjusted Average. <i>Transactions of the American Society of Actuaries</i> <b>17</b>, 43–48.
@@ -210,6 +250,12 @@ Meijer, H. A. (2005).</span>
   <span class="ref-author-list">Nandy, D. (2021).</span>
   Progress in Solar Cycle Predictions: Sunspot Cycles 24–25 in Perspective. <i>Solar Physics</i> <b>296</b>, 54.
   <a href="https://doi.org/10.1007/s11207-021-01797-2" target="_blank" class="button">doi</a>
+</div>
+
+<div id="wolter2011">
+  <span class="ref-author-list">Wolter, K. & Timlin, M. S. (2011).</span>
+  El Niño/Southern Oscillation behaviour since 1871 as diagnosed in an extended multivariate ENSO index (MEI.ext). <i>International Journal of Climatology</i> <b>31</b>, 1074-1087.
+  <a href="https://doi.org/10.1002/joc.2336" target="_blank" class="button">doi</a>
 </div>
 
 </div>

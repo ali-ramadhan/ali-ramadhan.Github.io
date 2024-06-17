@@ -130,25 +130,13 @@ It's probably worth noting that X11 methods are still mainly designed to work wi
 
 ## STL
 
-
-
 # Stationarity and unit root tests
+
+To properly use some of the time series models, namely the ARIMA family of models, the time series needs to be stationary. Define stationary.
 
 ## Augmented Dickey-Fuller test
 
 Let's talk about the Dickey-Fuller test, (obviously?) introduced by [Dickey & Fuller (1979)](#dickey1979).
-
-A footnote about computing critical values of distributions.[^critical-values-t] [^critical-values-chi-squared] [^critical-values-f]
-
-[^critical-values-t]: To compute the critical value $t_c$ for a $t$-distribution with $\nu$ degrees of freedom for the purpose of performing a $t$-test at a significance level of $\alpha$, you can use the formula $\displaystyle t_c = \sqrt{\frac{\nu}{I_{2\alpha}^{-1}(\frac{\nu}{2}, \frac{1}{2})} - \nu}$ where $I^{-1}$ is the inverse of the [_regularized incomplete beta function_](https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function), implemented in Mathematica as [`InverseBetaRegularized`](https://reference.wolfram.com/language/ref/InverseBetaRegularized.html).
-
-[^critical-values-chi-squared]: For a $\chi^2$ distribution the critical values can be computed as $\displaystyle \chi_\alpha^2 = Q^{-1}\left(\frac{k}{2}, \alpha\right)$ where $Q^{-1}$ is the inverse of the [_upper regularized gamma function_](https://en.wikipedia.org/wiki/Incomplete_gamma_function#Regularized_gamma_functions_and_Poisson_random_variables), implemented in Mathematica as [`InverseGammaRegularized`](https://reference.wolfram.com/language/ref/InverseGammaRegularized.html).
-
-[^critical-values-f]: For an $F$-distribution with $d_1$ and $d_2$ degrees of freedom, the critical values can be computed as $\displaystyle F_c = \left( \frac{I_\star^{-1}}{1 - I_\star^{-1}} \right) \frac{d_2}{d_1}$ where $\displaystyle I_\star^{-1} = I_{1-\alpha}^{-1}\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$.
-
-This is only very tangentially related to the Dickey-Fuller test but I couldn't find this information online so I'm including it here.
-
-Mention the exact kind of test. Move these footnotes to their own appendix? Link it to the ADF test more closely?
 
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
 
@@ -183,6 +171,46 @@ Mention the exact kind of test. Move these footnotes to their own appendix? Link
 ## General resources
 
 online textbook, python book?
+
+## Statistical hypothesis testing
+
+We use some hypothesis tests here and I was a little rusty/fuzzy on the details so this is just a brief aside on them and things to be careful of when using them.
+
+A statistical hypothesis test aims to infer something about a population (e.g. a mean, proportion, or variance) based on sample data. You set up a null hypothesis $H_0$ and an alternative hypothesis $H_1$, then conduct a test based on the sample data and decide whether you are able to reject the null hypothesis $H_0$ with some confidence level. Usually the null hypothesis states that there is no difference or no relationship but it can take various forms, while the alternative hypothesis $H_1$ usually claims the opposite. To decide whether we can reject $H_0$, we compute a <i>test statistic</i> from the sample data and null hypothesis. The test statistic may follow some known probability distribution (under certain assumptions) and based on how extreme the test statistic is, we may be able to reject $H_0$. The <i>p-value</i> is the probability of observing a test statistic as extreme under the null hypothesis. You choose the threshold for rejecting $H_0$ at a specific significance level, often denoted as $\alpha$, based on your desired false-positive rate.
+
+You generally need to be careful when using hypothesis tests. The tests often assume the data is e.g. normal or independent. 
+
+Moreover, a non-significant p-value does not prove the null hypothesis; it only suggests lack of evidence against it.
+Sample Size and Power: The sample size plays a crucial role in hypothesis testing. Small sample sizes may lack the power to detect true effects, leading to false negatives (Type II errors). Adequate sample sizes should be determined based on the desired power and effect size.
+Contextual Factors: P-values and hypothesis tests should be interpreted within the context of the research question, study design, and domain knowledge. Relying solely on p-values without considering other factors can lead to misinterpretations and flawed conclusions.
+
+A commonly used hypothesis test, developed by (Student, 19xx?) of Guiness, is the [$t$-test](https://en.wikipedia.org/wiki/Student%27s_t-test) used to test if a sample mean differs from a known mean. The [$t$-statistic](https://en.wikipedia.org/wiki/T-statistic) is a signal-to-noise ratio of the difference in group means over the variability and follows a [$t$-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) if the sample data is normal and has equal variances. Its critical values (above which $H_0$ can be rejected) can be computed numerically.[^critical-values-t]
+
+[^critical-values-t]: To compute the critical value $t_c$ for a $t$-distribution with $\nu$ degrees of freedom for the purpose of performing a $t$-test at a significance level of $\alpha$, you can use the formula $\displaystyle t_c = \sqrt{\frac{\nu}{I_{2\alpha}^{-1}(\frac{\nu}{2}, \frac{1}{2})} - \nu}$ where $I^{-1}$ is the inverse of the [_regularized incomplete beta function_](https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function), implemented in Mathematica as [`InverseBetaRegularized`](https://reference.wolfram.com/language/ref/InverseBetaRegularized.html).
+
+Used to test the association between two categorical variables or to compare observed frequencies with expected frequencies.
+Test Statistic: Chi-square statistic, which measures the deviation between observed and expected frequencies.
+P-value Interpretation: The probability of observing a chi-square statistic as extreme as or more extreme than the calculated value, assuming the null hypothesis of no association is true.
+Common Misuse: Applying the chi-square test when the expected frequencies are small (less than 5) without using appropriate corrections or alternative tests.
+
+Its critical values can be computed numerically.[^critical-values-chi-squared]
+
+[^critical-values-chi-squared]: For a $\chi^2$ distribution the critical values can be computed as $\displaystyle \chi_\alpha^2 = Q^{-1}\left(\frac{k}{2}, \alpha\right)$ where $Q^{-1}$ is the inverse of the [_upper regularized gamma function_](https://en.wikipedia.org/wiki/Incomplete_gamma_function#Regularized_gamma_functions_and_Poisson_random_variables), implemented in Mathematica as [`InverseGammaRegularized`](https://reference.wolfram.com/language/ref/InverseGammaRegularized.html).
+
+
+An [Analysis of Variance (ANOVA)](https://en.wikipedia.org/wiki/Analysis_of_variance) test generalizes the $t$-test to compare the means of three or more groups. The $F$-statistic compares the variability between groups to the variability within groups and follows an $F$-distribution.
+
+ANOVA (Analysis of Variance):
+Used to compare the means of three or more groups.
+Test Statistic: F-statistic, which compares the variability between groups to the variability within groups.
+P-value Interpretation: The probability of observing an F-statistic as extreme as or more extreme than the calculated value, assuming the null hypothesis of equal means is true.
+Common Misuse: Conducting multiple pairwise comparisons after a significant ANOVA without using appropriate post-hoc tests or adjustments for multiple testing.
+
+Its critical values can be computed numerically.[^critical-values-f]
+
+[^critical-values-f]: For an $F$-distribution with $d_1$ and $d_2$ degrees of freedom, the critical values can be computed as $\displaystyle F_c = \left( \frac{I_\star^{-1}}{1 - I_\star^{-1}} \right) \frac{d_2}{d_1}$ where $\displaystyle I_\star^{-1} = I_{1-\alpha}^{-1}\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$.
+
+Mention something about the ADF and KPSS tests and Monte Carlo estimates.
 
 # Footnotes
 

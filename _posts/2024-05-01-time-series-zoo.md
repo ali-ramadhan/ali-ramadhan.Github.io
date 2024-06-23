@@ -128,11 +128,36 @@ In general, methods like X13-ARIMA-SEATS are very detailed and describing them i
 
 It's probably worth noting that X11 methods are still mainly designed to work with quarterly or monthly time series.
 
-## STL
+## Seasonal and Trend decomposition using Loess (STL)
+
+Seasonal and Trend decomposition using LOESS (STL) also decomposes a time series into three components: trend, seasonality, and residual. LOESS (Locally Estimated Scatterplot Smoothing) is how STL removes or isolates the trend component. It fits a smooth curve to the data by fitting a low-order polynomial locally to each data point that gives more weight to nearby points and less weight to distant points. A traditional distance function is the tri-cube distance function $w(d) = (1 - \|d\|^3)^3$ where $d$ is scaled to be $0 \le d \le 1$. For each data point, LOESS defines a neighborhood of points close to it, assigns a weight to each point in the neighborhood, and fits a low-degree (order 0-2) polynomial using a weighted least squares regression. The smoothed value is then the value of the fitted polynomial at that data point. This smooth curve is then the trend component. Subtracting the trend out of the time series, STL uses LOESS again on the detrended time series to estimate the seasonal component. Subtracting the trend and seasonal components from the time series gives the residual component.
+
+Because STL relies on LOESS it can handle different types of seasonality and varying seasonality. It is also robust to missing values and outliers. As X13-ARIMA-SEATS assumes fixed seasonal periods which are very common in economic time series, STL is better for time series exhibiting other seasonalities. LOESS is a non-parametric method, not assuming any specific form for the trend or seasonal components, so it may capture non-linear patterns better than ARIMA models. STL can scale to larger datasets better. But it can't account for calendar effects.
 
 # Stationarity and unit root tests
 
-To properly use some of the time series models, namely the ARIMA family of models, the time series needs to be stationary. Define stationary.
+To properly use some of the time series models the time series needs to be stationary. This mostly applies to the ARIMA models for this post. A time series is considered to be <i>stationary</i> if its statistical properties (e.g. mean, variance, and autocorrelation) do not change with time.
+
+Formally, a stochastic process $X_t$ is said to be [<i>strictly stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Strict-sense_stationarity) if its joint distribution of $(X_{t_1}, X_{t_2}, ..., X_{t_n})$ is identical to the joint distribution of $(X_{t_1+\tau}, X_{t_2+\tau}, ..., X_{t_n+\tau})$ for all $n$, all time indices $t_1, t_2, \dots, t_n$ and time lags $\tau$. That is, all statistical properties of the time series are invariant under time shifts.
+
+The strict definition above is a bit too strict for practical purposes though, and we can make use of a weaker definition. A stochastic process is [<i>weak-sense stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Weak_or_wide-sense_stationarity) if its mean is constant over time, $E[X_t] = E[X_{t+\tau}]$, its autocovariance only depends on the time lag, $Cov[X_t, X_{t+\tau}] = \gamma(\tau)$, and its variance is finite, $Var[X_t] < \infty$.
+
+In practice, weak-sense stationarity is enough for most time series analyses as many methods mostly rely on the first and second moments which are captured by the mean and autocovariance. But most real-world data is not stationary or close to it, unless transformed. To use e.g. ARIMA models we need to make the time series stationary. To do so we can difference the time series, a key feature of ARIMA models, and work with $\Delta X_t = X_t - X_{t-1}$. Removing the trend or seasonal patterns may be enough. Looking at $\log X_t$ can also help make the time series more stationary by stabilizing a fluctuating variance.
+
+There are some common statistical tests used to determine whether a time series is stationary or not. Here we'll look at two of them: the Augmented Dickey-Fuller test and the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test.
+
+These tests check for stationarity by testing whether a [<i>unit root</i>](https://en.wikipedia.org/wiki/Unit_root) is present in a time series. Technically in the context of time series, a unit root exists when the characteristic equation of the stochastic process has a root equal to 1. But I think it's more useful to look at a more concrete example to understand the effects of a unit root.
+
+Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$.
+* If $|\rho| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $c / (1 - \rho)$, and shocks have temporary effects that decay over time.
+* If $|\rho| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
+* If $|\rho| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
+* If $\rho < 1$ then the values of $y_t$ will fluctuate between positive and negative values.
+
+So the statistical tests try to check whether $|\rho| = 1$ or $|\rho| < 1$.
+
+You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
+
 
 ## Augmented Dickey-Fuller test
 

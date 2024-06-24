@@ -25,6 +25,8 @@ For the scope of this post, I'll stick to single/univariate time series and fitt
 * Also we want to make some $h$-horizon forecast and act on it.
 * Explain that some can be used to make longer-term forecasts (e.g. AR) while some are only good for short-term.
 
+I wanted to learn more about forecasting real-world time series and I thought this kind of material would be easy to find, but I actually found it difficult to find good examples online. Most exampels I found were either focused on time series modeling or the forecasting problem was too simple (simple time series or very short horizon). So I decided to try and pick a bunch of time series and a bunch of modeling methods and to write about my own experience learning to do time series forecasting.
+
 # The time series zoo
 
 I collected some interesting and varied time series to play around with and populate the mini-zoo, which I'll describe here. All data is stored in my [`time-series-forecasting`](https://github.com/ali-ramadhan/time-series-forecasting) GitHub repository along with code for turning it into a [`pandas.Series`](https://pandas.pydata.org/docs/reference/api/pandas.Series.html) or [`darts.TimeSeries`](https://unit8co.github.io/darts/generated_api/darts.timeseries.html) and links to where the data was sourced from.
@@ -136,11 +138,11 @@ Because STL relies on LOESS it can handle different types of seasonality and var
 
 # Stationarity and unit root tests
 
-To properly use some of the time series models the time series needs to be stationary. This mostly applies to the ARIMA models for this post. A time series is considered to be <i>stationary</i> if its statistical properties (e.g. mean, variance, and autocorrelation) do not change with time.
+To properly use some time series models the time series needs to be stationary. This mostly applies to the ARIMA models for this post. A time series is considered to be <i>stationary</i> if its statistical properties (e.g. mean, variance, and autocorrelation) do not change with time.
 
-Formally, a stochastic process $X_t$ is said to be [<i>strictly stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Strict-sense_stationarity) if its joint distribution of $(X_{t_1}, X_{t_2}, ..., X_{t_n})$ is identical to the joint distribution of $(X_{t_1+\tau}, X_{t_2+\tau}, ..., X_{t_n+\tau})$ for all $n$, all time indices $t_1, t_2, \dots, t_n$ and time lags $\tau$. That is, all statistical properties of the time series are invariant under time shifts.
+Formally, a stochastic process $X_t$ is said to be [<i>strictly stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Strict-sense_stationarity) if its joint distribution of $(X_{t_1}, X_{t_2}, ..., X_{t_n})$ is identical to the joint distribution of $(X_{t_1+\tau}, X_{t_2+\tau}, ..., X_{t_n+\tau})$ for all $n$, all time indices $t_1, t_2, \dots, t_n$ and time lags $\tau$. So all statistical properties of the time series are invariant under time shifts.
 
-The strict definition above is a bit too strict for practical purposes though, and we can make use of a weaker definition. A stochastic process is [<i>weak-sense stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Weak_or_wide-sense_stationarity) if its mean is constant over time, $E[X_t] = E[X_{t+\tau}]$, its autocovariance only depends on the time lag, $Cov[X_t, X_{t+\tau}] = \gamma(\tau)$, and its variance is finite, $Var[X_t] < \infty$.
+The strict definition above is a bit strict for practical purposes, so we can use a weaker definition. A stochastic process is [<i>weak-sense stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Weak_or_wide-sense_stationarity) if its mean is constant over time, $E[X_t] = E[X_{t+\tau}]$, its autocovariance only depends on the time lag, $Cov[X_t, X_{t+\tau}] = \gamma(\tau)$, and its variance is finite, $Var[X_t] < \infty$.
 
 In practice, weak-sense stationarity is enough for most time series analyses as many methods mostly rely on the first and second moments which are captured by the mean and autocovariance. But most real-world data is not stationary or close to it, unless transformed. To use e.g. ARIMA models we need to make the time series stationary. To do so we can difference the time series, a key feature of ARIMA models, and work with $\Delta X_t = X_t - X_{t-1}$. Removing the trend or seasonal patterns may be enough. Looking at $\log X_t$ can also help make the time series more stationary by stabilizing a fluctuating variance.
 
@@ -148,7 +150,7 @@ There are some common statistical tests used to determine whether a time series 
 
 These tests check for stationarity by testing whether a [<i>unit root</i>](https://en.wikipedia.org/wiki/Unit_root) is present in a time series. Technically in the context of time series, a unit root exists when the characteristic equation of the stochastic process has a root equal to 1. But I think it's more useful to look at a more concrete example to understand the effects of a unit root.
 
-Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$.
+Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$ where y_t is the value at time t, ρ is the autoregressive coefficient, and ε_t is white noise
 * If $|\rho| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $c / (1 - \rho)$, and shocks have temporary effects that decay over time.
 * If $|\rho| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
 * If $|\rho| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
@@ -158,12 +160,33 @@ So the statistical tests try to check whether $|\rho| = 1$ or $|\rho| < 1$.
 
 You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
 
-
 ## Augmented Dickey-Fuller test
 
-Let's talk about the Dickey-Fuller test, (obviously?) introduced by [Dickey & Fuller (1979)](#dickey1979).
+The original test, not augmented, was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive model. It considered the AR model
+
+$y_t = \rho y_{t-1} + \varepsilon_t$
+
+which has a unit root if $\rho = 1$. It then considers the first difference,
+
+$\Delta y_t = (1 - \rho) y_{t-1} + \varepsilon_t = \delta y_{t-1} + \varepsilon_t$
+
+where $\delta = \rho - 1$ so we can test whether $\delta = 0$. Taking this model, the value and standard error of $\delta$ can be estimated using least squares to form the Dickey-Fuller statistic $\textrm{DF}_\delta = \hat{\delta} / \textrm{SE}(\delta)$ which looks like a $t$-statistic, but instead of following a $t$-distribution it follows a distribution with no closed form so [Dickey & Fuller (1979)](#dickey1979) tabulate critical values of the Dickey-Fuller statistic. The critical values can be computed using Monte Carlo simulations, although packages like `statsmodels` tend to interpolate the tables.
+
+There are three versions of the test depending on whether you want to include a constant term and also a linear trend, but otherwise the Dickey-Fuller test has some major limitations. It's based on a simple AR(1) model which may not capture the complex dynamics present in many time series. It also assumes the error terms in the model are uncorrelated which is not true of many real-world time series.
+
+The Augmented Dickey–Fuller (ADF) test was developed to address these limitations. The testing procedure is the same as for the Dickey–Fuller test but we instead use this more flexible model:
+
+$\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 \Delta y_{t-1} + \cdots + \delta_{p-1} \Delta y_{t-p+1} + \varepsilon_t$
+
+So we're considering an AR($p$) model with a constant term $\alpha$ and time trend coefficient $\beta$. The null hypothesis for the unit root test is that $\gamma = 0$ against the alternative hypothesis of $\gamma < 0$.
+
+statistic, used in the test, is a negative number. The more negative it is, the stronger the rejection of the hypothesis that there is a unit root at some level of confidence.
+
+The problem you're referring to in the context of the Dickey-Fuller test is called the "near-unit root problem" or sometimes the "near-integration problem."
 
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
+
+
 
 # Analyzing each time series
 
@@ -258,7 +281,7 @@ Mention something about the ADF and KPSS tests and Monte Carlo estimates.
   <a href="https://doi.org/10.1080%2F01621459.1979.10482531" target="_blank" class="button">doi</a>
 </div>
 
-<div id="dickey1979">
+<div id="ham2019">
   <span class="ref-author-list">Ham, Y. G., Kim, J. H. & Luo, J. J. (2019).</span>
   Deep learning for multi-year ENSO forecasts. <i>Nature</i> <b>573</b>, 568–572.
   <a href="https://doi.org/10.1038/s41586-019-1559-7" target="_blank" class="button">doi</a>

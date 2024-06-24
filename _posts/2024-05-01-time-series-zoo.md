@@ -186,7 +186,36 @@ The problem you're referring to in the context of the Dickey-Fuller test is call
 
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
 
+The KPSS test, developed by [Kwiatkowski et al. (1992)](#kwiatkowski1992), takes a different approach to testing for stationarity. It's null hypothesis is that the time series is stationary and the alternative hypothesis is that a unit root is present. The test considers the model
 
+$y_t = \alpha + \delta t + r_t + e_t$
+
+where $\alpha$ is a constant term, $\delta t$ is a deterministic trend, and $e_t$ is a stationary error term. $r_t = r_{t-1} + u_t$ is a random walk where $u_t \sim iid(0, \sigma_u^2)$ is identically distributed noise with zero mean and constant variance $\sigma_u^2$.
+
+The null hypothesis is that $\sigma_u^2 = 0$. In this case $r_t = r_0$ and $y_t$ is stationary. Well, it's stationary around zero if $\alpha = \delta = 0$, level-stationary if $\delta = 0$, and stationary around a deterministic trend if both $\alpha$ and $\delta$ are non-zero. The alternative hypothesis is $\sigma_u^2 > 0$.
+
+The KPSS test statistic is a bit more involved:
+
+$\displaystyle \eta = \frac{1}{T^2} \frac{\displaystyle \sum_{t=1}^{T} S_t^2}{\hat{\sigma}_\infty^2}$
+
+where $T$ is the sample size (length of the time series). $S_t = \sum_{i=1}^t \hat{e}_i$ is the partial sum of residuals where $\hat{e}_i$ are the residuals from a regression of $y_t = α + δt + \hat{e}_t$.
+
+$\hat{\sigma}_\infty^2$ is an estimate of the long-run variance of the residuals which captures the total impact of a shock over time, accounting for both immediate effects and lingering effects in subsequent periods. Unlike the simple variance, which only considers contemporaneous relationships, the long-run variance incorporates autocovariances at various lags. This is particularly important in time series data where observations are often correlated over time. A common way to estimate the long-run variance is using a heteroskedasticity and autocorrelation consistent (HAC) estimator, typically the Newey-West estimator. This approach accounts for potential autocorrelation in the residuals.
+
+The test statistic examines how much the cumulative sum of the residuals fluctuates. If the fluctuations are small, $\eta$ is small and the time series is more likely to be stationary. If the fluctuations are large, $\eta$ is large and the time series is more likely to contain a unit root. If $\eta$ is larger than some critical value we can reject the null hypothesis.
+
+The KPSS test relies on several key assumptions:
+
+1. Under the null hypothesis, the series is assumed to be stationary or trend-stationary.
+2. Under the alternative hypothesis, the series is assumed to have a unit root.
+3. The error terms $e_t$ are assumed to be stationary and weakly dependent.
+4. The test assumes that any non-stationarity in the series can be adequately captured by a deterministic trend and/or a random walk component.
+
+It's important to note that the KPSS test, like many statistical tests, is based on asymptotic theory. This means its properties are guaranteed as the sample size approaches infinity. In finite samples, especially small ones, the test's performance may deviate from its theoretical properties.
+
+Furthermore, the test's power (ability to correctly reject the null when it's false) can be affected by the presence of structural breaks or other forms of non-linearity in the data. Therefore, it's always advisable to combine the KPSS test with visual inspection of the data and other complementary tests for a comprehensive analysis of stationarity.
+
+The KPSS test is often used in conjunction with other tests like the ADF test to make more robust conclusions about stationarity.
 
 # Analyzing each time series
 

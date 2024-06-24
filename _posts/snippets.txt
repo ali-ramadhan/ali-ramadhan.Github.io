@@ -26,41 +26,6 @@ When to use each criterion:
 In practice, it is common to calculate all three criteria and compare the results. If the criteria agree on the best model, that model can be selected with more confidence. If they disagree, it may be worth considering the specific goals of the analysis (prediction vs. interpretation) and the sample size to make a decision.
 
 It's important to note that these criteria are relative measures and should be used to compare models within the same set of candidate models. Lower values of AIC, BIC, and HQIC indicate better models.
-
----
-
-A unit root in the context of time series analysis refers to a characteristic of a stochastic process, indicating that the process is non-stationary. Specifically, a time series with a unit root contains a stochastic trend, meaning that shocks to the series have a permanent effect on its future values. This is in contrast to stationary processes where shocks only have a temporary effect.
-
-### Definition
-
-A time series \( Y_t \) has a unit root if it can be described by a model such as:
-
-\[ Y_t = \rho Y_{t-1} + \epsilon_t \]
-
-where \( \epsilon_t \) is a white noise error term. If \( \rho = 1 \), then \( Y_t \) has a unit root. In this case, the process is typically referred to as a random walk. If \( |\rho| < 1 \), the process is stationary, and if \( \rho > 1 \), the process is explosive.
-
-### Implications of a Unit Root
-
-1. **Non-Stationarity**: A time series with a unit root is non-stationary. This means it has a time-dependent structure, particularly in its mean and variance. For instance, a random walk, which is a common example of a unit root process, has a variance that grows over time.
-
-2. **Statistical Properties**: The presence of a unit root affects the statistical properties of the series. For example, standard hypothesis tests (like t-tests and F-tests) that assume stationarity will no longer have valid standard distributions, leading to unreliable statistical inference.
-
-3. **Forecasting**: Predictions from a unit root process have increasing uncertainty as the forecast horizon extends, due to the accumulating effect of new shocks.
-
-### Testing for Unit Roots
-
-Several tests are used to determine whether a time series has a unit root, implying non-stationarity:
-
-1. **ADF (Augmented Dickey-Fuller) Test**: This test checks the null hypothesis that a unit root is present against the alternative that the series is stationary. It involves estimating the parameter \( \rho \) in the model \( \Delta Y_t = (\rho - 1) Y_{t-1} + \epsilon_t \) and testing if it is significantly different from zero.
-
-2. **Phillips-Perron (PP) Test**: Similar to the ADF test but adjusts for serial correlation and heteroskedasticity in the error term without adding lagged difference terms.
-
-3. **KPSS (Kwiatkowski-Phillips-Schmidt-Shin) Test**: This test has a null hypothesis of stationarity, opposite to that of the ADF and PP tests. It examines the stationarity of the series around a deterministic trend.
-
-### Dealing with Unit Roots
-
-If a unit root is present, analysts often difference the series—subtract the previous value from the current value—to achieve stationarity. This transformation is critical for making the series suitable for many standard time series analysis techniques and forecasting models, which assume or require stationarity.
-
 ---
 
 X-11 methods, including X-13ARIMA-SEATS, were originally developed for economic time series, particularly for seasonal adjustment of economic data like GDP, employment, and trade. These methods are designed to handle time series with trend, seasonal, and calendar effects, which are common in economic data.
@@ -73,3 +38,23 @@ However, the application of X-11 methods is not limited to economic time series.
     Health and medicine: Some health-related data, such as hospital admissions or disease incidence, may have seasonal patterns that can be analyzed using X-11 methods.
 
 While X-11 methods can be applied to non-economic time series, it is essential to consider the specific characteristics of the data and the purpose of the analysis. If the time series exhibits trend, seasonality, and calendar effects similar to economic data, then X-11 methods may be appropriate. However, if the data has different patterns or requires alternative modeling approaches, other time series analysis techniques may be more suitable.
+
+---
+
+Several practical considerations are important when applying the KPSS test:
+
+1. Choice of lag length: The selection of the truncation lag (l) in the Newey-West estimator can significantly affect the test results. If the lag is too short, the test may over-reject the null hypothesis of stationarity. If it's too long, the test may lose power. Common approaches to selecting the lag length include:
+   - Data-dependent formula: l = int(4 * (T/100)^(1/4))
+   - Fixed proportion of sample size: l = int(T^(1/3))
+   - Schwert criterion: l = int(12 * (T/100)^(1/4))
+   where T is the sample size.
+
+2. Level vs. Trend stationarity: The KPSS test can be conducted for both level-stationarity and trend-stationarity. The choice between these should be guided by both visual inspection of the data and theoretical considerations about the nature of the time series.
+
+3. Sensitivity analysis: It's often recommended to run the KPSS test with different lag lengths to assess the sensitivity of the results to this choice.
+
+4. Complementary testing: Due to the different null hypotheses, it's common to use the KPSS test in conjunction with tests like the Augmented Dickey-Fuller (ADF) test. If the ADF test rejects the null of a unit root and the KPSS test fails to reject the null of stationarity, we have stronger evidence for stationarity.
+
+5. Interpretation: Remember that failing to reject the null hypothesis in the KPSS test is not the same as proving stationarity. It merely indicates that there isn't strong evidence against stationarity in the data.
+
+In practice, these considerations underscore the importance of not relying solely on the p-value of a single test, but rather using the KPSS test as part of a broader, thoughtful approach to time series analysis.

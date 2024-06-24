@@ -120,7 +120,7 @@ In classical decomposition, we assume that the seasonal component is constant fr
 
 [^henderson]: The Henderson moving average or filter.
 
-Census Method I was followed by Census Method II and eleven more experimental versions (X1, X2, ..., X11) until Census Method II-X11 [Shiskin et al. (1967)](#shiskin1967) was probably good enough to be used widely. But X11 did have a major weakness. X11 produced poor seasonally adjusted data at the end of the time series which made it hard to assess and forecast the direction of short-term trends. At Statistics Canada [Dagum (1978)](#dagum1978) developed X11-ARIMA to combat this weakness by using an appropriate ARIMA model to forecast a bit beyond the end of the time series and backcast a bit before the start, thereby allowing us to use symmetric weighted moving averages over the entire time series. Later [Findley et al. (1998)](#findley1998) developed X12-ARIMA in which the ARIMA model includes regression variables (so it's now called regARIMA) to capture deterministic components such as trading day effects (certain months have more trading days which can affect economic time series), moving holiday effects, and outliers. Once the deterministic components have been taken out, the time series is confusingly said to be <i>linearized</i>.
+Census Method I was followed by Census Method II and eleven more experimental versions (X1, X2, ..., X11) until Census Method II-X11 [(Shiskin et al., 1967)](#shiskin1967) was probably good enough to be used widely. But X11 did have a major weakness. X11 produced poor seasonally adjusted data at the end of the time series which made it hard to assess and forecast the direction of short-term trends. At Statistics Canada [Dagum (1978)](#dagum1978) developed X11-ARIMA to combat this weakness by using an appropriate ARIMA model to forecast a bit beyond the end of the time series and backcast a bit before the start, thereby allowing us to use symmetric weighted moving averages over the entire time series. Later [Findley et al. (1998)](#findley1998) developed X12-ARIMA in which the ARIMA model includes regression variables (so it's now called regARIMA) to capture deterministic components such as trading day effects (certain months have more trading days which can affect economic time series), moving holiday effects, and outliers. Once the deterministic components have been taken out, the time series is confusingly said to be <i>linearized</i>.
 
 X13-ARIMA-SEATS extends X12-ARIMA by using SEATS (Seasonal Extraction in ARIMA Time Series) after the deterministic components have been taken out. SEATS takes the linearized time series and assumes that each component can be modeled as an ARIMA process. It does this by using the canonical decomposition which maximizes the variance of the irregular component while ensuring that the other components are uncorrelated. Once SEATS has identified an ARIMA model for each component, it uses the Wiener-Kolmogorov filter to actually estimate the components. The WK filter is designed to give the minimum mean square error (MMSE) estimates of the components. In other words, it tries to make the estimated components as close as possible to the "true" unobserved components. So X13-ARIMA pre-adjusts the time series then SEATS takes the linearized time series and does the decomposition. Another similar method is TRAMO-SEATS.[^tramo-seats]
 
@@ -150,13 +150,14 @@ There are some common statistical tests used to determine whether a time series 
 
 These tests check for stationarity by testing whether a [<i>unit root</i>](https://en.wikipedia.org/wiki/Unit_root) is present in a time series. Technically in the context of time series, a unit root exists when the characteristic equation of the stochastic process has a root equal to 1. But I think it's more useful to look at a more concrete example to understand the effects of a unit root.
 
-Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$ where y_t is the value at time t, ρ is the autoregressive coefficient, and ε_t is white noise
-* If $|\rho| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $c / (1 - \rho)$, and shocks have temporary effects that decay over time.
-* If $|\rho| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
-* If $|\rho| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
+Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$ where $y_t$ is the value at time $t$, $\rho$ is the autoregressive coefficient, and $\varepsilon_t$ is white noise.
+
+* If $\|\rho\| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $c / (1 - \rho)$, and shocks have temporary effects that decay over time.
+* If $\|\rho\| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
+* If $\|\rho\| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
 * If $\rho < 1$ then the values of $y_t$ will fluctuate between positive and negative values.
 
-So the statistical tests try to check whether $|\rho| = 1$ or $|\rho| < 1$.
+So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$.
 
 You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
 
@@ -310,6 +311,12 @@ Mention something about the ADF and KPSS tests and Monte Carlo estimates.
   <a href="https://doi.org/10.1080%2F01621459.1979.10482531" target="_blank" class="button">doi</a>
 </div>
 
+<div id="findley1998">
+  <span class="ref-author-list">Findley, D. F., Monsell, B. C., Bell, W. R., Otto, M. C., & Chen, B.-C. (1998).</span>
+  New Capabilities and Methods of the X-12-ARIMA Seasonal-Adjustment Program. <i>Journal of Business & Economic Statistics</i> <b>16</b>(2), 127-152.
+  <a href="https://doi.org/10.1080/07350015.1998.10524743" target="_blank" class="button">doi</a>
+</div>
+
 <div id="ham2019">
   <span class="ref-author-list">Ham, Y. G., Kim, J. H. & Luo, J. J. (2019).</span>
   Deep learning for multi-year ENSO forecasts. <i>Nature</i> <b>573</b>, 568–572.
@@ -356,6 +363,15 @@ Meijer, H. A. (2005).</span>
   Progress in Solar Cycle Predictions: Sunspot Cycles 24–25 in Perspective. <i>Solar Physics</i> <b>296</b>, 54.
   <a href="https://doi.org/10.1007/s11207-021-01797-2" target="_blank" class="button">doi</a>
 </div>
+
+<div id="shiskin1967">
+  <span class="ref-author-list">Shiskin, J., Young, A. H., & Musgrave, J. C. (1967).</span>
+  The X-11 Variant of the Census Method II Seasonal Adjustment Program. Technical Paper 15 (revised). <i>US Department of Commerce, 
+Bureau of the Census, Washington, DC.</i>
+  <a href="https://www.census.gov/library/working-papers/1967/adrm/shiskin-01.html" target="_blank" class="button">url</a>
+  <a href="https://www.census.gov/content/dam/Census/library/working-papers/1967/adrm/shiskinyoungmusgrave1967.pdf" target="_blank" class="button">pdf</a>
+</div>
+
 
 <div id="wolter2011">
   <span class="ref-author-list">Wolter, K. & Timlin, M. S. (2011).</span>

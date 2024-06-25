@@ -30,6 +30,11 @@ p {
     margin: 0.5em 0;
 }
 
+.post-body {
+    text-align: justify;
+    text-justify: auto;
+}
+
 .post-body ol, .post-body ul {
     margin-left: 1em;
 }

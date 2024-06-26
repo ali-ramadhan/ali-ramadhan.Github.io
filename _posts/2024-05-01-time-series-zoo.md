@@ -76,10 +76,12 @@ Daily exchange rate since 2005. Same comments as above.
 
 This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during March 2024 trading hours at a resolution of a few minutes. The above comments on unpredictibility still hold, but what might be interesting here is whether we are able to make forecasts on what the stock price does in the second half of the trading day given we know what it did in the first.
 
-## ERCOT
+## ERCOT electrical load
 {:.no_toc}
 
 This is the hourly electrical load in Texas for each control area served by ERCOT (Electric Reliability Council of Texas) between 2004-2023. There are multiple scales of seasonality and variability again with a long-term increasing trend.
+
+https://en.wikipedia.org/wiki/January_31_%E2%80%93_February_2,_2023_North_American_ice_storm
 
 ## Transformer oil temperature
 {:.no_toc}
@@ -109,10 +111,12 @@ Why do we want/need decompositions? Maybe we just need to inspect and forecast t
 A point to make and a test we can code/run? The different components should not be correlated!
 
 ## Classical or naive decomposition
+{:.no_toc}
 
 In classical decomposition, we assume that the seasonal component is constant from year to year. For multiplicative seasonality, the m values that form the seasonal component are sometimes called the “seasonal indices”.
 
 ## X13-ARIMA-SEATS
+{:.no_toc}
 
 [X13-ARIMA-SEATS](https://www.census.gov/data/software/x13as.html) is an advanced and complex seasonal adjustment open-source software package developed by the U.S. Census Bureau. It's the 13th and latest version of a software package used by the U.S. Census Bureau since the 1950's. The first version, Census Method I, was based off the work of [Macauley (1931)](#macauley1931) on smoothing time series.[^smoothing]
 
@@ -131,6 +135,7 @@ In general, methods like X13-ARIMA-SEATS are very detailed and describing them i
 It's probably worth noting that X11 methods are still mainly designed to work with quarterly or monthly time series.
 
 ## Seasonal and Trend decomposition using Loess (STL)
+{:.no_toc}
 
 Seasonal and Trend decomposition using LOESS (STL) also decomposes a time series into three components: trend, seasonality, and residual. LOESS (Locally Estimated Scatterplot Smoothing) is how STL removes or isolates the trend component. It fits a smooth curve to the data by fitting a low-order polynomial locally to each data point that gives more weight to nearby points and less weight to distant points. A traditional distance function is the tri-cube distance function $w(d) = (1 - \|d\|^3)^3$ where $d$ is scaled to be $0 \le d \le 1$. For each data point, LOESS defines a neighborhood of points close to it, assigns a weight to each point in the neighborhood, and fits a low-degree (order 0-2) polynomial using a weighted least squares regression. The smoothed value is then the value of the fitted polynomial at that data point. This smooth curve is then the trend component. Subtracting the trend out of the time series, STL uses LOESS again on the detrended time series to estimate the seasonal component. Subtracting the trend and seasonal components from the time series gives the residual component.
 
@@ -162,6 +167,7 @@ So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$.
 You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
 
 ## Augmented Dickey-Fuller test
+{:.no_toc}
 
 The original test, not augmented, was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive model. It considered the AR model
 
@@ -186,6 +192,7 @@ statistic, used in the test, is a negative number. The more negative it is, the 
 The problem you're referring to in the context of the Dickey-Fuller test is called the "near-unit root problem" or sometimes the "near-integration problem."
 
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
+{:.no_toc}
 
 The KPSS test, developed by [Kwiatkowski et al. (1992)](#kwiatkowski1992), takes a different approach to testing for stationarity. It's null hypothesis is that the time series is stationary and the alternative hypothesis is that a unit root is present. The test considers the model
 
@@ -218,26 +225,87 @@ Furthermore, the test's power (ability to correctly reject the null when it's fa
 
 The KPSS test is often used in conjunction with other tests like the ADF test to make more robust conclusions about stationarity.
 
+<!-- Let's do this in the proper sections!
 # Analyzing each time series
 
 * Look at trend-cycle decompositions and stationarity for each time series.
 * We're looking for something stationary to predict in each? Depends on the method I guess.
-
-# Time series forecasting methods
-
-## Exponential smoothing (Damped? Holt-Winters')
-
-## Autoregressive?
-
-## Moving average?
-
-## ARIMA
-
-## TBATS?
-
-## Prophet
+-->
 
 # Forecasting time series!
+
+Explain that we're splitting into train, val, and test. Must be in chronological order. 
+
+When possible we'll make probabilistic forecasts.
+
+## Exponential smoothing (Holt-Winters')
+
+Does quite well on the Keeling Curve.
+
+<figure class="centered" markdown="block">
+
+![exponential smoothing best model keeling](/img/time-series-zoo/exponential_smoothing_best_model_keeling.png)
+
+<figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
+
+</figure>
+
+We can look at some models:
+
+<figure class="centered" markdown="block">
+
+<video class="full-width-video" controls>
+  <source src="/img/time-series-zoo/exponential_smoothing_models_keeling.mp4" type="video/mp4">
+</video> 
+
+<figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
+
+</figure>
+
+For sunspots we're going to have to do some transformation. It's a time series of counts so forecasts shouldn't predict negative counts. It also has observations of zero which can be an issue. We'll transform it using the Box-Cox transform.
+
+Method needs to account for all seasonality lags, and with an ~11 year cycles that at least 132 periods, maybe feels like a lot. We'll look at the yearly mean sunspot number for exponential smoothing. Then we just need a ~11 periods.
+
+<figure class="centered" markdown="block">
+
+![exponential smoothing best model sunspots](/img/time-series-zoo/exponential_smoothing_best_model_sunspots.png)
+
+<figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
+
+</figure>
+
+Struggles to predict sunspot number. We picked the model that did the best on the verification time series, where it kinda got the timing of the cycles right but completely fails to capture the amplitude. It's too simple, it can't. As a result it does a bad job in predicting the timing of the cycles in the test set. Again, it can only handle well-defined seasonality and not .
+
+A big difference for sunspots is the huge confidence intervals on the forecast. Error accumulates over the course of the forecast, but since the Keeling Curve had a much better fit the variance of the error term is quite small. For sunspots, the fit isn't as good so the variance on the error term is quite large so it can accumulate very quickly.
+
+<figure class="centered" markdown="block">
+
+<video class="full-width-video" controls>
+  <source src="/img/time-series-zoo/exponential_smoothing_models_sunspots.mp4" type="video/mp4">
+</video> 
+
+<figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
+
+</figure>
+
+<!-- Plot both transformed and untransformed forecasts? -->
+
+No point trying on MEI or any of the financial time series.
+
+## Autoregressive?
+{:.no_toc}
+
+## Moving average?
+{:.no_toc}
+
+## ARIMA
+{:.no_toc}
+
+## TBATS?
+{:.no_toc}
+
+## Prophet
+{:.no_toc}
 
 # What else can we do?
 
@@ -247,10 +315,12 @@ The KPSS test is often used in conjunction with other tests like the ADF test to
 # Appendices
 
 ## General resources
+{:.no_toc}
 
 online textbook, python book?
 
 ## Statistical hypothesis testing
+{:.no_toc}
 
 We use some hypothesis tests here and I was a little rusty/fuzzy on the details so this is just a brief aside on them and things to be careful of when using them.
 
@@ -289,6 +359,9 @@ Its critical values can be computed numerically.[^critical-values-f]
 [^critical-values-f]: For an $F$-distribution with $d_1$ and $d_2$ degrees of freedom, the critical values can be computed as $\displaystyle F_c = \left( \frac{I_\star^{-1}}{1 - I_\star^{-1}} \right) \frac{d_2}{d_1}$ where $\displaystyle I_\star^{-1} = I_{1-\alpha}^{-1}\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$.
 
 Mention something about the ADF and KPSS tests and Monte Carlo estimates.
+
+## Model selection using information criteria
+{:.no_toc}
 
 # Footnotes
 

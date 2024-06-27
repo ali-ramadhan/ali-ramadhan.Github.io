@@ -224,7 +224,9 @@ The test statistic examines how much the cumulative sum of the residuals fluctua
 
 ![KPSS test statistic distribution under the null hypothesis](/img/time-series-zoo/kpss_no_trend_null_hypothesis_distribution.png)
 
-<figcaption>KPSS test statistic distribution under the null hypothesis assuming no trend. The distribution was estimated using Monte Carlo sampling with 100,000 simulations, each consisting of 2,000 data points.</figcaption>
+<figcaption>
+  KPSS test statistic distribution under the null hypothesis assuming no trend. The distribution was estimated using Monte Carlo sampling with 100,000 simulations, each consisting of 2,000 data points. The critical values agree with Table 1 of <a href="#kwiatkowski1992">Kwiatkowski et al. (1992)</a>. Code to produce this figure (and corresponding figure with trend) can be found in <a href="https://github.com/ali-ramadhan/time-series-forecasting/blob/main/kpss_distribution.ipynb"><code>kpss_distribution.ipynb</code></a>
+</figcaption>
 
 </figure>
 
@@ -432,6 +434,12 @@ Meijer, H. A. (2005).</span>
   In <i>A History of Atmospheric CO2 and its effects on Plants, Animals, and Ecosystems</i>, ed. Ehleringer, J.R., Cerling, T. E., & Dearing M. D., 83-113.
   Springer Verlag. xxx pp.
   <a href="https://doi.org/10.3402/tellusa.v12i2.9366" target="_blank" class="button">doi</a>
+</div>
+
+<div id="kwiatkowski1992">
+  <span class="ref-author-list">Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., Shin, Y. (1992).</span>
+  Testing the null hypothesis of stationarity against the alternative of a unit root: How sure are we that economic time series have a unit root? <i>Journal of Econometrics</i> <b>54</b>(1-3), 159-178.
+  <a href="https://doi.org/10.1016/0304-4076(92)90104-Y" target="_blank" class="button">doi</a>
 </div>
 
 <div id="ladiray2001">

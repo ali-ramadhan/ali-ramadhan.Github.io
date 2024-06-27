@@ -179,6 +179,14 @@ $\Delta y_t = (1 - \rho) y_{t-1} + \varepsilon_t = \delta y_{t-1} + \varepsilon_
 
 where $\delta = \rho - 1$ so we can test whether $\delta = 0$. Taking this model, the value and standard error of $\delta$ can be estimated using least squares to form the Dickey-Fuller statistic $\textrm{DF}_\delta = \hat{\delta} / \textrm{SE}(\delta)$ which looks like a $t$-statistic, but instead of following a $t$-distribution it follows a distribution with no closed form so [Dickey & Fuller (1979)](#dickey1979) tabulate critical values of the Dickey-Fuller statistic. The critical values can be computed using Monte Carlo simulations, although packages like `statsmodels` tend to interpolate the tables.
 
+<figure class="centered width-80" markdown="block">
+
+![Dickey-Fuller test statistic distribution under the null hypothesis](/img/time-series-zoo/dickey_fuller_null_hypothesis_distribution.png)
+
+<figcaption>Dickey-Fuller test statistic distribution under the null hypothesis. The distribution was estimated using Monte Carlo sampling with 100,000 AR(1) simulations, each consisting of 2,000 data points.</figcaption>
+
+</figure>
+
 There are three versions of the test depending on whether you want to include a constant term and also a linear trend, but otherwise the Dickey-Fuller test has some major limitations. It's based on a simple AR(1) model which may not capture the complex dynamics present in many time series. It also assumes the error terms in the model are uncorrelated which is not true of many real-world time series.
 
 The Augmented Dickey–Fuller (ADF) test was developed to address these limitations. The testing procedure is the same as for the Dickey–Fuller test but we instead use this more flexible model:
@@ -211,6 +219,14 @@ where $T$ is the sample size (length of the time series). $S_t = \sum_{i=1}^t \h
 $\hat{\sigma}_\infty^2$ is an estimate of the long-run variance of the residuals which captures the total impact of a shock over time, accounting for both immediate effects and lingering effects in subsequent periods. Unlike the simple variance, which only considers contemporaneous relationships, the long-run variance incorporates autocovariances at various lags. This is particularly important in time series data where observations are often correlated over time. A common way to estimate the long-run variance is using a heteroskedasticity and autocorrelation consistent (HAC) estimator, typically the Newey-West estimator. This approach accounts for potential autocorrelation in the residuals.
 
 The test statistic examines how much the cumulative sum of the residuals fluctuates. If the fluctuations are small, $\eta$ is small and the time series is more likely to be stationary. If the fluctuations are large, $\eta$ is large and the time series is more likely to contain a unit root. If $\eta$ is larger than some critical value we can reject the null hypothesis.
+
+<figure class="centered width-80" markdown="block">
+
+![KPSS test statistic distribution under the null hypothesis](/img/time-series-zoo/kpss_no_trend_null_hypothesis_distribution.png)
+
+<figcaption>KPSS test statistic distribution under the null hypothesis assuming no trend. The distribution was estimated using Monte Carlo sampling with 100,000 simulations, each consisting of 2,000 data points.</figcaption>
+
+</figure>
 
 The KPSS test relies on several key assumptions:
 

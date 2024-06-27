@@ -181,6 +181,14 @@ A point to make and a test we can code/run? The different components should not 
 
 In classical decomposition, we assume that the seasonal component is constant from year to year. For multiplicative seasonality, the m values that form the seasonal component are sometimes called the “seasonal indices”.
 
+<figure class="centered" markdown="block">
+
+![Classical seasonal decomposition of the Keeling Curve](/img/time-series-zoo/seasonal_decomposition_keeling_classical.png)
+
+<figcaption>Classical seasonal decomposition of the Keeling Curve.</figcaption>
+
+</figure>
+
 ## X13-ARIMA-SEATS
 {:.no_toc}
 
@@ -200,12 +208,28 @@ In general, methods like X13-ARIMA-SEATS are very detailed and describing them i
 
 It's probably worth noting that X11 methods are still mainly designed to work with quarterly or monthly time series.
 
+<figure class="centered" markdown="block">
+
+![X13-ARIMA decomposition of the Keeling Curve](/img/time-series-zoo/seasonal_decomposition_keeling_x13_arima_seats.png)
+
+<figcaption>X13-ARIMA decomposition of the Keeling Curve.</figcaption>
+
+</figure>
+
 ## Seasonal and Trend decomposition using Loess (STL)
 {:.no_toc}
 
 Seasonal and Trend decomposition using LOESS (STL) also decomposes a time series into three components: trend, seasonality, and residual. LOESS (Locally Estimated Scatterplot Smoothing) is how STL removes or isolates the trend component. It fits a smooth curve to the data by fitting a low-order polynomial locally to each data point that gives more weight to nearby points and less weight to distant points. A traditional distance function is the tri-cube distance function $w(d) = (1 - \|d\|^3)^3$ where $d$ is scaled to be $0 \le d \le 1$. For each data point, LOESS defines a neighborhood of points close to it, assigns a weight to each point in the neighborhood, and fits a low-degree (order 0-2) polynomial using a weighted least squares regression. The smoothed value is then the value of the fitted polynomial at that data point. This smooth curve is then the trend component. Subtracting the trend out of the time series, STL uses LOESS again on the detrended time series to estimate the seasonal component. Subtracting the trend and seasonal components from the time series gives the residual component.
 
 Because STL relies on LOESS it can handle different types of seasonality and varying seasonality. It is also robust to missing values and outliers. As X13-ARIMA-SEATS assumes fixed seasonal periods which are very common in economic time series, STL is better for time series exhibiting other seasonalities. LOESS is a non-parametric method, not assuming any specific form for the trend or seasonal components, so it may capture non-linear patterns better than ARIMA models. STL can scale to larger datasets better. But it can't account for calendar effects.
+
+<figure class="centered" markdown="block">
+
+![STL decomposition of the Keeling Curve](/img/time-series-zoo/seasonal_decomposition_keeling_stl.png)
+
+<figcaption>STL decomposition of the Keeling Curve.</figcaption>
+
+</figure>
 
 # Stationarity and unit root tests
 

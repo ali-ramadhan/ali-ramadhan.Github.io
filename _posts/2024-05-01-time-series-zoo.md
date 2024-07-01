@@ -403,6 +403,24 @@ No point trying on MEI or any of the financial time series.
 ## Autoregressive?
 {:.no_toc}
 
+<figure class="centered" markdown="block">
+
+![Autoregressive best model Keeling](/img/time-series-zoo/autoregressive_best_model_keeling.png)
+
+<figcaption>Autoregressive best model Keeling Curve.</figcaption>
+
+</figure>
+
+<figure class="centered" markdown="block">
+
+<video class="full-width-video" controls>
+  <source src="/img/time-series-zoo/autoregressive_models_keeling.mp4" type="video/mp4">
+</video> 
+
+<figcaption>Autoregressive models for the Keeling Curve.</figcaption>
+
+</figure>
+
 ## Moving average?
 {:.no_toc}
 

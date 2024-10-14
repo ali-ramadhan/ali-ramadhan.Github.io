@@ -6,4 +6,7 @@ source "https://rubygems.org"
 
 gem "jekyll", "~> 4.3"
 
-gem "jekyll-toc", "~> 0.18.0"
+
+gem "webrick", "~> 1.8"
+
+gem "erb", "~> 4.0"

@@ -27,6 +27,8 @@ For the scope of this post, I'll stick to single/univariate time series and fitt
 
 I wanted to learn more about forecasting real-world time series and I thought this kind of material would be easy to find, but I actually found it difficult to find good examples online. Most exampels I found were either focused on time series modeling or the forecasting problem was too simple (simple time series or very short horizon). So I decided to try and pick a bunch of time series and a bunch of modeling methods and to write about my own experience learning to do time series forecasting.
 
+[All models are wrong](https://en.wikipedia.org/wiki/All_models_are_wrong), but some are useful. We'll look at a bunch of time series model and see which are most useful for forecasting and in which cases they are useful.
+
 # The time series zoo
 
 I collected some interesting and varied time series to play around with and populate the mini-zoo, which I'll describe here. All data is stored in my [`time-series-forecasting`](https://github.com/ali-ramadhan/time-series-forecasting) GitHub repository along with code for turning it into a [`pandas.Series`](https://pandas.pydata.org/docs/reference/api/pandas.Series.html) or [`darts.TimeSeries`](https://unit8co.github.io/darts/generated_api/darts.timeseries.html) and links to where the data was sourced from.
@@ -488,6 +490,24 @@ Mention something about the ADF and KPSS tests and Monte Carlo estimates.
 
 ## Model selection using information criteria
 {:.no_toc}
+
+When fitting a statistical model to data, you generally want to use as much complexity as needed but no more. Complexity is generally measured by the number of parameters the model uses. Too little complexity and the model may underfit. Too much complexity and the model may overfit. A principled approach to balancing model fit and model complexity is to use information critieria. They are usually derived from information theory and employ the likelihood function.
+
+We cannot choose with certainty, because we do not know f. Akaike (1974) showed, however, that we can estimate, via AIC, how much more (or less) information is lost by g1 than by g2. The estimate, though, is only valid asymptotically; if the number of data points is small, then some correction is often necessary (see AICc, below). 
+
+$\text{AIC} = 2k - 2\ln\hat{L}$
+
+When the sample size is small, there is a substantial probability that AIC will select models that have too many parameters, i.e. that AIC will overfit.[13][14][15] To address such potential overfitting, AICc was developed: AICc is AIC with a correction for small sample sizes. 
+
+$\displaystyle \text{AICc} = \text{AIC} + \frac{2k^2 + 2k}{n - k - 1}$
+
+As n gets large relative to k, the correction term approaches zero, and AICc converges to AIC.
+
+The correction penalizes complexity (large k) more strongly when the sample size is small. This helps prevent overfitting in small samples.
+
+$\text{BIC} = k\ln n - 2\ln\hat{L}$
+
+Information criteria can help choose between different orders of the same model (e.g. an autoregressive model with a maximum lag of 10 vs. 20) but cannot be used to compare different models (e.g. exponential smoothing vs. autoregressive).
 
 # Footnotes
 

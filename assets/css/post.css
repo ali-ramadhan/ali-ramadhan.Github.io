@@ -159,28 +159,28 @@ label {
 
 .floating-toc {
     position: fixed;
-    top: 100px;
-    left: 20px;
+    top: 100px; /* Adjust based on your header height */
+    right: 20px;
     width: 280px;
     max-height: 80vh;
     background: white;
     border: 1px solid #ddd;
     border-radius: 4px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     z-index: 1000;
     overflow: hidden;
     font-size: 14px;
 }
 
 .floating-toc-header {
-    padding: 12px 16px;
+    padding: 2px 16px;
     font-weight: bold;
     border-bottom: 1px solid #ddd;
     background: #f8f9fa;
 }
 
 .floating-toc-content {
-    padding: 12px 16px;
+    padding: 2px 16px;
     overflow-y: auto;
     max-height: calc(80vh - 45px);
 }
@@ -189,10 +189,6 @@ label {
     list-style: none;
     padding-left: 0;
     margin: 0;
-}
-
-.floating-toc ol ol {
-    padding-left: 16px;
 }
 
 .floating-toc-item {
@@ -217,16 +213,43 @@ label {
     font-weight: bold;
 }
 
-/* Heading level-specific styles */
-.floating-toc-h1 { margin-top: 8px; }
-.floating-toc-h2 { padding-left: 16px; }
-.floating-toc-h3 { padding-left: 32px; }
-.floating-toc-h4 { padding-left: 48px; }
-.floating-toc-h5 { padding-left: 64px; }
-.floating-toc-h6 { padding-left: 80px; }
+.floating-toc-section {
+    margin: 4px 0;
+}
 
-@media (max-width: 1200px) {
-  .floating-toc {
+.floating-toc-section.collapsed .floating-toc-subsection {
     display: none;
-  }
+}
+
+.floating-toc-section>.section-heading {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-left: 15px;
+}
+
+.floating-toc-section .section-toggle {
+    display: inline-block;
+    font-size: 10px;
+    margin-right: 5px;
+    transition: transform 0.2s;
+}
+
+.floating-toc-section.collapsed .section-toggle {
+    transform: rotate(-90deg);
+}
+
+.floating-toc-section>.section-heading.no-toggle {
+    cursor: default;
+    padding-left: 0;
+}
+
+.floating-toc-subsection {
+    padding-left: 20px;
+}
+
+@media (max-width: 1500px) {
+    .floating-toc {
+        display: none;
+    }
 }

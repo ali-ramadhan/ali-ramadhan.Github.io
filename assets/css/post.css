@@ -50,21 +50,6 @@ img.centered {
     margin-right: auto;
 }
 
-#markdown-toc {
-    list-style-type: decimal;
-    margin-left: 2em;
-    margin-right: 2em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-#markdown-toc > li > ol {
-    list-style-type: lower-alpha;
-    margin-left: 2em;
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .centered {
     display: block;
     margin-left: auto;
@@ -102,6 +87,64 @@ figure > figcaption {
     font-style: italic;
     font-size: 0.9em;
     line-height: 1.5em;
+}
+
+/*
+ * Section and sub-section numbering
+ */
+
+.post-body {
+    counter-reset: h1counter;
+}
+
+.post-body h1 {
+    counter-increment: h1counter;
+    counter-reset: h2counter;
+}
+
+.post-body h2 {
+    counter-increment: h2counter;
+}
+
+.post-body h1::before {
+    content: counter(h1counter) ". ";
+}
+
+.post-body h2::before {
+    content: counter(h1counter) "." counter(h2counter) ". ";
+}
+
+#markdown-toc {
+    counter-reset: toc1counter;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#markdown-toc > li {
+    list-style: none;
+    counter-increment: toc1counter;
+}
+
+#markdown-toc > li > ol {
+    counter-reset: toc2counter;
+    margin-left: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#markdown-toc > li > ol > li {
+    list-style: none;
+    counter-increment: toc2counter;
+}
+
+#markdown-toc > li::before {
+    content: counter(toc1counter) ". ";
+}
+
+#markdown-toc > li > ol > li::before {
+    content: counter(toc1counter) "." counter(toc2counter) ". ";
 }
 
 /*
@@ -151,31 +194,6 @@ label {
 
 .ref-author-list {
     font-variant: small-caps;
-}
-
-/*
- * Section and sub-section numbering
- */
-
-.post-body {
-    counter-reset: h1counter;
-}
-
-.post-body h1 {
-    counter-increment: h1counter;
-    counter-reset: h2counter;
-}
-
-.post-body h2 {
-    counter-increment: h2counter;
-}
-
-.post-body h1::before {
-    content: counter(h1counter) ". ";
-}
-
-.post-body h2::before {
-    content: counter(h1counter) "." counter(h2counter) ". ";
 }
 
 /*

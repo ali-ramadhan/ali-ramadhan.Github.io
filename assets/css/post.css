@@ -152,3 +152,68 @@ label {
 .ref-author-list {
     font-variant: small-caps;
 }
+
+/*
+ * Floating table of contents
+ */
+
+.floating-toc {
+    position: fixed;
+    top: 100px; /* Adjust based on your header height */
+    right: 20px;
+    width: 280px;
+    max-height: 80vh;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    overflow: hidden;
+    font-size: 14px;
+  }
+
+  .floating-toc-header {
+    padding: 12px 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    background: #f8f9fa;
+  }
+
+  .floating-toc-content {
+    padding: 12px 16px;
+    overflow-y: auto;
+    max-height: calc(80vh - 45px);
+  }
+
+  .floating-toc ol {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+  .floating-toc ol ol {
+    padding-left: 20px;
+  }
+
+  .floating-toc a {
+    display: block;
+    padding: 4px 0;
+    color: #333;
+    text-decoration: none;
+    line-height: 1.4;
+  }
+
+  .floating-toc a:hover {
+    color: #007bff;
+  }
+
+  .floating-toc a.active {
+    color: #007bff;
+    font-weight: bold;
+  }
+
+  @media (max-width: 1200px) {
+    .floating-toc {
+      display: none;
+    }
+  }

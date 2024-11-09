@@ -154,6 +154,31 @@ label {
 }
 
 /*
+ * Section and sub-section numbering
+ */
+
+.post-body {
+    counter-reset: h1counter;
+}
+
+.post-body h1 {
+    counter-increment: h1counter;
+    counter-reset: h2counter;
+}
+
+.post-body h2 {
+    counter-increment: h2counter;
+}
+
+.post-body h1::before {
+    content: counter(h1counter) ". ";
+}
+
+.post-body h2::before {
+    content: counter(h1counter) "." counter(h2counter) ". ";
+}
+
+/*
  * Floating table of contents
  */
 

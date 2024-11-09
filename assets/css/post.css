@@ -159,8 +159,8 @@ label {
 
 .floating-toc {
     position: fixed;
-    top: 100px; /* Adjust based on your header height */
-    right: 20px;
+    top: 100px;
+    left: 20px;
     width: 280px;
     max-height: 80vh;
     background: white;
@@ -170,50 +170,63 @@ label {
     z-index: 1000;
     overflow: hidden;
     font-size: 14px;
-  }
+}
 
-  .floating-toc-header {
+.floating-toc-header {
     padding: 12px 16px;
     font-weight: bold;
     border-bottom: 1px solid #ddd;
     background: #f8f9fa;
-  }
+}
 
-  .floating-toc-content {
+.floating-toc-content {
     padding: 12px 16px;
     overflow-y: auto;
     max-height: calc(80vh - 45px);
-  }
+}
 
-  .floating-toc ol {
+.floating-toc ol {
     list-style: none;
     padding-left: 0;
     margin: 0;
-  }
+}
 
-  .floating-toc ol ol {
-    padding-left: 20px;
-  }
+.floating-toc ol ol {
+    padding-left: 16px;
+}
 
-  .floating-toc a {
+.floating-toc-item {
+    margin: 4px 0;
+}
+
+.floating-toc a {
     display: block;
-    padding: 4px 0;
+    padding: 2px 0;
     color: #333;
     text-decoration: none;
     line-height: 1.4;
-  }
+    font-size: 14px;
+}
 
-  .floating-toc a:hover {
+.floating-toc a:hover {
     color: #007bff;
-  }
+}
 
-  .floating-toc a.active {
+.floating-toc a.active {
     color: #007bff;
     font-weight: bold;
-  }
+}
 
-  @media (max-width: 1200px) {
-    .floating-toc {
-      display: none;
-    }
+/* Heading level-specific styles */
+.floating-toc-h1 { margin-top: 8px; }
+.floating-toc-h2 { padding-left: 16px; }
+.floating-toc-h3 { padding-left: 32px; }
+.floating-toc-h4 { padding-left: 48px; }
+.floating-toc-h5 { padding-left: 64px; }
+.floating-toc-h6 { padding-left: 80px; }
+
+@media (max-width: 1200px) {
+  .floating-toc {
+    display: none;
   }
+}

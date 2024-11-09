@@ -12,7 +12,7 @@ enable_mathjax: true
 
 Why look at time series and forecasting methods?
 You come across plenty of time series in the natural sciences and in everyday life. You see time series of weather conditions, sunspot numbers, sales figures, and stock prices.
-I've always wondered whether you can forecast these time series accurately just by using 
+I've always wondered whether you can forecast these time series accurately just by using
 It seems like a formal education in time series forecasting is not common, with courses typically being upper-level or grad-level courses in statistics or economics. So I've never had the chance to really learn how to forecast time series. This post is my attempt to teach myself time series forecasting by playing around with a small number of time series and forecasting methods.
 
 Time series forecasting only seems possible if the forecasting method can model or understand the underlying process. When you have clear trends and seasonality it's pretty easy to make forecasts.
@@ -44,7 +44,7 @@ The [Keeling Curve](https://en.wikipedia.org/wiki/Keeling_Curve) represents the 
 
 </figure>
 
-CO<sub>2</sub> level increase in the spring and summer as new vegetation growth pulls CO<sub>2</sub> out of the atmosphere through photosynthesis, then decrease in the fall as plants and leaves die off and decay, releasing CO<sub>2</sub> back into the atmosphere. Since Hawaii is quite isolated from sources of pollution and human activity and Mauna Loa is quite high up, the seasonal cycle exhibits little noise or variability, which will make it easier to forecast. In the Southern Hemisphere the cycle is reversed but it is also less pronounced as the Southern Hemisphere has less land and less vegetation as a result.                                                                  
+CO<sub>2</sub> level increase in the spring and summer as new vegetation growth pulls CO<sub>2</sub> out of the atmosphere through photosynthesis, then decrease in the fall as plants and leaves die off and decay, releasing CO<sub>2</sub> back into the atmosphere. Since Hawaii is quite isolated from sources of pollution and human activity and Mauna Loa is quite high up, the seasonal cycle exhibits little noise or variability, which will make it easier to forecast. In the Southern Hemisphere the cycle is reversed but it is also less pronounced as the Southern Hemisphere has less land and less vegetation as a result.
 
 Measurements were first taken by [Keeling (1960)](#keeling1960) and they're more thoroughly discussed in [Keeling et al. (2005)](#keeling2005).
 
@@ -239,9 +239,9 @@ To properly use some time series models the time series needs to be stationary. 
 
 Formally, a stochastic process $X_t$ is said to be [<i>strictly stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Strict-sense_stationarity) if its joint distribution of $(X_{t_1}, X_{t_2}, ..., X_{t_n})$ is identical to the joint distribution of $(X_{t_1+\tau}, X_{t_2+\tau}, ..., X_{t_n+\tau})$ for all $n$, all time indices $t_1, t_2, \dots, t_n$ and time lags $\tau$. So all statistical properties of the time series are invariant under time shifts.
 
-The strict definition above is a bit strict for practical purposes, so we can use a weaker definition. A stochastic process is [<i>weak-sense stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Weak_or_wide-sense_stationarity) if its mean is constant over time, $E[X_t] = E[X_{t+\tau}]$, its autocovariance only depends on the time lag, $Cov[X_t, X_{t+\tau}] = \gamma(\tau)$, and its variance is finite, $Var[X_t] < \infty$.
+The strict definition above is a bit strict for practical purposes, so we can use a weaker definition. A stochastic process is [<i>weak-sense stationary</i>](https://en.wikipedia.org/wiki/Stationary_process#Weak_or_wide-sense_stationarity) if its mean is constant over time, $\mathbb{E}[X_t] = \mathbb{E}[X_{t+\tau}]$, its autocovariance only depends on the time lag, $\operatorname{Cov}[X_t, X_{t+\tau}] = \gamma(\tau)$, and its variance is finite, $\operatorname{Var}[X_t] < \infty$.
 
-In practice, weak-sense stationarity is enough for most time series analyses as many methods mostly rely on the first and second moments which are captured by the mean and autocovariance. But most real-world data is not stationary or close to it, unless transformed. To use e.g. ARIMA models we need to make the time series stationary. To do so we can difference the time series, a key feature of ARIMA models, and work with $\Delta X_t = X_t - X_{t-1}$. Removing the trend or seasonal patterns may be enough. Looking at $\log X_t$ can also help make the time series more stationary by stabilizing a fluctuating variance.
+In practice, weak-sense stationarity is enough for most time series analyses as many methods mostly rely on the first and second moments which are captured by the mean and autocovariance. But most real-world data is not stationary or close to it, unless transformed. To use ARIMA models for example we need to make the time series stationary. To do so we can difference the time series, a key feature of ARIMA models, and work with $\Delta X_t = X_t - X_{t-1}$. Removing the trend or seasonal patterns may be enough. Looking at $\log X_t$ can also help make the time series more stationary by stabilizing a fluctuating variance.
 
 There are some common statistical tests used to determine whether a time series is stationary or not. Here we'll look at two of them: the Augmented Dickey-Fuller test and the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test.
 
@@ -252,7 +252,7 @@ Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$ where 
 * If $\|\rho\| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $c / (1 - \rho)$, and shocks have temporary effects that decay over time.
 * If $\|\rho\| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
 * If $\|\rho\| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
-* If $\rho < 1$ then the values of $y_t$ will fluctuate between positive and negative values.
+* If $\rho < 0$ then the values of $y_t$ will fluctuate between positive and negative values.
 
 So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$.
 
@@ -344,7 +344,7 @@ The KPSS test is often used in conjunction with other tests like the ADF test to
 
 # Forecasting time series!
 
-Explain that we're splitting into train, val, and test. Must be in chronological order. 
+Explain that we're splitting into train, val, and test. Must be in chronological order.
 
 When possible we'll make probabilistic forecasts.
 
@@ -366,7 +366,7 @@ We can look at some models:
 
 <video class="full-width-video" controls>
   <source src="/img/time-series-zoo/exponential_smoothing_models_keeling.mp4" type="video/mp4">
-</video> 
+</video>
 
 <figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
 
@@ -392,7 +392,7 @@ A big difference for sunspots is the huge confidence intervals on the forecast. 
 
 <video class="full-width-video" controls>
   <source src="/img/time-series-zoo/exponential_smoothing_models_sunspots.mp4" type="video/mp4">
-</video> 
+</video>
 
 <figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
 
@@ -417,7 +417,7 @@ No point trying on MEI or any of the financial time series.
 
 <video class="full-width-video" controls>
   <source src="/img/time-series-zoo/autoregressive_models_keeling.mp4" type="video/mp4">
-</video> 
+</video>
 
 <figcaption>Autoregressive models for the Keeling Curve.</figcaption>
 
@@ -454,7 +454,7 @@ We use some hypothesis tests here and I was a little rusty/fuzzy on the details 
 
 A statistical hypothesis test aims to infer something about a population (e.g. a mean, proportion, or variance) based on sample data. You set up a null hypothesis $H_0$ and an alternative hypothesis $H_1$, then conduct a test based on the sample data and decide whether you are able to reject the null hypothesis $H_0$ with some confidence level. Usually the null hypothesis states that there is no difference or no relationship but it can take various forms, while the alternative hypothesis $H_1$ usually claims the opposite. To decide whether we can reject $H_0$, we compute a <i>test statistic</i> from the sample data and null hypothesis. The test statistic may follow some known probability distribution (under certain assumptions) and based on how extreme the test statistic is, we may be able to reject $H_0$. The <i>p-value</i> is the probability of observing a test statistic as extreme under the null hypothesis. You choose the threshold for rejecting $H_0$ at a specific significance level, often denoted as $\alpha$, based on your desired false-positive rate.
 
-You generally need to be careful when using hypothesis tests. The tests often assume the data is e.g. normal or independent. 
+You generally need to be careful when using hypothesis tests. The tests often assume the data is e.g. normal or independent.
 
 Moreover, a non-significant p-value does not prove the null hypothesis; it only suggests lack of evidence against it.
 Sample Size and Power: The sample size plays a crucial role in hypothesis testing. Small sample sizes may lack the power to detect true effects, leading to false negatives (Type II errors). Adequate sample sizes should be determined based on the desired power and effect size.
@@ -493,11 +493,11 @@ Mention something about the ADF and KPSS tests and Monte Carlo estimates.
 
 When fitting a statistical model to data, you generally want to use as much complexity as needed but no more. Complexity is generally measured by the number of parameters the model uses. Too little complexity and the model may underfit. Too much complexity and the model may overfit. A principled approach to balancing model fit and model complexity is to use information critieria. They are usually derived from information theory and employ the likelihood function.
 
-We cannot choose with certainty, because we do not know f. Akaike (1974) showed, however, that we can estimate, via AIC, how much more (or less) information is lost by g1 than by g2. The estimate, though, is only valid asymptotically; if the number of data points is small, then some correction is often necessary (see AICc, below). 
+We cannot choose with certainty, because we do not know f. Akaike (1974) showed, however, that we can estimate, via AIC, how much more (or less) information is lost by g1 than by g2. The estimate, though, is only valid asymptotically; if the number of data points is small, then some correction is often necessary (see AICc, below).
 
 $\text{AIC} = 2k - 2\ln\hat{L}$
 
-When the sample size is small, there is a substantial probability that AIC will select models that have too many parameters, i.e. that AIC will overfit.[13][14][15] To address such potential overfitting, AICc was developed: AICc is AIC with a correction for small sample sizes. 
+When the sample size is small, there is a substantial probability that AIC will select models that have too many parameters, i.e. that AIC will overfit.[13][14][15] To address such potential overfitting, AICc was developed: AICc is AIC with a correction for small sample sizes.
 
 $\displaystyle \text{AICc} = \text{AIC} + \frac{2k^2 + 2k}{n - k - 1}$
 
@@ -556,7 +556,7 @@ Information criteria can help choose between different orders of the same model 
 </div>
 
 <div id="keeling2005">
-  <span class="ref-author-list">Keeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., &  
+  <span class="ref-author-list">Keeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., &
 Meijer, H. A. (2005).</span>
   Atmospheric CO<sub>2</sub> and <sup>13</sup>CO<sub>2</sub> exchange with the terrestrial biosphere and oceans from 1978 to 2000: observations and carbon cycle implications.
   In <i>A History of Atmospheric CO2 and its effects on Plants, Animals, and Ecosystems</i>, ed. Ehleringer, J.R., Cerling, T. E., & Dearing M. D., 83-113.
@@ -591,7 +591,7 @@ Meijer, H. A. (2005).</span>
 
 <div id="shiskin1967">
   <span class="ref-author-list">Shiskin, J., Young, A. H., & Musgrave, J. C. (1967).</span>
-  The X-11 Variant of the Census Method II Seasonal Adjustment Program. Technical Paper 15 (revised). <i>US Department of Commerce, 
+  The X-11 Variant of the Census Method II Seasonal Adjustment Program. Technical Paper 15 (revised). <i>US Department of Commerce,
 Bureau of the Census, Washington, DC.</i>
   <a href="https://www.census.gov/library/working-papers/1967/adrm/shiskin-01.html" target="_blank" class="button">url</a>
   <a href="https://www.census.gov/content/dam/Census/library/working-papers/1967/adrm/shiskinyoungmusgrave1967.pdf" target="_blank" class="button">pdf</a>

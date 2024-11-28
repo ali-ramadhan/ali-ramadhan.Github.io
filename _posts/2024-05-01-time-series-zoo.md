@@ -29,6 +29,12 @@ I wanted to learn more about forecasting real-world time series and I thought th
 
 [All models are wrong](https://en.wikipedia.org/wiki/All_models_are_wrong), but some are useful. We'll look at a bunch of time series model and see which are most useful for forecasting and in which cases they are useful.
 
+## Why is this post so long?
+{:.no_toc}
+
+## How to navigate this post
+{:.no_toc}
+
 # The time series zoo
 
 I collected some interesting and varied time series to play around with and populate the mini-zoo, which I'll describe here. All data is stored in my [`time-series-forecasting`](https://github.com/ali-ramadhan/time-series-forecasting) GitHub repository along with code for turning it into a [`pandas.Series`](https://pandas.pydata.org/docs/reference/api/pandas.Series.html) or [`darts.TimeSeries`](https://unit8co.github.io/darts/generated_api/darts.timeseries.html) and links to where the data was sourced from.
@@ -258,10 +264,10 @@ So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$.
 
 You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
 
-## Augmented Dickey-Fuller test
+## Dickey-Fuller test
 {:.no_toc}
 
-The original test, not augmented, was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive model. It considered the AR model
+The original test, not augmented, was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive model. It considered the AR(1) model
 
 $y_t = \rho y_{t-1} + \varepsilon_t$
 
@@ -275,11 +281,16 @@ where $\delta = \rho - 1$ so we can test whether $\delta = 0$. Taking this model
 
 ![Dickey-Fuller test statistic distribution under the null hypothesis](/img/time-series-zoo/dickey_fuller_null_hypothesis_distribution.png)
 
-<figcaption>Dickey-Fuller test statistic distribution under the null hypothesis. The distribution was estimated using Monte Carlo sampling with 100,000 AR(1) simulations, each consisting of 2,000 data points.</figcaption>
+<figcaption>Dickey-Fuller test statistic distribution under the null hypothesis. The distribution was estimated using Monte Carlo sampling with 100,000 AR(1) simulations, each consisting of 2,000 data points. The critical values agree closely with table 2 ($\tau_c$ and $N=1$ rows) of MacKinnon (2010).</figcaption>
 
 </figure>
 
+To generate a sample from the Dicker-Fuller null distribution, we generate a long random walk $y_t = t_{t-1} + \varepsilon_t$ where $\varepsilon_t \sim \mathscr{N}(0, 1)$. This looks like the AR(1) model above but with $\rho = 1$ and $c = 0$ so it has a unit root. We can then set up a regression problem $\Delta y_t = \delta y_{t-1} + c + \varepsilon_t$ and use ordinary least squares to estimate the parameters $\delta$ and $c$ along with their variance and standard error. The Dickey-Fuller statistic is then computed as $\hat{\delta} / \operatorname{SE}(\hat{\delta})$ where $\hat{\delta}$ is the least squares estimate of $\delta$ and $\operatorname{SE}(\hat{\delta})$ is the <i>standard error</i> of $\hat{\delta}$.
+
 There are three versions of the test depending on whether you want to include a constant term and also a linear trend, but otherwise the Dickey-Fuller test has some major limitations. It's based on a simple AR(1) model which may not capture the complex dynamics present in many time series. It also assumes the error terms in the model are uncorrelated which is not true of many real-world time series.
+
+## Augmented Dickey-Fuller test
+{:.no_toc}
 
 The Augmented Dickey–Fuller (ADF) test was developed to address these limitations. The testing procedure is the same as for the Dickey–Fuller test but we instead use this more flexible model:
 

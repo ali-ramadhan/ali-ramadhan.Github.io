@@ -249,58 +249,82 @@ The strict definition above is a bit strict for practical purposes, so we can us
 
 In practice, weak-sense stationarity is enough for most time series analyses as many methods mostly rely on the first and second moments which are captured by the mean and autocovariance. But most real-world data is not stationary or close to it, unless transformed. To use ARIMA models for example we need to make the time series stationary. To do so we can difference the time series, a key feature of ARIMA models, and work with $\Delta X_t = X_t - X_{t-1}$. Removing the trend or seasonal patterns may be enough. Looking at $\log X_t$ can also help make the time series more stationary by stabilizing a fluctuating variance.
 
-There are some common statistical tests used to determine whether a time series is stationary or not. Here we'll look at two of them: the Augmented Dickey-Fuller test and the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test.
+There are some common statistical tests used to determine whether a time series is stationary or not. Here we'll look at three of them: the Dickey-Fuller test and it's augmented version as well as the Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test.
 
 These tests check for stationarity by testing whether a [<i>unit root</i>](https://en.wikipedia.org/wiki/Unit_root) is present in a time series. Technically in the context of time series, a unit root exists when the characteristic equation of the stochastic process has a root equal to 1. But I think it's more useful to look at a more concrete example to understand the effects of a unit root.
 
-Let's consider the AR(1) process $y_t = c + \rho y_{t-1} + \varepsilon_t$ where $y_t$ is the value at time $t$, $\rho$ is the autoregressive coefficient, and $\varepsilon_t$ is white noise.
+Let's consider an [autoregressive process](https://en.wikipedia.org/wiki/Autoregressive_model) of order 1, denoted AR(1), with a constant term and a linear trend term
 
-* If $\|\rho\| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $c / (1 - \rho)$, and shocks have temporary effects that decay over time.
+$$y_t = \alpha + \beta t + \rho y_{t-1} + \varepsilon_t \label{ar1-process} \tag{1}$$
+
+where $y_t$ is the value at time $t$, $\rho$ is the autoregressive coefficient, $\alpha$ is the constant coefficient, $\beta$ is the linear trend coefficient, and $\varepsilon_t$ is white noise.
+
+If there is no linear trend ($\beta = 0$) then we can say:
+
+* If $\|\rho\| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $\alpha / (1 - \rho)$, and shocks have temporary effects that decay over time.
 * If $\|\rho\| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
 * If $\|\rho\| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
 * If $\rho < 0$ then the values of $y_t$ will fluctuate between positive and negative values.
 
-So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$.
+So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$. Note that the constant coefficient $\alpha$ only leads to a constant value for $y_t$ in the stationary case. Similarly, the linear trend term $\beta t$ only leads to a linear trend in $y_t$ in the stationary case.
 
 You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
 
 ## Dickey-Fuller test
 {:.no_toc}
 
-The original test, not augmented, was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive model. It considered the AR(1) model
+The original test was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive process. It considered the AR(1) process from equation \eqref{ar1-process}
 
-$y_t = \rho y_{t-1} + \varepsilon_t$
+$y_t = \alpha + \beta t + \rho y_{t-1} + \varepsilon_t$
 
-which has a unit root if $\rho = 1$. It then considers the first difference,
+which has a unit root if $\rho = 1$. It then considers the first difference
 
-$\Delta y_t = (1 - \rho) y_{t-1} + \varepsilon_t = \delta y_{t-1} + \varepsilon_t$
+$\Delta y_t = y_t - y_{t-1} = \alpha + \beta t + (1 - \rho) y_{t-1} + \varepsilon_t = \alpha + \beta t + \delta y_{t-1} + \varepsilon_t$
 
-where $\delta = \rho - 1$ so we can test whether $\delta = 0$. Taking this model, the value and standard error of $\delta$ can be estimated using least squares to form the Dickey-Fuller statistic $\textrm{DF}_\delta = \hat{\delta} / \textrm{SE}(\delta)$ which looks like a $t$-statistic, but instead of following a $t$-distribution it follows a distribution with no closed form so [Dickey & Fuller (1979)](#dickey1979) tabulate critical values of the Dickey-Fuller statistic. The critical values can be computed using Monte Carlo simulations, although packages like `statsmodels` tend to interpolate the tables.
+where $\delta = \rho - 1$. So we can test whether $y_t$ is stationary by testing whether $\delta = 0$.
+
+There are three versions of the test depending on whether you want to include the constant term $\alpha$ and/or linear trend $\beta$. You should include the constant term $\alpha$ if the time series fluctuates around a non-zero value. And you should include the linear trend term $\beta t$ if the time series shows a clear linear trend.
+
+Taking this model, the value and standard error of $\delta$ can be estimated using least squares to form the Dickey-Fuller statistic $\textrm{DF}_\delta = \hat{\delta} / \textrm{SE}(\delta)$ which looks like a [$t$-statistic](https://en.wikipedia.org/wiki/T-statistic), but instead of following a [$t$-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) it follows a distribution with no closed form so [Dickey & Fuller (1979)](#dickey1979) tabulate critical values of the Dickey-Fuller statistic. The critical values can be computed using Monte Carlo simulations, although packages like Python's `statsmodels` tend to interpolate the tables for efficiency.
+
+If your time series data exhibits a Dickey-Fuller static below say the 1% critical value, then this is good because if the time series truly has a unit root (following the null hypothesis) then the probability of getting a test statistic this extreme by chance would be less than 1%. But we can't actually quantify the probability that the time series is truly stationary using this statistic.
 
 <figure class="centered width-80" markdown="block">
 
 ![Dickey-Fuller test statistic distribution under the null hypothesis](/img/time-series-zoo/dickey_fuller_null_hypothesis_distribution.png)
 
-<figcaption>Dickey-Fuller test statistic distribution under the null hypothesis. The distribution was estimated using Monte Carlo sampling with 100,000 AR(1) simulations, each consisting of 2,000 data points. The critical values agree closely with table 2 ($\tau_c$ and $N=1$ rows) of MacKinnon (2010).</figcaption>
+<figcaption>Dickey-Fuller test statistic distribution under the null hypothesis for the case of no constant term ($\alpha = 0$) and no linear trend ($\beta = 0$). The distribution was estimated using Monte Carlo sampling with 100,000 AR(1) simulations, each consisting of 2,000 data points. The critical values agree closely with table 2 ($\tau_c$ and $N=1$ rows) of MacKinnon (2010).</figcaption>
 
 </figure>
 
-To generate a sample from the Dicker-Fuller null distribution, we generate a long random walk $y_t = t_{t-1} + \varepsilon_t$ where $\varepsilon_t \sim \mathscr{N}(0, 1)$. This looks like the AR(1) model above but with $\rho = 1$ and $c = 0$ so it has a unit root. We can then set up a regression problem $\Delta y_t = \delta y_{t-1} + c + \varepsilon_t$ and use ordinary least squares to estimate the parameters $\delta$ and $c$ along with their variance and standard error. The Dickey-Fuller statistic is then computed as $\hat{\delta} / \operatorname{SE}(\hat{\delta})$ where $\hat{\delta}$ is the least squares estimate of $\delta$ and $\operatorname{SE}(\hat{\delta})$ is the <i>standard error</i> of $\hat{\delta}$.
+To generate a sample from the Dicker-Fuller null distribution (and create the figure above), we generate a long random walk $y_t = t_{t-1} + \varepsilon_t$ where $\varepsilon_t \sim \mathcal{N}(0, 1)$. This is equation \eqref{ar1-process} but with $\rho = 1$ and $c = 0$ so it has a unit root. We can then set up a regression problem, $\Delta y_t = \delta y_{t-1} + c + \varepsilon_t$, and use ordinary least squares to estimate the parameters $\delta$ and $c$ along with their variance and standard error. The Dickey-Fuller statistic is then computed as $\hat{\delta} / \operatorname{SE}(\hat{\delta})$ where $\hat{\delta}$ is the least squares estimate of $\delta$, and $\operatorname{SE}(\hat{\delta})$ is the <i>standard error</i> of $\hat{\delta}$.
 
-There are three versions of the test depending on whether you want to include a constant term and also a linear trend, but otherwise the Dickey-Fuller test has some major limitations. It's based on a simple AR(1) model which may not capture the complex dynamics present in many time series. It also assumes the error terms in the model are uncorrelated which is not true of many real-world time series.
+Although useful, the Dickey-Fuller test has some major limitations. It's based on a simple AR(1) model which may not capture the complex dynamics present in many time series. It also assumes the error terms in the model are uncorrelated which is not true of many real-world time series. The Augmented Dickey–Fuller (ADF) test was developed to address these limitations.
 
 ## Augmented Dickey-Fuller test
 {:.no_toc}
 
-The Augmented Dickey–Fuller (ADF) test was developed to address these limitations. The testing procedure is the same as for the Dickey–Fuller test but we instead use this more flexible model:
+The testing procedure is the same as for the Dickey–Fuller test but we instead use a more flexible autoregressive process of order $p$, denoted $\operatorname{AR}(p)$, again with constant and linear trend terms
 
-$\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 \Delta y_{t-1} + \cdots + \delta_{p-1} \Delta y_{t-p+1} + \varepsilon_t$
+$y_t = \alpha + \beta t + \rho_1 y_{t-1} + \rho_2 y_{t-2} + \cdots + \rho_p y_{t-p} + \varepsilon_t $
 
-So we're considering an AR($p$) model with a constant term $\alpha$ and time trend coefficient $\beta$. The null hypothesis for the unit root test is that $\gamma = 0$ against the alternative hypothesis of $\gamma < 0$.
+where we now have $p$ autoregressive coefficients $\rho_1, $\rho_2, \dots, \rho_p$. Now the first difference is
 
-statistic, used in the test, is a negative number. The more negative it is, the stronger the rejection of the hypothesis that there is a unit root at some level of confidence.
+$\Delta y_t = \alpha + \beta t + (\rho_1 - 1) y_{t-1} + \rho_2 y_{t-2} + \cdots + \rho_p y_{t-p} + \varepsilon_t$
 
-The problem you're referring to in the context of the Dickey-Fuller test is called the "near-unit root problem" or sometimes the "near-integration problem."
+which we can rearrange in terms of the lagged differences (see footnote or appendix?) as
+
+$\Delta y_t = \alpha + \beta t + \gamma y_{t-1} + \delta_1 \Delta y_{t-1} + \delta_2 \Delta y_{t-2} + \cdots + \delta_{p-1} \Delta y_{t-p+1} + \varepsilon_t$
+
+We want to regress on differences $\Delta y_{t-i}$ instead of time series values $y_{t-i}$ because under the null hypothesis a unit root is present so the differences are all stationary (explain why, maybe in a footnote?), but not the time series values. We are interested in estimating the value of $\gamma$ here, so ideally all other regressors should be stationary. <!-- Explain more... -->
+
+The number of lags $p$ can be chosen using information criteria like AIC or BIC, or more simply by including enough lags until the residuals appear uncorrelated.
+
+Just as with the original Dickey-Fuller test, we're testing whether $\gamma = 0$ (which corresponds to $\rho_1 = 1$?, indicating a unit root) against the alternative that $\gamma < 0$ (corresponding to $\rho_1 < 1$?, indicating stationarity). The test statistic is computed similarly as $\hat{\gamma} / \operatorname{SE}(\hat{\gamma})$, where the estimates come from fitting the augmented model using ordinary least squares.
+
+The null distributions of the Augmented Dickey-Fuller (ADF) and original Dickey-Fuller (DF) tests are actually the same for all $p$! So no need to compute new critical values. Under the null hypothesis of a unit root, the $y_{t-1}$ term is an integrated process while the lagged differences $\Delta y_{t-i}$ are stationary. As the sample size grows, the non-stationary $y_{t-1}$ dominates the asymptotic distribution of the test statistic, while the stationary differences become negligible. This is why both the simple and augmented Dickey-Fuller tests share the same limiting distribution and critical values.
+
+One subtlety worth noting is that the ADF test, like its simpler predecessor, has low power when $\rho$ is close to but less than 1. This means it might fail to reject the null hypothesis of a unit root even when the series is actually stationary. This is one reason why it's often useful to complement the ADF test with other stationarity tests, such as the KPSS test, which we'll explore next.
 
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
 {:.no_toc}

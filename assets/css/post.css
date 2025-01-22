@@ -158,7 +158,7 @@ pre {
 code {
     position: relative;
     font-family: monospace;
-    font-size: inherit;
+    font-size: smaller;
     line-height: inherit;
     border-radius: 0.3em;
     padding: 2px 6px;

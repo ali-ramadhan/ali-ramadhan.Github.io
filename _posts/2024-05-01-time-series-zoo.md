@@ -329,19 +329,25 @@ One subtlety worth noting is that the ADF test, like its simpler predecessor, ha
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
 {:.no_toc}
 
-The KPSS test, developed by [Kwiatkowski et al. (1992)](#kwiatkowski1992), takes a different approach to testing for stationarity. It's null hypothesis is that the time series is stationary and the alternative hypothesis is that a unit root is present. The test considers the model
+The KPSS test, developed by [Kwiatkowski et al. (1992)](#kwiatkowski1992), takes a different approach to testing for stationarity. It considers the model
 
-$y_t = \alpha + \delta t + r_t + e_t$
+$y_t = \alpha + \beta t + r_t + \epsilon_t$
 
-where $\alpha$ is a constant term, $\delta t$ is a deterministic trend, and $e_t$ is a stationary error term. $r_t = r_{t-1} + u_t$ is a random walk where $u_t \sim iid(0, \sigma_u^2)$ is identically distributed noise with zero mean and constant variance $\sigma_u^2$.
+where $r_t = r_{t-1} + u_t$ is a random walk, $u_t \sim iid(0, \sigma_u^2)$, and $\epsilon_t$ is a stationary error process. The null hypothesis this time is that $\sigma_u^2 = 0$, i.e. that $y_t$ is trend-stationary. So the alternative, that $\sigma_u^2 > 0$, is that $y_t$ is not stationary.
 
-The null hypothesis is that $\sigma_u^2 = 0$. In this case $r_t = r_0$ and $y_t$ is stationary. Well, it's stationary around zero if $\alpha = \delta = 0$, level-stationary if $\delta = 0$, and stationary around a deterministic trend if both $\alpha$ and $\delta$ are non-zero. The alternative hypothesis is $\sigma_u^2 > 0$.
+You can compute residuals $\hat{e}_t$ by regressing on $y_t = \alpha + \beta t + \hat{e}_t$. Under the null hypothesis, the residuals $\hat{e}_t$ would be stationary. Under the alternative hypothesis, the residuals would contain both $r_t$ and $\epsilon_t$ are not be stationary.
 
-The KPSS test statistic is a bit more involved:
+We can now compute the partial sums of the residuals,
 
-$\displaystyle \eta = \frac{1}{T^2} \frac{\displaystyle \sum_{t=1}^{T} S_t^2}{\hat{\sigma}_\infty^2}$
+$\displaystyle S_t = \sum_{i=1}^t \hat{e}_i$
 
-where $T$ is the sample size (length of the time series). $S_t = \sum_{i=1}^t \hat{e}_i$ is the partial sum of residuals where $\hat{e}_i$ are the residuals from a regression of $y_t = α + δt + \hat{e}_t$.
+and under the null hypothesis $S_t$ are partial sums of a stationary process and thus stationary themselves. But under the alternative hypothesis the partial sums $S_t$ show much more variation due to the inclusion of the random walk $r_t$.
+
+So this motivates the KPSS test statistic
+
+$\displaystyle \eta = \frac{1}{\hat{\sigma}^2 T^2} \sum_{t=1}^T S_t^2$
+
+where $T$ is the sample size (length of the time series) and $\hat{\sigma}^2$ is the long-run variance estimator.
 
 $\hat{\sigma}_\infty^2$ is an estimate of the long-run variance of the residuals which captures the total impact of a shock over time, accounting for both immediate effects and lingering effects in subsequent periods. Unlike the simple variance, which only considers contemporaneous relationships, the long-run variance incorporates autocovariances at various lags. This is particularly important in time series data where observations are often correlated over time. A common way to estimate the long-run variance is using a heteroskedasticity and autocorrelation consistent (HAC) estimator, typically the Newey-West estimator. This approach accounts for potential autocorrelation in the residuals.
 

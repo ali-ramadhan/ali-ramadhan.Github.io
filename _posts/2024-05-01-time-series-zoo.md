@@ -174,15 +174,18 @@ Uber pickups from January to June 2015 in New York City. We'll be looking at and
 
 # Time series decomposition
 
-<!-- In this section, show an example of an additive decomposition and another of a multiplicative decomposition. Also show the Fourier transform and the correlation between the components? -->
+<!--
+  In this section, show an example of an additive decomposition and another of a multiplicative decomposition? Maybe for the naive decomposition? Or maybe show one additive and one multiplicative?
+  Also show the Fourier transform and the correlation between the components?
+-->
 
 The idea with decomposing a time series $y_t$ is to write it as $y_t = S_t + T_t + R_t$ where $y_t$ is the data, $S_t$ is the seasonal component, $T_t$ is the trend-cycle component, and $R_t$ is the remainder component (sometimes called the irregular component), all at time $t$. This is called an additive decomposition, but you can also do a multiplicative decomposition where $y_t = S_t \times T_t \times R_t$.[^multiplicative-decomposition]
 
-[^multiplicative-decomposition]: Why? If seasonality and irregular components vary with the magnitude of the signal.
+[^multiplicative-decomposition]: A multiplicative decomposition can describe the data better when the seasonal variations grow proportionally with the trend. So for example, if a sales time series shows that December sales are consistently 50% higher than the trend rather than $500 higher, then a multiplicative decomposition should describe the data better.
 
-Why do we want/need decompositions? Maybe we just need to inspect and forecast the trend and the seasonality just gets in the way. As we'll find out, seasonally adjusting a time series is not trivial. It can also be easier to make forecasts of the trend and seasonal components separately. What else?
+Time series decompositions can be useful for understanding the time series and for forcasting. By separating a series into its core components (trend, seasonality, and remainder), we can better understand what's driving changes in the data. For example, a decomposition can help tell us whether sales are growing due an underlying trend or just seasonal spikes, or we can remove seasonal effects to see if there's an underlying trend. For forecasting, decompositions can let us forecast each component separately then recombine them! This can be more effective because the trend component is usually smoother and easier to forecast than the full time series and the seasonal component often has a stable pattern that can be extrpolated. The remainder can be fit separately or even used to provide uncertainty bounds on the forecasts.
 
-A point to make and a test we can code/run? The different components should not be correlated!
+The different components should ideally be uncorrelated to suggest that the patterns have been completely separated. Then we can more confidently forecast them separately and recombine the component forecasts into a full forecast for the time series.
 
 ## Classical or naive decomposition
 {:.no_toc}

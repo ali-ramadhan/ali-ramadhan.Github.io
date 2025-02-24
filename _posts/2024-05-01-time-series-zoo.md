@@ -179,7 +179,7 @@ Uber pickups from January to June 2015 in New York City. We'll be looking at and
   Also show the Fourier transform and the correlation between the components?
 -->
 
-The idea with decomposing a time series $y_t$ is to write it as $y_t = S_t + T_t + R_t$ where $y_t$ is the data, $S_t$ is the seasonal component, $T_t$ is the trend-cycle component, and $R_t$ is the remainder component (sometimes called the irregular component), all at time $t$. This is called an additive decomposition, but you can also do a multiplicative decomposition where $y_t = S_t \times T_t \times R_t$.[^multiplicative-decomposition]
+The idea with decomposing a time series $y_t$ is to write it as $y_t = T_t + S_t + R_t$ where $y_t$ is the data, $T_t$ is the trend-cycle component, $S_t$ is the seasonal component, and $R_t$ is the remainder component (sometimes called the irregular component), all at time $t$. This is called an additive decomposition, but you can also do a multiplicative decomposition where $y_t = T_t \times S_t \times R_t$.[^multiplicative-decomposition]
 
 [^multiplicative-decomposition]: A multiplicative decomposition can describe the data better when the seasonal variations grow proportionally with the trend. So for example, if a sales time series shows that December sales are consistently 50% higher than the trend rather than $500 higher, then a multiplicative decomposition should describe the data better.
 
@@ -190,13 +190,23 @@ The different components should ideally be uncorrelated to suggest that the patt
 ## Classical or naive decomposition
 {:.no_toc}
 
-In classical decomposition, we assume that the seasonal component is constant from year to year. For multiplicative seasonality, the m values that form the seasonal component are sometimes called the “seasonal indices”.
+In a classical or naive decomposition, the trend component $T_t$ is estimated using some kind of moving average. The trend is then removed by subtracting it (in the additive case) or dividing by it (in the multiplicative case) to get detrended data. Then the seasonal component $S_t$ is estimated by averaging the detrended values for each season so you need to specify a period. What's left after removing $T_t$ and $S_t$ is the remainder component $R_t$.
+
+For example, in the case of statsmodels' `tsa.seasonal.seasonal_decompose`, which we use below, it uses a convolution filter to estimate the trend component $T_t$.
+
+This is a pretty naive approach to decomposition because it assumes the seasonal pattern does not change over time. It's also a bit limited in that the moving average or convolution cannot estimate trends at the beginning and end of the time series.
+
+Let's look at what a classical decomposition looks like for the Keeling curve!
+
+We'll look at the decomposition components as well as the autocorrelation and partial autocorrelation functions for each component which can help tell us which time series model to choose and, when looking at the remainder component $R_t$, whether we've done a good job fitting the data. More concretely, for fitting ARIMA models the ACF helps identify the moving average (MA) order and the PACF helps identify the autoregressive (AR) order. And the ACF and PACF of the residuals should look like white noise.
+
+We'll also also look at a periodogram (or power spectrum) of each component to see which frequencies were captured by each component. The trend component should show power at low frequencies (long-term changes) and the seasonal component should show peaks at specific frequencies, e.g. at the annual frequency (12 months) and its harmonics. The residual component should show uniform power like noise should.
 
 <figure class="centered" markdown="block">
 
 ![Classical seasonal decomposition of the Keeling Curve](/img/time-series-zoo/seasonal_decomposition_keeling_classical.png)
 
-<figcaption>Classical seasonal decomposition of the Keeling Curve.</figcaption>
+<figcaption>Classical seasonal decomposition of the Keeling Curve. (Left column) Shows the decomposition into trend, seasonal, and residual components. (Middle columns) Shows the autocorrelation (ACF) and partial autocorrelation (PACF) functions for each component. The light blue shading shows the confidence bands for testing whether the correlations are significantly different from zero. (Right column) Shows periodograms for each component on a log scale, highlighting the frequency content.</figcaption>
 
 </figure>
 

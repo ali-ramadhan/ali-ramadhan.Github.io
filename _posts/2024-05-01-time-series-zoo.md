@@ -243,18 +243,20 @@ We can apply X13-ARIMA-SEATS to the Keeling Curve and compare the decomposition 
 
 ![X13-ARIMA decomposition of the Keeling Curve](/img/time-series-zoo/seasonal_decomposition_keeling_x13_arima_seats.png)
 
-<figcaption>X13-ARIMA decomposition of the Keeling Curve.</figcaption>
+<figcaption>X13-ARIMA-SEATS decomposition of the Keeling Curve.</figcaption>
 
 </figure>
 
-The trend component is very similar to the naive decomposition so there's not much to say there. A key improvement is that the seasonal component's magnitude can now vary in time which allows us to capture whether the seasonal CO2 fluctuations get stronger or weaker. The peaks in the seasonal component's periodogram are wider too and this is more realistic since real-world seasonal patterns have some variability in frequency. As a result, the most dramatic improvement is in the residual component which now looks more like true white noise now. Its ACF and PACF show almost no significant spikes and are almost all within the confidence bands, and its periodogram appears more uniform across frequencies without the dips left by subtracting out the seasonal component.
+For X13-ARIMA-SEATS the trend component is very similar to the naive decomposition so there's not much to say there. A key improvement is that the seasonal component's magnitude can now vary in time which allows us to capture whether the seasonal CO2 fluctuations get stronger or weaker. The peaks in the seasonal component's periodogram are wider too and this is more realistic since real-world seasonal patterns have some variability in frequency. As a result, the most dramatic improvement is in the residual component which now looks more like true white noise now. Its ACF and PACF show almost no significant spikes and are almost all within the confidence bands, and its periodogram appears more uniform across frequencies without the dips left by subtracting out the seasonal component.
 
 ## Seasonal and Trend decomposition using Loess (STL)
 {:.no_toc}
 
-Seasonal and Trend decomposition using LOESS (STL) also decomposes a time series into three components: trend, seasonality, and residual. LOESS (Locally Estimated Scatterplot Smoothing) is how STL removes or isolates the trend component. It fits a smooth curve to the data by fitting a low-order polynomial locally to each data point that gives more weight to nearby points and less weight to distant points. A traditional distance function is the tri-cube distance function $w(d) = (1 - \|d\|^3)^3$ where $d$ is scaled to be $0 \le d \le 1$. For each data point, LOESS defines a neighborhood of points close to it, assigns a weight to each point in the neighborhood, and fits a low-degree (order 0-2) polynomial using a weighted least squares regression. The smoothed value is then the value of the fitted polynomial at that data point. This smooth curve is then the trend component. Subtracting the trend out of the time series, STL uses LOESS again on the detrended time series to estimate the seasonal component. Subtracting the trend and seasonal components from the time series gives the residual component.
+Seasonal and Trend decomposition using LOESS (STL), introduced by [Cleveland et al. (1990)](#cleveland1990), also decomposes a time series into three components: trend, seasonality, and residual. But STL uses a completely different approach from X13-ARIMA-SEATS called LOESS, which relies on local regression to isolate the trend and seasonal components rather than ARIMA models.
 
-Because STL relies on LOESS it can handle different types of seasonality and varying seasonality. It is also robust to missing values and outliers. As X13-ARIMA-SEATS assumes fixed seasonal periods which are very common in economic time series, STL is better for time series exhibiting other seasonalities. LOESS is a non-parametric method, not assuming any specific form for the trend or seasonal components, so it may capture non-linear patterns better than ARIMA models. STL can scale to larger datasets better. But it can't account for calendar effects.
+LOESS (Locally Estimated Scatterplot Smoothing) is the local regression technique STL uses. It fits a smooth curve to the data by fitting a low-order (usually linear or quadratic) polynomial locally to each data point that gives more weight to nearby points. A traditional weight function is the tri-cube distance function $w(d) = (1 - |d|^3)^3$ where $d$ is scaled to be $0 \le d \le 1$. Applying LOESS to the original time series gives an estimate of the trend component. After subtracting the trend from the original time series, LOESS can be applied again to now estimate the seasonal component. Then what's left is the residual component.
+
+X13-ARIMA-SEATS assumes fixed seasonal periods but STL and LOESS can handle different types of seasonality and varying seasonality. Since LOESS is non-parametric it may capture nonlinear patterns better than ARIMA models. But STL can't account for calendar effects like trading days and moving holidays which X13-ARIMA-SEATS handles well.
 
 <figure class="centered" markdown="block">
 
@@ -263,6 +265,8 @@ Because STL relies on LOESS it can handle different types of seasonality and var
 <figcaption>STL decomposition of the Keeling Curve.</figcaption>
 
 </figure>
+
+For STL the trend component is again quite similar. This isn't surprising since the long-term trend in the Keeling Curve is quite strong and easy to identify. The seasonal component is quite similar to X13-ARIMA-SEATS and much better than the classical decomposition, capturing a more natural seasonal pattern and not just pure wine waves. Even though the trend and seasonal components are similar to the X13-ARIMA-SEATS ones, the STL residual component looks more like white noise with fewer outlier spikes even though its periodogram shows a seasonal dip. For the Keeling curve time series we're probably nitpicking though. If you need calendar adjustments then X13-ARIMA-SEATS probably makes more sense. And if you need a more flexible approach without parametric assumptions then STL might work better.
 
 # Stationarity and unit root tests
 

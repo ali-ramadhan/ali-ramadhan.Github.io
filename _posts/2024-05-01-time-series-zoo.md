@@ -221,21 +221,23 @@ The periodograms (right column) also make sense. Most of the power is in very lo
 ## X13-ARIMA-SEATS
 {:.no_toc}
 
-[X13-ARIMA-SEATS](https://www.census.gov/data/software/x13as.html) is an advanced and complex seasonal adjustment open-source software package developed by the U.S. Census Bureau. It's the 13th and latest version of a software package used by the U.S. Census Bureau since the 1950's. The first version, Census Method I, was based off the work of [Macauley (1931)](#macauley1931) on smoothing time series.[^smoothing]
+[X13-ARIMA-SEATS](https://www.census.gov/data/software/x13as.html) is a complex seasonal adjustment open-source software package developed by the U.S. Census Bureau. It's the 13th and latest version of a software package used by the Bureau since the 1950's. The first version, Census Method I, was based off the work of [Macauley (1931)](#macauley1931) on smoothing time series.[^smoothing]
 
-[^smoothing]: Smoothing is useful to reduce noise in time series and identify trends and seasonality, making it easier to visualize and forecast. Macauley emphasized the importance of not just relying on a simple moving average which has a few issues. It weighs data points in the averaging window equally when more recent points may be more relevant. It cannot be used at the endpoints. It tends to lag behind the original data. And it can be significantly impacted by outliers. The answer is to use a weighted moving average such as the Henderson moving average.[^henderson]
+[^smoothing]: Smoothing is useful to reduce noise in time series and identify trends and seasonality, making it easier to visualize and forecast. Macauley emphasized the importance of not just relying on a simple moving average, which has a few issues. A simple moving average weighs data points in the averaging window equally when more recent points may be more relevant. Also, it cannot be used at the endpoints. It tends to lag behind the original data. And it can be significantly impacted by outliers. The answer is to use a weighted moving average such as the Henderson moving average.[^henderson]
 
 [^henderson]: The Henderson moving average or filter.
 
 Census Method I was followed by Census Method II and eleven more experimental versions (X1, X2, ..., X11) until Census Method II-X11 [(Shiskin et al., 1967)](#shiskin1967) was probably good enough to be used widely. But X11 did have a major weakness. X11 produced poor seasonally adjusted data at the end of the time series which made it hard to assess and forecast the direction of short-term trends. At Statistics Canada [Dagum (1978)](#dagum1978) developed X11-ARIMA to combat this weakness by using an appropriate ARIMA model to forecast a bit beyond the end of the time series and backcast a bit before the start, thereby allowing us to use symmetric weighted moving averages over the entire time series. Later [Findley et al. (1998)](#findley1998) developed X12-ARIMA in which the ARIMA model includes regression variables (so it's now called regARIMA) to capture deterministic components such as trading day effects (certain months have more trading days which can affect economic time series), moving holiday effects, and outliers. Once the deterministic components have been taken out, the time series is confusingly said to be <i>linearized</i>.
 
-X13-ARIMA-SEATS extends X12-ARIMA by using SEATS (Seasonal Extraction in ARIMA Time Series) after the deterministic components have been taken out. SEATS takes the linearized time series and assumes that each component can be modeled as an ARIMA process. It does this by using the canonical decomposition which maximizes the variance of the irregular component while ensuring that the other components are uncorrelated. Once SEATS has identified an ARIMA model for each component, it uses the Wiener-Kolmogorov filter to actually estimate the components. The WK filter is designed to give the minimum mean square error (MMSE) estimates of the components. In other words, it tries to make the estimated components as close as possible to the "true" unobserved components. So X13-ARIMA pre-adjusts the time series then SEATS takes the linearized time series and does the decomposition. Another similar method is TRAMO-SEATS.[^tramo-seats]
+X13-ARIMA-SEATS extends X12-ARIMA by using SEATS (Seasonal Extraction in ARIMA Time Series) after the deterministic components have been taken out. SEATS takes the linearized time series and assumes that each component can be modeled as an ARIMA process. Once SEATS has identified an ARIMA model for each component, it uses the Wiener-Kolmogorov (WK) filter to actually estimate the components. The WK filter is designed to give the minimum mean square error (MMSE) estimates of the components. In other words, it tries to make the estimated components as close as possible to the "true" unobserved components. So X13-ARIMA pre-adjusts the time series then SEATS takes the linearized time series and does the decomposition. Another similar method is TRAMO-SEATS.[^tramo-seats]
 
 [^tramo-seats]: TRAMO-SEATS is another method similar to X13-ARIMA-SEATS. TRAMO stands for Time Series Regression with ARIMA Noise, Missing Observations, and Outliers. It was developed at the Bank of Spain and is implemented by the [Demetra+](https://en.wikipedia.org/wiki/Demetra%2B) software package. It similarly accounts for calendar day effects and outliers and also uses SEATS for the decomposition.
 
 In general, methods like X13-ARIMA-SEATS are very detailed and describing them in detail would take up an entire blog post at least. For more of an overview I would refer to [Dagum & Bianconcini (Ch. 4, 2016)](#dagum2016). If you want a much more detailed description of the X11 method see [Ladiray & Quenneville (2001)](#ladiray2001). It's an entire book dedicated to describing the X11 method!
 
 It's probably worth noting that X11 methods are still mainly designed to work with quarterly or monthly time series.
+
+We can apply X13-ARIMA-SEATS to the Keeling Curve and compare the decomposition to the classical one.
 
 <figure class="centered" markdown="block">
 
@@ -244,6 +246,8 @@ It's probably worth noting that X11 methods are still mainly designed to work wi
 <figcaption>X13-ARIMA decomposition of the Keeling Curve.</figcaption>
 
 </figure>
+
+The trend component is very similar to the naive decomposition so there's not much to say there. A key improvement is that the seasonal component's magnitude can now vary in time which allows us to capture whether the seasonal CO2 fluctuations get stronger or weaker. The peaks in the seasonal component's periodogram are wider too and this is more realistic since real-world seasonal patterns have some variability in frequency. As a result, the most dramatic improvement is in the residual component which now looks more like true white noise now. Its ACF and PACF show almost no significant spikes and are almost all within the confidence bands, and its periodogram appears more uniform across frequencies without the dips left by subtracting out the seasonal component.
 
 ## Seasonal and Trend decomposition using Loess (STL)
 {:.no_toc}

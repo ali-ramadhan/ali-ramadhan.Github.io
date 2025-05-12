@@ -429,44 +429,66 @@ Explain that we're splitting into train, val, and test. Must be in chronological
 When possible we'll make probabilistic forecasts.
 
 ## Exponential smoothing (Holt-Winters')
+{:.no_toc}
 
-Exponential smoothing is a pretty simple method to produce forecasts using weight averages of past observations, with the weights decaying exponentially as the observations get older. So more recent data points get larger weights. Holt-Winters' method builds on this by explicitly modeling trend and seasonality. <a href="#hyndman2021">Hyndman & Athanasopoulos (Ch. 8, 2021)</a> have a really nice introduction to exponential smoothing methods including Holt-Winters' method so we'll just describe the mode.
+Exponential smoothing is a pretty simple method to produce forecasts using weighted averages of past observations, with the weights decaying exponentially as the observations get older. So more recent data points get larger weights. Holt-Winters' method builds on this by explicitly modeling trend and seasonality. <a href="#hyndman2021">Hyndman & Athanasopoulos (Ch. 8, 2021)</a> have a really nice introduction to exponential smoothing methods including Holt-Winters' method, so we'll just describe the model.
 
 There are two main variations of Holt-Winters' method, depending on how seasonality is incorporated: additive and multiplicative.
 
-The additive method is generally used when the seasonal variations are roughly constant throughout the series. Let $y_t$ be the observation at time $t$ and $\hat{y}_{t+h\|t}$ be the forecast at time $t+h$ given the observation up until time $t$. We can write an equation for each component at time $t$: the base level of the time series $\ell_t$, the trend $b_t$, the seasonal component $s_t$. Adding them together allows us to compute a forecast.
+
+The additive method is generally used when the seasonal variations are roughly constant throughout the series, for example if sales consistently increase by 100 units in December whether sales are high or low. Let $y_t$ be the observation at time $t$ and $\hat{y}_{t+h\|t}$ be the forecast at time $t+h$ given the observation up to time $t$. The method involves three smoothing equations for the level $\ell_t$, trend $b_t$, and seasonal $s_t$ components, plus the forecast equation:
 
 $$
 \begin{aligned}
-\hat{y}_{t+h|t} &= \ell_t + h b_t + s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
-\ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
-b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
-s_t &= \gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
+  \hat{y}_{t+h|t} &= \ell_t + h b_t + s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
+  \ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
+  b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
+  s_t &= \gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
 \end{aligned}
 $$
 
 Here $m$ is the number of periods in a season (e.g. 12 for monthly data and 4 for quarterly data) and $k$ is the integer part of $(h - 1) / m$ to ensure that the seasonal indices used for forecasting are from the final year of the training data. $\alpha$, $\beta$, and $\gamma$ are smoothing parameters for the level, trend, and seasonal components respectively that control how quickly the model adapts to new data.
 
-The multiplicative method is better when the seasonal variations are proportional to the level of the series. For example, if sales in December are consistently 20% higher than the average whether sales are high or low. In this case we can write
+So to produce a forecast, you take the level $\ell_t$, linearly extrapolate the trend $b_t$ by the number of time periods $h$, and add the seasonal component for time period $t+h, $s_{t+h-m(k+1)}$.
+* The level $\ell_t$ is a weighted average of $y_t - s_{t-m}$ which is the current observation with historical seasonality and $\ell_{t-1} + b_{t-1}$ which is what we would expect the level to be if it followed the previous level and trend.
+* The slope $b_t$ is a weighted average of $\ell_t - \ell_{t-1}$ whic his the most recent change in level and $b_{t-1}$ which is the previous trend.
+* The seasonal correction $s_t$ is a weighted average of $y_t - \ell_{t-1} - b_{t-1}$ which is an estimate of the seasonal component in the current observation (what's left after accounting for the previous level and trend) and $s_{t-m}$ which is the estimate from the previous season.
+
+The multiplicative method is better when the seasonal variations are proportional to the level of the series. For example, if sales in December are consistently 20% higher than the average, whether overall sales are high or low.
 
 $$
 \begin{aligned}
-\hat{y}_{t+h|t} &= (\ell_t + h b_t) s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
-\ell_t &= \alpha \frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
-b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
-s_t &= \gamma \frac{y_t}{(\ell_{t-1} + b_{t-1})} + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
+  \hat{y}_{t+h|t} &= (\ell_t + h b_t) s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
+  \ell_t &= \alpha \frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
+  b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
+  s_t &= \gamma \frac{y_t}{(\ell_{t-1} + b_{t-1})} + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
 \end{aligned}
 $$
 
-The parameters \\( \\alpha \\), \\( \\beta \\), and \\( \\gamma \\) control how quickly the model adapts to new data for the level, trend, and seasonal components, respectively.
+We can interpret the weighing similarly to how we did with the additive case except now we multiply or divide by the seasonal component instead of add or subtract.
 
-Holt-Winters' methods are quite versatile and often provide a good balance between simplicity and forecasting accuracy, especially for time series with clear trend and seasonal patterns. As mentioned, for a more comprehensive overview and examples, the online textbook [Forecasting: Principles and Practice](https://otexts.com/fpp3/expsmooth.html) is an excellent resource.
+Sometimes, a simple linear trend $b_t$ can extrapolate a bit too enthusiastically into the future, leading to forecasts that shoot off. To tame this, we can introduce a **damping parameter** $\phi$ (usually between 0 and 1, often close to 1). Damping causes the trend to flatten out over longer forecast horizons. Damping can be applied to both additive and multiplicative Holt-Winters' methods. To illustrate, let's look at the equations for the **Holt-Winters' additive method with a damped trend**:
 
-Via darts, we use the statsmodels exponential smoothing implementation to fit to time series data. To estimate $\alpha$, $\beta$, and $\gamma$ an optimization method is used. By default, statsmodels uses SLSQP (Sequential Least SQuares Programming).
+$$
+\begin{aligned}
+  \hat{y}_{t+h|t} &= \ell_t + (\phi + \phi^2 + \dots + \phi^h)b_t + s_{t+h-m(k+1)} \\
+  \ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + \phi b_{t-1}) \\
+  b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)\phi b_{t-1} \\
+  s_t &= \gamma (y_t - (\ell_{t-1} + \phi b_{t-1})) + (1-\gamma)s_{t-m}
+\end{aligned}
+$$
+
+The trend's contribution to the forecast is now damped: instead of multiplying by $h$ we multiply by $\phi + \phi^2 + \dots + \phi^h$ which is less than $h$ if $0 \le \phi \le 1$ preventing the forecast from shooting off, especially for large $h$. Otherwise, when the trend $b_t$ is used it is now multiplied by $\phi$. This damping often provides more robust and accurate forecasts, especially for longer horizons.
+
+Via darts, we use the statsmodels exponential smoothing implementation to fit to time series data. To estimate $\alpha$, $\beta$, $\gamma$, and $\phi$ if damped is used, an optimization method is used. By default, statsmodels uses SLSQP.[^slsqp]
+
+[^slsqp]: SLSQP (Sequential Least SQuares Programming) is an iterative optimization algorithm designed to solve nonlinear programming problems with both equality and inequality constraints. It's suitable for estimating exponential smoothing parameters ($\alpha, \beta, \gamma$) because these parameters often have bounds (e.g., between 0 and 1), and the optimization problem (e.g., minimizing mean squared error or maximizing likelihood) is generally nonlinear. SLSQP finds the parameter values that best fit the model to the observed time series data, given these constraints.
 
 ### Keeling Curve
 
 Does quite well on the Keeling Curve.
+
+<!-- Can we look at the values of alpha, beta, gamma, phi? -->
 
 <figure class="centered" markdown="block">
 

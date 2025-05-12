@@ -430,6 +430,42 @@ When possible we'll make probabilistic forecasts.
 
 ## Exponential smoothing (Holt-Winters')
 
+Exponential smoothing is a pretty simple method to produce forecasts using weight averages of past observations, with the weights decaying exponentially as the observations get older. So more recent data points get larger weights. Holt-Winters' method builds on this by explicitly modeling trend and seasonality. <a href="#hyndman2021">Hyndman & Athanasopoulos (Ch. 8, 2021)</a> have a really nice introduction to exponential smoothing methods including Holt-Winters' method so we'll just describe the mode.
+
+There are two main variations of Holt-Winters' method, depending on how seasonality is incorporated: additive and multiplicative.
+
+The additive method is generally used when the seasonal variations are roughly constant throughout the series. Let $y_t$ be the observation at time $t$ and $\hat{y}_{t+h\|t}$ be the forecast at time $t+h$ given the observation up until time $t$. We can write an equation for each component at time $t$: the base level of the time series $\ell_t$, the trend $b_t$, the seasonal component $s_t$. Adding them together allows us to compute a forecast.
+
+$$
+\begin{aligned}
+\hat{y}_{t+h|t} &= \ell_t + h b_t + s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
+\ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
+b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
+s_t &= \gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
+\end{aligned}
+$$
+
+Here $m$ is the number of periods in a season (e.g. 12 for monthly data and 4 for quarterly data) and $k$ is the integer part of $(h - 1) / m$ to ensure that the seasonal indices used for forecasting are from the final year of the training data. $\alpha$, $\beta$, and $\gamma$ are smoothing parameters for the level, trend, and seasonal components respectively that control how quickly the model adapts to new data.
+
+The multiplicative method is better when the seasonal variations are proportional to the level of the series. For example, if sales in December are consistently 20% higher than the average whether sales are high or low. In this case we can write
+
+$$
+\begin{aligned}
+\hat{y}_{t+h|t} &= (\ell_t + h b_t) s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
+\ell_t &= \alpha \frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
+b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
+s_t &= \gamma \frac{y_t}{(\ell_{t-1} + b_{t-1})} + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
+\end{aligned}
+$$
+
+The parameters \\( \\alpha \\), \\( \\beta \\), and \\( \\gamma \\) control how quickly the model adapts to new data for the level, trend, and seasonal components, respectively.
+
+Holt-Winters' methods are quite versatile and often provide a good balance between simplicity and forecasting accuracy, especially for time series with clear trend and seasonal patterns. As mentioned, for a more comprehensive overview and examples, the online textbook [Forecasting: Principles and Practice](https://otexts.com/fpp3/expsmooth.html) is an excellent resource.
+
+Via darts, we use the statsmodels exponential smoothing implementation to fit to time series data. To estimate $\alpha$, $\beta$, and $\gamma$ an optimization method is used. By default, statsmodels uses SLSQP (Sequential Least SQuares Programming).
+
+### Keeling Curve
+
 Does quite well on the Keeling Curve.
 
 <figure class="centered" markdown="block">
@@ -442,6 +478,8 @@ Does quite well on the Keeling Curve.
 
 We can look at some models:
 
+<!-- Explain why you make an animation from worst to best with the table of parameters. It's not gradient descent! -->
+
 <figure class="centered" markdown="block">
 
 <video class="full-width-video" controls>
@@ -451,6 +489,8 @@ We can look at some models:
 <figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
 
 </figure>
+
+### Sunspots
 
 For sunspots we're going to have to do some transformation. It's a time series of counts so forecasts shouldn't predict negative counts. It also has observations of zero which can be an issue. We'll transform it using the Box-Cox transform.
 
@@ -596,6 +636,12 @@ Information criteria can help choose between different orders of the same model 
 
 # References
 
+<!--
+Holt, C. C. (1957). Forecasting seasonals and trends by exponentially weighted averages (ONR Memorandum No. 52). Carnegie Institute of Technology, Pittsburgh USA. Reprinted in the International Journal of Forecasting, 2004. [DOI]
+
+Winters, P. R. (1960). Forecasting sales by exponentially weighted moving averages. Management Science, 6(3), 324–342. [DOI]
+ -->
+
 <div class="references">
 
 <div id="dagum2016">
@@ -623,10 +669,16 @@ Information criteria can help choose between different orders of the same model 
 </div>
 
 <div id="henderson1916">
-  <span class="ref-author-list">Henderson, R. (1916)</span>
+  <span class="ref-author-list">Henderson, R. (1916).</span>
   Note on Graduation by Adjusted Average. <i>Transactions of the American Society of Actuaries</i> <b>17</b>, 43–48.
   <a href="/files/time-series-zoo/Henderson (1916), Note on Graduation by Adjusted Average, Transactions of the American Society of Actuaries.pdf" target="_blank" class="button">pdf</a>
   <a href="https://archive.org/details/transactions17actuuoft/page/42/mode/2up" target="_blank" class="button">source</a>
+</div>
+
+<div id="hyndman2021">
+  <span class="ref-author-list">Hyndman, R. J., & Athanasopoulos, G. (2021).</span>
+  <i>Forecasting: principles and practice</i>, 3rd edition. OTexts: Melbourne, Australia.
+  <a href="https://otexts.com/fpp3" target="_blank" class="button">url</a>
 </div>
 
 <div id="keeling1960">

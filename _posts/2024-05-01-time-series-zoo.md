@@ -528,21 +528,33 @@ We can look at a range of different exponential smoothing models to understand h
 
 ### Sunspots
 
-For sunspots we're going to have to do some transformation. It's a time series of counts so forecasts shouldn't predict negative counts. It also has observations of zero which can be an issue. We'll transform it using the Box-Cox transform.
+Applying exponential smoothing to the sunspot numbers presents unique challenges. Unlike the Keeling Curve with its steady trend and regular seasonality, sunspots follow a quasi-periodic cycle averaging around 11 years but with significant variations in both timing and amplitude. Since we're dealing with count data that includes zeros, we need a transformation to ensure our forecasts don't predict physically impossible negative values. The Box-Cox transformation (with λ = 0.30) helps stabilize the variance and make the data more suitable for our model.
 
-Method needs to account for all seasonality lags, and with an ~11 year cycles that at least 132 periods, maybe feels like a lot. We'll look at the yearly mean sunspot number for exponential smoothing. Then we just need a ~11 periods.
+For standard monthly data, capturing an 11-year cycle would require modeling 132 seasonal periods (11 years × 12 months), which is unwieldy for exponential smoothing. Instead, we'll use yearly mean sunspot numbers, reducing our required seasonal periods to just 11, which is much more manageable.
 
 <figure class="centered" markdown="block">
 
 ![exponential smoothing best model sunspots](/img/time-series-zoo/exponential_smoothing_best_model_sunspots.png)
 
-<figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
+<figcaption>Exponential smoothing model applied to the yearly sunspot numbers. The model uses additive trend and seasonality components without damping. Note the extremely wide prediction intervals compared to the Keeling Curve forecasts.</figcaption>
 
 </figure>
 
-Struggles to predict sunspot number. We picked the model that did the best on the verification time series, where it kinda got the timing of the cycles right but completely fails to capture the amplitude. It's too simple, it can't. As a result it does a bad job in predicting the timing of the cycles in the test set. Again, it can only handle well-defined seasonality and not .
+Looking at the best-performing model on our validation set, we see that exponential smoothing struggles significantly with sunspot prediction. The model parameters reveal some interesting characteristics:
 
-A big difference for sunspots is the huge confidence intervals on the forecast. Error accumulates over the course of the forecast, but since the Keeling Curve had a much better fit the variance of the error term is quite small. For sunspots, the fit isn't as good so the variance on the error term is quite large so it can accumulate very quickly.
+* α (alpha) = 0.9688: This extremely high level smoothing parameter indicates the model gives almost all weight to the most recent observations, essentially discarding older data quickly. This makes sense for a system like the Sun where the current state strongly determines near-future behavior.
+
+* β (beta) = 7.3202e-09: This near-zero trend smoothing parameter effectively eliminates any trend component, suggesting the model doesn't find value in extrapolating linear trends for this data.
+
+* γ (gamma) = 2.2994e-08: Similarly, this extremely small seasonal smoothing parameter means the seasonal component is barely being updated from its initial values. The model is essentially using a fixed seasonal pattern derived from the historical data.
+
+While the model captures the general ~11-year periodicity in the validation period, it completely fails to predict the amplitude of future cycles. In the test period, it even struggles with timing prediction. This isn't surprising—the solar cycle is driven by complex magnetohydrodynamic processes that can't be adequately captured by simple statistical models. Each cycle is somewhat unique and influenced by deep physical processes within the Sun that create significant variations from one cycle to the next.
+
+The most striking feature compared to our Keeling Curve forecasts is the enormous prediction intervals. These wide intervals reflect the model's genuine uncertainty about future sunspot activity. Since the fit to historical data isn't particularly good, the error term has large variance, and this uncertainty compounds dramatically as we forecast further into the future. By the end of the test period, the prediction interval spans nearly the entire historical range of observed values—essentially acknowledging that beyond a few years, the model has little confidence in its point predictions.
+
+You might notice we only used additive models for the sunspot series rather than exploring multiplicative variants. This is deliberate—multiplicative models are problematic for sunspot data for two key reasons. First, the sunspot series contains zeros (particularly during solar minima), and multiplicative models break down with zero values since they involve division operations in their update equations. Second, the variation in sunspot amplitude doesn't consistently scale with the level in a proportional way that multiplicative models assume. Solar cycles with higher peaks don't necessarily have proportionally higher values throughout the entire cycle. The Box-Cox transformation (λ = 0.30) we applied already handles some of the non-linear scaling relationships in the data, making the additive model on transformed data more appropriate than a multiplicative approach on the original series.
+
+This example highlights a fundamental limitation of exponential smoothing: it works well for time series with stable patterns but struggles with complex, variable cycles that aren't strictly periodic. More sophisticated approaches are needed for meaningful sunspot predictions, ideally incorporating physical models of solar dynamics rather than relying solely on statistical patterns in historical data.
 
 <figure class="centered" markdown="block">
 
@@ -550,11 +562,9 @@ A big difference for sunspots is the huge confidence intervals on the forecast. 
   <source src="/img/time-series-zoo/exponential_smoothing_models_sunspots.mp4" type="video/mp4">
 </video>
 
-<figcaption>Exponential smoothing best model Keeling Curve.</figcaption>
+<figcaption>Comparison of different exponential smoothing configurations for sunspot prediction, ordered from worst to best performing models based on validation error. Note how different combinations of trend and seasonal components affect forecast quality.</figcaption>
 
 </figure>
-
-<!-- Plot both transformed and untransformed forecasts? -->
 
 No point trying on MEI or any of the financial time series.
 

@@ -566,10 +566,26 @@ This example highlights a fundamental limitation of exponential smoothing: it wo
 
 </figure>
 
-No point trying on MEI or any of the financial time series.
+<!-- No point trying on MEI or any of the financial time series? -->
 
-## Autoregressive?
+## Autoregressive
 {:.no_toc}
+
+Autoregressive models represent one of the most fundamental approaches to time series modeling. The basic idea is remarkably intuitive: predict the current value based on past values of the series. Formally, an autoregressive model of order $p$, denoted as AR($p$), expresses the current observation as a linear combination of $p$ previous observations plus a random error term:
+
+$$y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \ldots + \phi_p y_{t-p} + \varepsilon_t$$
+
+Here, $c$ is a constant term, $\phi_1, \phi_2, \ldots, \phi_p$ are the autoregressive coefficients, and $\varepsilon_t$ is white noise with mean zero and constant variance $\sigma^2$. The order $p$ determines how many past values influence the current value, essentially representing the "memory" of the process.
+
+For an AR model to be stationary (meaning its statistical properties don't change over time), the autoregressive coefficients must satisfy certain mathematical constraints. For an AR(1) model, stationarity requires $\|\phi_1\| < 1$. For higher-order models, the constraints become more complex, but essentially require that the roots of the characteristic polynomial lie outside the unit circle.
+
+Unlike the exponential smoothing methods we explored earlier, autoregressive models don't explicitly model trend or seasonality components. Instead, they capture these patterns implicitly through the lag structure. For example, in monthly data with annual seasonality, we might see significant coefficients at lags 12, 24, and 36, reflecting the seasonal pattern. This approach can be more flexible than the structured decomposition used in exponential smoothing, but it also means we need to carefully select the appropriate lag order.
+
+Parameter estimation for AR models typically uses either ordinary least squares or maximum likelihood estimation. The optimal lag order $p$ can be determined using information criteria like AIC or BIC, which balance model fit against complexity. Alternatively, we might examine the partial autocorrelation function (PACF), which shows the correlation between $y_t$ and $y_{t-k}$ after removing the effects of the intermediate lags. Significant spikes in the PACF suggest which lags should be included in the model.
+
+A key strength of autoregressive models is their interpretability—each coefficient directly shows how strongly a particular lag influences the current value. However, pure AR models have limitations. They struggle with strong trends since they don't explicitly model them, and they can have difficulty capturing long seasonal patterns efficiently. These limitations are often addressed by extending to more complex models like ARIMA (Autoregressive Integrated Moving Average) or SARIMA (Seasonal ARIMA), which we'll explore in later sections.
+
+Let's see how autoregressive models perform on our time series, starting with the Keeling Curve:
 
 <figure class="centered" markdown="block">
 

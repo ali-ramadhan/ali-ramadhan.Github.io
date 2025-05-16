@@ -605,6 +605,20 @@ Let's see how autoregressive models perform on our time series, starting with th
 
 </figure>
 
+The performance of autoregressive models on the Keeling Curve offers fascinating insights into both the model's capabilities and the nature of the CO2 data itself. Looking at our best-performing model, we see an AR(24) model with second-order differencing (d=2) achieves impressive accuracy with MAPE values of 0.55% on the validation set and an even better 0.41% on the test set.
+
+The high-order AR model (p=24) is particularly interesting here. While we might expect that 12 lags would be sufficient to capture the annual cycle in monthly data, the model benefits from incorporating two full years of lagged values. This suggests that CO2 concentrations don't just depend on the same month from the previous year, but potentially exhibit longer-term dependencies that span multiple years. This aligns with our understanding of the carbon cycle, where CO2 exchanges between the atmosphere, biosphere, and oceans operate on varying timescales.
+
+The second-order differencing (d=2) is crucial for the model's success. As shown in the bottom-left panel of the second figure, models with d=2 substantially outperform those with other differencing levels across almost all autoregressive orders. First-order differencing (d=1) helps remove the strong upward trend in the Keeling Curve, but second-order differencing appears necessary to properly stabilize the series for autoregressive modeling. This suggests that the CO2 increase is not just linear but has acceleration components that need to be accounted for.
+
+The bottom right panel showing the coefficient values for a poorer-performing model (AR(20) with d=3) reveals why over-differencing is problematic. The extreme negative values in the middle coefficients create an unstable model that quickly diverges from reality, producing the dramatically wrong downward forecasts seen in the top panel. This highlights how sensitive autoregressive models can be to their parameterization—with the right settings, they produce remarkably accurate forecasts, but with sub-optimal parameters, they can fail catastrophically.
+
+The prediction intervals for our best AR model start relatively narrow but widen as the forecast extends further into the future, which correctly represents the growing uncertainty. However, they remain sufficiently tight even at extended horizons to be useful for climate projections. This suggests that despite the apparent complexity of atmospheric CO2 dynamics, there's a strong statistical regularity that AR models can capture effectively.
+
+Compared to the exponential smoothing approach we discussed earlier, the autoregressive model achieves similar accuracy (MAPE of 0.41% for AR versus 0.50% for exponential smoothing on the test set). This comparable performance from two conceptually different approaches reinforces our confidence in the forecasts—when distinct modeling philosophies arrive at similar projections, it suggests we're genuinely capturing the underlying process rather than just fitting to patterns that might be artifacts of a particular model structure.
+
+What's particularly notable is that the AR model accomplishes this without explicitly modeling trend and seasonality components. Instead, it implicitly captures these patterns through its lag structure and differencing. This more flexible approach might be better equipped to adapt to subtle changes in the CO2 trend or seasonal pattern over time, which could explain its slightly superior performance on the test set.
+
 ## Moving average?
 {:.no_toc}
 

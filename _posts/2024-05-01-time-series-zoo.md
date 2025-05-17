@@ -619,6 +619,48 @@ Compared to the exponential smoothing approach we discussed earlier, the autoreg
 
 What's particularly notable is that the AR model accomplishes this without explicitly modeling trend and seasonality components. Instead, it implicitly captures these patterns through its lag structure and differencing. This more flexible approach might be better equipped to adapt to subtle changes in the CO2 trend or seasonal pattern over time, which could explain its slightly superior performance on the test set.
 
+### Sunspots
+
+Next, let's examine how autoregressive models handle the more challenging sunspot time series:
+
+<figure class="centered" markdown="block">
+
+![Autoregressive best model sunspots](/img/time-series-zoo/autoregressive_best_model_sunspots.png)
+
+<figcaption>Autoregressive best model for sunspot number prediction.</figcaption>
+
+</figure>
+
+<figure class="centered" markdown="block">
+
+<video class="full-width-video" controls>
+  <source src="/img/time-series-zoo/autoregressive_models_sunspots.mp4" type="video/mp4">
+</video>
+
+<figcaption>Comparison of different autoregressive configurations for sunspot prediction.</figcaption>
+
+</figure>
+
+The sunspot data presents a fascinating challenge for autoregressive models. The first figure shows our best-performing model: an AR(11) with second-order differencing (d=2) and a Box-Cox transformation (λ=0.60). This model manages to capture the cyclic nature of solar activity with remarkably good timing, albeit with some limitations in amplitude prediction. The model achieves a Mean Absolute Error (MAE) of 47.95 for the validation period and 28.15 for the test period. Note that we're using MAE rather than MAPE here since the sunspot count frequently approaches zero, which would make percentage errors misleadingly large.
+
+The second figure provides a more comprehensive view of model performance, showing both a poorer-performing model (AR(34) with d=3) and diagnostic plots. The top panel reveals how this model dramatically overestimates sunspot counts in the test period (MAE of 132.98), producing unrealistic peaks despite reasonable performance in the validation period. The bottom-left panel shows how error varies with autoregressive order (p) across different differencing levels, while the bottom-right panel displays the coefficient pattern for the AR(34) model—note the extremely large positive coefficient at lag 34 (around +50), suggesting a serious overfitting issue.
+
+Applying autoregressive models to sunspot data reveals both successes and limitations of this approach for complex natural phenomena. The optimal model (AR(11) with d=2) demonstrates remarkable skill in capturing the quasi-periodic solar cycle, with forecasts that maintain the approximately 11-year periodicity seen throughout the historical record. The model's ability to time the peaks and troughs reasonably well is particularly impressive given the known variability in cycle length, which can range from 9 to 14 years.
+
+The Box-Cox transformation (λ=0.60) plays a crucial role in this model's success. This transformation helps stabilize variance across the series, addressing the fact that higher sunspot counts tend to show greater variability. A λ value of 0.60 represents a transformation between a square root (λ=0.5) and the original data (λ=1.0), effectively reducing the influence of extreme peaks without completely flattening them.
+
+The choice of p=11 for our best model intuitively aligns with the average solar cycle length. This suggests the model is directly capturing the fundamental periodicity rather than relying on higher-order patterns. Second-order differencing (d=2) helps stabilize the series, removing both level shifts and changes in trend that might occur between different solar cycles.
+
+The prediction intervals for the sunspot forecasts are notably wider than those we saw for the Keeling Curve, reflecting the greater inherent uncertainty in solar activity prediction. This aligns with current scientific understanding of solar dynamics, where the complex magnetohydrodynamic processes driving sunspot formation have chaotic elements that fundamentally limit predictability.
+
+Comparing the two figures reveals important insights about model selection. The AR(34) model with d=3 demonstrates classic overfitting symptoms: it performs reasonably on the validation set (though still worse than our optimal model) but fails catastrophically on the test set. Looking at the coefficient plot, the extreme positive value at lag 34 suggests the model is placing enormous emphasis on patterns that happened exactly 34 years ago—essentially "memorizing" the training data rather than learning generalizable patterns. This is further exacerbated by over-differencing (d=3), which introduces additional instability.
+
+The MAE comparison chart is particularly revealing. While d=2 still performs best overall, the differences between differencing levels are much less pronounced than with the Keeling Curve data. The lines for d=0, d=1, and d=2 remain relatively close across most autoregressive orders, with only d=3 showing dramatic error spikes at certain values of p. This suggests that the sunspot data is inherently more stationary than the CO2 data, requiring less aggressive differencing to achieve reasonable performance.
+
+One notable limitation is that while our best model captures cycle timing well, it struggles somewhat with amplitude prediction. This is a common challenge with sunspot forecasting—even sophisticated physical models have difficulty predicting how strong or weak a particular solar cycle will be. The relatively flat peaks in our forecasts suggest the model is essentially predicting "average" cycle amplitudes rather than the extreme variations that can occur in reality.
+
+Compared to our exponential smoothing results from earlier, the autoregressive approach performs better for this particular dataset. While both methods struggle with the inherent unpredictability of solar activity, the AR model's ability to directly incorporate the ~11-year periodicity through its lag structure gives it an advantage over the more rigid seasonal patterns in exponential smoothing. This highlights the importance of matching the modeling approach to the specific characteristics of the time series being analyzed.
+
 ## Moving average?
 {:.no_toc}
 
@@ -795,6 +837,12 @@ Meijer, H. A. (2005).</span>
   <i>The Smoothing of Time Series</i>. National Bureau of Economic Research. 169 pp.
   <a href="/files/time-series-zoo/Macaulay (1931), The Smoothing of Time Series, National Bureau of Economic Research.pdf" target="_blank" class="button">pdf</a>
   <a href="https://www.nber.org/books-and-chapters/smoothing-time-series" target="_blank" class="button">source</a>
+</div>
+
+<div id="mackinnon2010">
+  <span class="ref-author-list">MacKinnon, J. G. (2010).</span>
+  Critical Values For Cointegration Tests. <i>Working Paper 1227</i>, Economics Department, Queen's University.
+  <a href="https://ideas.repec.org/p/qed/wpaper/1227.html" target="_blank" class="button">url</a>
 </div>
 
 <div id="nandy2021">

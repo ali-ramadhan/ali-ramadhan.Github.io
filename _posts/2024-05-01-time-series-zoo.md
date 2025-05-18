@@ -726,20 +726,22 @@ where $O_i$ are the observed frequencies and $E_i$ are the expected frequencies.
 
 [^critical-values-chi-squared]: For a $\chi^2$ distribution the critical values can be computed as $\displaystyle \chi_\alpha^2 = Q^{-1}\left(\frac{k}{2}, \alpha\right)$ where $Q^{-1}$ is the inverse of the [_upper regularized gamma function_](https://en.wikipedia.org/wiki/Incomplete_gamma_function#Regularized_gamma_functions_and_Poisson_random_variables), implemented in Mathematica as [`InverseGammaRegularized`](https://reference.wolfram.com/language/ref/InverseGammaRegularized.html).
 
+### ANOVA
+{:.no_toc}
 
-An [Analysis of Variance (ANOVA)](https://en.wikipedia.org/wiki/Analysis_of_variance) test generalizes the $t$-test to compare the means of three or more groups. The $F$-statistic compares the variability between groups to the variability within groups and follows an $F$-distribution.
+An [Analysis of Variance (ANOVA)](https://en.wikipedia.org/wiki/Analysis_of_variance) test generalizes the $t$-test to compare the means of three or more groups. While a $t$-test can tell you if two means differ significantly, ANOVA tackles the more general question of "are any of these group means significantly different from each other?" ANOVA answers this question by partitioning the total variability in a dataset into two components: variability between groups and variability within groups. If the differences between group means are large compared to the variability within each group, that suggests real differences rather than just random chance.
 
-ANOVA (Analysis of Variance):
-Used to compare the means of three or more groups.
-Test Statistic: F-statistic, which compares the variability between groups to the variability within groups.
-P-value Interpretation: The probability of observing an F-statistic as extreme as or more extreme than the calculated value, assuming the null hypothesis of equal means is true.
-Common Misuse: Conducting multiple pairwise comparisons after a significant ANOVA without using appropriate post-hoc tests or adjustments for multiple testing.
+The test statistic used in ANOVA is the $F$-statistic, calculated as:
 
-Its critical values can be computed numerically.[^critical-values-f]
+$$F = \frac{\text{variance between groups}}{\text{variance within groups}}$$
+
+The $F$-statistic compares the variability between groups to the variability within groups and follows an [$F$-distribution](https://en.wikipedia.org/wiki/F-distribution) with degrees of freedom $d_1 = k-1$ and $d_2 = N-k$, where $k$ is the number of groups and $N$ is the total sample size. A large $F$-value indicates that the between-group variation dominates, suggesting significant differences between at least some of the group means. The critical values here can also be computed numerically.[^critical-values-f]
 
 [^critical-values-f]: For an $F$-distribution with $d_1$ and $d_2$ degrees of freedom, the critical values can be computed as $\displaystyle F_c = \left( \frac{I_\star^{-1}}{1 - I_\star^{-1}} \right) \frac{d_2}{d_1}$ where $\displaystyle I_\star^{-1} = I_{1-\alpha}^{-1}\left(\frac{d_1}{2}, \frac{d_2}{2}\right)$.
 
-Mention something about the ADF and KPSS tests and Monte Carlo estimates.
+It's important to note that a significant ANOVA result only tells you that differences exist somewhere among your groups. It doesn't tell you which specific groups differ. For that, you need to conduct post-hoc tests.
+
+<!-- ANOVA comes in several forms, with one-way ANOVA being the simplest and most common. In one-way ANOVA, we examine the effect of a single factor (categorical variable) on a continuous outcome. For instance, comparing test scores across three different teaching methods. Multi-way ANOVA extends this by simultaneously examining the effects of two or more factors—like comparing test scores across different teaching methods and different class sizes. This allows us to detect not just the main effects of each factor independently, but also potential interaction effects where the impact of one factor depends on the level of another. Multi-way designs can offer more nuanced insights but require larger sample sizes and more careful interpretation. -->
 
 ## Model selection using information criteria
 {:.no_toc}
@@ -878,6 +880,12 @@ Meijer, H. A. (2005).</span>
 Bureau of the Census, Washington, DC.</i>
   <a href="https://www.census.gov/library/working-papers/1967/adrm/shiskin-01.html" target="_blank" class="button">url</a>
   <a href="https://www.census.gov/content/dam/Census/library/working-papers/1967/adrm/shiskinyoungmusgrave1967.pdf" target="_blank" class="button">pdf</a>
+</div>
+
+<div id="student1908">
+  <span class="ref-author-list">Gosset, W.S. (1908).</span>
+  The probable error of a mean. <i>Biometrika</i> <b>6</b>(1), 1-25.
+  <a href="https://doi.org/10.2307/2331554" target="_blank" class="button">doi</a>
 </div>
 
 

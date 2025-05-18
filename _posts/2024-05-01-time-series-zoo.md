@@ -713,12 +713,16 @@ where $\bar{x}$ is the sample mean, $\mu$ is the population mean (or hypothesize
 
 [^critical-values-t]: To compute the critical value $t_c$ for a $t$-distribution with $\nu$ degrees of freedom for the purpose of performing a $t$-test at a significance level of $\alpha$, you can use the formula $\displaystyle t_c = \sqrt{\frac{\nu}{I_{2\alpha}^{-1}(\frac{\nu}{2}, \frac{1}{2})} - \nu}$ where $I^{-1}$ is the inverse of the [_regularized incomplete beta function_](https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function), implemented in Mathematica as [`InverseBetaRegularized`](https://reference.wolfram.com/language/ref/InverseBetaRegularized.html).
 
-Used to test the association between two categorical variables or to compare observed frequencies with expected frequencies.
-Test Statistic: Chi-square statistic, which measures the deviation between observed and expected frequencies.
-P-value Interpretation: The probability of observing a chi-square statistic as extreme as or more extreme than the calculated value, assuming the null hypothesis of no association is true.
-Common Misuse: Applying the chi-square test when the expected frequencies are small (less than 5) without using appropriate corrections or alternative tests.
+### $χ^2$-test
+{:.no_toc}
 
-Its critical values can be computed numerically.[^critical-values-chi-squared]
+The [chi-squared test](https://en.wikipedia.org/wiki/Chi-squared_test) (or $\chi^2$ test) is another popular test primarily used when working with categorical data. While the $t$-test helps us compare means, the $\chi^2$ test looks at whether observed frequencies differ from expected frequencies in categorical variables. It's particularly useful for analyzing [contingency tables](https://en.wikipedia.org/wiki/Contingency_table) (pivot tables) to determine if there's a significant association between variables.
+
+The test works by comparing what we actually observe with what we would expect to observe if there were no relationship between the variables. The test statistic is calculated as:
+
+$$\chi^2 = \sum_i \frac{(O_i - E_i)^2}{E_i}$$
+
+where $O_i$ are the observed frequencies and $E_i$ are the expected frequencies. This statistic follows a [$\chi^2$ distribution](https://en.wikipedia.org/wiki/Chi-squared_distribution) with the degrees of freedom typically calculated as $(r-1)(c-1)$ for a contingency table with $r$ rows and $c$ columns. If the $\chi^2$ statistic is high enough (above a critical value), we can say the frequencies are significantly different than expected. Its critical values can also be computed numerically.[^critical-values-chi-squared]
 
 [^critical-values-chi-squared]: For a $\chi^2$ distribution the critical values can be computed as $\displaystyle \chi_\alpha^2 = Q^{-1}\left(\frac{k}{2}, \alpha\right)$ where $Q^{-1}$ is the inverse of the [_upper regularized gamma function_](https://en.wikipedia.org/wiki/Incomplete_gamma_function#Regularized_gamma_functions_and_Poisson_random_variables), implemented in Mathematica as [`InverseGammaRegularized`](https://reference.wolfram.com/language/ref/InverseGammaRegularized.html).
 

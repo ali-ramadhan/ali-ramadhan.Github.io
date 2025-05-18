@@ -698,6 +698,18 @@ You generally need to be careful when using hypothesis tests though. The tests o
 
 It's worth noting that p-values are frequently misused in research. If you're looking to make a claim based on a low-enough p-value you can analyze data in different ways until you find one where p < 0.05 (a common threshold). This is called [p-hacking](https://en.wikipedia.org/wiki/Data_dredging) and may involve just changing the sample size. So maybe we should use a more stringent thresholds of 0.01 or even 0.001. But you should always report the exact p-value alongside effect sizes rather than just stating that the effect is "statistically significant"™.
 
+### $t$-test
+{:.no_toc}
+
+A commonly used hypothesis test is the [$t$-test](https://en.wikipedia.org/wiki/Student%27s_t-test) [(Student, 1908)](#student1908), developed by William Sealy Gosset while working as a chemist at the Guinness brewery in Dublin. Gosset published under the pseudonym "Student" because apparently Guinness preferred it if research staff published under pen names, perhaps to avoid accidently leaking trade secrets and because they did not want competitors to know that they were using $t$-tests to determine the quality of barley. So now it's also known as "Student's $t$-test".
+
+The $t$-test is used to determine if a sample mean differs significantly from a known mean or if two sample means differ from each other when sample sizes are small. It's easy to tell if your sample mean is significantly different from a known mean if you have plenty of data, but what do you do when you don't have much data?
+
+You can compute the [$t$-statistic](https://en.wikipedia.org/wiki/T-statistic) as
+
+$$t = \frac{\bar{x} - \mu}{s / \sqrt{n}}$$
+
+where $\bar{x}$ is the sample mean, $\mu$ is the population mean (or hypothesized value), $s$ is the sample standard deviation, and $n$ is the sample size. So $t$ is basically a signal-to-noise ratio, comparing the difference in means to the variability within the data. It follows a [$t$-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) if the sample data is normally distributed and has equal variances. Once you compute the $t$-statistic, you compare it to the critical value from the $t$-distribution for your chosen signifiance level $\alpha$ and degrees of freedom $\nu = n - 1$. If your calculated $t$ exceeds the critical value (i.e. it's extreme enough), you can reject the null hypothesis. The critical values can be computed numerically for a chosen significance level $\alpha$ and increase as $\alpha$ decreases.[^critical-values-t] The test is quite useful and widely used since it adjusts for the increased uncertainty that comes with small sample sizes.
 
 [^critical-values-t]: To compute the critical value $t_c$ for a $t$-distribution with $\nu$ degrees of freedom for the purpose of performing a $t$-test at a significance level of $\alpha$, you can use the formula $\displaystyle t_c = \sqrt{\frac{\nu}{I_{2\alpha}^{-1}(\frac{\nu}{2}, \frac{1}{2})} - \nu}$ where $I^{-1}$ is the inverse of the [_regularized incomplete beta function_](https://en.wikipedia.org/wiki/Beta_function#Incomplete_beta_function), implemented in Mathematica as [`InverseBetaRegularized`](https://reference.wolfram.com/language/ref/InverseBetaRegularized.html).
 

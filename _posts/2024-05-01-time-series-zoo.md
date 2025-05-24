@@ -743,26 +743,73 @@ It's important to note that a significant ANOVA result only tells you that diffe
 
 <!-- ANOVA comes in several forms, with one-way ANOVA being the simplest and most common. In one-way ANOVA, we examine the effect of a single factor (categorical variable) on a continuous outcome. For instance, comparing test scores across three different teaching methods. Multi-way ANOVA extends this by simultaneously examining the effects of two or more factors—like comparing test scores across different teaching methods and different class sizes. This allows us to detect not just the main effects of each factor independently, but also potential interaction effects where the impact of one factor depends on the level of another. Multi-way designs can offer more nuanced insights but require larger sample sizes and more careful interpretation. -->
 
+### Other tests
+{:.no_toc}
+
+The hypothesis testing framework we've discussed applies to specialized tests in time series analysis as well. Tests like the Augmented Dickey-Fuller (ADF) and Kwiatkowski-Phillips-Schmidt-Shin (KPSS) tests, which we explore in the main article, follow these same fundamental principles but are specifically designed to test for stationarity properties in time series data. Monte Carlo methods are often used to derive the critical values for these specialized tests since their test statistics don't always follow standard distributions.
+
 ## Model selection using information criteria
 {:.no_toc}
 
-When fitting a statistical model to data, you generally want to use as much complexity as needed but no more. Complexity is generally measured by the number of parameters the model uses. Too little complexity and the model may underfit. Too much complexity and the model may overfit. A principled approach to balancing model fit and model complexity is to use information critieria. They are usually derived from information theory and employ the likelihood function.
+When fitting a statistical model to data, like fitting a time series model to time series data, you want to strike a balance between using a model that is too simple (which might underfit the data and miss important patterns) and a model that is too complex (which might overfit and fit noise rather than the signal). Ideally we want a model that fits the observed data well and generalizes to new unseen data while being as simple as possible. Information criteria try to quantify this balance by considering model fit and model complexity to help us choose which model to use.
 
-We cannot choose with certainty, because we do not know f. Akaike (1974) showed, however, that we can estimate, via AIC, how much more (or less) information is lost by g1 than by g2. The estimate, though, is only valid asymptotically; if the number of data points is small, then some correction is often necessary (see AICc, below).
+A common example is fitting a polynomial to data points. A straight line might miss a curve in the data so that's too simple of a model. A 20th-degree polynomial might pass through every point perfectly but will probably perform terribly on new data, having memorized noise rather than learned the pattern. So that's too complex of a model. The best model is probably somewhere in between.
 
-$\text{AIC} = 2k - 2\ln\hat{L}$
+Information criteria are usually calculated like
 
-When the sample size is small, there is a substantial probability that AIC will select models that have too many parameters, i.e. that AIC will overfit.[13][14][15] To address such potential overfitting, AICc was developed: AICc is AIC with a correction for small sample sizes.
+$$\text{IC} = \text{Badness of fit} + \text{Complexity penalty}$$
 
-$\displaystyle \text{AICc} = \text{AIC} + \frac{2k^2 + 2k}{n - k - 1}$
+so a lower value is better. The badness of fit is usually based on the likelihood so if the observed data is less likely under the model that leads to a higher value. The complexity penalty increases with the number of parameters in the model.
 
-As n gets large relative to k, the correction term approaches zero, and AICc converges to AIC.
+### AIC (Akaike Information Criterion)
+{:.no_toc}
 
-The correction penalizes complexity (large k) more strongly when the sample size is small. This helps prevent overfitting in small samples.
+The AIC, developed by Akaike (1973), attempts to estimate how much information is lost when using a model to approximate reality. We can compute it as
 
-$\text{BIC} = k\ln n - 2\ln\hat{L}$
+$$\text{AIC} =  -2\ln\hat{L} + 2k$$
 
-Information criteria can help choose between different orders of the same model (e.g. an autoregressive model with a maximum lag of 10 vs. 20) but cannot be used to compare different models (e.g. exponential smoothing vs. autoregressive).
+where $\hat{L}$ is the maximum likelihood value which is the value of the likelihood function evaluated at the best fitting parameters (or the best performance of the model) and $k$ is the number of model parameters. The reason it's called an _information criterion_ is that it's derived using information theory.[^aic-derivation]
+
+[^aic-derivation]: The AIC comes from information theory: Akaike showed that the expected Kullback-Leibler (KL) divergence—which measures information lost when using a model to approximate reality—can be estimated by the negative log-likelihood plus a bias correction. Remarkably, this bias equals the number of parameters k, giving us the elegant penalty term 2k.
+
+Think of AIC as the "prediction-focused" criterion. It's optimistic and eager to add more parameters if it helps prediction.
+
+### AICc (Corrected AIC)
+{:.no_toc}
+
+When the sample size is small, there is a substantial probability that AIC will select models that have too many parameters as the AIC is generally eager to add more parameters. To address such potential overfitting, the AICc was developed. The AICc is just the AIC with a correction for small sample sizes. We can compute it from the AIC as
+
+$$\text{AICc} = \text{AIC} + \frac{k+1}{n-k-1}2k$$
+
+where $n$ is the sample size (number of data points) and $k$ is still the number of model parameters.
+
+So the AICc adds an extra penalty for extra parameters. The penalty is proportional the number of parameters to be estimated $k + 1$ (the variance is the extra parameter here) and inversely proportional to the "residual degrees of freedom" or how many degrees of freedom are left after fitting which is $n - (k + 1)$. So for the same value of $k$, the extra penalty is large if you don't have much data and $n$ is small. But if you have lots of data and $n$ is large then the extra penalty is small (and the AICc is gonna be close to the AIC).
+
+### BIC (Bayesian Information Criterion)
+{:.no_toc}
+
+The BIC, developed by Schwarz (1978), aims to find the true model assuming it's among the model candidates. The idea is that if the true model is among the model candidates and you have enough data, the BIC will eventually select it with probability approaching 1. The AIC, on the other hand, might keep selecting overly complex models even with infinite data. Of course this may never happen because real data is not generated by time series models (it's generated by complex real-life processes) and real data can be quite noisy and you may struggle to collect enough data.
+
+The BIC can be computed as
+
+$$\text{BIC} = -2\ln\hat{L} + k \ln n$$
+
+which is the same as the AIC but the penalty for parameters scales with the amount of data as $\ln n$. So the more data you have, the higher the penalty.
+
+The BIC is Bayesian by derivation.[^bic-derivation]
+
+[^bic-derivation]: The BIC approximates the Bayes factor, which compares the posterior probability of different models—it's derived using Laplace's method to approximate the marginal likelihood of each model. This Bayesian foundation means BIC asymptotically selects the model with highest posterior probability, making it "truth-seeking" in the sense that it will identify the correct model (if it's among the candidates) as data accumulates.
+
+### How to use information criteria
+{:.no_toc}
+
+So when should you use each criterion? If you just want good predictions and forecasts, then the AIC might be the one to use. Think of it as saying "reality is complex and all models are approximations" and you just want to select the model with the best predictive power, even if it's a bit more complex than necessary. If you don't have much data (the rule of thumb seems to be $n/k < 40$) then consider using the AICc since there's basically no downside (when you have lots of data the AICc converges to the AIC anyways). If you think a simple true model exists and you want to select it, then the BIC might be the one to use. So maybe the BIC is more useful if you want to select the model that explains the data. One way to think of it is that the AIC/AICc is the pragmatist's choice while the BIC is the scientist's choice.
+
+When choosing between models, you should look at the differences in IC values rather than the absolute numbers which don't mean much on their own. As a rule of thumb if $Δ\text{IC} < 2$ then the models are essentially equivalent, if $2 ≤ Δ{IC} < 7$ then there's moderate evidence favoring the model with lower IC, and if $Δ\text{IC} ≥ 10$ then there's strong evidence favoring the model with lower IC. These ratios from the mathematics of likelihood ratios and evidence strength.
+
+You should calculate multiple criteria. When they agree, you have strong evidence for your model choice. When they disagree (like AIC selecting a complex model while BIC prefers a simpler one), it reveals a fundamental tradeoff between predictive accuracy and simplicity. This disagreement itself is informative—it tells you whether adding complexity genuinely improves predictions or just fits noise.
+
+Remember that these criteria can only compare models fit to the same data. You can't compare AIC values between different datasets or even different transformations of the same data (like comparing a model of y versus a model of log(y)).
 
 # Footnotes
 

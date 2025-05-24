@@ -10,7 +10,7 @@
     line-height: 1.5em;
 }
 
-h1, h2 {
+h1, h2, h3 {
     margin-top: 1em;
 }
 
@@ -21,6 +21,12 @@ h1 {
 }
 
 h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #444444;
+}
+
+h3 {
     font-size: 1.5rem;
     font-weight: 600;
     color: #444444;
@@ -104,6 +110,11 @@ figure > figcaption {
 
 .post-body h2 {
     counter-increment: h2counter;
+    counter-reset: h3counter;
+}
+
+.post-body h3 {
+    counter-increment: h3counter;
 }
 
 .post-body h1::before {
@@ -113,6 +124,10 @@ figure > figcaption {
 .post-body h2::before {
     content: counter(h1counter) "." counter(h2counter) ". ";
 }
+
+.post-body h3::before {
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
+}y
 
 #markdown-toc {
     counter-reset: toc1counter;

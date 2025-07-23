@@ -127,7 +127,7 @@ figure > figcaption {
 
 .post-body h3::before {
     content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
-}y
+}
 
 #markdown-toc {
     counter-reset: toc1counter;
@@ -309,5 +309,101 @@ label {
 @media (max-width: 1500px) {
     .floating-toc {
         display: none;
+    }
+}
+
+/*
+ * Collapsible sections
+ */
+
+ /* Add section numbers as ::before pseudo-elements */
+.post-body h1.collapsible-header::before {
+    content: counter(h1counter) ". ";
+    padding-left: 1.2em;
+}
+
+.post-body h2.collapsible-header::before {
+    content: counter(h1counter) "." counter(h2counter) ". ";
+    padding-left: 1.2em;
+}
+
+.post-body h3.collapsible-header::before {
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
+    padding-left: 1.2em;
+}
+
+/* Add rotating arrows as ::after pseudo-elements, positioned at the start */
+.post-body h1.collapsible-header::after,
+.post-body h2.collapsible-header::after,
+.post-body h3.collapsible-header::after {
+    content: "▼";
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    transition: transform 0.3s ease;
+    transform: rotate(0deg);
+    transform-origin: center;
+    width: 1em;
+}
+
+/* Make collapsible headers position relative for absolute positioning of arrow */
+.post-body h1.collapsible-header,
+.post-body h2.collapsible-header,
+.post-body h3.collapsible-header {
+    position: relative;
+}
+
+.collapsible-header {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.collapsible-header:hover {
+    color: #007bff !important;
+}
+
+.collapsible-header:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Rotate arrow when collapsed - specific selectors to match content rules */
+.post-body h1.collapsible-header.collapsed::after,
+.post-body h2.collapsible-header.collapsed::after,
+.post-body h3.collapsible-header.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+/* Collapsible content styling */
+.collapsible-content {
+    overflow: hidden;
+    max-height: none;
+    opacity: 1;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
+
+.collapsible-content.collapsed {
+    max-height: 0 !important;
+    opacity: 0.3;
+}
+
+/* Ensure headers are not clipped */
+.post-body {
+    overflow: visible !important;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .post-body h1.collapsible-header::after,
+    .post-body h2.collapsible-header::after,
+    .post-body h3.collapsible-header::after {
+        transform-origin: center;
+    }
+
+    .post-body h1.collapsible-header.collapsed::after,
+    .post-body h2.collapsible-header.collapsed::after,
+    .post-body h3.collapsible-header.collapsed::after {
+        transform: rotate(-90deg);
     }
 }

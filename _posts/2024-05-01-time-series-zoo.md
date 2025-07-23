@@ -683,12 +683,12 @@ Compared to our exponential smoothing results from earlier, the autoregressive a
 # Appendices
 
 ## General resources
-{:.no_toc}
 
-online textbook, python book?
+online textbook, python book?, python packages?
+
+Explain packages: pandas, darts, statsmodels, statsforecast, sktime
 
 ## Statistical hypothesis testing
-{:.no_toc}
 
 We use some hypothesis tests in this post and I was a little rusty on the details. So this appendix is just a brief aside on hypothesis tests and things to be careful of when using them. I also give an overview of a few popular tests even though we don't use them in this post. I include some formulas for computing critical values as I could not easily find the information online.
 
@@ -749,7 +749,6 @@ It's important to note that a significant ANOVA result only tells you that diffe
 The hypothesis testing framework we've discussed applies to specialized tests in time series analysis as well. Tests like the Augmented Dickey-Fuller (ADF) and Kwiatkowski-Phillips-Schmidt-Shin (KPSS) tests, which we explore in the main article, follow these same fundamental principles but are specifically designed to test for stationarity properties in time series data. Monte Carlo methods are often used to derive the critical values for these specialized tests since their test statistics don't always follow standard distributions.
 
 ## Model selection using information criteria
-{:.no_toc}
 
 When fitting a statistical model to data, like fitting a time series model to time series data, you want to strike a balance between using a model that is too simple (which might underfit the data and miss important patterns) and a model that is too complex (which might overfit and fit noise rather than the signal). Ideally we want a model that fits the observed data well and generalizes to new unseen data while being as simple as possible. Information criteria try to quantify this balance by considering model fit and model complexity to help us choose which model to use.
 
@@ -810,6 +809,10 @@ When choosing between models, you should look at the differences in IC values ra
 You should calculate multiple criteria. When they agree, you have strong evidence for your model choice. When they disagree (like AIC selecting a complex model while BIC prefers a simpler one), it reveals a fundamental tradeoff between predictive accuracy and simplicity. This disagreement itself is informative—it tells you whether adding complexity genuinely improves predictions or just fits noise.
 
 Remember that these criteria can only compare models fit to the same data. You can't compare AIC values between different datasets or even different transformations of the same data (like comparing a model of y versus a model of log(y)).
+
+## Prediction intervals. vs. conformal prediction?
+
+Show a couple of plots to highlight the difference?
 
 # Footnotes
 

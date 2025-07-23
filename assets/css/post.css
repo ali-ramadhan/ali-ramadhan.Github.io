@@ -344,6 +344,7 @@ label {
     transform: rotate(0deg);
     transform-origin: center;
     width: 1em;
+    font-size: 0.8em;
 }
 
 /* Make collapsible headers position relative for absolute positioning of arrow */

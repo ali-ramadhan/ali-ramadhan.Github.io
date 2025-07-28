@@ -188,7 +188,6 @@ Time series decompositions can be useful for understanding the time series and f
 The different components should ideally be uncorrelated to suggest that the patterns have been completely separated. Then we can more confidently forecast them separately and recombine the component forecasts into a full forecast for the time series.
 
 ## Classical or naive decomposition
-{:.no_toc}
 
 In a classical or naive decomposition, the trend component $T_t$ is estimated using some kind of moving average. The trend is then removed by subtracting it (in the additive case) or dividing by it (in the multiplicative case) to get detrended data. Then the seasonal component $S_t$ is estimated by averaging the detrended values for each season so you need to specify a period. What's left after removing $T_t$ and $S_t$ is the remainder component $R_t$.
 
@@ -225,7 +224,6 @@ The partial autocorrelation function (PACF) plots also make sense and help ident
 The periodograms (right column) also make sense. Most of the power is in very low frequencies due to the long-term trend of increasing CO2 being the time series' most prominent feature. You can see a couple of peaks: one at 1 cycles per year corresponding to the seasonal cycle, and the other at 2 cycles per year probably corresponding to the different seasonal patterns between the Northern and Southern hemispheres. These peaks are not present in the trend component's periodogram which is a good sign that the seasonal decomposition did something sensible. Due to the naive decomposition, the seasonal component's power is fully contained in a number of pure sine waves which decay in power with increasing frequency. Since the residual component is what's left after subtracting the trend and seasonal components, the residual does not contain any power at the annual frequencies so it's clearly not white noise.
 
 ## X13-ARIMA-SEATS
-{:.no_toc}
 
 [X13-ARIMA-SEATS](https://www.census.gov/data/software/x13as.html) is a complex seasonal adjustment open-source software package developed by the U.S. Census Bureau. It's the 13th and latest version of a software package used by the Bureau since the 1950's. The first version, Census Method I, was based off the work of [Macaulay (1931)](#macaulay1931) on smoothing time series.[^smoothing]
 
@@ -260,7 +258,6 @@ We can apply X13-ARIMA-SEATS to the Keeling Curve and compare the decomposition 
 For X13-ARIMA-SEATS the trend component is very similar to the naive decomposition so there's not much to say there. A key improvement is that the seasonal component's magnitude can now vary in time which allows us to capture whether the seasonal CO2 fluctuations get stronger or weaker. The peaks in the seasonal component's periodogram are wider too and this is more realistic since real-world seasonal patterns have some variability in frequency. As a result, the most dramatic improvement is in the residual component which now looks more like true white noise now. Its ACF and PACF show almost no significant spikes and are almost all within the confidence bands, and its periodogram appears more uniform across frequencies without the dips left by subtracting out the seasonal component.
 
 ## Seasonal and Trend decomposition using Loess (STL)
-{:.no_toc}
 
 Seasonal and Trend decomposition using LOESS (STL), introduced by [Cleveland et al. (1990)](#cleveland1990), also decomposes a time series into three components: trend, seasonality, and residual. But STL uses a completely different approach from X13-ARIMA-SEATS called LOESS, which relies on local regression to isolate the trend and seasonal components rather than ARIMA models.
 
@@ -310,7 +307,6 @@ So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$. 
 You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and viral spread, but they are temporary, localized phenomena rather than long-term, stable processes. This stuff is super hard to forecast anyways. You can also get negative $\rho$ processes in the real-world, e.g. in some regions wet days may be more likely to be followed by a dry day and vice versa, or stock returns may sometimes oscillate between positive and negative due to mean reversion or overreaction.
 
 ## Dickey-Fuller test
-{:.no_toc}
 
 The original test was introduced by [Dickey & Fuller (1979)](#dickey1979). It tests the null hypothesis that a unit root is present in an autoregressive process. It considered the AR(1) process from equation \eqref{ar1-process}
 
@@ -341,7 +337,6 @@ To generate a sample from the Dicker-Fuller null distribution (and create the fi
 Although useful, the Dickey-Fuller test has some major limitations. It's based on a simple AR(1) model which may not capture the complex dynamics present in many time series. It also assumes the error terms in the model are uncorrelated which is not true of many real-world time series. The Augmented Dickey–Fuller (ADF) test was developed to address these limitations.
 
 ## Augmented Dickey-Fuller test
-{:.no_toc}
 
 The testing procedure is the same as for the Dickey–Fuller test but we instead use a more flexible autoregressive process of order $p$, denoted $\operatorname{AR}(p)$, again with constant and linear trend terms
 
@@ -366,7 +361,6 @@ The null distributions of the Augmented Dickey-Fuller (ADF) and original Dickey-
 One subtlety worth noting is that the ADF test, like its simpler predecessor, has low power when $\rho$ is close to but less than 1. This means it might fail to reject the null hypothesis of a unit root even when the series is actually stationary. This is one reason why it's often useful to complement the ADF test with other stationarity tests, such as the KPSS test, which we'll explore next.
 
 ## Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
-{:.no_toc}
 
 The KPSS test, developed by [Kwiatkowski et al. (1992)](#kwiatkowski1992), takes a different approach to testing for stationarity. It considers the model
 
@@ -422,21 +416,27 @@ The KPSS test is often used in conjunction with other tests like the ADF test to
 * We're looking for something stationary to predict in each? Depends on the method I guess.
 -->
 
-# Forecasting time series!
+# Traditional forecasting methods
 
 Explain that we're splitting into train, val, and test. Must be in chronological order.
 
-When possible we'll make probabilistic forecasts.
+We'll look at the MAE.
+
+When possible we'll make probabilistic forecasts and look at the MIW and MIC.
 
 ## Exponential smoothing (Holt-Winters')
+
+### Description
 {:.no_toc}
 
 Exponential smoothing is a pretty simple method to produce forecasts using weighted averages of past observations, with the weights decaying exponentially as the observations get older. So more recent data points get larger weights. Holt-Winters' method builds on this by explicitly modeling trend and seasonality. <a href="#hyndman2021">Hyndman & Athanasopoulos (Ch. 8, 2021)</a> have a really nice introduction to exponential smoothing methods including Holt-Winters' method, so we'll just describe the model.
 
-There are two main variations of Holt-Winters' method, depending on how seasonality is incorporated: additive and multiplicative.
+There are two main variations of Holt-Winters' method, depending on how seasonality is incorporated: additive or multiplicative.
 
+#### Additive method
+{:.no_toc}
 
-The additive method is generally used when the seasonal variations are roughly constant throughout the series, for example if sales consistently increase by 100 units in December whether sales are high or low. Let $y_t$ be the observation at time $t$ and $\hat{y}_{t+h\|t}$ be the forecast at time $t+h$ given the observation up to time $t$. The method involves three smoothing equations for the level $\ell_t$, trend $b_t$, and seasonal $s_t$ components, plus the forecast equation:
+The additive method is generally used when the seasonal variations are roughly constant throughout the series, for example if sales consistently increase by 100 units in December whether sales are high or low. Let $y_t$ be the time series observation at time $t$ and $\hat{y}_{t+h\|t}$ be the forecast at time $t+h$ given the observation up to time $t$. The method involves three smoothing equations for the level $\ell_t$, trend $b_t$, and seasonal components $s_t$, plus the forecast equation:
 
 $$
 \begin{aligned}
@@ -447,12 +447,15 @@ $$
 \end{aligned}
 $$
 
-Here $m$ is the number of periods in a season (e.g. 12 for monthly data and 4 for quarterly data) and $k$ is the integer part of $(h - 1) / m$ to ensure that the seasonal indices used for forecasting are from the final year of the training data. $\alpha$, $\beta$, and $\gamma$ are smoothing parameters for the level, trend, and seasonal components respectively that control how quickly the model adapts to new data.
+Here $m$ is the number of periods in a season (e.g. 12 for monthly data and 4 for quarterly data). The model maintains $m$ distinct seasonal components $s_1, s_2, \ldots, s_m$, where each $s_i$ represents the seasonal effect for the $i$-th period within the seasonal cycle. The parameter $k = \lfloor (h - 1) / m \rfloor$ ensures that when forecasting $h$ steps ahead, we cycle through the seasonal components correctly. $\lfloor x \rfloor$ is the floor function. $\alpha$, $\beta$, and $\gamma$ (all between 0 and 1) are smoothing parameters for the level, trend, and seasonal components respectively that control how quickly the model adapts to new data.
 
-So to produce a forecast, you take the level $\ell_t$, linearly extrapolate the trend $b_t$ by the number of time periods $h$, and add the seasonal component for time period $t+h, $s_{t+h-m(k+1)}$.
-* The level $\ell_t$ is a weighted average of $y_t - s_{t-m}$ which is the current observation with historical seasonality and $\ell_{t-1} + b_{t-1}$ which is what we would expect the level to be if it followed the previous level and trend.
-* The slope $b_t$ is a weighted average of $\ell_t - \ell_{t-1}$ whic his the most recent change in level and $b_{t-1}$ which is the previous trend.
+So to produce a forecast, you take the level $\ell_t$, linearly extrapolate the trend $b_t$ by the number of time periods $h$, and add the seasonal component for time period $t+h$, which is $s_{t+h-m(k+1)}$.
+* The level $\ell_t$ is a weighted average of $y_t - s_{t-m}$ which is the current observation with seasonality removed and $\ell_{t-1} + b_{t-1}$ which is what we would expect the level to be if it followed the previous level and trend.
+* The slope $b_t$ is a weighted average of $\ell_t - \ell_{t-1}$ which is the most recent change in level and $b_{t-1}$ which is the previous trend.
 * The seasonal correction $s_t$ is a weighted average of $y_t - \ell_{t-1} - b_{t-1}$ which is an estimate of the seasonal component in the current observation (what's left after accounting for the previous level and trend) and $s_{t-m}$ which is the estimate from the previous season.
+
+#### Multiplicative method
+{:.no_toc}
 
 The multiplicative method is better when the seasonal variations are proportional to the level of the series. For example, if sales in December are consistently 20% higher than the average, whether overall sales are high or low.
 
@@ -467,7 +470,10 @@ $$
 
 We can interpret the weighing similarly to how we did with the additive case except now we multiply or divide by the seasonal component instead of add or subtract.
 
-Sometimes, a simple linear trend $b_t$ can extrapolate a bit too enthusiastically into the future, leading to forecasts that shoot off. To tame this, we can introduce a **damping parameter** $\phi$ (usually between 0 and 1, often close to 1). Damping causes the trend to flatten out over longer forecast horizons. Damping can be applied to both additive and multiplicative Holt-Winters' methods. To illustrate, let's look at the equations for the **Holt-Winters' additive method with a damped trend**:
+#### Damping
+{:.no_toc}
+
+Sometimes, a simple linear trend $b_t$ can extrapolate a bit too enthusiastically into the future, leading to forecasts that shoot off. To tame this, we can introduce a *damping parameter* $\phi$ (usually between 0 and 1, often close to 1). Damping causes the trend to flatten out over longer forecast horizons. Damping can be applied to both additive and multiplicative Holt-Winters' methods. For example, adding a damped trend to the additive method we get:
 
 $$
 \begin{aligned}
@@ -478,43 +484,39 @@ $$
 \end{aligned}
 $$
 
-The trend's contribution to the forecast is now damped: instead of multiplying by $h$ we multiply by $\phi + \phi^2 + \dots + \phi^h$ which is less than $h$ if $0 \le \phi \le 1$ preventing the forecast from shooting off, especially for large $h$. Otherwise, when the trend $b_t$ is used it is now multiplied by $\phi$. This damping often provides more robust and accurate forecasts, especially for longer horizons.
+The trend's contribution to the forecast is now damped: instead of multiplying by $h$ we multiply by $\phi + \phi^2 + \dots + \phi^h$ which is less than $h$ if $0 \le \phi \le 1$ preventing the forecast from shooting off, especially for large $h$. Otherwise, when the trend $b_t$ is used it is now multiplied by $\phi$.
 
-Via darts, we use the statsmodels exponential smoothing implementation to fit to time series data. To estimate $\alpha$, $\beta$, $\gamma$, and $\phi$ if damped is used, an optimization method is used. By default, statsmodels uses SLSQP.[^slsqp]
+#### Training
+{:.no_toc}
+
+Via darts, we use the statsmodels exponential smoothing implementation to fit to time series data. To estimate $\alpha$, $\beta$, $\gamma$, and $\phi$, an optimization method is used. By default, statsmodels uses SLSQP.[^slsqp] To start the exponential smoothing process, we need initial values for the level $\ell_0$, trend $b_0$, and seasonal components $s_1, s_2, \ldots, s_m$. Simple approaches include setting $\ell_0 = y_1$ (the first observation), $b_0 = (y_{m+1} - y_1)/m$ for seasonal data, and estimating seasonal components by averaging each season's deviations from the overall mean. More sophisticated methods use optimization to find initial values that minimize forecast errors, or apply classical decomposition to the first few seasonal cycles. The choice of initialization can significantly impact early forecasts, though its influence diminishes as more data is processed.
+
+Hyperparameter optimization on the trend and seasonality type, Box-Cox parameter, etc.
+
+Query code for how initialization and prediction intervals are done.
 
 [^slsqp]: SLSQP (Sequential Least SQuares Programming) is an iterative optimization algorithm designed to solve nonlinear programming problems with both equality and inequality constraints. It's suitable for estimating exponential smoothing parameters ($\alpha, \beta, \gamma$) because these parameters often have bounds (e.g., between 0 and 1), and the optimization problem (e.g., minimizing mean squared error or maximizing likelihood) is generally nonlinear. SLSQP finds the parameter values that best fit the model to the observed time series data, given these constraints.
 
 ### Keeling Curve
+{:.no_toc}
 
-Exponential smoothing does quite well on the Keeling Curve, which isn't too surprising given the nature of the data. The Keeling Curve exhibits a clear upward trend with regular seasonal oscillations, making it an ideal candidate for Holt-Winters' exponential smoothing. The model captures both components elegantly.
-
-Looking at the best model shown in the figure, we can see it uses additive trend and additive seasonality components without damping. This makes sense physically: CO2 concentration increases at a fairly steady rate (additive trend) and has seasonal variations that don't dramatically change in amplitude over time (additive seasonality). The model parameters reveal interesting properties about how the algorithm processes this climate data:
-
-* α (alpha) = 0.5909: This relatively high value for the level smoothing parameter indicates the model gives substantial weight to recent observations when updating the level component. It's balancing the most recent seasonal-adjusted observation with the previous level forecast.
-* β (beta) = 0.0115: The extremely small trend smoothing parameter means the trend component changes very slowly in response to new data. This makes physical sense because the rate of CO2 increase shouldn't fluctuate dramatically month-to-month.
-* γ (gamma) = 0.1131: The moderate seasonal smoothing parameter allows the seasonal pattern to adapt gradually, acknowledging that while the seasonal cycle is consistent, it may experience slight variations year-to-year.
-
-The model achieves impressive forecast accuracy with a Mean Absolute Percentage Error (MAPE) of just 0.38% on the validation set and 0.50% on the test set. This performance demonstrates that exponential smoothing can effectively model atmospheric CO2 concentrations when the underlying physical process has a consistent trend and seasonality.
-
-Looking at the video showing different model configurations, we can see how various combinations of parameters affect the forecasts. The model selection process wasn't using gradient descent—rather, it involved evaluating different model specifications (combinations of trend and seasonality types) and selecting the best performer based on information criteria and validation performance. The slightly underestimated forecast in more recent periods suggests that even though the model captures the main patterns well, there might be a subtle acceleration in the CO2 growth rate that a basic exponential smoothing model with linear trend can't perfectly reproduce. This acceleration has been documented in several studies, with Henshaw (2019) finding that atmospheric CO2 growth rates have increased from a relatively stable 1.48%/yr before WWII to hovering around 2.0%/yr since 1960. More recent NOAA data indicates that the 2010s saw even faster growth, with the annual rate reaching 2.4 ppm per year during that decade compared to approximately 2.0 ppm per year in the 2000s. The period 2014-2024 has been particularly notable, with 12 consecutive years of CO2 increases exceeding 2 ppm annually, and a record year-over-year gain of 4.7 ppm recorded between March 2023 and March 2024 (NOAA, 2024).
-
-An important feature of the model is the shaded regions around both the validation (green) and test (orange) forecasts. These aren't traditional confidence intervals but rather prediction intervals derived from Monte Carlo simulations. In exponential smoothing models, simulation-based approaches are indeed a standard and recommended way to represent forecast uncertainty. According to Hyndman et al. (2005), there are two primary ways to generate prediction intervals for exponential smoothing: analytical approaches using state space models, and simulation-based methods. While analytical formulas exist, simulation methods have become increasingly popular because they don't rely on normality assumptions and can better capture the uncertainty in more complex models. The simulation approach involves generating multiple future sample paths by repeatedly sampling from the model's residuals (either assuming a normal distribution or using bootstrapping), applying the exponential smoothing update equations for each future period, and then deriving prediction intervals from the resulting distribution of forecasts. This is precisely what the code does with its `num_samples=1000` parameter, creating 1,000 different simulated futures.
-
-Simulation-based methods offer several significant advantages over analytical approaches. Simulations can account for parameter uncertainty, adapt to non-normal error distributions, and properly represent the cumulative uncertainty that grows with the forecast horizon. They're particularly valuable when forecasting with transformations, as they directly incorporate the additional uncertainty introduced during back-transformation. For complex models like the one we've applied to the Keeling Curve—with both trend and seasonal components—simulation methods also ensure that the dynamic interactions between components are properly captured in the uncertainty estimates. This is critical for reliable decision-making in contexts where understanding the full range of possible outcomes is as important as the point forecast itself.
-
-The relatively narrow width of these simulation-based prediction intervals is remarkable—despite forecasting years into the future, the bounds remain quite tight around the predicted values. This narrow uncertainty band is a testament to the remarkable regularity and predictability of atmospheric CO2 concentrations. Unlike many other physical or economic time series, the Keeling Curve follows a remarkably stable pattern that combines a consistent upward trend with a well-defined seasonal cycle, making it highly amenable to statistical forecasting.
-
-The fact that the actual observed CO2 concentrations (shown in light gray for the test period) remain entirely within these prediction intervals validates the exponential smoothing approach for this particular time series. This confirmation is particularly impressive considering that the simulation envelopes represent thousands of possible scenarios for how CO2 concentrations might evolve. The prediction intervals widen slightly over the forecast horizon, appropriately reflecting how uncertainty increases with time—both in the underlying trend component and in the seasonal variations. This well-calibrated uncertainty quantification is crucial for climate scientists and policymakers who need to understand not just the expected trajectory of CO2 concentrations but also the range of plausible scenarios when making decisions about climate mitigation strategies.
+Exponential smoothing does quite well on the Keeling Curve, which isn't too surprising given the nature of the data. The Keeling Curve exhibits a clear upward trend with regular seasonal oscillations, so it's easy to forecast. Here's the best model based on the Mean Absolute Percentage Error (MAPE) error metric:
 
 <figure class="centered" markdown="block">
 
 ![exponential smoothing best model keeling](/img/time-series-zoo/exponential_smoothing_best_model_keeling.png)
 
-<figcaption>Exponential smoothing best model for the Keeling Curve.</figcaption>
+<figcaption>The best fitting exponential smoothing model for the Keeling Curve.</figcaption>
 
 </figure>
 
-We can look at a range of different exponential smoothing models to understand how different configurations affect the forecast quality.
+We can see it uses additive trend and additive seasonality components without damping. This makes sense physically: CO2 concentration increases at a fairly steady rate (additive trend) and has seasonal variations that don't dramatically change in amplitude over time (additive seasonality). The trend seems robust so no need for damping.
+
+Looking at the smoothing parameters, $\alpha = 0.5909$ indicates that the model gives substantial weight to recent observations when updating the level component. $\beta = 0.0115$ is pretty small because the trend is changing pretty slowly but steadily. $\gamma = 0.1131$ is a moderate value and allows the seasonal pattern to adapt gradually as it is robust but with some slight interannual variations.
+
+Looking at the MAPE the fit is pretty good. It extrapolates well, even multiple years into the future, and based on the fit to the testing data, the model has not overfit. $m = 12$ seasonal periods makes a lot of sense too. The only thing that might be missing is that the model underestimates the growth of the trend term, perhaps because CO2 increase is accelerating. But the real time series is well contained within the model's prediction interval.
+
+If the trend is accelerating, then training only on more recent observation might produce better forecasts.
 
 <figure class="centered" markdown="block">
 
@@ -526,27 +528,34 @@ We can look at a range of different exponential smoothing models to understand h
 
 </figure>
 
+The vast majority of models are not good fits, mostly because $m = 12$ seasonal periods (or a multiple of 12) fits the data best. This is why hyperparameter optimization is important here.
+
 ### Sunspots
+{:.no_toc}
 
-Applying exponential smoothing to the sunspot numbers presents unique challenges. Unlike the Keeling Curve with its steady trend and regular seasonality, sunspots follow a quasi-periodic cycle averaging around 11 years but with significant variations in both timing and amplitude. Since we're dealing with count data that includes zeros, we need a transformation to ensure our forecasts don't predict physically impossible negative values. The Box-Cox transformation (with λ = 0.30) helps stabilize the variance and make the data more suitable for our model.
+Fitting exponential smoothing models to the monthly sunspot number time series requires a bit of pre-processing because the time series must always be non-negative (we cannot have a negative number/count of sunspots). So enforce this, we transform the time series using the Box-Cox transformation[^box-cox] then fit the exponential smoothing model to the transformed time series. We forecast the transformed time series and undo the transformation to plot forecasts and simulations alongside the oreiginal time series. The Box-Cox parameter $\lambda$ can be chosen as part of hyperparameter optimization.
 
-For standard monthly data, capturing an 11-year cycle would require modeling 132 seasonal periods (11 years × 12 months), which is unwieldy for exponential smoothing. Instead, we'll use yearly mean sunspot numbers, reducing our required seasonal periods to just 11, which is much more manageable.
+[^box-cox]: The Box-Cox transformation is a family of power transformations used to stabilize variance and make data more approximately normal. We can also use it to  The forward transformation is
+
+    $$y^{(\lambda)} = \begin{cases} \frac{y^\lambda - 1}{\lambda} & \text{if } \lambda \neq 0 \\ \ln(y) & \text{if } \lambda = 0 \end{cases}$$
+
+    where $\lambda$ is estimated from the data (in our case $\lambda = 0.30$). The inverse transformation to get back to the original scale is
+
+    $$y = \begin{cases} (\lambda y^{(\lambda)} + 1)^{1/\lambda} & \text{if } \lambda \neq 0 \\ \exp(y^{(\lambda)}) & \text{if } \lambda = 0 \end{cases}$$
+
+    Values of $\lambda = 1$ leave data unchanged, $\lambda = 0.5$ corresponds to a square root transformation, and $\lambda = 0$ gives a log transformation.
+
+The time series also has a quasi-periodic cycle averaging around 11 years so we'll need around 132 seasonal periods (11 years x 12 months) which is quite a lot of parameters for exponential smoothing. So instead, for exponential smoothing we'll look at the yearly mean sunspot number reducing the required number of seasonal periods to just 11.
 
 <figure class="centered" markdown="block">
 
 ![exponential smoothing best model sunspots](/img/time-series-zoo/exponential_smoothing_best_model_sunspots.png)
 
-<figcaption>Exponential smoothing model applied to the yearly sunspot numbers. The model uses additive trend and seasonality components without damping. Note the extremely wide prediction intervals compared to the Keeling Curve forecasts.</figcaption>
+<figcaption>The best fitting exponential smoothing model for the yearly-mean sunspot number time series.</figcaption>
 
 </figure>
 
-Looking at the best-performing model on our validation set, we see that exponential smoothing struggles significantly with sunspot prediction. The model parameters reveal some interesting characteristics:
-
-* α (alpha) = 0.9688: This extremely high level smoothing parameter indicates the model gives almost all weight to the most recent observations, essentially discarding older data quickly. This makes sense for a system like the Sun where the current state strongly determines near-future behavior.
-
-* β (beta) = 7.3202e-09: This near-zero trend smoothing parameter effectively eliminates any trend component, suggesting the model doesn't find value in extrapolating linear trends for this data.
-
-* γ (gamma) = 2.2994e-08: Similarly, this extremely small seasonal smoothing parameter means the seasonal component is barely being updated from its initial values. The model is essentially using a fixed seasonal pattern derived from the historical data.
+$\alpha = 0.9688$ is close to 1 so the model gives almost all weight to most recent observations. $\beta = 7.3202 \times 10^{-9}$ makes sense as there's no trend in the sunspot time series. And $\gamma = 2.2994 \times 10^{-8}$ is tiny which is saying that the seasonal components are barely being updated from their initial values and that the model is basically using a fixed seasonal pattern.
 
 While the model captures the general ~11-year periodicity in the validation period, it completely fails to predict the amplitude of future cycles. In the test period, it even struggles with timing prediction. This isn't surprising—the solar cycle is driven by complex magnetohydrodynamic processes that can't be adequately captured by simple statistical models. Each cycle is somewhat unique and influenced by deep physical processes within the Sun that create significant variations from one cycle to the next.
 
@@ -571,7 +580,6 @@ This example highlights a fundamental limitation of exponential smoothing: it wo
 <!-- No point trying on MEI or any of the financial time series? -->
 
 ## Autoregressive
-{:.no_toc}
 
 Autoregressive models represent one of the most fundamental approaches to time series modeling. The basic idea is remarkably intuitive: predict the current value based on past values of the series. Formally, an autoregressive model of order $p$, denoted as AR($p$), expresses the current observation as a linear combination of $p$ previous observations plus a random error term:
 
@@ -622,6 +630,7 @@ Compared to the exponential smoothing approach we discussed earlier, the autoreg
 What's particularly notable is that the AR model accomplishes this without explicitly modeling trend and seasonality components. Instead, it implicitly captures these patterns through its lag structure and differencing. This more flexible approach might be better equipped to adapt to subtle changes in the CO2 trend or seasonal pattern over time, which could explain its slightly superior performance on the test set.
 
 ### Sunspots
+{:.no_toc}
 
 Next, let's examine how autoregressive models handle the more challenging sunspot time series:
 
@@ -663,17 +672,17 @@ One notable limitation is that while our best model captures cycle timing well, 
 
 Compared to our exponential smoothing results from earlier, the autoregressive approach performs better for this particular dataset. While both methods struggle with the inherent unpredictability of solar activity, the AR model's ability to directly incorporate the ~11-year periodicity through its lag structure gives it an advantage over the more rigid seasonal patterns in exponential smoothing. This highlights the importance of matching the modeling approach to the specific characteristics of the time series being analyzed.
 
-## Moving average?
-{:.no_toc}
-
 ## ARIMA
-{:.no_toc}
 
-## TBATS?
-{:.no_toc}
+## TBATS
 
 ## Prophet
-{:.no_toc}
+
+# Gradient boosting forecasting
+
+# Neural network forecasting
+
+# Foundational model forecasting
 
 # What else can we do?
 

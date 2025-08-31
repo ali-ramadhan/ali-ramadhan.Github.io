@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Earth Layers - Personal Website</title>
+    <link rel="stylesheet" href="earth-layers.css" />
+  </head>
+  <body>
+    <section class="layer" id="outer-space">
+      <div class="content">
+        <h1>Outer Space</h1>
+        <p>Content about space exploration, astronomy, or cosmic thoughts goes here.</p>
+      </div>
+      <div class="stars"></div>
+      <div class="sun" id="sun"></div>
+    </section>
+
+    <section class="layer" id="atmosphere">
+      <div class="content">
+        <h1>Atmosphere</h1>
+        <p>Content about climate, weather, or atmospheric science goes here.</p>
+      </div>
+      <div class="high-clouds">
+        <div class="high-cloud high-cloud1"></div>
+        <div class="high-cloud high-cloud2"></div>
+      </div>
+      <div class="clouds">
+        <div class="cloud cloud1"></div>
+        <div class="cloud cloud2"></div>
+        <div class="cloud cloud3"></div>
+      </div>
+    </section>
+
+    <section class="layer" id="land">
+      <div class="content">
+        <h1>Welcome to Earth</h1>
+        <p>This is the starting point. Add your main content, bio, or introduction here.</p>
+      </div>
+    </section>
+
+    <section class="layer" id="ocean">
+      <div class="content">
+        <h1>Ocean</h1>
+        <p>Content about marine life, oceanography, or water-related projects goes here.</p>
+      </div>
+    </section>
+
+    <section class="layer" id="crust">
+      <div class="content">
+        <h1>Earth's Core</h1>
+        <p>Content about geology, earth sciences, or foundational knowledge goes here.</p>
+      </div>
+    </section>
+
+    <nav class="layer-nav" aria-label="Earth layers navigation">
+      <a
+        href="#outer-space"
+        class="nav-dot"
+        data-layer="outer-space"
+        aria-label="Navigate to Outer Space"
+      ></a>
+      <a
+        href="#atmosphere"
+        class="nav-dot"
+        data-layer="atmosphere"
+        aria-label="Navigate to Atmosphere"
+      ></a>
+      <a
+        href="#land"
+        class="nav-dot active"
+        data-layer="land"
+        aria-label="Navigate to Land"
+        aria-current="page"
+      ></a>
+      <a href="#ocean" class="nav-dot" data-layer="ocean" aria-label="Navigate to Ocean"></a>
+      <a
+        href="#crust"
+        class="nav-dot"
+        data-layer="crust"
+        aria-label="Navigate to Earth's crust"
+      ></a>
+    </nav>
+
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+      <span class="toggle-icon">☀️</span>
+    </button>
+
+    <script src="earth-layers.js"></script>
+  </body>
+</html>

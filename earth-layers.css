@@ -439,7 +439,7 @@ body {
 
 /* Sun Element */
 .sun {
-    position: fixed;
+    position: absolute;
     top: 20%;
     right: -100px;
     width: 80px;
@@ -472,8 +472,8 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Sun visible in light mode */
-body:not([data-theme="dark"]) .sun {
+/* Sun visible in light mode in outer space section */
+body:not([data-theme="dark"]) #outer-space .sun {
     right: 100px;
 }
 
@@ -500,7 +500,7 @@ body:not([data-theme="dark"]) .sun {
         top: 15%;
     }
     
-    body:not([data-theme="dark"]) .sun {
+    body:not([data-theme="dark"]) #outer-space .sun {
         right: 80px;
     }
 }

@@ -54,6 +54,8 @@ body {
     font-family: 'Arial', sans-serif;
     overflow-x: hidden;
     transition: background-color 0.5s ease;
+    background: var(--crust-bg);
+    min-height: 100vh;
 }
 
 .container {
@@ -352,38 +354,11 @@ body {
 #crust-mantle {
     background: var(--crust-bg);
     transition: background 0.5s ease;
+    min-height: 100vh;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
 
-.geological-layers {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-}
-
-.rock-layer {
-    position: absolute;
-    width: 100%;
-    height: 33.33%;
-    opacity: 0.7;
-}
-
-.layer1 {
-    top: 0;
-    background: linear-gradient(90deg, #8b4513, #a0522d);
-    clip-path: polygon(0 50%, 100% 60%, 100% 100%, 0 100%);
-}
-
-.layer2 {
-    top: 33.33%;
-    background: linear-gradient(90deg, #cd853f, #daa520);
-    clip-path: polygon(0 30%, 100% 40%, 100% 100%, 0 100%);
-}
-
-.layer3 {
-    top: 66.66%;
-    background: linear-gradient(90deg, #ff4500, #ff6347);
-    clip-path: polygon(0 20%, 100% 30%, 100% 100%, 0 100%);
-}
 
 /* Navigation */
 .layer-nav {

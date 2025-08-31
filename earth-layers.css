@@ -1,8 +1,8 @@
 :root {
     /* Light theme colors */
     --outer-space-bg: linear-gradient(180deg, #000011 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
-    --atmosphere-bg: linear-gradient(180deg, rgba(74, 95, 122, 0) 0%, #4a5f7a 10%, #87ceeb 40%, #e0f6ff 100%);
-    --land-bg: linear-gradient(180deg, #87ceeb 0%, #90ee90 50%, #228b22 100%);
+    --atmosphere-bg: linear-gradient(180deg, rgba(74, 95, 122, 0) 0%, #4a5f7a 10%, #87ceeb 40%, #b8d4f0 80%, #c8e6ff 100%);
+    --land-bg: linear-gradient(180deg, rgba(200, 230, 255, 0) 0%, #c8e6ff 10%, #90ee90 30%, #32cd32 50%, #d4af37 70%, #daa520 100%);
     --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
     --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
     
@@ -25,8 +25,8 @@
 [data-theme="dark"] {
     /* Dark theme colors */
     --outer-space-bg: linear-gradient(180deg, #000000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
-    --atmosphere-bg: linear-gradient(180deg, rgba(22, 33, 62, 0) 0%, #16213e 10%, #1a1a2e 40%, #16213e 100%);
-    --land-bg: linear-gradient(180deg, #16213e 0%, #2d4a3d 50%, #1a3a1a 100%);
+    --atmosphere-bg: linear-gradient(180deg, rgba(22, 33, 62, 0) 0%, #16213e 10%, #1a1a2e 40%, #1f2a3e 80%, #253040 100%);
+    --land-bg: linear-gradient(180deg, rgba(37, 48, 64, 0) 0%, #253040 10%, #2d4a3d 30%, #1a3a1a 50%, #3a3020 70%, #4a3820 100%);
     --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
     --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
     
@@ -154,6 +154,8 @@ body {
     position: relative;
     margin-top: -20vh;
     padding-top: 20vh;
+    padding-bottom: 15vh;
+    margin-bottom: -15vh;
 }
 
 .clouds {
@@ -313,6 +315,35 @@ body {
 #land {
     background: var(--land-bg);
     transition: background 0.5s ease;
+    position: relative;
+    margin-top: -15vh;
+    padding-top: 15vh;
+}
+
+#land::before {
+    content: '';
+    position: absolute;
+    top: 15vh;
+    left: 0;
+    right: 0;
+    height: 20%;
+    background: linear-gradient(
+        to bottom,
+        rgba(200, 230, 255, 0.2) 0%,
+        rgba(200, 230, 255, 0.1) 50%,
+        transparent 100%
+    );
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] #land::before {
+    background: linear-gradient(
+        to bottom,
+        rgba(37, 48, 64, 0.3) 0%,
+        rgba(37, 48, 64, 0.15) 50%,
+        transparent 100%
+    );
 }
 
 .landscape {
@@ -320,6 +351,22 @@ body {
     width: 100%;
     height: 50%;
     bottom: 0;
+}
+
+.forest {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 35%;
+    height: 100%;
+}
+
+.desert {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 35%;
+    height: 100%;
 }
 
 .hill {
@@ -353,6 +400,169 @@ body {
     border-radius: 125px 125px 0 0;
     background: var(--hill-color-3);
     transition: background-color 0.5s ease;
+}
+
+/* Forest Elements */
+.tree {
+    position: absolute;
+    bottom: 0;
+}
+
+.tree::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 40px;
+    background: #8b4513;
+    border-radius: 4px;
+}
+
+.tree::after {
+    content: '';
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-bottom: 60px solid #228b22;
+}
+
+.tree1 {
+    left: 15%;
+    bottom: 20%;
+}
+
+.tree2 {
+    left: 60%;
+    bottom: 10%;
+}
+
+.tree2::after {
+    border-left: 30px solid transparent;
+    border-right: 30px solid transparent;
+    border-bottom: 70px solid #32cd32;
+}
+
+.tree3 {
+    left: 25%;
+    bottom: 35%;
+}
+
+.tree3::after {
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-bottom: 50px solid #006400;
+}
+
+.forest-hill1 {
+    width: 80%;
+    height: 60px;
+    left: 0;
+    border-radius: 120px 120px 0 0;
+    background: #228b22;
+    bottom: 0;
+}
+
+.forest-hill2 {
+    width: 60%;
+    height: 80px;
+    right: 0;
+    border-radius: 100px 100px 0 0;
+    background: #32cd32;
+    bottom: 0;
+}
+
+/* Desert Elements */
+.mesa {
+    position: absolute;
+    bottom: 0;
+    background: #cd853f;
+}
+
+.mesa1 {
+    width: 120px;
+    height: 80px;
+    right: 20%;
+    clip-path: polygon(15% 0%, 85% 0%, 90% 100%, 10% 100%);
+    background: #daa520;
+}
+
+.mesa2 {
+    width: 80px;
+    height: 60px;
+    right: 50%;
+    clip-path: polygon(10% 0%, 90% 0%, 95% 100%, 5% 100%);
+    background: #cd853f;
+}
+
+.cactus {
+    position: absolute;
+    bottom: 0;
+}
+
+.cactus::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 50px;
+    background: #228b22;
+    border-radius: 6px;
+}
+
+.cactus::after {
+    content: '';
+    position: absolute;
+    bottom: 30px;
+    left: -8px;
+    width: 8px;
+    height: 25px;
+    background: #228b22;
+    border-radius: 4px;
+    transform: rotate(30deg);
+}
+
+.cactus1 {
+    left: 30%;
+    bottom: 15%;
+}
+
+.cactus2 {
+    left: 70%;
+    bottom: 25%;
+}
+
+.cactus2::before {
+    height: 35px;
+    width: 10px;
+}
+
+.cactus2::after {
+    bottom: 20px;
+    left: 8px;
+    transform: rotate(-30deg);
+}
+
+.rock-formation {
+    position: absolute;
+    bottom: 0;
+    background: #a0522d;
+}
+
+.rock1 {
+    width: 60px;
+    height: 40px;
+    right: 10%;
+    clip-path: polygon(0% 100%, 20% 60%, 40% 80%, 60% 40%, 80% 70%, 100% 100%);
+    background: #8b4513;
 }
 
 /* Ocean */

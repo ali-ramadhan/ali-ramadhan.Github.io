@@ -1,7 +1,7 @@
 :root {
     /* Light theme colors */
-    --outer-space-bg: linear-gradient(180deg, #000011 0%, #1a1a2e 100%);
-    --atmosphere-bg: linear-gradient(180deg, #87ceeb 0%, #e0f6ff 100%);
+    --outer-space-bg: linear-gradient(180deg, #000011 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
+    --atmosphere-bg: linear-gradient(180deg, rgba(74, 95, 122, 0) 0%, #4a5f7a 10%, #87ceeb 40%, #e0f6ff 100%);
     --land-bg: linear-gradient(180deg, #87ceeb 0%, #90ee90 50%, #228b22 100%);
     --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
     --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
@@ -24,8 +24,8 @@
 
 [data-theme="dark"] {
     /* Dark theme colors */
-    --outer-space-bg: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
-    --atmosphere-bg: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    --outer-space-bg: linear-gradient(180deg, #000000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
+    --atmosphere-bg: linear-gradient(180deg, rgba(22, 33, 62, 0) 0%, #16213e 10%, #1a1a2e 40%, #16213e 100%);
     --land-bg: linear-gradient(180deg, #16213e 0%, #2d4a3d 50%, #1a3a1a 100%);
     --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
     --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
@@ -108,12 +108,15 @@ body {
     background: var(--outer-space-bg);
     color: white;
     transition: background 0.5s ease;
+    position: relative;
+    padding-bottom: 20vh;
+    margin-bottom: -20vh;
 }
 
 .stars {
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 120%;
     background-image: 
         radial-gradient(2px 2px at 20px 30px, var(--star-color-1), transparent),
         radial-gradient(1px 1px at 40px 70px, var(--star-color-2), transparent),
@@ -126,18 +129,38 @@ body {
     background-repeat: repeat;
     background-size: 300px 200px;
     transition: background-image 0.5s ease;
+    mask: linear-gradient(
+        to bottom,
+        white 0%,
+        white 60%,
+        rgba(255, 255, 255, 0.7) 75%,
+        rgba(255, 255, 255, 0.3) 90%,
+        transparent 100%
+    );
+    -webkit-mask: linear-gradient(
+        to bottom,
+        white 0%,
+        white 60%,
+        rgba(255, 255, 255, 0.7) 75%,
+        rgba(255, 255, 255, 0.3) 90%,
+        transparent 100%
+    );
 }
 
 /* Atmosphere */
 #atmosphere {
     background: var(--atmosphere-bg);
     transition: background 0.5s ease;
+    position: relative;
+    margin-top: -20vh;
+    padding-top: 20vh;
 }
 
 .clouds {
     position: absolute;
     width: 100%;
     height: 100%;
+    top: 20vh;
 }
 
 .cloud {
@@ -146,6 +169,72 @@ body {
     border-radius: 50px;
     opacity: 0.8;
     transition: background-color 0.5s ease;
+}
+
+.high-clouds {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 20vh;
+}
+
+.high-cloud {
+    position: absolute;
+    background: var(--cloud-color);
+    border-radius: 100px;
+    opacity: 0.3;
+    transition: background-color 0.5s ease;
+}
+
+.high-cloud::before,
+.high-cloud::after {
+    content: '';
+    position: absolute;
+    background: var(--cloud-color);
+    border-radius: 100px;
+    transition: background-color 0.5s ease;
+}
+
+.high-cloud1 {
+    width: 200px;
+    height: 20px;
+    top: 10%;
+    left: 15%;
+}
+
+.high-cloud1::before {
+    top: -8px;
+    left: 30px;
+    width: 80px;
+    height: 25px;
+}
+
+.high-cloud1::after {
+    top: -5px;
+    right: 20px;
+    width: 60px;
+    height: 18px;
+}
+
+.high-cloud2 {
+    width: 150px;
+    height: 18px;
+    top: 15%;
+    right: 25%;
+}
+
+.high-cloud2::before {
+    top: -6px;
+    left: 20px;
+    width: 50px;
+    height: 20px;
+}
+
+.high-cloud2::after {
+    top: -4px;
+    right: 15px;
+    width: 40px;
+    height: 15px;
 }
 
 .cloud::before,

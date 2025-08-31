@@ -15,8 +15,8 @@
   "type": "module",
   "main": "index.html",
   "scripts": {
-    "lint:js": "eslint *.js",
-    "lint:css": "stylelint *.css",
+    "lint:js": "eslint *.js --fix",
+    "lint:css": "stylelint *.css --fix",
     "lint": "npm-run-all lint:*",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

@@ -1,9 +1,9 @@
 :root {
   /* Light theme colors */
-  --outer-space-bg: linear-gradient(180deg, #000011 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
+  --outer-space-bg: linear-gradient(180deg, #001 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
   --atmosphere-bg: linear-gradient(
     180deg,
-    rgba(74, 95, 122, 0) 0%,
+    rgb(74, 95, 122, 0) 0%,
     #4a5f7a 10%,
     #87ceeb 40%,
     #b8d4f0 80%,
@@ -11,7 +11,7 @@
   );
   --land-bg: linear-gradient(
     180deg,
-    rgba(200, 230, 255, 0) 0%,
+    rgb(200, 230, 255, 0) 0%,
     #c8e6ff 10%,
     #90ee90 30%,
     #32cd32 50%,
@@ -20,13 +20,11 @@
   );
   --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
   --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
-
-  --content-bg: rgba(255, 255, 255, 0.9);
+  --content-bg: rgb(255, 255, 255, 0.9);
   --content-text: #333;
   --content-subtext: #666;
-  --nav-dot: rgba(255, 255, 255, 0.5);
+  --nav-dot: rgb(255, 255, 255, 0.5);
   --nav-dot-active: white;
-
   --cloud-color: white;
   --star-color-1: #eee;
   --star-color-2: #fff;
@@ -35,10 +33,10 @@
 
 [data-theme="dark"] {
   /* Dark theme colors */
-  --outer-space-bg: linear-gradient(180deg, #000000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
+  --outer-space-bg: linear-gradient(180deg, #000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
   --atmosphere-bg: linear-gradient(
     180deg,
-    rgba(22, 33, 62, 0) 0%,
+    rgb(22, 33, 62, 0) 0%,
     #16213e 10%,
     #1a1a2e 40%,
     #1f2a3e 80%,
@@ -46,7 +44,7 @@
   );
   --land-bg: linear-gradient(
     180deg,
-    rgba(37, 48, 64, 0) 0%,
+    rgb(37, 48, 64, 0) 0%,
     #253040 10%,
     #2d4a3d 30%,
     #1a3a1a 50%,
@@ -55,13 +53,11 @@
   );
   --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
   --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
-
-  --content-bg: rgba(26, 26, 46, 0.9);
+  --content-bg: rgb(26, 26, 46, 0.9);
   --content-text: #e0e0e0;
   --content-subtext: #b0b0b0;
-  --nav-dot: rgba(224, 224, 224, 0.5);
+  --nav-dot: rgb(224, 224, 224, 0.5);
   --nav-dot-active: #e0e0e0;
-
   --cloud-color: #4a4a6a;
   --star-color-1: #fff;
   --star-color-2: #eee;
@@ -72,6 +68,10 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease;
 }
 
 html {
@@ -79,7 +79,7 @@ html {
 }
 
 body {
-  font-family: "Arial", sans-serif;
+  font-family: Arial, sans-serif;
   overflow-x: hidden;
   transition: background-color 0.5s ease;
   background: var(--crust-bg);
@@ -153,16 +153,8 @@ body {
     to bottom,
     white 0%,
     white 60%,
-    rgba(255, 255, 255, 0.7) 75%,
-    rgba(255, 255, 255, 0.3) 90%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(
-    to bottom,
-    white 0%,
-    white 60%,
-    rgba(255, 255, 255, 0.7) 75%,
-    rgba(255, 255, 255, 0.3) 90%,
+    rgb(255, 255, 255, 0.7) 75%,
+    rgb(255, 255, 255, 0.3) 90%,
     transparent 100%
   );
 }
@@ -414,8 +406,8 @@ body {
   height: 20%;
   background: linear-gradient(
     to bottom,
-    rgba(200, 230, 255, 0.2) 0%,
-    rgba(200, 230, 255, 0.1) 50%,
+    rgb(200, 230, 255, 0.2) 0%,
+    rgb(200, 230, 255, 0.1) 50%,
     transparent 100%
   );
   pointer-events: none;
@@ -425,8 +417,8 @@ body {
 [data-theme="dark"] #land::before {
   background: linear-gradient(
     to bottom,
-    rgba(37, 48, 64, 0.3) 0%,
-    rgba(37, 48, 64, 0.15) 50%,
+    rgb(37, 48, 64, 0.3) 0%,
+    rgb(37, 48, 64, 0.15) 50%,
     transparent 100%
   );
 }
@@ -488,7 +480,7 @@ body {
 }
 
 /* Responsive */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .content {
     padding: 1.5rem;
     margin: 0 1rem;
@@ -528,7 +520,7 @@ body {
 
 .theme-toggle:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.2);
 }
 
 .theme-toggle:focus {
@@ -565,21 +557,18 @@ body {
   border-radius: 50%;
   z-index: 5;
   transition: right 1s ease-in-out;
-  box-shadow: 0 0 30px rgba(255, 235, 59, 0.5);
+  box-shadow: 0 0 30px rgb(255, 235, 59, 0.5);
 }
 
 .sun::before {
   content: "";
   position: absolute;
-  top: -20px;
-  left: -20px;
-  right: -20px;
-  bottom: -20px;
+  inset: -20px;
   background:
-    linear-gradient(0deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%),
-    linear-gradient(45deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%),
-    linear-gradient(90deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%),
-    linear-gradient(135deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%);
+    linear-gradient(0deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
+    linear-gradient(45deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
+    linear-gradient(90deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
+    linear-gradient(135deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%);
   border-radius: 50%;
   animation: rays 3s linear infinite;
 }
@@ -588,6 +577,7 @@ body {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }
@@ -598,15 +588,7 @@ body:not([data-theme="dark"]) #outer-space .sun {
   right: 100px;
 }
 
-/* Theme transition */
-* {
-  transition:
-    background-color 0.5s ease,
-    color 0.5s ease,
-    border-color 0.5s ease;
-}
-
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .theme-toggle {
     top: 20px;
     right: 20px;

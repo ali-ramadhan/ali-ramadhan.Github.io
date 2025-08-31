@@ -1,0 +1,20 @@
+{
+  "name": "aliramadhan.me",
+  "version": "1.0.0",
+  "description": "Ali Ramadhan's personal website (aliramadhan.me)",
+  "homepage": "https://github.com/ali-ramadhan/ali-ramadhan.Github.io#readme",
+  "bugs": {
+    "url": "https://github.com/ali-ramadhan/ali-ramadhan.Github.io/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ali-ramadhan/ali-ramadhan.Github.io.git"
+  },
+  "license": "MIT",
+  "author": "Ali Ramadhan",
+  "type": "module",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

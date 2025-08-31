@@ -10,7 +10,7 @@
     line-height: 1.5em;
 }
 
-h1, h2 {
+h1, h2, h3 {
     margin-top: 1em;
 }
 
@@ -21,6 +21,12 @@ h1 {
 }
 
 h2 {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #444444;
+}
+
+h3 {
     font-size: 1.5rem;
     font-weight: 600;
     color: #444444;
@@ -28,6 +34,11 @@ h2 {
 
 p {
     margin: 0.5em 0;
+}
+
+.post-body {
+    text-align: justify;
+    text-justify: auto;
 }
 
 .post-body ol, .post-body ul {
@@ -43,21 +54,6 @@ img.centered {
     display: block;
     margin-left: auto;
     margin-right: auto;
-}
-
-#markdown-toc {
-    list-style-type: decimal;
-    margin-left: 2em;
-    margin-right: 2em;
-    margin-top: 1em;
-    margin-bottom: 1em;
-}
-
-#markdown-toc > li > ol {
-    list-style-type: lower-alpha;
-    margin-left: 2em;
-    margin-top: 0;
-    margin-bottom: 0;
 }
 
 .centered {
@@ -78,6 +74,11 @@ img.centered {
     width: 80%;
 }
 
+.full-width-video {
+    width: 100%;
+    height: auto;
+  }
+
 figure > p {
     margin: 0;
     padding: 0;
@@ -95,6 +96,73 @@ figure > figcaption {
 }
 
 /*
+ * Section and sub-section numbering
+ */
+
+.post-body {
+    counter-reset: h1counter;
+}
+
+.post-body h1 {
+    counter-increment: h1counter;
+    counter-reset: h2counter;
+}
+
+.post-body h2 {
+    counter-increment: h2counter;
+    counter-reset: h3counter;
+}
+
+.post-body h3 {
+    counter-increment: h3counter;
+}
+
+.post-body h1::before {
+    content: counter(h1counter) ". ";
+}
+
+.post-body h2::before {
+    content: counter(h1counter) "." counter(h2counter) ". ";
+}
+
+.post-body h3::before {
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
+}
+
+#markdown-toc {
+    counter-reset: toc1counter;
+    margin-left: 2em;
+    margin-right: 2em;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+#markdown-toc > li {
+    list-style: none;
+    counter-increment: toc1counter;
+}
+
+#markdown-toc > li > ol {
+    counter-reset: toc2counter;
+    margin-left: 2em;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#markdown-toc > li > ol > li {
+    list-style: none;
+    counter-increment: toc2counter;
+}
+
+#markdown-toc > li::before {
+    content: counter(toc1counter) ". ";
+}
+
+#markdown-toc > li > ol > li::before {
+    content: counter(toc1counter) "." counter(toc2counter) ". ";
+}
+
+/*
  * Code blocks
  */
 
@@ -105,7 +173,7 @@ pre {
 code {
     position: relative;
     font-family: monospace;
-    font-size: inherit;
+    font-size: smaller;
     line-height: inherit;
     border-radius: 0.3em;
     padding: 2px 6px;
@@ -133,4 +201,210 @@ label {
     line-height: 1.5em;
     background-color: darkslategray;
     border-bottom-left-radius: .375em;
+}
+
+/*
+ * References
+ */
+
+.ref-author-list {
+    font-variant: small-caps;
+}
+
+/*
+ * Floating table of contents
+ */
+
+.floating-toc {
+    position: fixed;
+    top: 100px; /* Adjust based on your header height */
+    right: 20px;
+    width: 280px;
+    max-height: 80vh;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow: hidden;
+    font-size: 14px;
+}
+
+.floating-toc-header {
+    padding: 2px 16px;
+    font-weight: bold;
+    border-bottom: 1px solid #ddd;
+    background: #f8f9fa;
+}
+
+.floating-toc-content {
+    padding: 2px 16px;
+    overflow-y: auto;
+    max-height: calc(80vh - 45px);
+}
+
+.floating-toc ol {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.floating-toc-item {
+    margin: 4px 0;
+}
+
+.floating-toc a {
+    display: block;
+    padding: 2px 0;
+    color: #333;
+    text-decoration: none;
+    line-height: 1.4;
+    font-size: 14px;
+}
+
+.floating-toc a:hover {
+    color: #007bff;
+}
+
+.floating-toc a.active {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.floating-toc-section {
+    margin: 4px 0;
+}
+
+.floating-toc-section.collapsed .floating-toc-subsection {
+    display: none;
+}
+
+.floating-toc-section>.section-heading {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    padding-left: 15px;
+}
+
+.floating-toc-section .section-toggle {
+    display: inline-block;
+    font-size: 10px;
+    margin-right: 5px;
+    transition: transform 0.2s;
+}
+
+.floating-toc-section.collapsed .section-toggle {
+    transform: rotate(-90deg);
+}
+
+.floating-toc-section>.section-heading.no-toggle {
+    cursor: default;
+    padding-left: 0;
+}
+
+.floating-toc-subsection {
+    padding-left: 20px;
+}
+
+@media (max-width: 1500px) {
+    .floating-toc {
+        display: none;
+    }
+}
+
+/*
+ * Collapsible sections
+ */
+
+ /* Add section numbers as ::before pseudo-elements */
+.post-body h1.collapsible-header::before {
+    content: counter(h1counter) ". ";
+    padding-left: 1.2em;
+}
+
+.post-body h2.collapsible-header::before {
+    content: counter(h1counter) "." counter(h2counter) ". ";
+    padding-left: 1.2em;
+}
+
+.post-body h3.collapsible-header::before {
+    content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
+    padding-left: 1.2em;
+}
+
+/* Add rotating arrows as ::after pseudo-elements, positioned at the start */
+.post-body h1.collapsible-header::after,
+.post-body h2.collapsible-header::after,
+.post-body h3.collapsible-header::after {
+    content: "▼";
+    display: inline-block;
+    position: absolute;
+    left: 0;
+    transition: transform 0.3s ease;
+    transform: rotate(0deg);
+    transform-origin: center;
+    width: 1em;
+    font-size: 0.8em;
+}
+
+/* Make collapsible headers position relative for absolute positioning of arrow */
+.post-body h1.collapsible-header,
+.post-body h2.collapsible-header,
+.post-body h3.collapsible-header {
+    position: relative;
+}
+
+.collapsible-header {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: color 0.2s ease;
+}
+
+.collapsible-header:hover {
+    color: #007bff !important;
+}
+
+.collapsible-header:focus {
+    outline: 2px solid #007bff;
+    outline-offset: 2px;
+}
+
+/* Rotate arrow when collapsed - specific selectors to match content rules */
+.post-body h1.collapsible-header.collapsed::after,
+.post-body h2.collapsible-header.collapsed::after,
+.post-body h3.collapsible-header.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+/* Collapsible content styling */
+.collapsible-content {
+    overflow: hidden;
+    max-height: none;
+    opacity: 1;
+    transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
+
+.collapsible-content.collapsed {
+    max-height: 0 !important;
+    opacity: 0.3;
+}
+
+/* Ensure headers are not clipped */
+.post-body {
+    overflow: visible !important;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .post-body h1.collapsible-header::after,
+    .post-body h2.collapsible-header::after,
+    .post-body h3.collapsible-header::after {
+        transform-origin: center;
+    }
+
+    .post-body h1.collapsible-header.collapsed::after,
+    .post-body h2.collapsible-header.collapsed::after,
+    .post-body h3.collapsible-header.collapsed::after {
+        transform: rotate(-90deg);
+    }
 }

@@ -15,10 +15,28 @@ show_profile_picture: false
 <head>
   {% include head.html %}
   <link rel="stylesheet" href="/assets/css/post.css" />
+  {% if page.enable_mathjax %}
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        }
+      };
+    </script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  {% endif %}
 </head>
 
 <body>
   {% include sidebar.html %}
+
+  <div id="floating-toc" class="floating-toc">
+    <div class="floating-toc-header">Contents</div>
+    <div class="floating-toc-content">
+      <!-- floating_toc.js will populate this. -->
+    </div>
+  </div>
 
   <div id="main">
     <section>
@@ -60,6 +78,8 @@ show_profile_picture: false
   <script src="/assets/js/main.js"></script>
   <script src="/assets/js/expandable_descriptions.js"></script>
   <script src="/assets/js/slideshow.js"></script>
+  <script src="/assets/js/floating_toc.js"></script>
+  <script src="/assets/js/collapsible_sections.js"></script>
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>

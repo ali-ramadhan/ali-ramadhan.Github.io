@@ -5,14 +5,14 @@
     --land-bg: linear-gradient(180deg, rgba(200, 230, 255, 0) 0%, #c8e6ff 10%, #90ee90 30%, #32cd32 50%, #d4af37 70%, #daa520 100%);
     --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
     --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
-    
+
     --content-bg: rgba(255, 255, 255, 0.9);
     --content-text: #333;
     --content-subtext: #666;
     --nav-dot: rgba(255, 255, 255, 0.5);
     --nav-dot-active: white;
-    
-    
+
+
     --cloud-color: white;
     --star-color-1: #eee;
     --star-color-2: #fff;
@@ -26,14 +26,14 @@
     --land-bg: linear-gradient(180deg, rgba(37, 48, 64, 0) 0%, #253040 10%, #2d4a3d 30%, #1a3a1a 50%, #3a3020 70%, #4a3820 100%);
     --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
     --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
-    
+
     --content-bg: rgba(26, 26, 46, 0.9);
     --content-text: #e0e0e0;
     --content-subtext: #b0b0b0;
     --nav-dot: rgba(224, 224, 224, 0.5);
     --nav-dot-active: #e0e0e0;
-    
-    
+
+
     --cloud-color: #4a4a6a;
     --star-color-1: #fff;
     --star-color-2: #eee;
@@ -110,7 +110,7 @@ body {
     position: absolute;
     width: 100%;
     height: 120%;
-    background-image: 
+    background-image:
         radial-gradient(2px 2px at 20px 30px, var(--star-color-1), transparent),
         radial-gradient(1px 1px at 40px 70px, var(--star-color-2), transparent),
         radial-gradient(1px 1px at 90px 40px, var(--star-color-2), transparent),
@@ -203,7 +203,7 @@ body {
     --after-right: 20px;
     --after-width: 60px;
     --after-height: 18px;
-    
+
     width: var(--cloud-width);
     height: var(--cloud-height);
     top: var(--cloud-top);
@@ -237,7 +237,7 @@ body {
     --after-right: 15px;
     --after-width: 40px;
     --after-height: 15px;
-    
+
     width: var(--cloud-width);
     height: var(--cloud-height);
     top: var(--cloud-top);
@@ -280,7 +280,7 @@ body {
     --after-right: 15px;
     --after-width: 60px;
     --after-height: 30px;
-    
+
     width: var(--cloud-width);
     height: var(--cloud-height);
     top: var(--cloud-top);
@@ -314,7 +314,7 @@ body {
     --after-right: 10px;
     --after-width: 50px;
     --after-height: 25px;
-    
+
     width: var(--cloud-width);
     height: var(--cloud-height);
     top: var(--cloud-top);
@@ -348,7 +348,7 @@ body {
     --after-right: 20px;
     --after-width: 65px;
     --after-height: 35px;
-    
+
     width: var(--cloud-width);
     height: var(--cloud-height);
     top: var(--cloud-top);
@@ -412,8 +412,8 @@ body {
 }
 
 
-/* Crust/Mantle */
-#crust-mantle {
+/* Crust */
+#crust {
     background: var(--crust-bg);
     transition: background 0.5s ease;
     min-height: 100vh;
@@ -469,19 +469,19 @@ body {
         padding: 1.5rem;
         margin: 0 1rem;
     }
-    
+
     .content h1 {
         font-size: 2rem;
     }
-    
+
     .content p {
         font-size: 1rem;
     }
-    
+
     .layer-nav {
         right: 15px;
     }
-    
+
 }
 
 /* Theme Toggle Button */
@@ -552,7 +552,7 @@ body {
     left: -20px;
     right: -20px;
     bottom: -20px;
-    background: 
+    background:
         linear-gradient(0deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%),
         linear-gradient(45deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%),
         linear-gradient(90deg, transparent 45%, rgba(255, 235, 59, 0.3) 50%, transparent 55%),
@@ -583,17 +583,17 @@ body:not([data-theme="dark"]) #outer-space .sun {
         width: 50px;
         height: 50px;
     }
-    
+
     .toggle-icon {
         font-size: 1.2rem;
     }
-    
+
     .sun {
         width: 60px;
         height: 60px;
         top: 15%;
     }
-    
+
     body:not([data-theme="dark"]) #outer-space .sun {
         right: 80px;
     }

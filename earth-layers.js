@@ -1,11 +1,19 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Configuration constants
+    const CONFIG = {
+        STARTING_SECTION: 2, // Land section index
+        TOUCH_THRESHOLD: 50, // Minimum swipe distance in pixels
+        SCROLL_DEBOUNCE_DELAY: 100, // Scroll event debounce in ms
+        SCROLL_ANIMATION_DURATION: 1000 // Scroll animation timeout in ms
+    };
+    
     const layers = document.querySelectorAll('.layer');
     const navDots = document.querySelectorAll('.nav-dot');
     const themeToggle = document.getElementById('theme-toggle');
     const toggleIcon = document.querySelector('.toggle-icon');
     
     let isScrolling = false;
-    let currentSection = 2; // Start at land (index 2)
+    let currentSection = CONFIG.STARTING_SECTION;
     
     // Theme management
     function initTheme() {
@@ -13,15 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
         setTheme(savedTheme);
     }
     
+    function updateThemeIcon(theme) {
+        toggleIcon.innerHTML = theme === 'dark' ? '🌙' : '☀️';
+    }
+    
     function setTheme(theme) {
         document.body.setAttribute('data-theme', theme);
         localStorage.setItem('theme', theme);
-        
-        if (theme === 'dark') {
-            toggleIcon.innerHTML = '🌙';
-        } else {
-            toggleIcon.innerHTML = '☀️';
-        }
+        updateThemeIcon(theme);
     }
     
     function toggleTheme() {
@@ -35,25 +42,47 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize - scroll to land section on load
     function init() {
-        const landSection = document.getElementById('land');
-        landSection.scrollIntoView({ behavior: 'instant' });
-        updateActiveNav('land');
+        const landSection = getSectionById('land');
+        if (landSection) {
+            landSection.scrollIntoView({ behavior: 'instant' });
+            updateActiveNav('land');
+        }
     }
     
     // Update active navigation dot
     function updateActiveNav(layerId) {
         navDots.forEach(dot => {
-            dot.classList.remove('active');
-            if (dot.getAttribute('data-layer') === layerId) {
-                dot.classList.add('active');
+            const isActive = dot.getAttribute('data-layer') === layerId;
+            
+            // Update visual active state
+            dot.classList.toggle('active', isActive);
+            
+            // Update accessibility attributes
+            if (isActive) {
+                dot.setAttribute('aria-current', 'page');
+            } else {
+                dot.removeAttribute('aria-current');
             }
         });
     }
     
-    // Get section index by ID
+    // Cache section data for efficient navigation
+    const sectionData = Array.from(layers).map((layer, index) => ({
+        element: layer,
+        id: layer.id,
+        index: index
+    }));
+    
+    // Get section index by ID (optimized with cached data)
     function getSectionIndex(layerId) {
-        const sectionIds = ['outer-space', 'atmosphere', 'land', 'ocean', 'crust-mantle'];
-        return sectionIds.indexOf(layerId);
+        const section = sectionData.find(s => s.id === layerId);
+        return section ? section.index : -1;
+    }
+    
+    // Get section by index (direct access)
+    function getSectionById(layerId) {
+        const section = sectionData.find(s => s.id === layerId);
+        return section ? section.element : null;
     }
     
     // Handle scroll events
@@ -74,20 +103,22 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scroll to section
     function scrollToSection(targetId) {
         isScrolling = true;
-        const targetSection = document.getElementById(targetId);
+        const targetSection = getSectionById(targetId);
         
-        targetSection.scrollIntoView({ 
-            behavior: 'smooth',
-            block: 'start'
-        });
-        
-        currentSection = getSectionIndex(targetId);
-        updateActiveNav(targetId);
+        if (targetSection) {
+            targetSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+            
+            currentSection = getSectionIndex(targetId);
+            updateActiveNav(targetId);
+        }
         
         // Reset scrolling flag after animation
         setTimeout(() => {
             isScrolling = false;
-        }, 1000);
+        }, CONFIG.SCROLL_ANIMATION_DURATION);
     }
     
     // Handle navigation dot clicks
@@ -118,14 +149,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Handle mouse wheel with debouncing
-    let wheelTimeout;
-    document.addEventListener('wheel', function(e) {
-        clearTimeout(wheelTimeout);
-        wheelTimeout = setTimeout(() => {
-            handleScroll();
-        }, 50);
-    });
+    // Consolidated scroll handling with debouncing
+    let scrollTimeout;
+    function debouncedScrollHandler() {
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+            if (!isScrolling) {
+                handleScroll();
+            }
+        }, CONFIG.SCROLL_DEBOUNCE_DELAY);
+    }
+    
+    // Handle all scroll-related events
+    document.addEventListener('wheel', debouncedScrollHandler);
+    window.addEventListener('scroll', debouncedScrollHandler);
     
     // Handle touch events for mobile
     let touchStartY = 0;
@@ -139,7 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
         touchEndY = e.changedTouches[0].screenY;
         const touchDiff = touchStartY - touchEndY;
         
-        if (Math.abs(touchDiff) > 50 && !isScrolling) {
+        if (Math.abs(touchDiff) > CONFIG.TOUCH_THRESHOLD && !isScrolling) {
             if (touchDiff > 0 && currentSection < layers.length - 1) {
                 // Swipe up - go down
                 const targetId = layers[currentSection + 1].id;
@@ -161,15 +198,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize the page
     initTheme();
     init();
-    
-    // Update navigation on manual scroll
-    let scrollTimeout;
-    window.addEventListener('scroll', function() {
-        clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(() => {
-            if (!isScrolling) {
-                handleScroll();
-            }
-        }, 100);
-    });
 });

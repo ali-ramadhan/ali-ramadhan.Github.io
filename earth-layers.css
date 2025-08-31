@@ -191,45 +191,71 @@ body {
 }
 
 .high-cloud1 {
-    width: 200px;
-    height: 20px;
-    top: 10%;
-    left: 15%;
+    --cloud-width: 200px;
+    --cloud-height: 20px;
+    --cloud-top: 10%;
+    --cloud-left: 15%;
+    --before-top: -8px;
+    --before-left: 30px;
+    --before-width: 80px;
+    --before-height: 25px;
+    --after-top: -5px;
+    --after-right: 20px;
+    --after-width: 60px;
+    --after-height: 18px;
+    
+    width: var(--cloud-width);
+    height: var(--cloud-height);
+    top: var(--cloud-top);
+    left: var(--cloud-left);
 }
 
 .high-cloud1::before {
-    top: -8px;
-    left: 30px;
-    width: 80px;
-    height: 25px;
+    top: var(--before-top);
+    left: var(--before-left);
+    width: var(--before-width);
+    height: var(--before-height);
 }
 
 .high-cloud1::after {
-    top: -5px;
-    right: 20px;
-    width: 60px;
-    height: 18px;
+    top: var(--after-top);
+    right: var(--after-right);
+    width: var(--after-width);
+    height: var(--after-height);
 }
 
 .high-cloud2 {
-    width: 150px;
-    height: 18px;
-    top: 15%;
-    right: 25%;
+    --cloud-width: 150px;
+    --cloud-height: 18px;
+    --cloud-top: 15%;
+    --cloud-right: 25%;
+    --before-top: -6px;
+    --before-left: 20px;
+    --before-width: 50px;
+    --before-height: 20px;
+    --after-top: -4px;
+    --after-right: 15px;
+    --after-width: 40px;
+    --after-height: 15px;
+    
+    width: var(--cloud-width);
+    height: var(--cloud-height);
+    top: var(--cloud-top);
+    right: var(--cloud-right);
 }
 
 .high-cloud2::before {
-    top: -6px;
-    left: 20px;
-    width: 50px;
-    height: 20px;
+    top: var(--before-top);
+    left: var(--before-left);
+    width: var(--before-width);
+    height: var(--before-height);
 }
 
 .high-cloud2::after {
-    top: -4px;
-    right: 15px;
-    width: 40px;
-    height: 15px;
+    top: var(--after-top);
+    right: var(--after-right);
+    width: var(--after-width);
+    height: var(--after-height);
 }
 
 .cloud::before,
@@ -242,66 +268,105 @@ body {
 }
 
 .cloud1 {
-    width: 100px;
-    height: 40px;
-    top: 20%;
-    left: 20%;
+    --cloud-width: 100px;
+    --cloud-height: 40px;
+    --cloud-top: 20%;
+    --cloud-left: 20%;
+    --before-top: -15px;
+    --before-left: 10px;
+    --before-width: 50px;
+    --before-height: 50px;
+    --after-top: -10px;
+    --after-right: 15px;
+    --after-width: 60px;
+    --after-height: 30px;
+    
+    width: var(--cloud-width);
+    height: var(--cloud-height);
+    top: var(--cloud-top);
+    left: var(--cloud-left);
 }
 
 .cloud1::before {
-    top: -15px;
-    left: 10px;
-    width: 50px;
-    height: 50px;
+    top: var(--before-top);
+    left: var(--before-left);
+    width: var(--before-width);
+    height: var(--before-height);
 }
 
 .cloud1::after {
-    top: -10px;
-    right: 15px;
-    width: 60px;
-    height: 30px;
+    top: var(--after-top);
+    right: var(--after-right);
+    width: var(--after-width);
+    height: var(--after-height);
 }
 
 .cloud2 {
-    width: 80px;
-    height: 35px;
-    top: 60%;
-    right: 30%;
+    --cloud-width: 80px;
+    --cloud-height: 35px;
+    --cloud-top: 60%;
+    --cloud-right: 30%;
+    --before-top: -12px;
+    --before-left: 15px;
+    --before-width: 40px;
+    --before-height: 40px;
+    --after-top: -8px;
+    --after-right: 10px;
+    --after-width: 50px;
+    --after-height: 25px;
+    
+    width: var(--cloud-width);
+    height: var(--cloud-height);
+    top: var(--cloud-top);
+    right: var(--cloud-right);
 }
 
 .cloud2::before {
-    top: -12px;
-    left: 15px;
-    width: 40px;
-    height: 40px;
+    top: var(--before-top);
+    left: var(--before-left);
+    width: var(--before-width);
+    height: var(--before-height);
 }
 
 .cloud2::after {
-    top: -8px;
-    right: 10px;
-    width: 50px;
-    height: 25px;
+    top: var(--after-top);
+    right: var(--after-right);
+    width: var(--after-width);
+    height: var(--after-height);
 }
 
 .cloud3 {
-    width: 120px;
-    height: 45px;
-    top: 40%;
-    left: 60%;
+    --cloud-width: 120px;
+    --cloud-height: 45px;
+    --cloud-top: 40%;
+    --cloud-left: 60%;
+    --before-top: -18px;
+    --before-left: 20px;
+    --before-width: 55px;
+    --before-height: 55px;
+    --after-top: -12px;
+    --after-right: 20px;
+    --after-width: 65px;
+    --after-height: 35px;
+    
+    width: var(--cloud-width);
+    height: var(--cloud-height);
+    top: var(--cloud-top);
+    left: var(--cloud-left);
 }
 
 .cloud3::before {
-    top: -18px;
-    left: 20px;
-    width: 55px;
-    height: 55px;
+    top: var(--before-top);
+    left: var(--before-left);
+    width: var(--before-width);
+    height: var(--before-height);
 }
 
 .cloud3::after {
-    top: -12px;
-    right: 20px;
-    width: 65px;
-    height: 35px;
+    top: var(--after-top);
+    right: var(--after-right);
+    width: var(--after-width);
+    height: var(--after-height);
 }
 
 /* Land */
@@ -386,6 +451,18 @@ body {
     opacity: 0.8;
 }
 
+.nav-dot:focus {
+    background: var(--nav-dot-active);
+    outline: 2px solid var(--nav-dot-active);
+    outline-offset: 2px;
+}
+
+.nav-dot:focus-visible {
+    background: var(--nav-dot-active);
+    outline: 2px solid var(--nav-dot-active);
+    outline-offset: 2px;
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     .content {
@@ -429,6 +506,16 @@ body {
 .theme-toggle:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.theme-toggle:focus {
+    outline: 2px solid var(--nav-dot-active);
+    outline-offset: 2px;
+}
+
+.theme-toggle:focus-visible {
+    outline: 2px solid var(--nav-dot-active);
+    outline-offset: 2px;
 }
 
 .toggle-icon {

@@ -58,9 +58,6 @@ body {
     min-height: 100vh;
 }
 
-.container {
-    height: 500vh;
-}
 
 .layer {
     position: relative;

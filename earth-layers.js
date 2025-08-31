@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Configuration constants
   const CONFIG = {
     STARTING_SECTION: 2, // Land section index
@@ -7,61 +7,61 @@ document.addEventListener('DOMContentLoaded', function () {
     SCROLL_ANIMATION_DURATION: 1000, // Scroll animation timeout in ms
   };
 
-  const layers = document.querySelectorAll('.layer');
-  const navDots = document.querySelectorAll('.nav-dot');
-  const themeToggle = document.getElementById('theme-toggle');
-  const toggleIcon = document.querySelector('.toggle-icon');
+  const layers = document.querySelectorAll(".layer");
+  const navDots = document.querySelectorAll(".nav-dot");
+  const themeToggle = document.getElementById("theme-toggle");
+  const toggleIcon = document.querySelector(".toggle-icon");
 
   let isScrolling = false;
   let currentSection = CONFIG.STARTING_SECTION;
 
   // Theme management
   function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    const savedTheme = localStorage.getItem("theme") || "light";
     setTheme(savedTheme);
   }
 
   function updateThemeIcon(theme) {
-    toggleIcon.innerHTML = theme === 'dark' ? '🌙' : '☀️';
+    toggleIcon.innerHTML = theme === "dark" ? "🌙" : "☀️";
   }
 
   function setTheme(theme) {
-    document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
+    document.body.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
     updateThemeIcon(theme);
   }
 
   function toggleTheme() {
-    const currentTheme = document.body.getAttribute('data-theme') || 'light';
-    const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+    const currentTheme = document.body.getAttribute("data-theme") || "light";
+    const newTheme = currentTheme === "light" ? "dark" : "light";
     setTheme(newTheme);
   }
 
   // Theme toggle event listener
-  themeToggle.addEventListener('click', toggleTheme);
+  themeToggle.addEventListener("click", toggleTheme);
 
   // Initialize - scroll to land section on load
   function init() {
-    const landSection = getSectionById('land');
+    const landSection = getSectionById("land");
     if (landSection) {
-      landSection.scrollIntoView({ behavior: 'instant' });
-      updateActiveNav('land');
+      landSection.scrollIntoView({ behavior: "instant" });
+      updateActiveNav("land");
     }
   }
 
   // Update active navigation dot
   function updateActiveNav(layerId) {
     navDots.forEach((dot) => {
-      const isActive = dot.getAttribute('data-layer') === layerId;
+      const isActive = dot.getAttribute("data-layer") === layerId;
 
       // Update visual active state
-      dot.classList.toggle('active', isActive);
+      dot.classList.toggle("active", isActive);
 
       // Update accessibility attributes
       if (isActive) {
-        dot.setAttribute('aria-current', 'page');
+        dot.setAttribute("aria-current", "page");
       } else {
-        dot.removeAttribute('aria-current');
+        dot.removeAttribute("aria-current");
       }
     });
   }
@@ -111,8 +111,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (targetSection) {
       targetSection.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+        behavior: "smooth",
+        block: "start",
       });
 
       currentSection = getSectionIndex(targetId);
@@ -127,24 +127,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Handle navigation dot clicks
   navDots.forEach((dot) => {
-    dot.addEventListener('click', function (e) {
+    dot.addEventListener("click", function (e) {
       e.preventDefault();
-      const targetLayer = this.getAttribute('data-layer');
+      const targetLayer = this.getAttribute("data-layer");
       scrollToSection(targetLayer);
     });
   });
 
   // Handle keyboard navigation
-  document.addEventListener('keydown', function (e) {
+  document.addEventListener("keydown", function (e) {
     if (isScrolling) return;
 
-    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
       e.preventDefault();
       if (currentSection > 0) {
         const targetId = layers[currentSection - 1].id;
         scrollToSection(targetId);
       }
-    } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    } else if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
       if (currentSection < layers.length - 1) {
         const targetId = layers[currentSection + 1].id;
@@ -165,18 +165,18 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Handle all scroll-related events
-  document.addEventListener('wheel', debouncedScrollHandler);
-  window.addEventListener('scroll', debouncedScrollHandler);
+  document.addEventListener("wheel", debouncedScrollHandler);
+  window.addEventListener("scroll", debouncedScrollHandler);
 
   // Handle touch events for mobile
   let touchStartY = 0;
   let touchEndY = 0;
 
-  document.addEventListener('touchstart', function (e) {
+  document.addEventListener("touchstart", function (e) {
     touchStartY = e.changedTouches[0].screenY;
   });
 
-  document.addEventListener('touchend', function (e) {
+  document.addEventListener("touchend", function (e) {
     touchEndY = e.changedTouches[0].screenY;
     const touchDiff = touchStartY - touchEndY;
 
@@ -194,9 +194,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // Update scroll position on resize
-  window.addEventListener('resize', function () {
+  window.addEventListener("resize", function () {
     const activeLayer = layers[currentSection];
-    activeLayer.scrollIntoView({ behavior: 'instant' });
+    activeLayer.scrollIntoView({ behavior: "instant" });
   });
 
   // Initialize the page

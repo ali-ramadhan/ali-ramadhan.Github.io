@@ -1,11 +1,11 @@
 <!--
   Land and River Background SVG
-  
+
   This SVG creates the land section background with three distinct regions:
   - Forest region (left): Green gradient representing woodland/vegetation
-  - Desert region (right): Brown gradient representing arid landscape  
+  - Desert region (right): Brown gradient representing arid landscape
   - River (center): Blue gradient with flowing animation down the middle
-  
+
   Features:
   - Dual theme support (light/dark gradients)
   - Organic, meandering river path
@@ -13,34 +13,34 @@
   - Responsive design that scales to viewport
   - Animated river flow effect
 -->
-<svg class="land-river-svg" 
-     viewBox="0 0 400 680" 
-     preserveAspectRatio="none" 
+<svg class="land-river-svg"
+     viewBox="0 0 400 680"
+     preserveAspectRatio="none"
      xmlns="http://www.w3.org/2000/svg">
-  
+
   <!-- CSS styles for animation and theme responsiveness -->
   <style>
     <![CDATA[
-      
+
       /* Dark theme styles for when parent has data-theme="dark" */
       .forest-region {
         fill: url(#forestGradient);
       }
-      
+
       .desert-region {
         fill: url(#desertGradient);
       }
-      
+
       .river-path {
         fill: url(#riverGradient);
       }
-      
+
       .cliff-pattern {
         fill: url(#cliffGradient);
       }
     ]]>
   </style>
-  
+
   <defs>
     <!-- FOREST GRADIENTS (Left Side) -->
     <!-- Light theme forest: Sky blue at top transitioning to deep greens -->
@@ -52,7 +52,7 @@
       <stop offset="70%" style="stop-color:#228b22; stop-opacity:1"   /> <!-- Forest green -->
       <stop offset="100%" style="stop-color:#006400; stop-opacity:1"  /> <!-- Dark green -->
     </linearGradient>
-    
+
     <!-- Dark theme forest: Darker atmospheric colors -->
     <linearGradient id="forestGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%"  style="stop-color:#253040; stop-opacity:0.3" /> <!-- Dark blue-gray -->
@@ -62,7 +62,7 @@
       <stop offset="70%" style="stop-color:#1a4a1a; stop-opacity:1"   /> <!-- Dark forest -->
       <stop offset="100%" style="stop-color:#0a2a0a; stop-opacity:1"  /> <!-- Very dark green -->
     </linearGradient>
-    
+
     <!-- DESERT GRADIENTS (Right Side) -->
     <!-- Light theme desert: Sky blue transitioning to warm browns -->
     <linearGradient id="desertGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -73,7 +73,7 @@
       <stop offset="70%" style="stop-color:#a0522d; stop-opacity:1"   /> <!-- Sienna -->
       <stop offset="100%" style="stop-color:#8b4513; stop-opacity:1"  /> <!-- Saddle brown -->
     </linearGradient>
-    
+
     <!-- Dark theme desert: Muted earth tones -->
     <linearGradient id="desertGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%"  style="stop-color:#253040; stop-opacity:0.3" /> <!-- Dark blue-gray -->
@@ -83,7 +83,7 @@
       <stop offset="70%" style="stop-color:#2a1800; stop-opacity:1"   /> <!-- Very dark brown -->
       <stop offset="100%" style="stop-color:#1a0f00; stop-opacity:1"  /> <!-- Almost black brown -->
     </linearGradient>
-    
+
     <!-- RIVER GRADIENTS (Center) -->
     <!-- Light theme river: Transitioning to match ocean TOP color at bottom -->
     <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -92,7 +92,7 @@
       <stop offset="70%" style="stop-color:#4682b4; stop-opacity:1"   /> <!-- Transitioning to ocean -->
       <stop offset="100%" style="stop-color:#4682b4; stop-opacity:1"  /> <!-- Ocean TOP color -->
     </linearGradient>
-    
+
     <!-- Dark theme river: Transitioning to match dark ocean TOP color at bottom -->
     <linearGradient id="riverGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%"  style="stop-color:#2c5f75; stop-opacity:0.7" /> <!-- Dark teal -->
@@ -100,7 +100,7 @@
       <stop offset="70%" style="stop-color:#0f2536; stop-opacity:1"   /> <!-- Transitioning to ocean -->
       <stop offset="100%" style="stop-color:#0f2536; stop-opacity:1"  /> <!-- Dark ocean TOP color -->
     </linearGradient>
-    
+
     <!-- CLIFF GRADIENTS (Bottom Edge) -->
     <!-- Light theme cliff: Rocky gray-brown tones -->
     <linearGradient id="cliffGradient" x1="0%" y1="0%" x2="0%" y2="100%">
@@ -109,7 +109,7 @@
       <stop offset="70%" style="stop-color:#556b2f; stop-opacity:1" /> <!-- Dark olive green -->
       <stop offset="100%" style="stop-color:#2f4f4f; stop-opacity:1" /> <!-- Dark slate gray -->
     </linearGradient>
-    
+
     <!-- Dark theme cliff: Darker rocky tones -->
     <linearGradient id="cliffGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%"  style="stop-color:#3d3d3d; stop-opacity:1" /> <!-- Dark gray -->
@@ -118,13 +118,13 @@
       <stop offset="100%" style="stop-color:#0f0f0f; stop-opacity:1" /> <!-- Almost black -->
     </linearGradient>
   </defs>
-  
+
   <!-- FOREST REGION (Left Side) -->
   <!-- Creates the woodland area from left edge to river's left bank -->
-  <path class="forest-region" 
+  <path class="forest-region"
         fill="url(#forestGradient)"
-        d="M 0,0 
-           L 0,680 
+        d="M 0,0
+           L 0,680
            L 285,680
            C 270,660 260,640 270,610
            C 240,580 210,550 200,520
@@ -135,12 +135,12 @@
            C 240,130 250,100 240,70
            C 230,40 210,20 200,0
            Z" />
-  
+
   <!-- DESERT REGION (Right Side) -->
   <!-- Creates the arid landscape from river's right bank to right edge -->
-  <path class="desert-region" 
+  <path class="desert-region"
         fill="url(#desertGradient)"
-        d="M 200,0 
+        d="M 200,0
            C 210,20 230,40 240,70
            C 250,100 240,130 220,160
            C 200,190 180,220 190,250
@@ -152,13 +152,13 @@
            L 400,680
            L 400,0
            Z" />
-  
+
   <!-- CLIFF (Bottom Edge) -->
   <!-- Rocky cliff with cracks and patterns -->
-  <rect class="cliff-pattern" 
+  <rect class="cliff-pattern"
         x="0" y="660" width="400" height="20"
         fill="#696969" />
-  
+
   <!-- Cliff crack patterns -->
   <g class="cliff-cracks" stroke="#4a4a4a" stroke-width="0.8" fill="none">
     <!-- Vertical cracks -->
@@ -167,13 +167,13 @@
     <line x1="180" y1="660" x2="182" y2="680" />
     <line x1="250" y1="660" x2="248" y2="680" />
     <line x1="320" y1="660" x2="322" y2="680" />
-    
+
     <!-- Horizontal cracks -->
     <line x1="0" y1="668" x2="80" y2="669" />
     <line x1="90" y1="672" x2="190" y2="671" />
     <line x1="200" y1="666" x2="300" y2="667" />
     <line x1="310" y1="674" x2="400" y2="673" />
-    
+
     <!-- Diagonal cracks -->
     <line x1="25" y1="660" x2="45" y2="675" />
     <line x1="140" y1="675" x2="160" y2="660" />
@@ -184,20 +184,20 @@
   <!-- RIVER (Center) -->
   <!-- Creates a truly meandering waterway with S-curves and bends -->
   <!-- This path sits on top of the other regions including cliff -->
-  <path class="river-path" 
+  <path class="river-path"
         fill="url(#riverGradient)"
-        d="M 195,0 
-           C 200,30 210,60 215,90
-           C 225,120 205,150 185,180
-           C 170,210 155,240 165,270
-           C 175,300 200,330 235,360
-           C 265,390 255,420 225,450
-           C 185,480 155,510 165,540
-           C 175,570 210,600 250,630
-           C 280,660 290,680 260,680
+        d="M 195,0
+           C 212.30442,26.742948 222.66631,36.838744 227.66631,66.838744
+           C 237.66631,96.838744 205,150 185,180
+           C 170,210 165.13305,235.65726 175.13305,265.65726
+           C 185.13305,295.65726 205.06652,321.31453 235.00000,360.00000
+           C 257.03832,394.70463 231.83874,406.248 205.81958,438.05748
+           C 173.78127,478.55242 164.40926,506.74295 174.40926,536.74295
+           C 184.40926,566.74295 210.00000,589.86695 250.00000,630.00000
+           C 273.124,663.61895 285.69452,679.63811 285.69452,679.63811
            L 340,680
-           C 320,660 310,640 285,610
-           C 255,580 225,550 215,520
+           C 320,660 308.55242,643.98084 283.55242,613.98084
+           C 256.44758,580.72379 225,550 215,520
            C 205,490 235,460 265,430
            C 295,400 305,370 275,340
            C 245,310 215,280 205,250
@@ -205,5 +205,5 @@
            C 255,130 265,100 255,70
            C 245,40 225,20 210,0
            Z" />
-           
+
 </svg>

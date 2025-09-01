@@ -638,8 +638,14 @@ body {
   background: radial-gradient(circle, #ffeb3b 0%, #ffc107 70%, #ff9800 100%);
   border-radius: 50%;
   z-index: 5;
-  transition: right 1s ease-in-out;
+  transition: right 1s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
   box-shadow: 0 0 30px rgb(255, 235, 59, 0.5);
+  cursor: pointer;
+}
+
+.sun:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgb(255, 235, 59, 0.7);
 }
 
 .sun::before {

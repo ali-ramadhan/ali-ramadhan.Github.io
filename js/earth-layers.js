@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const navDots = document.querySelectorAll(".nav-dot");
   const themeToggle = document.getElementById("theme-toggle");
   const toggleIcon = document.querySelector(".toggle-icon");
+  const sunElement = document.getElementById("sun");
 
   let isScrolling = false;
   let currentSection = CONFIG.STARTING_SECTION;
@@ -37,8 +38,20 @@ document.addEventListener("DOMContentLoaded", function () {
     setTheme(newTheme);
   }
 
-  // Theme toggle event listener
+  // Handle sun click to switch to dark mode
+  function handleSunClick() {
+    const currentTheme = document.body.getAttribute("data-theme") || "light";
+    // Only allow sun click to switch to dark mode when in light mode
+    if (currentTheme === "light") {
+      setTheme("dark");
+    }
+  }
+
+  // Theme toggle event listeners
   themeToggle.addEventListener("click", toggleTheme);
+  if (sunElement) {
+    sunElement.addEventListener("click", handleSunClick);
+  }
 
   // Initialize - scroll to land section on load
   function init() {

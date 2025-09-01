@@ -21,24 +21,6 @@
   <!-- CSS styles for animation and theme responsiveness -->
   <style>
     <![CDATA[
-      .river-path {
-        animation: riverFlow 8s ease-in-out infinite;
-      }
-      
-      @keyframes riverFlow {
-        0%, 100% {
-          filter: brightness(1) saturate(1);
-        }
-        25% {
-          filter: brightness(1.1) saturate(1.2);
-        }
-        50% {
-          filter: brightness(0.9) saturate(0.8);
-        }
-        75% {
-          filter: brightness(1.05) saturate(1.1);
-        }
-      }
       
       /* Dark theme styles for when parent has data-theme="dark" */
       .forest-region {
@@ -103,20 +85,20 @@
     </linearGradient>
     
     <!-- RIVER GRADIENTS (Center) -->
-    <!-- Light theme river: Clear blues getting deeper -->
+    <!-- Light theme river: Transitioning to match ocean TOP color at bottom -->
     <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%"  style="stop-color:#87ceeb; stop-opacity:0.8" /> <!-- Sky blue -->
       <stop offset="30%" style="stop-color:#4682b4; stop-opacity:0.9" /> <!-- Steel blue -->
-      <stop offset="70%" style="stop-color:#1e6091; stop-opacity:1"   /> <!-- Deep blue -->
-      <stop offset="100%" style="stop-color:#0f4c75; stop-opacity:1"  /> <!-- Dark blue -->
+      <stop offset="70%" style="stop-color:#4682b4; stop-opacity:1"   /> <!-- Transitioning to ocean -->
+      <stop offset="100%" style="stop-color:#4682b4; stop-opacity:1"  /> <!-- Ocean TOP color -->
     </linearGradient>
     
-    <!-- Dark theme river: Muted, deeper water colors -->
+    <!-- Dark theme river: Transitioning to match dark ocean TOP color at bottom -->
     <linearGradient id="riverGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
       <stop offset="0%"  style="stop-color:#2c5f75; stop-opacity:0.7" /> <!-- Dark teal -->
       <stop offset="30%" style="stop-color:#1a4960; stop-opacity:0.8" /> <!-- Darker teal -->
-      <stop offset="70%" style="stop-color:#0f3445; stop-opacity:0.9" /> <!-- Very dark teal -->
-      <stop offset="100%" style="stop-color:#081f2a; stop-opacity:1"  /> <!-- Almost black blue -->
+      <stop offset="70%" style="stop-color:#0f2536; stop-opacity:1"   /> <!-- Transitioning to ocean -->
+      <stop offset="100%" style="stop-color:#0f2536; stop-opacity:1"  /> <!-- Dark ocean TOP color -->
     </linearGradient>
     
     <!-- CLIFF GRADIENTS (Bottom Edge) -->
@@ -204,24 +186,24 @@
   <!-- This path sits on top of the other regions including cliff -->
   <path class="river-path" 
         fill="url(#riverGradient)"
-        d="M 180,0 
-           C 190,30 210,60 220,90
-           C 230,120 210,150 190,180
-           C 170,210 150,240 160,270
-           C 170,300 200,330 230,360
-           C 260,390 250,420 220,450
-           C 190,480 160,510 170,540
-           C 180,570 210,600 240,630
-           C 270,660 280,680 285,680
-           L 315,680
-           C 310,660 300,640 270,610
-           C 240,580 210,550 200,520
-           C 190,490 220,460 250,430
-           C 280,400 290,370 260,340
-           C 230,310 200,280 190,250
-           C 180,220 200,190 220,160
-           C 240,130 250,100 240,70
-           C 230,40 210,20 200,0
+        d="M 195,0 
+           C 200,30 210,60 215,90
+           C 225,120 205,150 185,180
+           C 170,210 155,240 165,270
+           C 175,300 200,330 235,360
+           C 265,390 255,420 225,450
+           C 185,480 155,510 165,540
+           C 175,570 210,600 250,630
+           C 280,660 290,680 260,680
+           L 340,680
+           C 320,660 310,640 285,610
+           C 255,580 225,550 215,520
+           C 205,490 235,460 265,430
+           C 295,400 305,370 275,340
+           C 245,310 215,280 205,250
+           C 195,220 215,190 235,160
+           C 255,130 265,100 255,70
+           C 245,40 225,20 210,0
            Z" />
            
 </svg>

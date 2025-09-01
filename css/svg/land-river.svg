@@ -52,6 +52,10 @@
       .river-path {
         fill: url(#riverGradient);
       }
+      
+      .cliff-pattern {
+        fill: url(#cliffGradient);
+      }
     ]]>
   </style>
   
@@ -114,6 +118,23 @@
       <stop offset="70%" style="stop-color:#0f3445; stop-opacity:0.9" /> <!-- Very dark teal -->
       <stop offset="100%" style="stop-color:#081f2a; stop-opacity:1"  /> <!-- Almost black blue -->
     </linearGradient>
+    
+    <!-- CLIFF GRADIENTS (Bottom Edge) -->
+    <!-- Light theme cliff: Rocky gray-brown tones -->
+    <linearGradient id="cliffGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#8b7d6b; stop-opacity:1" /> <!-- Light brown-gray -->
+      <stop offset="40%" style="stop-color:#696969; stop-opacity:1" /> <!-- Dim gray -->
+      <stop offset="70%" style="stop-color:#556b2f; stop-opacity:1" /> <!-- Dark olive green -->
+      <stop offset="100%" style="stop-color:#2f4f4f; stop-opacity:1" /> <!-- Dark slate gray -->
+    </linearGradient>
+    
+    <!-- Dark theme cliff: Darker rocky tones -->
+    <linearGradient id="cliffGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#3d3d3d; stop-opacity:1" /> <!-- Dark gray -->
+      <stop offset="40%" style="stop-color:#2a2a2a; stop-opacity:1" /> <!-- Darker gray -->
+      <stop offset="70%" style="stop-color:#1a1a1a; stop-opacity:1" /> <!-- Very dark gray -->
+      <stop offset="100%" style="stop-color:#0f0f0f; stop-opacity:1" /> <!-- Almost black -->
+    </linearGradient>
   </defs>
   
   <!-- FOREST REGION (Left Side) -->
@@ -150,9 +171,37 @@
            L 400,0
            Z" />
   
+  <!-- CLIFF (Bottom Edge) -->
+  <!-- Rocky cliff with cracks and patterns -->
+  <rect class="cliff-pattern" 
+        x="0" y="660" width="400" height="20"
+        fill="#696969" />
+  
+  <!-- Cliff crack patterns -->
+  <g class="cliff-cracks" stroke="#4a4a4a" stroke-width="0.8" fill="none">
+    <!-- Vertical cracks -->
+    <line x1="50" y1="660" x2="52" y2="680" />
+    <line x1="120" y1="660" x2="118" y2="680" />
+    <line x1="180" y1="660" x2="182" y2="680" />
+    <line x1="250" y1="660" x2="248" y2="680" />
+    <line x1="320" y1="660" x2="322" y2="680" />
+    
+    <!-- Horizontal cracks -->
+    <line x1="0" y1="668" x2="80" y2="669" />
+    <line x1="90" y1="672" x2="190" y2="671" />
+    <line x1="200" y1="666" x2="300" y2="667" />
+    <line x1="310" y1="674" x2="400" y2="673" />
+    
+    <!-- Diagonal cracks -->
+    <line x1="25" y1="660" x2="45" y2="675" />
+    <line x1="140" y1="675" x2="160" y2="660" />
+    <line x1="270" y1="660" x2="290" y2="678" />
+    <line x1="340" y1="678" x2="360" y2="662" />
+  </g>
+
   <!-- RIVER (Center) -->
   <!-- Creates a truly meandering waterway with S-curves and bends -->
-  <!-- This path sits on top of the other regions -->
+  <!-- This path sits on top of the other regions including cliff -->
   <path class="river-path" 
         fill="url(#riverGradient)"
         d="M 180,0 

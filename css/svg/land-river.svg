@@ -1,0 +1,154 @@
+<!--
+  Land and River Background SVG
+  
+  This SVG creates the land section background with three distinct regions:
+  - Forest region (left): Green gradient representing woodland/vegetation
+  - Desert region (right): Brown gradient representing arid landscape  
+  - River (center): Blue gradient with flowing animation down the middle
+  
+  Features:
+  - Dual theme support (light/dark gradients)
+  - Organic, meandering river path
+  - Seamless integration with mountain range above
+  - Responsive design that scales to viewport
+  - Animated river flow effect
+-->
+<svg class="land-river-svg" 
+     viewBox="0 0 400 680" 
+     preserveAspectRatio="none" 
+     xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- CSS styles for animation and theme responsiveness -->
+  <style>
+    <![CDATA[
+      .river-path {
+        animation: riverFlow 8s ease-in-out infinite;
+      }
+      
+      @keyframes riverFlow {
+        0%, 100% {
+          filter: brightness(1) saturate(1);
+        }
+        25% {
+          filter: brightness(1.1) saturate(1.2);
+        }
+        50% {
+          filter: brightness(0.9) saturate(0.8);
+        }
+        75% {
+          filter: brightness(1.05) saturate(1.1);
+        }
+      }
+      
+      /* Dark theme styles for when parent has data-theme="dark" */
+      .forest-region {
+        fill: url(#forestGradient);
+      }
+      
+      .desert-region {
+        fill: url(#desertGradient);
+      }
+      
+      .river-path {
+        fill: url(#riverGradient);
+      }
+    ]]>
+  </style>
+  
+  <defs>
+    <!-- FOREST GRADIENTS (Left Side) -->
+    <!-- Light theme forest: Sky blue at top transitioning to deep greens -->
+    <linearGradient id="forestGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#c8e6ff; stop-opacity:0.3" /> <!-- Light sky blue -->
+      <stop offset="10%" style="stop-color:#c8e6ff; stop-opacity:0.5" /> <!-- Fading sky -->
+      <stop offset="30%" style="stop-color:#228b22; stop-opacity:0.8" /> <!-- Forest green -->
+      <stop offset="50%" style="stop-color:#32cd32; stop-opacity:1"   /> <!-- Lime green -->
+      <stop offset="70%" style="stop-color:#228b22; stop-opacity:1"   /> <!-- Forest green -->
+      <stop offset="100%" style="stop-color:#006400; stop-opacity:1"  /> <!-- Dark green -->
+    </linearGradient>
+    
+    <!-- Dark theme forest: Darker atmospheric colors -->
+    <linearGradient id="forestGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#253040; stop-opacity:0.3" /> <!-- Dark blue-gray -->
+      <stop offset="10%" style="stop-color:#253040; stop-opacity:0.5" /> <!-- Fading atmosphere -->
+      <stop offset="30%" style="stop-color:#1a4a1a; stop-opacity:0.8" /> <!-- Dark forest -->
+      <stop offset="50%" style="stop-color:#0f3a0f; stop-opacity:1"   /> <!-- Deep green -->
+      <stop offset="70%" style="stop-color:#1a4a1a; stop-opacity:1"   /> <!-- Dark forest -->
+      <stop offset="100%" style="stop-color:#0a2a0a; stop-opacity:1"  /> <!-- Very dark green -->
+    </linearGradient>
+    
+    <!-- DESERT GRADIENTS (Right Side) -->
+    <!-- Light theme desert: Sky blue transitioning to warm browns -->
+    <linearGradient id="desertGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#c8e6ff; stop-opacity:0.3" /> <!-- Light sky blue -->
+      <stop offset="10%" style="stop-color:#c8e6ff; stop-opacity:0.5" /> <!-- Fading sky -->
+      <stop offset="30%" style="stop-color:#d2b48c; stop-opacity:0.8" /> <!-- Tan -->
+      <stop offset="50%" style="stop-color:#cd853f; stop-opacity:1"   /> <!-- Peru -->
+      <stop offset="70%" style="stop-color:#a0522d; stop-opacity:1"   /> <!-- Sienna -->
+      <stop offset="100%" style="stop-color:#8b4513; stop-opacity:1"  /> <!-- Saddle brown -->
+    </linearGradient>
+    
+    <!-- Dark theme desert: Muted earth tones -->
+    <linearGradient id="desertGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#253040; stop-opacity:0.3" /> <!-- Dark blue-gray -->
+      <stop offset="10%" style="stop-color:#253040; stop-opacity:0.5" /> <!-- Fading atmosphere -->
+      <stop offset="30%" style="stop-color:#4a3820; stop-opacity:0.8" /> <!-- Dark tan -->
+      <stop offset="50%" style="stop-color:#3a2810; stop-opacity:1"   /> <!-- Dark brown -->
+      <stop offset="70%" style="stop-color:#2a1800; stop-opacity:1"   /> <!-- Very dark brown -->
+      <stop offset="100%" style="stop-color:#1a0f00; stop-opacity:1"  /> <!-- Almost black brown -->
+    </linearGradient>
+    
+    <!-- RIVER GRADIENTS (Center) -->
+    <!-- Light theme river: Clear blues getting deeper -->
+    <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#87ceeb; stop-opacity:0.8" /> <!-- Sky blue -->
+      <stop offset="30%" style="stop-color:#4682b4; stop-opacity:0.9" /> <!-- Steel blue -->
+      <stop offset="70%" style="stop-color:#1e6091; stop-opacity:1"   /> <!-- Deep blue -->
+      <stop offset="100%" style="stop-color:#0f4c75; stop-opacity:1"  /> <!-- Dark blue -->
+    </linearGradient>
+    
+    <!-- Dark theme river: Muted, deeper water colors -->
+    <linearGradient id="riverGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#2c5f75; stop-opacity:0.7" /> <!-- Dark teal -->
+      <stop offset="30%" style="stop-color:#1a4960; stop-opacity:0.8" /> <!-- Darker teal -->
+      <stop offset="70%" style="stop-color:#0f3445; stop-opacity:0.9" /> <!-- Very dark teal -->
+      <stop offset="100%" style="stop-color:#081f2a; stop-opacity:1"  /> <!-- Almost black blue -->
+    </linearGradient>
+  </defs>
+  
+  <!-- FOREST REGION (Left Side) -->
+  <!-- Creates the woodland area from left edge to river's left bank -->
+  <path class="forest-region" 
+        fill="url(#forestGradient)"
+        d="M 0,0 
+           L 0,680 
+           L 165,680
+           C 165,510 180,340 165,170
+           C 180,85 190,42 185,0
+           Z" />
+  
+  <!-- DESERT REGION (Right Side) -->
+  <!-- Creates the arid landscape from river's right bank to right edge -->
+  <path class="desert-region" 
+        fill="url(#desertGradient)"
+        d="M 215,0 
+           C 210,42 220,85 235,170
+           C 220,340 235,510 235,680
+           L 400,680
+           L 400,0
+           Z" />
+  
+  <!-- RIVER (Center) -->
+  <!-- Creates the meandering waterway flowing down the middle -->
+  <!-- This path sits on top of the other regions -->
+  <path class="river-path" 
+        fill="url(#riverGradient)"
+        d="M 185,0 
+           C 190,42 180,85 165,170
+           C 180,340 165,510 165,680
+           L 235,680
+           C 235,510 220,340 235,170
+           C 220,85 210,42 215,0
+           Z" />
+           
+</svg>

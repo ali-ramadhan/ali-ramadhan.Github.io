@@ -7,7 +7,10 @@
   height: 120px;
   z-index: 4;
   overflow: hidden;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='120' viewBox='0 0 400 120'%3E%3Cpolygon points='0,120 50,20 100,120' fill='%238b4513'/%3E%3Cpolygon points='40,35 50,20 60,35' fill='%23fff'/%3E%3Cpolygon points='60,120 110,35 160,120' fill='%238b4513'/%3E%3Cpolygon points='100,50 110,35 120,50' fill='%23fff'/%3E%3Cpolygon points='120,120 180,10 240,120' fill='%238b4513'/%3E%3Cpolygon points='170,25 180,10 190,25' fill='%23fff'/%3E%3Cpolygon points='200,120 250,40 300,120' fill='%238b4513'/%3E%3Cpolygon points='240,55 250,40 260,55' fill='%23fff'/%3E%3Cpolygon points='280,120 340,25 400,120' fill='%238b4513'/%3E%3Cpolygon points='330,40 340,25 350,40' fill='%23fff'/%3E%3C/svg%3E");
+  /* Light theme mountain colors */
+  --mountain-color: #8b4513;
+  --snow-color: #fff;
+  background-image: url('../svg/mountains.svg');
   background-repeat: repeat-x;
   background-position: bottom;
   background-size: 400px 120px;
@@ -16,7 +19,9 @@
 
 /* Dark theme mountains */
 [data-theme="dark"] .mountain-range {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='120' viewBox='0 0 400 120'%3E%3Cpolygon points='0,120 50,20 100,120' fill='%234a3820'/%3E%3Cpolygon points='40,35 50,20 60,35' fill='%23e0e0e0'/%3E%3Cpolygon points='60,120 110,35 160,120' fill='%234a3820'/%3E%3Cpolygon points='100,50 110,35 120,50' fill='%23e0e0e0'/%3E%3Cpolygon points='120,120 180,10 240,120' fill='%234a3820'/%3E%3Cpolygon points='170,25 180,10 190,25' fill='%23e0e0e0'/%3E%3Cpolygon points='200,120 250,40 300,120' fill='%234a3820'/%3E%3Cpolygon points='240,55 250,40 260,55' fill='%23e0e0e0'/%3E%3Cpolygon points='280,120 340,25 400,120' fill='%234a3820'/%3E%3Cpolygon points='330,40 340,25 350,40' fill='%23e0e0e0'/%3E%3C/svg%3E");
+  /* Dark theme mountain colors */
+  --mountain-color: #4a3820;
+  --snow-color: #e0e0e0;
 }
 
 /* Land */
@@ -28,7 +33,7 @@
   padding-top: 15vh;
 }
 
-/* Unified Land and River SVG */
+/* External Land and River SVG */
 .land-river-svg {
   position: absolute;
   top: 15vh; /* Start at mountain range level */
@@ -39,39 +44,13 @@
   pointer-events: none;
 }
 
-/* Theme switching for unified SVG elements */
-[data-theme="dark"] .forest-region {
-  fill: url(#forestGradientDark);
+/* Theme switching for external SVG - uses CSS filters as fallback */
+[data-theme="dark"] .land-river-svg {
+  /* Apply subtle dark theme adjustments to external SVG */
+  filter: brightness(0.7) saturate(0.9) contrast(1.1);
 }
 
-[data-theme="dark"] .desert-region {
-  fill: url(#desertGradientDark);
-}
-
-[data-theme="dark"] .river-path {
-  fill: url(#riverGradientDark);
-}
-
-/* River animation within unified SVG */
-.land-river-svg .river-path {
-  fill: url(#riverGradient);
-  animation: riverFlow 8s ease-in-out infinite;
-}
-
-@keyframes riverFlow {
-  0%, 100% {
-    filter: brightness(1) saturate(1);
-  }
-  25% {
-    filter: brightness(1.1) saturate(1.2);
-  }
-  50% {
-    filter: brightness(0.9) saturate(0.8);
-  }
-  75% {
-    filter: brightness(1.05) saturate(1.1);
-  }
-}
+/* Note: Animation and detailed theming are now handled within the SVG file itself */
 
 #land::before {
   content: "";

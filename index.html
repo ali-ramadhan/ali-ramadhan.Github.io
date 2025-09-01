@@ -44,92 +44,13 @@
     </section>
 
     <section class="layer" id="land">
-      <!-- Unified Land and River SVG -->
-      <svg class="land-river-svg" viewBox="0 0 400 680" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <!-- Forest gradient (left side) -->
-          <linearGradient id="forestGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#c8e6ff;stop-opacity:0.3" />
-            <stop offset="10%" style="stop-color:#c8e6ff;stop-opacity:0.5" />
-            <stop offset="30%" style="stop-color:#228b22;stop-opacity:0.8" />
-            <stop offset="50%" style="stop-color:#32cd32;stop-opacity:1" />
-            <stop offset="70%" style="stop-color:#228b22;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#006400;stop-opacity:1" />
-          </linearGradient>
-          <!-- Forest gradient dark theme -->
-          <linearGradient id="forestGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#253040;stop-opacity:0.3" />
-            <stop offset="10%" style="stop-color:#253040;stop-opacity:0.5" />
-            <stop offset="30%" style="stop-color:#1a4a1a;stop-opacity:0.8" />
-            <stop offset="50%" style="stop-color:#0f3a0f;stop-opacity:1" />
-            <stop offset="70%" style="stop-color:#1a4a1a;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#0a2a0a;stop-opacity:1" />
-          </linearGradient>
-          <!-- Desert gradient (right side) -->
-          <linearGradient id="desertGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#c8e6ff;stop-opacity:0.3" />
-            <stop offset="10%" style="stop-color:#c8e6ff;stop-opacity:0.5" />
-            <stop offset="30%" style="stop-color:#d2b48c;stop-opacity:0.8" />
-            <stop offset="50%" style="stop-color:#cd853f;stop-opacity:1" />
-            <stop offset="70%" style="stop-color:#a0522d;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#8b4513;stop-opacity:1" />
-          </linearGradient>
-          <!-- Desert gradient dark theme -->
-          <linearGradient id="desertGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#253040;stop-opacity:0.3" />
-            <stop offset="10%" style="stop-color:#253040;stop-opacity:0.5" />
-            <stop offset="30%" style="stop-color:#4a3820;stop-opacity:0.8" />
-            <stop offset="50%" style="stop-color:#3a2810;stop-opacity:1" />
-            <stop offset="70%" style="stop-color:#2a1800;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#1a0f00;stop-opacity:1" />
-          </linearGradient>
-          <!-- River gradient -->
-          <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:0.8" />
-            <stop offset="30%" style="stop-color:#4682b4;stop-opacity:0.9" />
-            <stop offset="70%" style="stop-color:#1e6091;stop-opacity:1" />
-            <stop offset="100%" style="stop-color:#0f4c75;stop-opacity:1" />
-          </linearGradient>
-          <!-- River gradient dark theme -->
-          <linearGradient id="riverGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" style="stop-color:#2c5f75;stop-opacity:0.7" />
-            <stop offset="30%" style="stop-color:#1a4960;stop-opacity:0.8" />
-            <stop offset="70%" style="stop-color:#0f3445;stop-opacity:0.9" />
-            <stop offset="100%" style="stop-color:#081f2a;stop-opacity:1" />
-          </linearGradient>
-        </defs>
-        
-        <!-- Forest (left side) - from left edge to river's left bank -->
-        <path class="forest-region" 
-              d="M0,0 
-                 L0,680 
-                 L165,680
-                 C165,510 180,340 165,170
-                 C180,85 190,42 185,0
-                 Z" 
-              fill="url(#forestGradient)"/>
-        
-        <!-- Desert (right side) - from river's right bank to right edge -->
-        <path class="desert-region" 
-              d="M215,0 
-                 C210,42 220,85 235,170
-                 C220,340 235,510 235,680
-                 L400,680
-                 L400,0
-                 Z" 
-              fill="url(#desertGradient)"/>
-        
-        <!-- River on top -->
-        <path class="river-path" 
-              d="M185,0 
-                 C190,42 180,85 165,170
-                 C180,340 165,510 165,680
-                 L235,680
-                 C235,510 220,340 235,170
-                 C220,85 210,42 215,0
-                 Z" 
-              fill="url(#riverGradient)"/>
-      </svg>
+      <!-- External SVG for land and river background -->
+      <object class="land-river-svg" 
+              data="css/svg/land-river.svg" 
+              type="image/svg+xml">
+        <!-- Fallback for browsers that don't support SVG -->
+        <img src="css/svg/land-river.svg" alt="Land and river background" />
+      </object>
       
       <div class="content">
         <h1>Welcome to Earth</h1>

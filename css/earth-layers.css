@@ -9,15 +9,6 @@
     #b8d4f0 80%,
     #c8e6ff 100%
   );
-  --land-bg: linear-gradient(
-    180deg,
-    rgb(200, 230, 255, 0) 0%,
-    #c8e6ff 10%,
-    #90ee90 30%,
-    #32cd32 50%,
-    #d4af37 70%,
-    #daa520 100%
-  );
   --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
   --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
   --content-bg: rgb(255, 255, 255, 0.9);
@@ -41,15 +32,6 @@
     #1a1a2e 40%,
     #1f2a3e 80%,
     #253040 100%
-  );
-  --land-bg: linear-gradient(
-    180deg,
-    rgb(37, 48, 64, 0) 0%,
-    #253040 10%,
-    #2d4a3d 30%,
-    #1a3a1a 50%,
-    #3a3020 70%,
-    #4a3820 100%
   );
   --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
   --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
@@ -98,7 +80,7 @@ body {
 
 .content {
   position: relative;
-  z-index: 10;
+  z-index: 15; /* Higher than land background and river */
   text-align: center;
   background: var(--content-bg);
   padding: 2rem;
@@ -864,26 +846,39 @@ body {
 
 /* Land */
 #land {
-  background: var(--land-bg);
+  background: transparent; /* Using unified SVG now */
   transition: background 0.5s ease;
   position: relative;
   margin-top: -15vh;
   padding-top: 15vh;
 }
 
-/* River */
-.river {
+/* Unified Land and River SVG */
+.land-river-svg {
   position: absolute;
   top: 15vh; /* Start at mountain range level */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 120px;
+  left: 0;
+  width: 100%;
   height: calc(100vh - 15vh); /* Fill from mountain to bottom */
-  z-index: 6;
+  z-index: 1;
   pointer-events: none;
 }
 
-.river-path {
+/* Theme switching for unified SVG elements */
+[data-theme="dark"] .forest-region {
+  fill: url(#forestGradientDark);
+}
+
+[data-theme="dark"] .desert-region {
+  fill: url(#desertGradientDark);
+}
+
+[data-theme="dark"] .river-path {
+  fill: url(#riverGradientDark);
+}
+
+/* River animation within unified SVG */
+.land-river-svg .river-path {
   fill: url(#riverGradient);
   animation: riverFlow 8s ease-in-out infinite;
 }
@@ -903,10 +898,6 @@ body {
   }
 }
 
-/* Dark theme river */
-[data-theme="dark"] .river-path {
-  fill: url(#riverGradientDark);
-}
 
 #land::before {
   content: "";

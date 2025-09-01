@@ -871,6 +871,43 @@ body {
   padding-top: 15vh;
 }
 
+/* River */
+.river {
+  position: absolute;
+  top: 15vh; /* Start at mountain range level */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: calc(100vh - 15vh); /* Fill from mountain to bottom */
+  z-index: 6;
+  pointer-events: none;
+}
+
+.river-path {
+  fill: url(#riverGradient);
+  animation: riverFlow 8s ease-in-out infinite;
+}
+
+@keyframes riverFlow {
+  0%, 100% {
+    filter: brightness(1) saturate(1);
+  }
+  25% {
+    filter: brightness(1.1) saturate(1.2);
+  }
+  50% {
+    filter: brightness(0.9) saturate(0.8);
+  }
+  75% {
+    filter: brightness(1.05) saturate(1.1);
+  }
+}
+
+/* Dark theme river */
+[data-theme="dark"] .river-path {
+  fill: url(#riverGradientDark);
+}
+
 #land::before {
   content: "";
   position: absolute;
@@ -1056,6 +1093,11 @@ body {
   .mountain-range {
     height: 80px;
     background-size: 300px 80px;
+  }
+
+  /* River responsive adjustments */
+  .river {
+    width: 80px;
   }
 
 }

@@ -45,20 +45,16 @@
     <!-- FOREST GRADIENTS (Left Side) -->
     <!-- Light theme forest: Sky blue at top transitioning to deep greens -->
     <linearGradient id="forestGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"  style="stop-color:#c8e6ff; stop-opacity:0.3" /> <!-- Light sky blue -->
-      <stop offset="10%" style="stop-color:#c8e6ff; stop-opacity:0.5" /> <!-- Fading sky -->
-      <stop offset="30%" style="stop-color:#228b22; stop-opacity:0.8" /> <!-- Forest green -->
-      <stop offset="50%" style="stop-color:#32cd32; stop-opacity:1"   /> <!-- Lime green -->
+      <stop offset="0%" style="stop-color:#228b22; stop-opacity:0.8" />  <!-- Forest green -->
+      <stop offset="30%" style="stop-color:#32cd32; stop-opacity:1"   /> <!-- Lime green -->
       <stop offset="70%" style="stop-color:#228b22; stop-opacity:1"   /> <!-- Forest green -->
       <stop offset="100%" style="stop-color:#006400; stop-opacity:1"  /> <!-- Dark green -->
     </linearGradient>
 
     <!-- Dark theme forest: Darker atmospheric colors -->
     <linearGradient id="forestGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"  style="stop-color:#253040; stop-opacity:0.3" /> <!-- Dark blue-gray -->
-      <stop offset="10%" style="stop-color:#253040; stop-opacity:0.5" /> <!-- Fading atmosphere -->
-      <stop offset="30%" style="stop-color:#1a4a1a; stop-opacity:0.8" /> <!-- Dark forest -->
-      <stop offset="50%" style="stop-color:#0f3a0f; stop-opacity:1"   /> <!-- Deep green -->
+      <stop offset="0%" style="stop-color:#1a4a1a; stop-opacity:0.8" />  <!-- Dark forest -->
+      <stop offset="30%" style="stop-color:#0f3a0f; stop-opacity:1"   /> <!-- Deep green -->
       <stop offset="70%" style="stop-color:#1a4a1a; stop-opacity:1"   /> <!-- Dark forest -->
       <stop offset="100%" style="stop-color:#0a2a0a; stop-opacity:1"  /> <!-- Very dark green -->
     </linearGradient>
@@ -66,20 +62,16 @@
     <!-- DESERT GRADIENTS (Right Side) -->
     <!-- Light theme desert: Sky blue transitioning to warm browns -->
     <linearGradient id="desertGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"  style="stop-color:#c8e6ff; stop-opacity:0.3" /> <!-- Light sky blue -->
-      <stop offset="10%" style="stop-color:#c8e6ff; stop-opacity:0.5" /> <!-- Fading sky -->
-      <stop offset="30%" style="stop-color:#d2b48c; stop-opacity:0.8" /> <!-- Tan -->
-      <stop offset="50%" style="stop-color:#cd853f; stop-opacity:1"   /> <!-- Peru -->
+      <stop offset="0%" style="stop-color:#d2b48c; stop-opacity:0.8" />  <!-- Tan -->
+      <stop offset="30%" style="stop-color:#cd853f; stop-opacity:1"   /> <!-- Peru -->
       <stop offset="70%" style="stop-color:#a0522d; stop-opacity:1"   /> <!-- Sienna -->
       <stop offset="100%" style="stop-color:#8b4513; stop-opacity:1"  /> <!-- Saddle brown -->
     </linearGradient>
 
     <!-- Dark theme desert: Muted earth tones -->
     <linearGradient id="desertGradientDark" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"  style="stop-color:#253040; stop-opacity:0.3" /> <!-- Dark blue-gray -->
-      <stop offset="10%" style="stop-color:#253040; stop-opacity:0.5" /> <!-- Fading atmosphere -->
-      <stop offset="30%" style="stop-color:#4a3820; stop-opacity:0.8" /> <!-- Dark tan -->
-      <stop offset="50%" style="stop-color:#3a2810; stop-opacity:1"   /> <!-- Dark brown -->
+      <stop offset="0%" style="stop-color:#4a3820; stop-opacity:0.8" />  <!-- Dark tan -->
+      <stop offset="30%" style="stop-color:#3a2810; stop-opacity:1"   /> <!-- Dark brown -->
       <stop offset="70%" style="stop-color:#2a1800; stop-opacity:1"   /> <!-- Very dark brown -->
       <stop offset="100%" style="stop-color:#1a0f00; stop-opacity:1"  /> <!-- Almost black brown -->
     </linearGradient>
@@ -159,28 +151,6 @@
         x="0" y="660" width="400" height="20"
         fill="#696969" />
 
-  <!-- Cliff crack patterns -->
-  <g class="cliff-cracks" stroke="#4a4a4a" stroke-width="0.8" fill="none">
-    <!-- Vertical cracks -->
-    <line x1="50" y1="660" x2="52" y2="680" />
-    <line x1="120" y1="660" x2="118" y2="680" />
-    <line x1="180" y1="660" x2="182" y2="680" />
-    <line x1="250" y1="660" x2="248" y2="680" />
-    <line x1="320" y1="660" x2="322" y2="680" />
-
-    <!-- Horizontal cracks -->
-    <line x1="0" y1="668" x2="80" y2="669" />
-    <line x1="90" y1="672" x2="190" y2="671" />
-    <line x1="200" y1="666" x2="300" y2="667" />
-    <line x1="310" y1="674" x2="400" y2="673" />
-
-    <!-- Diagonal cracks -->
-    <line x1="25" y1="660" x2="45" y2="675" />
-    <line x1="140" y1="675" x2="160" y2="660" />
-    <line x1="270" y1="660" x2="290" y2="678" />
-    <line x1="340" y1="678" x2="360" y2="662" />
-  </g>
-
   <!-- RIVER (Center) -->
   <!-- Creates a truly meandering waterway with S-curves and bends -->
   <!-- This path sits on top of the other regions including cliff -->
@@ -203,7 +173,6 @@
            C 245,310 215,280 205,250
            C 195,220 215,190 235,160
            C 255,130 265,100 255,70
-           C 245,40 225,20 210,0
            Z" />
 
 </svg>

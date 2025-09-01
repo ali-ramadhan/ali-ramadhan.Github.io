@@ -1,0 +1,47 @@
+/* Sun Element */
+.sun {
+  position: absolute;
+  top: 20%;
+  right: -100px;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, #ffeb3b 0%, #ffc107 70%, #ff9800 100%);
+  border-radius: 50%;
+  z-index: 5;
+  transition: right 1s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 30px rgb(255, 235, 59, 0.5);
+  cursor: pointer;
+}
+
+.sun:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgb(255, 235, 59, 0.7);
+}
+
+.sun::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  background:
+    linear-gradient(0deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
+    linear-gradient(45deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
+    linear-gradient(90deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
+    linear-gradient(135deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%);
+  border-radius: 50%;
+  animation: rays 3s linear infinite;
+}
+
+@keyframes rays {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sun visible in light mode in outer space section */
+body:not([data-theme="dark"]) #outer-space .sun {
+  right: 100px;
+}

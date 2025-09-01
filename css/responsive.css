@@ -1,0 +1,131 @@
+/* Responsive */
+@media (width <= 768px) {
+  .content {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+  }
+
+  .layer-nav {
+    right: 15px;
+  }
+
+  /* Responsive cloud adjustments for mobile */
+  .cirrus1 {
+    width: 200px;
+    height: 6px;
+  }
+
+  .cirrus1::before {
+    width: 120px;
+    height: 3px;
+  }
+
+  .cirrus1::after {
+    width: 80px;
+    height: 2px;
+  }
+
+  .cirrus2 {
+    width: 180px;
+    height: 5px;
+  }
+
+  .cirrus2::before {
+    width: 100px;
+    height: 2px;
+  }
+
+  .cirrus3 {
+    width: 150px;
+    height: 4px;
+  }
+
+  .cirrus3::before {
+    width: 80px;
+    height: 2px;
+  }
+
+  .alto1 {
+    width: 90%;
+    height: 30px;
+  }
+
+  .alto1::before {
+    height: 20px;
+  }
+
+  .alto2 {
+    width: 80%;
+    height: 25px;
+  }
+
+  .alto2::before {
+    height: 15px;
+  }
+
+  .cumulus1,
+  .cumulus2,
+  .cumulus3,
+  .cumulus4 {
+    width: 80px;
+    height: 35px;
+  }
+
+  .cumulus1::before,
+  .cumulus2::before,
+  .cumulus3::before,
+  .cumulus4::before {
+    width: 45px;
+    height: 45px;
+    top: -18px;
+  }
+
+  .cumulus1::after,
+  .cumulus2::after,
+  .cumulus3::after,
+  .cumulus4::after {
+    width: 35px;
+    height: 25px;
+    top: -10px;
+  }
+
+  /* Mountain range responsive adjustments */
+  .mountain-range {
+    height: 80px;
+    background-size: 300px 80px;
+  }
+
+  /* River responsive adjustments */
+  .river {
+    width: 80px;
+  }
+
+  .theme-toggle {
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .toggle-icon {
+    font-size: 1.2rem;
+  }
+
+  .sun {
+    width: 60px;
+    height: 60px;
+    top: 15%;
+  }
+
+  body:not([data-theme="dark"]) #outer-space .sun {
+    right: 80px;
+  }
+}

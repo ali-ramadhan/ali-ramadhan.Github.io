@@ -1,0 +1,106 @@
+:root {
+  /* Light theme colors */
+  --outer-space-bg: linear-gradient(180deg, #001 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
+  --atmosphere-bg: linear-gradient(
+    180deg,
+    rgb(74, 95, 122, 0) 0%,
+    #4a5f7a 10%,
+    #87ceeb 40%,
+    #b8d4f0 80%,
+    #c8e6ff 100%
+  );
+  --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
+  --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
+  --content-bg: rgb(255, 255, 255, 0.9);
+  --content-text: #333;
+  --content-subtext: #666;
+  --nav-dot: rgb(255, 255, 255, 0.5);
+  --nav-dot-active: white;
+  --cloud-color: white;
+  --star-color-1: #eee;
+  --star-color-2: #fff;
+  --star-color-3: #ddd;
+}
+
+[data-theme="dark"] {
+  /* Dark theme colors */
+  --outer-space-bg: linear-gradient(180deg, #000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
+  --atmosphere-bg: linear-gradient(
+    180deg,
+    rgb(22, 33, 62, 0) 0%,
+    #16213e 10%,
+    #1a1a2e 40%,
+    #1f2a3e 80%,
+    #253040 100%
+  );
+  --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
+  --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
+  --content-bg: rgb(26, 26, 46, 0.9);
+  --content-text: #e0e0e0;
+  --content-subtext: #b0b0b0;
+  --nav-dot: rgb(224, 224, 224, 0.5);
+  --nav-dot-active: #e0e0e0;
+  --cloud-color: #4a4a6a;
+  --star-color-1: #fff;
+  --star-color-2: #eee;
+  --star-color-3: #ddd;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition:
+    background-color 0.5s ease,
+    color 0.5s ease,
+    border-color 0.5s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease;
+  background: var(--crust-bg);
+  min-height: 100vh;
+}
+
+.layer {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.content {
+  position: relative;
+  z-index: 15; /* Higher than land background and river */
+  text-align: center;
+  background: var(--content-bg);
+  padding: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  max-width: 600px;
+  margin: 0 2rem;
+  transition: background-color 0.5s ease;
+}
+
+.content h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--content-text);
+  transition: color 0.5s ease;
+}
+
+.content p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: var(--content-subtext);
+  transition: color 0.5s ease;
+}

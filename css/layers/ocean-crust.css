@@ -1,0 +1,14 @@
+/* Ocean */
+#ocean {
+  background: var(--ocean-bg);
+  transition: background 0.5s ease;
+}
+
+/* Crust */
+#crust {
+  background: var(--crust-bg);
+  transition: background 0.5s ease;
+  min-height: 100vh;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}

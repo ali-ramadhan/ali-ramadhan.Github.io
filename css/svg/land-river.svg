@@ -115,15 +115,45 @@
     </linearGradient>
   </defs>
 
-  <!-- FOREST REGION (Left Half) -->
-  <rect class="forest-region"
+  <!-- FOREST REGION (Left Half with wavy bottom) -->
+  <path class="forest-region"
         fill="url(#forestGradient)"
-        x="0" y="0" width="200" height="680" />
+        d="M 0,0
+           L 0,620
+           C 20,640 40,630 60,635
+           C 80,640 100,650 120,645
+           C 140,640 160,635 180,640
+           L 200,645
+           L 200,0
+           Z" />
 
-  <!-- DESERT REGION (Right Half) -->
-  <rect class="desert-region"
+  <!-- DESERT REGION (Right Half with wavy bottom) -->
+  <path class="desert-region"
         fill="url(#desertGradient)"
-        x="200" y="0" width="200" height="680" />
+        d="M 200,0
+           L 200,645
+           C 220,640 240,635 260,640
+           C 280,645 300,650 320,645
+           C 340,640 360,635 380,640
+           L 400,645
+           L 400,0
+           Z" />
+
+  <!-- OCEAN REGION (Below wavy boundary) -->
+  <path class="ocean-region"
+        fill="#4682b4"
+        d="M 0,620
+           C 20,640 40,630 60,635
+           C 80,640 100,650 120,645
+           C 140,640 160,635 180,640
+           L 200,645
+           C 220,640 240,635 260,640
+           C 280,645 300,650 320,645
+           C 340,640 360,635 380,640
+           L 400,645
+           L 400,680
+           L 0,680
+           Z" />
 
 
   <!-- RIVER (Center) -->

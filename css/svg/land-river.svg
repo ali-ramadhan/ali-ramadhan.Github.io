@@ -157,9 +157,13 @@
 
 
   <!-- RIVER (Center) -->
-  <!-- Straight river down the middle -->
-  <rect class="river-path"
+  <!-- River with perspective - very narrow at top, wider at bottom -->
+  <path class="river-path"
         fill="url(#riverGradient)"
-        x="180" y="0" width="40" height="680" />
+        d="M 199,0
+           L 201,0
+           L 220,680
+           L 180,680
+           Z" />
 
 </svg>

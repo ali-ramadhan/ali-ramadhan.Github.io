@@ -8,9 +8,14 @@
   </head>
   <body>
     <section class="layer" id="outer-space">
-      <div class="content">
-        <h1>Outer Space</h1>
-        <p>Content about space exploration, astronomy, or cosmic thoughts goes here.</p>
+      <!-- Video sphere background -->
+      <div id="video-outer-box">
+        <div id="video-inner-box">
+          <video id="video" crossorigin="anonymous" autoplay muted loop playsinline></video>
+        </div>
+        <span id="left-arrow" class="arrow" aria-hidden="true">◀</span>
+        <span id="right-arrow" class="arrow" aria-hidden="true">▶</span>
+        <div id="video-tooltip"></div>
       </div>
       <div class="stars"></div>
       <div class="sun" id="sun"></div>
@@ -65,7 +70,7 @@
               data="css/svg/ocean-bathymetry-light.svg"
               type="image/svg+xml">
       </object>
-      
+
       <!-- Ocean bathymetry at the bottom - Dark theme -->
       <object class="ocean-bathymetry-svg dark-theme"
               data="css/svg/ocean-bathymetry-dark.svg"
@@ -77,7 +82,7 @@
       <div class="content publications-content">
         {% include "publications.html" %}
       </div>
-      
+
       <div class="content resources-content">
         {% include "resources.html" %}
       </div>
@@ -97,5 +102,6 @@
     {% include "theme-toggle.html" %}
 
     <script src="js/earth-layers.js"></script>
+    <script type="module" src="js/video-sphere.js"></script>
   </body>
 </html>

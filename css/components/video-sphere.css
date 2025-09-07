@@ -1,0 +1,74 @@
+#video-outer-box {
+	position: absolute;
+	top: 30%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 800px;
+	height: 600px;
+	z-index: 1;
+}
+
+#canvas-video-sphere {
+	display: block;
+	width: 800px !important;
+	height: 600px !important;
+}
+
+#video {
+	display: none;
+	width: 800px;
+	height: 600px;
+}
+
+#video-title {
+	display: none;
+}
+
+#video-caption {
+	display: none;
+}
+
+.arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	font-size: 2rem;
+	color: rgba(255, 255, 255, 0.8);
+	user-select: none;
+	z-index: 20;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+	transition: opacity 0.3s ease;
+	backdrop-filter: blur(2px);
+	padding: 0.5rem;
+	border-radius: 50%;
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.arrow:hover {
+	opacity: 0.7;
+}
+
+#left-arrow {
+	left: 2rem;
+}
+
+#right-arrow {
+	right: 2rem;
+}
+
+#colorbar {
+	display: none;
+	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+	padding-top: 0.5em;
+}
+
+/*
+ * dat.gui
+ */
+
+ .c div input {
+	font-size: 100%;
+  }

@@ -16,8 +16,8 @@
   pointer-events: none; /* Don't interfere with interactions */
 }
 
-/* Crust */
-#crust {
+/* Resources (formerly Crust) */
+#resources {
   background: var(--crust-bg);
   transition: background 0.5s ease;
   min-height: 100vh;

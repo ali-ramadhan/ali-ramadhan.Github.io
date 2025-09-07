@@ -225,56 +225,72 @@ document.addEventListener("DOMContentLoaded", function () {
     activeLayer.scrollIntoView({ behavior: "instant" });
   });
 
-  // Research functionality
+  // Research functionality with error handling
   function initSlideshow() {
-    const slideshows = document.querySelectorAll('.slideshow');
-    
-    slideshows.forEach(slideshow => {
-      const slides = slideshow.querySelectorAll('div');
-      if (slides.length === 0) return;
+    try {
+      const slideshows = document.querySelectorAll('.slideshow');
       
-      let currentSlide = 0;
-      
-      // Show first slide initially
-      slides[currentSlide].classList.add('active');
-      
-      // Auto-advance slides
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 4000); // Change slide every 4 seconds
-    });
+      slideshows.forEach(slideshow => {
+        try {
+          const slides = slideshow.querySelectorAll('div');
+          if (slides.length === 0) return;
+          
+          let currentSlide = 0;
+          
+          // Show first slide initially
+          slides[currentSlide].classList.add('active');
+          
+          // Auto-advance slides
+          setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+          }, 4000); // Change slide every 4 seconds
+        } catch (error) {
+          console.error('Error initializing slideshow:', error);
+        }
+      });
+    } catch (error) {
+      console.error('Error in slideshow initialization:', error);
+    }
   }
 
   function initProjectSections() {
-    const projectTitles = document.querySelectorAll('.project-title');
-    
-    projectTitles.forEach(title => {
-      title.addEventListener('click', function() {
-        const projectNum = this.getAttribute('data-project');
-        const projectDetails = document.getElementById(`project${projectNum}`);
-        
-        if (!projectDetails) return;
-        
-        const isExpanded = this.classList.contains('expanded');
-        
-        if (isExpanded) {
-          // Collapse
-          this.classList.remove('expanded');
-          projectDetails.classList.remove('expanded');
-          projectDetails.style.display = 'none';
-        } else {
-          // Expand
-          this.classList.add('expanded');
-          projectDetails.style.display = 'block';
-          // Small delay to allow display change to take effect
-          setTimeout(() => {
-            projectDetails.classList.add('expanded');
-          }, 10);
+    try {
+      const projectTitles = document.querySelectorAll('.project-title');
+      
+      projectTitles.forEach(title => {
+        try {
+          title.addEventListener('click', function() {
+            const projectNum = this.getAttribute('data-project');
+            const projectDetails = document.getElementById(`project${projectNum}`);
+            
+            if (!projectDetails) return;
+            
+            const isExpanded = this.classList.contains('expanded');
+            
+            if (isExpanded) {
+              // Collapse
+              this.classList.remove('expanded');
+              projectDetails.classList.remove('expanded');
+              projectDetails.style.display = 'none';
+            } else {
+              // Expand
+              this.classList.add('expanded');
+              projectDetails.style.display = 'block';
+              // Small delay to allow display change to take effect
+              setTimeout(() => {
+                projectDetails.classList.add('expanded');
+              }, 10);
+            }
+          });
+        } catch (error) {
+          console.error('Error setting up project section:', error);
         }
       });
-    });
+    } catch (error) {
+      console.error('Error in project sections initialization:', error);
+    }
   }
 
   // Initialize the page

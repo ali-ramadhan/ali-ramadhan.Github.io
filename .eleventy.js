@@ -6,6 +6,11 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("files");
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy(".htaccess");
+  
+  // Pass through bundled dependencies
+  eleventyConfig.addPassthroughCopy("node_modules/three/build/three.module.js");
+  eleventyConfig.addPassthroughCopy("node_modules/three/examples/jsm/controls/OrbitControls.js");
+  eleventyConfig.addPassthroughCopy("node_modules/dat.gui/build/dat.gui.min.js");
 
   // Watch CSS and JS for changes during development
   eleventyConfig.addWatchTarget("css/");

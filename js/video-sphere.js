@@ -1,7 +1,7 @@
 // Code credit: https://discourse.threejs.org/t/how-do-i-render-a-video-on-sphere-in-threejs/34003/4
 
-import * as THREE from "https://cdn.skypack.dev/three@0.136.0";
-import {OrbitControls} from "https://cdn.skypack.dev/three@0.136.0/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "../node_modules/three/build/three.module.js";
+import {OrbitControls} from "../node_modules/three/examples/jsm/controls/OrbitControls.js";
 
 /////
 ///// Data
@@ -215,24 +215,71 @@ function addSeconds(d, s) {
 ///// three.js setup
 /////
 
-let scene = new THREE.Scene();
+// Initialize Three.js with error handling
+function initVideoSphere() {
+    try {
+        // Check WebGL support
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+        if (!gl) {
+            throw new Error('WebGL not supported');
+        }
 
-let video_width = 800;
-let video_height = 600;
+        let scene = new THREE.Scene();
 
-let camera = new THREE.PerspectiveCamera(60, video_width / video_height, 1, 1000);
-camera.position.set(0, 0, 2);
+        let video_width = 800;
+        let video_height = 600;
 
-let renderer = new THREE.WebGLRenderer({
-    antialias: true,
-    alpha: true
-});
+        let camera = new THREE.PerspectiveCamera(60, video_width / video_height, 1, 1000);
+        camera.position.set(0, 0, 2);
 
-renderer.setSize(video_width, video_height);
+        let renderer = new THREE.WebGLRenderer({
+            antialias: true,
+            alpha: true
+        });
 
-let video_sphere_box = document.getElementById('video-inner-box');
-let canvasElement = video_sphere_box.appendChild(renderer.domElement);
-canvasElement.setAttribute("id", "canvas-video-sphere");
+        renderer.setSize(video_width, video_height);
+
+        let video_sphere_box = document.getElementById('video-inner-box');
+        if (!video_sphere_box) {
+            throw new Error('Video container not found');
+        }
+        
+        let canvasElement = video_sphere_box.appendChild(renderer.domElement);
+        canvasElement.setAttribute("id", "canvas-video-sphere");
+
+        return { scene, camera, renderer, video_width, video_height };
+    } catch (error) {
+        console.error('Failed to initialize video sphere:', error);
+        showVideoSphereError(error.message);
+        return null;
+    }
+}
+
+function showVideoSphereError(message) {
+    const video_sphere_box = document.getElementById('video-inner-box');
+    if (video_sphere_box) {
+        video_sphere_box.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; height: 600px; background: #f0f0f0; color: #666; text-align: center; border-radius: 8px;">
+                <div>
+                    <h3>Video Sphere Unavailable</h3>
+                    <p>${message}</p>
+                    <small>This feature requires WebGL support</small>
+                </div>
+            </div>
+        `;
+    }
+}
+
+const sphereInit = initVideoSphere();
+if (!sphereInit) {
+    // Exit early if initialization failed
+    return;
+}
+
+const { scene, camera, renderer, video_width, video_height } = sphereInit;
+
+let canvasElement = document.getElementById('canvas-video-sphere');
 
 let controls = new OrbitControls(camera, renderer.domElement);
 controls.enableRotate = true;
@@ -306,6 +353,22 @@ video_options.add(options, 'show_colorbar').name('Show colorbar').onChange(funct
 /////
 
 let video = document.getElementById('video');
+if (!video) {
+    console.error('Video element not found');
+    showVideoSphereError('Video element not found');
+    return;
+}
+
+// Add video error handling
+video.addEventListener('error', function(e) {
+    console.error('Video loading error:', e);
+    showVideoSphereError('Failed to load video content');
+});
+
+video.addEventListener('loadeddata', function() {
+    console.log('Video loaded successfully');
+});
+
 video.defaultPlaybackRate = 1.0;
 video.playbackRate = options.playback_rate;
 
@@ -316,18 +379,30 @@ sphereMeshMaterial.needsUpdate = true;
 let tooltipMeshGroup = new THREE.Group();
 
 function selectVideo(n) {
-    video.pause();
+    try {
+        video.pause();
 
-    let videoTitle = document.getElementById("video-title");
-    videoTitle.innerHTML = videos[n]["title"];
+        let videoTitle = document.getElementById("video-title");
+        if (videoTitle) {
+            videoTitle.innerHTML = videos[n]["title"];
+        }
 
-    video.src = videos[n]["src"];
-    video.play();
+        video.src = videos[n]["src"];
+        video.play().catch(error => {
+            console.error('Video play failed:', error);
+            showVideoSphereError('Failed to play video');
+        });
 
-    let colorbar = document.getElementById("colorbar");
-    colorbar.src = videos[n]["colorbar"];
+        let colorbar = document.getElementById("colorbar");
+        if (colorbar) {
+            colorbar.src = videos[n]["colorbar"];
+        }
 
-    tooltipMeshGroup.clear();
+        tooltipMeshGroup.clear();
+    } catch (error) {
+        console.error('Error selecting video:', error);
+        showVideoSphereError('Failed to switch video');
+    }
 
     for (const [name, tooltip] of Object.entries(videos[n]["tooltips"])) {
         let tooltipLatitude = tooltip["latitude"];

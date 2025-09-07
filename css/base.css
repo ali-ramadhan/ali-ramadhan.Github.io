@@ -20,7 +20,7 @@
   --star-color-1: #eee;
   --star-color-2: #fff;
   --star-color-3: #ddd;
-  --body-bg: #ffffff;
+  --body-bg: #fff;
 }
 
 [data-theme="dark"] {
@@ -45,7 +45,7 @@
   --star-color-1: #fff;
   --star-color-2: #eee;
   --star-color-3: #ddd;
-  --body-bg: #000000;
+  --body-bg: #000;
 }
 
 * {
@@ -135,7 +135,7 @@ body {
 
 #resources .content h3 {
   font-size: 1.4rem;
-  margin: 1.5rem 0 0.5rem 0;
+  margin: 1.5rem 0 0.5rem;
   color: var(--content-text);
   transition: color 0.5s ease;
 }

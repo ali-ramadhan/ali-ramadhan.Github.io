@@ -273,13 +273,14 @@ function showVideoSphereError(message) {
 
 const sphereInit = initVideoSphere();
 if (!sphereInit) {
-    // Exit early if initialization failed
-    return;
-}
-
+    // Exit early if initialization failed - for modules we can't return at top level
+    console.warn('Video sphere initialization failed, skipping setup');
+} else {
+    
 const { scene, camera, renderer, video_width, video_height } = sphereInit;
 
-let canvasElement = document.getElementById('canvas-video-sphere');
+// Canvas element is created by initVideoSphere function
+// let canvasElement = document.getElementById('canvas-video-sphere');
 
 let controls = new OrbitControls(camera, renderer.domElement);
 controls.enableRotate = true;
@@ -356,8 +357,7 @@ let video = document.getElementById('video');
 if (!video) {
     console.error('Video element not found');
     showVideoSphereError('Video element not found');
-    return;
-}
+} else {
 
 // Add video error handling
 video.addEventListener('error', function(e) {
@@ -509,3 +509,7 @@ window.addEventListener("mousemove", function(e) {
         tooltip.style.display = "none";
     }
 });
+
+} // End of video element check
+
+} // End of sphereInit else block

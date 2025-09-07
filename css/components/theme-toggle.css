@@ -40,7 +40,3 @@
 [data-theme="dark"] .toggle-icon {
   transform: rotate(180deg);
 }
-
-[data-theme="dark"] .toggle-icon::before {
-  content: "🌙";
-}

@@ -5,37 +5,65 @@
   right: -100px;
   width: 80px;
   height: 80px;
-  background: radial-gradient(circle, #ffeb3b 0%, #ffc107 70%, #ff9800 100%);
-  border-radius: 50%;
   z-index: 5;
   transition: right 1s ease-in-out, transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 0 30px rgb(255, 235, 59, 0.5);
   cursor: pointer;
 }
 
 .sun:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 40px rgb(255, 235, 59, 0.7);
+  transform: scale(1.05);
 }
 
+.sun:hover::before,
+.sun:hover::after {
+  transform: scale(1.05) rotate(var(--rotation, 0deg));
+}
+
+/* Sun rays (behind the sun) */
 .sun::before {
   content: "";
   position: absolute;
-  inset: -20px;
-  background:
-    linear-gradient(0deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
-    linear-gradient(45deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
-    linear-gradient(90deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%),
-    linear-gradient(135deg, transparent 45%, rgb(255, 235, 59, 0.3) 50%, transparent 55%);
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin: -100px 0 0 -100px;
+  z-index: -1;
+  background: 
+    linear-gradient(0deg, transparent 48%, rgba(255, 235, 59, 0.3) 50%, transparent 52%),
+    linear-gradient(45deg, transparent 48%, rgba(255, 235, 59, 0.25) 50%, transparent 52%),
+    linear-gradient(90deg, transparent 48%, rgba(255, 235, 59, 0.3) 50%, transparent 52%),
+    linear-gradient(135deg, transparent 48%, rgba(255, 235, 59, 0.25) 50%, transparent 52%),
+    linear-gradient(22.5deg, transparent 49%, rgba(255, 235, 59, 0.2) 50%, transparent 51%),
+    linear-gradient(67.5deg, transparent 49%, rgba(255, 235, 59, 0.2) 50%, transparent 51%),
+    linear-gradient(112.5deg, transparent 49%, rgba(255, 235, 59, 0.2) 50%, transparent 51%),
+    linear-gradient(157.5deg, transparent 49%, rgba(255, 235, 59, 0.2) 50%, transparent 51%);
+  mask-image: radial-gradient(circle, black 25%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, black 25%, transparent 70%);
+  animation: rays 4s linear infinite;
+}
+
+/* Sun core (in front of rays) */
+.sun::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #ffeb3b 0%, #ffc107 60%, #ff9800 90%, #f57c00 100%);
   border-radius: 50%;
-  animation: rays 3s linear infinite;
+  box-shadow: 
+    0 0 20px rgba(255, 235, 59, 0.4),
+    0 0 40px rgba(255, 193, 7, 0.3),
+    0 0 60px rgba(255, 152, 0, 0.2);
 }
 
 @keyframes rays {
   0% {
     transform: rotate(0deg);
   }
-
+  
   100% {
     transform: rotate(360deg);
   }

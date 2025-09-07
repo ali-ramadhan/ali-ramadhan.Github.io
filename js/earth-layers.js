@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const themeToggle = document.getElementById("theme-toggle");
   const toggleIcon = document.querySelector(".toggle-icon");
   const sunElement = document.getElementById("sun");
+  const moonElement = document.getElementById("moon");
 
   let isScrolling = false;
   let currentSection = CONFIG.STARTING_SECTION;
@@ -47,10 +48,22 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Handle moon click to switch to light mode
+  function handleMoonClick() {
+    const currentTheme = document.body.getAttribute("data-theme") || "light";
+    // Only allow moon click to switch to light mode when in dark mode
+    if (currentTheme === "dark") {
+      setTheme("light");
+    }
+  }
+
   // Theme toggle event listeners
   themeToggle.addEventListener("click", toggleTheme);
   if (sunElement) {
     sunElement.addEventListener("click", handleSunClick);
+  }
+  if (moonElement) {
+    moonElement.addEventListener("click", handleMoonClick);
   }
 
   // Initialize - scroll to land section on load

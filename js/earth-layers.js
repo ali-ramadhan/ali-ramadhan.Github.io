@@ -27,10 +27,38 @@ document.addEventListener("DOMContentLoaded", function () {
     toggleIcon.innerHTML = theme === "dark" ? "🌙" : "☀️";
   }
 
+  function updateBathymetryColor(theme) {
+    // Update the bathymetry SVG color to match the crust top color
+    const bathymetryObject = document.querySelector('.ocean-bathymetry-svg');
+    if (bathymetryObject) {
+      bathymetryObject.addEventListener('load', function() {
+        const svgDoc = bathymetryObject.contentDocument;
+        if (svgDoc) {
+          const bathymetryFloor = svgDoc.querySelector('.bathymetry-floor');
+          if (bathymetryFloor) {
+            const color = theme === "dark" ? "#3d2817" : "#8b4513";
+            bathymetryFloor.style.fill = color;
+          }
+        }
+      });
+      
+      // If already loaded, update immediately
+      const svgDoc = bathymetryObject.contentDocument;
+      if (svgDoc) {
+        const bathymetryFloor = svgDoc.querySelector('.bathymetry-floor');
+        if (bathymetryFloor) {
+          const color = theme === "dark" ? "#3d2817" : "#8b4513";
+          bathymetryFloor.style.fill = color;
+        }
+      }
+    }
+  }
+
   function setTheme(theme) {
     document.body.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
     updateThemeIcon(theme);
+    updateBathymetryColor(theme);
   }
 
   function toggleTheme() {

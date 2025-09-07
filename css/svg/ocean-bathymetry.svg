@@ -13,12 +13,7 @@
   <style>
     <![CDATA[
       .bathymetry-floor {
-        fill: #8b4513; /* Light theme: crust top color */
-      }
-
-      /* Dark theme support */
-      [data-theme="dark"] .bathymetry-floor {
-        fill: #3d2817; /* Dark theme: crust top color */
+        fill: #8b4513; /* Light theme default - will be updated by JavaScript */
       }
     ]]>
   </style>

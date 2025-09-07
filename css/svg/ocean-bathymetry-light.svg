@@ -1,8 +1,8 @@
 <!--
-  Ocean Bathymetry Background SVG
+  Ocean Bathymetry Background SVG - Light Theme
   
   Simple single curve at the bottom of the ocean section
-  using solid crust colors for light and dark themes.
+  using light theme crust color.
 -->
 <svg class="ocean-bathymetry-svg"
      viewBox="0 -2 400 64"
@@ -13,7 +13,7 @@
   <style>
     <![CDATA[
       .bathymetry-floor {
-        fill: #8b4513; /* Light theme default - will be updated by JavaScript */
+        fill: #8b4513; /* Light theme crust top color */
       }
     ]]>
   </style>

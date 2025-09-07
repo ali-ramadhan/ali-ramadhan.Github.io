@@ -16,5 +16,9 @@ export default function (eleventyConfig) {
       input: ".",
       output: "_site",
     },
+    // Use Nunjucks for HTML files
+    markdownTemplateEngine: "njk",
+    htmlTemplateEngine: "njk",
+    templateFormats: ["html", "njk", "md"]
   };
 }

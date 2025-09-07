@@ -168,3 +168,63 @@ body {
 #resources .content a:hover {
   color: var(--nav-dot-active);
 }
+
+/* Publications styling within resources section */
+#resources .publications-content {
+  text-align: left;
+  margin-bottom: 3rem;
+}
+
+#resources .publications-content h1 {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+#resources .publications-content ol.publications-list {
+  list-style: decimal;
+  padding-left: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+#resources .publications-content ol.publications-list li {
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+#resources .publications-content ol.publications-list li b {
+  color: var(--content-text);
+  transition: color 0.5s ease;
+}
+
+#resources .publications-content ol.publications-list li i {
+  color: var(--content-subtext);
+  transition: color 0.5s ease;
+}
+
+#resources .publications-content a {
+  color: var(--content-text);
+  text-decoration: underline;
+  transition: color 0.5s ease;
+}
+
+#resources .publications-content a:hover {
+  color: var(--nav-dot-active);
+}
+
+#resources .publications-content a.publication-button {
+  display: inline-block;
+  background: var(--nav-dot-active);
+  color: var(--content-bg);
+  padding: 0.3rem 0.6rem;
+  margin: 0.2rem 0.3rem 0.2rem 0;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+#resources .publications-content a.publication-button:hover {
+  background: var(--content-text);
+  transform: translateY(-1px);
+}

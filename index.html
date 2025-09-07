@@ -10,11 +10,17 @@
     <section class="layer" id="outer-space">
       <!-- Video sphere background -->
       <div id="video-outer-box">
+        <div id="video-title">Temperature</div>
+        
         <div id="video-inner-box">
           <video id="video" crossorigin="anonymous" autoplay muted loop playsinline></video>
         </div>
+
         <span id="left-arrow" class="arrow" aria-hidden="true">◀</span>
         <span id="right-arrow" class="arrow" aria-hidden="true">▶</span>
+
+        <div id="video-caption"></div>
+        <div id="video-colorbar"><img id="colorbar" /></div>
         <div id="video-tooltip"></div>
       </div>
       <div class="stars"></div>
@@ -24,8 +30,7 @@
 
     <section class="layer" id="atmosphere">
       <div class="content">
-        <h1>Atmosphere</h1>
-        <p>Content about climate, weather, or atmospheric science goes here.</p>
+        {% include "blog-listing.html" %}
       </div>
       <!-- Cirrus clouds (highest altitude) -->
       <div class="cirrus-clouds">
@@ -101,6 +106,7 @@
     {% include "nav.html" %}
     {% include "theme-toggle.html" %}
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.9/dat.gui.min.js"></script>
     <script src="js/earth-layers.js"></script>
     <script type="module" src="js/video-sphere.js"></script>
   </body>

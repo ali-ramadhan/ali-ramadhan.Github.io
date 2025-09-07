@@ -2,6 +2,18 @@
 #ocean {
   background: var(--ocean-bg);
   transition: background 0.5s ease;
+  position: relative;
+}
+
+/* Ocean bathymetry SVG positioning */
+.ocean-bathymetry-svg {
+  position: absolute;
+  bottom: -5vh; /* Extend beyond ocean section into crust */
+  left: 0;
+  width: 100%;
+  height: 25vh; /* Taller to ensure complete coverage */
+  z-index: 5; /* Below content but above ocean background */
+  pointer-events: none; /* Don't interfere with interactions */
 }
 
 /* Crust */

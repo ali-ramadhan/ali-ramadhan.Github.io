@@ -20,6 +20,7 @@
   --star-color-1: #eee;
   --star-color-2: #fff;
   --star-color-3: #ddd;
+  --body-bg: #ffffff;
 }
 
 [data-theme="dark"] {
@@ -44,6 +45,7 @@
   --star-color-1: #fff;
   --star-color-2: #eee;
   --star-color-3: #ddd;
+  --body-bg: #000000;
 }
 
 * {
@@ -64,7 +66,7 @@ body {
   font-family: Arial, sans-serif;
   overflow-x: hidden;
   transition: background-color 0.5s ease;
-  background: var(--crust-bg);
+  background: var(--body-bg);
   min-height: 100vh;
 }
 

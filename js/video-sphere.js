@@ -262,7 +262,44 @@ function onWindowResize() {
     renderer.setSize(video_width, video_height);
 }
 
-// dat.GUI controls removed for simplified interface
+/////
+///// dat.gui setup
+/////
+
+let gui = new dat.GUI();
+
+let options = {
+    playback_rate: 1.0,
+    show_caption: false,
+    show_colorbar: false
+};
+
+let video_options = gui.addFolder('Video options');
+
+video_options.add(options, 'playback_rate', 0.0, 5.0, 0.1).name('Playback rate').onChange(function () {
+    let video = document.getElementById('video');
+    video.playbackRate = options.playback_rate;
+})
+
+video_options.add(options, 'show_caption').name('Show timestamp').onChange(function () {
+    let videoCaption = document.getElementById("video-caption");
+    if (options.show_caption) {
+        videoCaption.style.display = "block";
+    } else {
+        videoCaption.style.display = "none";
+    }
+})
+
+video_options.add(options, 'show_colorbar').name('Show colorbar').onChange(function () {
+    let colorbar = document.getElementById("colorbar");
+    if (options.show_colorbar) {
+        colorbar.style.display = "block";
+    } else {
+        colorbar.style.display = "none";
+    }
+})
+
+// video_options.open();
 
 /////
 ///// video sphere setup
@@ -270,7 +307,7 @@ function onWindowResize() {
 
 let video = document.getElementById('video');
 video.defaultPlaybackRate = 1.0;
-video.playbackRate = 1.0;
+video.playbackRate = options.playback_rate;
 
 let videoTex = new THREE.VideoTexture(video);
 sphereMeshMaterial.map = videoTex;
@@ -281,8 +318,14 @@ let tooltipMeshGroup = new THREE.Group();
 function selectVideo(n) {
     video.pause();
 
+    let videoTitle = document.getElementById("video-title");
+    videoTitle.innerHTML = videos[n]["title"];
+
     video.src = videos[n]["src"];
     video.play();
+
+    let colorbar = document.getElementById("colorbar");
+    colorbar.src = videos[n]["colorbar"];
 
     tooltipMeshGroup.clear();
 
@@ -312,17 +355,27 @@ selectVideo(0);
 let leftArrow = document.getElementById('left-arrow');
 let rightArrow = document.getElementById('right-arrow');
 
-leftArrow.addEventListener('click', (event) => {
+leftArrow.addEventListener('click', () => {
     currentVideo = mod(currentVideo - 1, videos.length);
     selectVideo(currentVideo);
 });
 
-rightArrow.addEventListener('click', (event) => {
+rightArrow.addEventListener('click', () => {
     currentVideo = mod(currentVideo + 1, videos.length);
     selectVideo(currentVideo);
 });
 
-// Video caption functionality removed for simplified interface
+function updateVideoCaption() {
+    let dateStart = videos[currentVideo]["dateStart"];
+    let framePeriod = videos[currentVideo]["framePeriod"];
+    let frameNum = Math.floor(videoFramerate * video.currentTime);
+    let dateFrame = addSeconds(dateStart, frameNum * framePeriod);
+
+    let videoCaption = document.getElementById("video-caption");
+    videoCaption.textContent = `${dateFrame.toISOString().slice(0, -8)}Z`;
+}
+
+setInterval(updateVideoCaption, 1000 / videoFramerate);
 
 // Convert geographical (lat, lon) corresponds to (x, y, z) three.js coordinates on our sphere.
 function latlon2xyz(lat, lon) {

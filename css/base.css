@@ -103,4 +103,14 @@ body {
   line-height: 1.6;
   color: var(--content-subtext);
   transition: color 0.5s ease;
+  margin-bottom: 1rem;
+}
+
+.content p:last-child {
+  margin-bottom: 0;
+}
+
+/* Left-align text for the land section about me content */
+#land .content p {
+  text-align: left;
 }

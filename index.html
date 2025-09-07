@@ -45,16 +45,15 @@
 
     <section class="layer" id="land">
       <!-- External SVG for land and river background -->
-      <object class="land-river-svg" 
-              data="css/svg/land-river.svg" 
+      <object class="land-river-svg"
+              data="css/svg/land-river.svg"
               type="image/svg+xml">
         <!-- Fallback for browsers that don't support SVG -->
         <img src="css/svg/land-river.svg" alt="Land and river background" />
       </object>
-      
+
       <div class="content">
-        <h1>Welcome to Earth</h1>
-        <p>This is the starting point. Add your main content, bio, or introduction here.</p>
+        {% include "about-me.html" %}
       </div>
     </section>
 

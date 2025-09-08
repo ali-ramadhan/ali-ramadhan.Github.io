@@ -23,7 +23,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("files");
   eleventyConfig.addPassthroughCopy("CNAME");
-  eleventyConfig.addPassthroughCopy(".htaccess");
 
   // Watch CSS and JS for changes during development
   eleventyConfig.addWatchTarget("css/");

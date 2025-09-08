@@ -1,7 +1,8 @@
 // Code credit: https://discourse.threejs.org/t/how-do-i-render-a-video-on-sphere-in-threejs/34003/4
 
 import * as THREE from "three";
-import {OrbitControls} from "../node_modules/three/examples/jsm/controls/OrbitControls.js";
+import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
+import * as dat from "dat.gui";
 
 /////
 ///// Data

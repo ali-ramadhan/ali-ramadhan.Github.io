@@ -1,4 +1,22 @@
+import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
+
 export default function (eleventyConfig) {
+  // Add Vite plugin
+  eleventyConfig.addPlugin(EleventyVitePlugin, {
+    viteOptions: {
+      clearScreen: false,
+      appType: "mpa",
+      server: {
+        middlewareMode: true,
+      },
+      build: {
+        rollupOptions: {
+          input: "js/main.js"
+        }
+      }
+    }
+  });
+
   // Pass through assets as-is
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("js");
@@ -6,11 +24,6 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("files");
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy(".htaccess");
-  
-  // Pass through bundled dependencies
-  eleventyConfig.addPassthroughCopy("node_modules/three/build/three.module.js");
-  eleventyConfig.addPassthroughCopy("node_modules/three/examples/jsm/controls/OrbitControls.js");
-  eleventyConfig.addPassthroughCopy("node_modules/dat.gui/build/dat.gui.min.js");
 
   // Watch CSS and JS for changes during development
   eleventyConfig.addWatchTarget("css/");

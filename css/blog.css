@@ -44,7 +44,9 @@
   padding: 2rem;
   box-shadow: 0 4px 20px rgb(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
   border: 1px solid rgb(255, 255, 255, 0.2);
 }
 
@@ -260,7 +262,6 @@
   color: #d0d0d0;
 }
 
-
 .blog-post-content p {
   margin-bottom: 1.5rem;
 }
@@ -274,7 +275,6 @@
 .blog-post-content li {
   margin-bottom: 0.5rem;
 }
-
 
 .blog-post-content blockquote {
   border-left: 4px solid #3498db;
@@ -292,7 +292,7 @@
   background: #f8f9fa;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  font-family: Monaco, Menlo, 'Ubuntu Mono', monospace;
+  font-family: Monaco, Menlo, "Ubuntu Mono", monospace;
   font-size: 0.9em;
 }
 
@@ -349,23 +349,23 @@
   .blog-section {
     padding: 1rem;
   }
-  
+
   .blog-post-preview {
     padding: 1.5rem;
   }
-  
+
   .blog-post-main {
     padding: 1rem;
   }
-  
+
   .blog-post {
     padding: 1.5rem;
   }
-  
+
   .blog-post-full-title {
     font-size: 2rem;
   }
-  
+
   .blog-post-meta {
     flex-direction: column;
     gap: 1rem;

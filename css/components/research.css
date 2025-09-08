@@ -176,38 +176,38 @@
     flex-direction: column;
     gap: 1.5rem;
   }
-  
+
   .research-figure {
     flex: none;
     max-width: 100%;
     order: 1 !important;
   }
-  
+
   .research-description {
     order: 2 !important;
   }
-  
+
   .slideshow {
     height: 250px;
   }
-  
+
   .project-content {
     flex-direction: column;
     gap: 1rem;
   }
-  
+
   .project-image {
     order: 1;
   }
-  
+
   .project-text {
     order: 2;
   }
-  
+
   .research-description h3 {
     font-size: 1.2rem;
   }
-  
+
   .project-title {
     font-size: 1.1rem;
   }
@@ -217,11 +217,11 @@
   .slideshow {
     height: 200px;
   }
-  
+
   .research-area {
     gap: 1rem;
   }
-  
+
   .project-content {
     gap: 0.5rem;
   }

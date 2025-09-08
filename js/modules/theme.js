@@ -9,7 +9,7 @@ class ThemeManager {
     this.toggleIcon = document.querySelector(".toggle-icon");
     this.sunElement = document.getElementById("sun");
     this.moonElement = document.getElementById("moon");
-    
+
     this.eventListeners = [];
     this.init();
   }
@@ -60,7 +60,11 @@ class ThemeManager {
     if (this.themeToggle) {
       const toggleHandler = () => this.toggleTheme();
       this.themeToggle.addEventListener("click", toggleHandler);
-      this.eventListeners.push({ element: this.themeToggle, event: "click", handler: toggleHandler });
+      this.eventListeners.push({
+        element: this.themeToggle,
+        event: "click",
+        handler: toggleHandler,
+      });
     }
 
     if (this.sunElement) {

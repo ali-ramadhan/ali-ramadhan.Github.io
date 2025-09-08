@@ -10,7 +10,7 @@
   /* Light theme mountain colors */
   --mountain-color: #8b4513;
   --snow-color: #fff;
-  background-image: url('../svg/mountains.svg');
+  background-image: url("../svg/mountains.svg");
   background-repeat: repeat-x;
   background-position: bottom;
   background-size: 400px 120px;

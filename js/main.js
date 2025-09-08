@@ -4,11 +4,11 @@
  */
 
 // Import all CSS - Vite will handle processing and bundling
-import '../css/earth-layers.css';
+import "../css/earth-layers.css";
 
 // Import our application modules
-import './earth-layers.js';
-import './video-sphere.js';
+import "./earth-layers.js";
+import "./video-sphere.js";
 
 // Log successful initialization
-console.log('🚀 Website loaded with Vite!');
+console.log("🚀 Website loaded with Vite!");

@@ -16,12 +16,12 @@ class NavigationManager {
     this.navDots = document.querySelectorAll(".nav-dot");
     this.isScrolling = false;
     this.currentSection = this.CONFIG.STARTING_SECTION;
-    
+
     this.eventListeners = [];
     this.touchStartY = 0;
     this.touchEndY = 0;
     this.scrollTimeout = null;
-    
+
     this.init();
   }
 
@@ -192,7 +192,11 @@ class NavigationManager {
     const touchEndHandler = (e) => this.handleTouchEnd(e);
     document.addEventListener("touchstart", touchStartHandler);
     document.addEventListener("touchend", touchEndHandler);
-    this.eventListeners.push({ element: document, event: "touchstart", handler: touchStartHandler });
+    this.eventListeners.push({
+      element: document,
+      event: "touchstart",
+      handler: touchStartHandler,
+    });
     this.eventListeners.push({ element: document, event: "touchend", handler: touchEndHandler });
 
     // Resize handling
@@ -205,7 +209,7 @@ class NavigationManager {
     if (this.scrollTimeout) {
       clearTimeout(this.scrollTimeout);
     }
-    
+
     this.eventListeners.forEach(({ element, event, handler }) => {
       element.removeEventListener(event, handler);
     });

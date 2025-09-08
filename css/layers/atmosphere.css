@@ -11,7 +11,8 @@
 
 /* Cloud Animation Keyframes */
 @keyframes drift-slow {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   25% {
@@ -26,7 +27,8 @@
 }
 
 @keyframes drift-slow-left {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   25% {
@@ -41,7 +43,8 @@
 }
 
 @keyframes drift-medium {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   33% {
@@ -53,7 +56,8 @@
 }
 
 @keyframes drift-medium-left {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   33% {
@@ -65,7 +69,8 @@
 }
 
 @keyframes drift-fast {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   50% {
@@ -74,7 +79,8 @@
 }
 
 @keyframes drift-fast-right {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateX(0) translateY(0);
   }
   50% {

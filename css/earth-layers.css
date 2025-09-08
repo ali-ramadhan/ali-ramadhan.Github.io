@@ -1,12 +1,12 @@
 /* Main Earth Layers CSS - Imports all modular components */
-@import url('base.css');
-@import url('layers/outer-space.css');
-@import url('layers/atmosphere.css');
-@import url('layers/land.css');
-@import url('layers/ocean-crust.css');
-@import url('components/navigation.css');
-@import url('components/theme-toggle.css');
-@import url('components/research.css');
-@import url('components/sun.css');
-@import url('components/video-sphere.css');
-@import url('responsive.css');
+@import url("base.css");
+@import url("layers/outer-space.css");
+@import url("layers/atmosphere.css");
+@import url("layers/land.css");
+@import url("layers/ocean-crust.css");
+@import url("components/navigation.css");
+@import url("components/theme-toggle.css");
+@import url("components/research.css");
+@import url("components/sun.css");
+@import url("components/video-sphere.css");
+@import url("responsive.css");

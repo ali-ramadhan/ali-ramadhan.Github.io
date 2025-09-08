@@ -2,33 +2,24 @@
 
 <ol reversed class="publications-list">
   {% for publication in publications %}
-    <li id="{{ publication.id }}">
-      <b>{{ publication.title }}</b><br>
-      {% for author in publication.authors %}
-        {% if author == "A. Ramadhan" %}
-          <u>{{ author }}</u>{% if not loop.last %}, {% endif %}
-        {% else %}
-          {{ author | safe }}{% if not loop.last %}, {% endif %}
-        {% endif %}
-      {% endfor %}
-      <br>
-      {% if publication.status == "published" %}
-        <i>{{ publication.journal }}</i>
-        {% if publication.volume %}
-          <b>{{ publication.volume }}</b>{% if publication.subvolume %}({{ publication.subvolume }}){% endif %},
-        {% endif %}
-        {{ publication.pages }}
-        ({{ publication.year }}).
-      {% elif publication.status == "submitted" %}
-        Submitted to <i>{{ publication.journal }}</i> ({{ publication.year }}).
-      {% elif publication.status == "arxiv" %}
-        <i>{{ publication.arxiv }}</i> ({{ publication.year }}).
-      {% elif publication.status == "thesis" %}
-        <i>{{ publication.info }}</i> ({{ publication.year }}).
-      {% endif %}
-      {% for link in publication.links %}
-        <a href="{{ link.url }}" target="_blank" class="publication-button">{{ link.type }}</a>
-      {% endfor %}
-    </li>
+  <li id="{{ publication.id }}">
+    <b>{{ publication.title }}</b><br />
+    {% for author in publication.authors %} {% if author == "A. Ramadhan" %}
+    <u>{{ author }}</u>{% if not loop.last %}, {% endif %} {% else %} {{ author | safe }}{% if not
+    loop.last %}, {% endif %} {% endif %} {% endfor %}
+    <br />
+    {% if publication.status == "published" %}
+    <i>{{ publication.journal }}</i>
+    {% if publication.volume %}
+    <b>{{ publication.volume }}</b>{% if publication.subvolume %}({{ publication.subvolume }}){%
+    endif %}, {% endif %} {{ publication.pages }} ({{ publication.year }}). {% elif
+    publication.status == "submitted" %} Submitted to <i>{{ publication.journal }}</i> ({{
+    publication.year }}). {% elif publication.status == "arxiv" %}
+    <i>{{ publication.arxiv }}</i> ({{ publication.year }}). {% elif publication.status == "thesis"
+    %} <i>{{ publication.info }}</i> ({{ publication.year }}). {% endif %} {% for link in
+    publication.links %}
+    <a href="{{ link.url }}" target="_blank" class="publication-button">{{ link.type }}</a>
+    {% endfor %}
+  </li>
   {% endfor %}
 </ol>

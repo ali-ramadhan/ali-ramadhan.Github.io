@@ -157,13 +157,7 @@
   {
     "id": "antarctic-siz-paper",
     "title": "Observations of Upwelling and Downwelling Around Antarctica Mediated by Sea Ice",
-    "authors": [
-      "A. Ramadhan",
-      "J. Marshall",
-      "G. Meneghello",
-      "L. Illari",
-      "K. Speer"
-    ],
+    "authors": ["A. Ramadhan", "J. Marshall", "G. Meneghello", "L. Illari", "K. Speer"],
     "status": "published",
     "journal": "Frontiers in Marine Science",
     "volume": 9,
@@ -183,13 +177,7 @@
   {
     "id": "icy-moons-paper",
     "title": "Exploring Ocean Circulation on Icy Moons Heated From Below",
-    "authors": [
-      "S. Bire",
-      "W. Kang",
-      "A. Ramadhan",
-      "J.-M. Campin",
-      "J. Marshall"
-    ],
+    "authors": ["S. Bire", "W. Kang", "A. Ramadhan", "J.-M. Campin", "J. Marshall"],
     "status": "published",
     "journal": "Journal of Geophysical Research: Planets",
     "volume": 127,
@@ -213,13 +201,7 @@
   {
     "id": "antarctic-meltwater-paper",
     "title": "On the Settling Depth of Meltwater Escaping from beneath Antarctic Ice Shelves",
-    "authors": [
-      "C. W. Arnscheidt",
-      "J. Marshall",
-      "P. Dutrieux",
-      "C. D. Rye",
-      "A. Ramadhan"
-    ],
+    "authors": ["C. W. Arnscheidt", "J. Marshall", "P. Dutrieux", "C. D. Rye", "A. Ramadhan"],
     "status": "published",
     "journal": "Journal of Physical Oceanography",
     "volume": 51,
@@ -240,13 +222,7 @@
   {
     "id": "niw-swell-paper",
     "title": "Near-Inertial Waves and Turbulence Driven by the Growth of Swell",
-    "authors": [
-      "G. L. Wagner",
-      "G. P. Chini",
-      "A. Ramadhan",
-      "B. Gallet",
-      "R. Ferrari"
-    ],
+    "authors": ["G. L. Wagner", "G. P. Chini", "A. Ramadhan", "B. Gallet", "R. Ferrari"],
     "status": "published",
     "journal": "Journal of Physical Oceanography",
     "volume": 51,
@@ -522,12 +498,7 @@
   {
     "id": "microwire-welding-paper",
     "title": "Welding of Au Microwires by Femtosecond Laser Irradiation",
-    "authors": [
-      "N. Ly",
-      "M. Mayer",
-      "A. Ramadhan",
-      "J. Sanderson"
-    ],
+    "authors": ["N. Ly", "M. Mayer", "A. Ramadhan", "J. Sanderson"],
     "status": "published",
     "journal": "Proceedings of the 14th IEEE International Conference on Nanotechnology",
     "pages": "146–149",

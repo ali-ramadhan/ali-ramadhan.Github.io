@@ -14,23 +14,23 @@ class SlideshowManager {
     try {
       this.initializeSlideshows();
     } catch (error) {
-      console.error('Error in slideshow initialization:', error);
+      console.error("Error in slideshow initialization:", error);
     }
   }
 
   initializeSlideshows() {
-    const slideshowElements = document.querySelectorAll('.slideshow');
-    
+    const slideshowElements = document.querySelectorAll(".slideshow");
+
     slideshowElements.forEach((slideshow, index) => {
       try {
-        const slides = slideshow.querySelectorAll('div');
+        const slides = slideshow.querySelectorAll("div");
         if (slides.length === 0) return;
 
         const slideshowData = {
           element: slideshow,
           slides: slides,
           currentSlide: 0,
-          id: index
+          id: index,
         };
 
         this.slideshows.push(slideshowData);
@@ -43,16 +43,16 @@ class SlideshowManager {
 
   startSlideshow(slideshowData) {
     const { slides } = slideshowData;
-    
+
     // Show first slide initially
-    slides[slideshowData.currentSlide].classList.add('active');
-    
+    slides[slideshowData.currentSlide].classList.add("active");
+
     // Auto-advance slides
     const intervalId = setInterval(() => {
       try {
-        slides[slideshowData.currentSlide].classList.remove('active');
+        slides[slideshowData.currentSlide].classList.remove("active");
         slideshowData.currentSlide = (slideshowData.currentSlide + 1) % slides.length;
-        slides[slideshowData.currentSlide].classList.add('active');
+        slides[slideshowData.currentSlide].classList.add("active");
       } catch (error) {
         console.error(`Error advancing slide in slideshow ${slideshowData.id}:`, error);
       }
@@ -62,7 +62,7 @@ class SlideshowManager {
   }
 
   pauseAll() {
-    this.intervals.forEach(intervalId => {
+    this.intervals.forEach((intervalId) => {
       clearInterval(intervalId);
     });
   }
@@ -71,9 +71,9 @@ class SlideshowManager {
     // Clear existing intervals first
     this.pauseAll();
     this.intervals = [];
-    
+
     // Restart all slideshows
-    this.slideshows.forEach(slideshowData => {
+    this.slideshows.forEach((slideshowData) => {
       this.startSlideshow(slideshowData);
     });
   }

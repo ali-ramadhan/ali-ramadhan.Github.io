@@ -4,12 +4,14 @@
   <div class="research-description">
     <h3>Ocean model development</h3>
     <p>
-      My work has involved developing ocean models for climate modeling.
-      I am the original developer of <a href="https://github.com/CliMA/Oceananigans.jl" target="_blank">Oceananigans.jl</a>, a fast, friendly, and flexible Julia package for
-      computational fluid dynamics on CPUs and GPUs <a href="#oceananigans-paper">(Ramadhan et al., 2020)</a>.
-      Oceananigans.jl serves as the ocean component for the next-generation climate model being developed by the <a href="https://clima.caltech.edu/" target="_blank">Climate Modeling Alliance</a>.
-      I led development of the first release and implemented features to turn it into a fully-fledged ocean model.
-      I also worked on
+      My work has involved developing ocean models for climate modeling. I am the original developer
+      of <a href="https://github.com/CliMA/Oceananigans.jl" target="_blank">Oceananigans.jl</a>, a
+      fast, friendly, and flexible Julia package for computational fluid dynamics on CPUs and GPUs
+      <a href="#oceananigans-paper">(Ramadhan et al., 2020)</a>. Oceananigans.jl serves as the ocean
+      component for the next-generation climate model being developed by the
+      <a href="https://clima.caltech.edu/" target="_blank">Climate Modeling Alliance</a>. I led
+      development of the first release and implemented features to turn it into a fully-fledged
+      ocean model. I also worked on
     </p>
     <ul>
       <li>implementing support for GPUs with CUDA and distributed computing with MPI,</li>
@@ -23,8 +25,18 @@
     <div class="slideshow" id="slideshow1">
       <div><img src="img/Oceananigans-free-convection.png" alt="Free convection simulation" /></div>
       <div><img src="img/Oceananigans-eddying-channel.png" alt="Eddying channel simulation" /></div>
-      <div><img src="img/Oceananigans-cubed-sphere-rossby-haurwitz.png" alt="Cubed sphere Rossby-Haurwitz wave" /></div>
-      <div><img src="img/Oceananigans-cubed-sphere-eddying-aquaplanet.png" alt="Cubed sphere eddying aquaplanet" /></div>
+      <div>
+        <img
+          src="img/Oceananigans-cubed-sphere-rossby-haurwitz.png"
+          alt="Cubed sphere Rossby-Haurwitz wave"
+        />
+      </div>
+      <div>
+        <img
+          src="img/Oceananigans-cubed-sphere-eddying-aquaplanet.png"
+          alt="Cubed sphere eddying aquaplanet"
+        />
+      </div>
       <div><img src="img/Oceananigans-2d-turbulence-MPI.png" alt="2D turbulence with MPI" /></div>
     </div>
   </div>
@@ -33,23 +45,39 @@
 <div class="research-area">
   <div class="research-figure left-aligned">
     <div class="slideshow" id="slideshow2">
-      <div><img src="img/NDE-architecture.png" alt="Neural differential equations architecture" /></div>
-      <div><img src="img/NDE-free-convection-training-parameter-space.png" alt="Free convection training parameter space" /></div>
+      <div>
+        <img src="img/NDE-architecture.png" alt="Neural differential equations architecture" />
+      </div>
+      <div>
+        <img
+          src="img/NDE-free-convection-training-parameter-space.png"
+          alt="Free convection training parameter space"
+        />
+      </div>
       <div><img src="img/NDE-in-a-double-gyre.png" alt="NDE in double gyre simulation" /></div>
-      <div><img src="img/NDE-global-training-data-locations.png" alt="Global training data locations" /></div>
+      <div>
+        <img
+          src="img/NDE-global-training-data-locations.png"
+          alt="Global training data locations"
+        />
+      </div>
     </div>
   </div>
   <div class="research-description">
     <h3>Capturing missing physics in climate models using machine learning</h3>
     <p>
-      Even with today's immense computational resources, climate models cannot resolve every cloud in the atmosphere or eddying swirl in the ocean.
-      However, collectively these small-scale turbulent processes play a key role in setting Earth's climate.
-      The problem is that they are not well-represented in climate models.
+      Even with today's immense computational resources, climate models cannot resolve every cloud
+      in the atmosphere or eddying swirl in the ocean. However, collectively these small-scale
+      turbulent processes play a key role in setting Earth's climate. The problem is that they are
+      not well-represented in climate models.
     </p>
     <p>
-      My research combines physical principles and machine learning to improve how turbulence is represented in climate models
-      We take simple yet robust models of these turbulent processes and augment the partial differential equations they solve with neural networks.
-      The augmented models are trained using resolved simulations of the turbulent process generated using Oceananigans.jl so the neural networks learn the missing physics <a href="#ndes-paper">(Ramadhan et al., 2023)</a>.
+      My research combines physical principles and machine learning to improve how turbulence is
+      represented in climate models We take simple yet robust models of these turbulent processes
+      and augment the partial differential equations they solve with neural networks. The augmented
+      models are trained using resolved simulations of the turbulent process generated using
+      Oceananigans.jl so the neural networks learn the missing physics
+      <a href="#ndes-paper">(Ramadhan et al., 2023)</a>.
     </p>
   </div>
 </div>
@@ -58,17 +86,35 @@
   <div class="research-description">
     <h3>Fluid dynamics on Earth and other planets</h3>
     <p>
-      In collaboration with oceanographers at MIT, we have leveraged Oceananigans.jl to tackle research problems requiring the speedup provided by GPUs.
-      For example, we have <a href="#uq-paper">fit oceanic convection models using Bayesian inference</a>, <a href="#antarctic-meltwater-paper">accurately modeled meltwater from Antarctic ice shelves</a>,
-      and even <a href="#icy-moons-paper">investigated the circulation of subsurface oceans on icy moons</a> such as Jupiter's <a href="https://en.wikipedia.org/wiki/Europa_(moon)#Subsurface_ocean">Europa</a>
-      and Saturn's <a href="https://en.wikipedia.org/wiki/Enceladus#Subsurface_water_ocean">Enceladus</a>.
+      In collaboration with oceanographers at MIT, we have leveraged Oceananigans.jl to tackle
+      research problems requiring the speedup provided by GPUs. For example, we have
+      <a href="#uq-paper">fit oceanic convection models using Bayesian inference</a>,
+      <a href="#antarctic-meltwater-paper"
+        >accurately modeled meltwater from Antarctic ice shelves</a
+      >, and even
+      <a href="#icy-moons-paper">investigated the circulation of subsurface oceans on icy moons</a>
+      such as Jupiter's
+      <a href="https://en.wikipedia.org/wiki/Europa_(moon)#Subsurface_ocean">Europa</a> and Saturn's
+      <a href="https://en.wikipedia.org/wiki/Enceladus#Subsurface_water_ocean">Enceladus</a>.
     </p>
   </div>
   <div class="research-figure right-aligned">
     <div class="slideshow" id="slideshow3">
-      <div><img src="img/Europa-ocean-model-schematic.png" alt="Europa ocean model schematic" /></div>
-      <div><img src="img/Europa-ocean-model-zonal-velocity.png" alt="Europa ocean model zonal velocity" /></div>
-      <div><img src="img/Antarctic-meltwater-domain-schematic.jpg" alt="Antarctic meltwater domain schematic" /></div>
+      <div>
+        <img src="img/Europa-ocean-model-schematic.png" alt="Europa ocean model schematic" />
+      </div>
+      <div>
+        <img
+          src="img/Europa-ocean-model-zonal-velocity.png"
+          alt="Europa ocean model zonal velocity"
+        />
+      </div>
+      <div>
+        <img
+          src="img/Antarctic-meltwater-domain-schematic.jpg"
+          alt="Antarctic meltwater domain schematic"
+        />
+      </div>
       <div><img src="img/Oceananigans-KPP-parameters-MCMC.png" alt="KPP parameters MCMC" /></div>
     </div>
   </div>
@@ -77,16 +123,26 @@
 <div class="research-area">
   <div class="research-figure left-aligned">
     <div class="slideshow" id="slideshow4">
-      <div><img src="img/Southern-Ocean-surface-stress-JAS.png" alt="Southern Ocean surface stress" /></div>
-      <div><img src="img/Southern-Ocean-sea-ice-zone-MOC-schematic.png" alt="Southern Ocean sea ice zone MOC schematic" /></div>
+      <div>
+        <img src="img/Southern-Ocean-surface-stress-JAS.png" alt="Southern Ocean surface stress" />
+      </div>
+      <div>
+        <img
+          src="img/Southern-Ocean-sea-ice-zone-MOC-schematic.png"
+          alt="Southern Ocean sea ice zone MOC schematic"
+        />
+      </div>
     </div>
   </div>
   <div class="research-description">
     <h3>Southern Ocean dynamics</h3>
     <p>
-      I have done some work on bringing in a dynamical perspective to how the Southern Ocean's meridional overturning circulation interacts with the ocean surface and sea ice around Antarctica <a href="#antarctic-siz-paper">(Ramadhan et al., 2022)</a>.
-      This was done by inferring surface stress patterns from decades of observational satellite data.
-      We also investigated trends that may explain patterns and rates of Antarctic land ice loss and sea level rise.
+      I have done some work on bringing in a dynamical perspective to how the Southern Ocean's
+      meridional overturning circulation interacts with the ocean surface and sea ice around
+      Antarctica <a href="#antarctic-siz-paper">(Ramadhan et al., 2022)</a>. This was done by
+      inferring surface stress patterns from decades of observational satellite data. We also
+      investigated trends that may explain patterns and rates of Antarctic land ice loss and sea
+      level rise.
     </p>
   </div>
 </div>
@@ -95,17 +151,27 @@
   <div class="research-description">
     <h3>Idealized modeling of the ecological dynamics of marine microbes</h3>
     <p>
-      Marine microbial communities lie at the bottom of the oceanic food web sustaining all marine animal life.
-      The geographical structure of these microbial communities, and thus oceanic biodiversity, is set by short-range ecological interactions.
-      To investigate how these interactions affect biodiversity, we utilized an agent-based modeling approach in which millions of marine microbes are modeled as
-      particles that are advected by surface ocean currents derived from satellite observations.
-      The interaction was modeled using an imbalanced probabilistic rock-paper-scissors game leading to the reproduction of observed ecological phenomena.
+      Marine microbial communities lie at the bottom of the oceanic food web sustaining all marine
+      animal life. The geographical structure of these microbial communities, and thus oceanic
+      biodiversity, is set by short-range ecological interactions. To investigate how these
+      interactions affect biodiversity, we utilized an agent-based modeling approach in which
+      millions of marine microbes are modeled as particles that are advected by surface ocean
+      currents derived from satellite observations. The interaction was modeled using an imbalanced
+      probabilistic rock-paper-scissors game leading to the reproduction of observed ecological
+      phenomena.
     </p>
   </div>
   <div class="research-figure right-aligned">
     <div class="slideshow" id="slideshow5">
-      <div><img src="img/Lagrangian-microbes-rock-paper-scissors-interaction.png" alt="Lagrangian microbes rock-paper-scissors interaction" /></div>
-      <div><img src="img/Lagrangian-microbes-dynamics.png" alt="Lagrangian microbes dynamics" /></div>
+      <div>
+        <img
+          src="img/Lagrangian-microbes-rock-paper-scissors-interaction.png"
+          alt="Lagrangian microbes rock-paper-scissors interaction"
+        />
+      </div>
+      <div>
+        <img src="img/Lagrangian-microbes-dynamics.png" alt="Lagrangian microbes dynamics" />
+      </div>
     </div>
   </div>
 </div>
@@ -118,28 +184,37 @@
     Project Lovelace: Developing computational thinking in science students
   </h3>
 
-  <div class="project-details" id="project1" style="display: none;">
+  <div class="project-details" id="project1" style="display: none">
     <div class="project-content">
       <div class="project-text">
-        <p><a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a> is an open online platform
-          for learning about science and developing computational thinking through programming and problem
-          solving. It is a collection of computational science problems and tutorials taken from all branches of
-          the natural, social, and mathematical sciences. Each problem teaches a scientific application (e.g.
-          locating earthquakes, DNA splicing) and requires the use of scientific insight and some programming
-          skills to solve. Tutorials teach computational methods that students and researchers may find useful
-          (e.g. solving differential equations, Bayesian inference) and may be required knowledge for some
-          problems.</p>
+        <p>
+          <a href="http://projectlovelace.net/" target="_blank">Project Lovelace</a> is an open
+          online platform for learning about science and developing computational thinking through
+          programming and problem solving. It is a collection of computational science problems and
+          tutorials taken from all branches of the natural, social, and mathematical sciences. Each
+          problem teaches a scientific application (e.g. locating earthquakes, DNA splicing) and
+          requires the use of scientific insight and some programming skills to solve. Tutorials
+          teach computational methods that students and researchers may find useful (e.g. solving
+          differential equations, Bayesian inference) and may be required knowledge for some
+          problems.
+        </p>
 
-        <p>While Project Lovelace is still in development, we are deploying the website and the problems one by
-          one throughout the winter in preparation for a pilot run in April 2017. In addition to the website's
-          recreational aspect we ultimately hope that the problems and tutorials may be used in undergraduate
-          courses, especially to complement courses that lack a computational portion as computational methods
-          have become ubiquitous in almost every field of science.</p>
+        <p>
+          While Project Lovelace is still in development, we are deploying the website and the
+          problems one by one throughout the winter in preparation for a pilot run in April 2017. In
+          addition to the website's recreational aspect we ultimately hope that the problems and
+          tutorials may be used in undergraduate courses, especially to complement courses that lack
+          a computational portion as computational methods have become ubiquitous in almost every
+          field of science.
+        </p>
       </div>
       <div class="project-image">
-        <img src="img/ada-lovelace-portrait.jpg" alt="Ada Lovelace portrait">
-        <p>The name commemorates <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank">Ada
-          Lovelace</a> who proposed the first algorithm to be run on a computer in the 1840's.</p>
+        <img src="img/ada-lovelace-portrait.jpg" alt="Ada Lovelace portrait" />
+        <p>
+          The name commemorates
+          <a href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank">Ada Lovelace</a> who
+          proposed the first algorithm to be run on a computer in the 1840's.
+        </p>
       </div>
     </div>
   </div>
@@ -151,33 +226,44 @@
     Molecular movies and geometry reconstruction using Coulomb explosion imaging
   </h3>
 
-  <div class="project-details" id="project2" style="display: none;">
+  <div class="project-details" id="project2" style="display: none">
     <div class="project-content">
       <div class="project-text">
-        <p>Have you ever seen a molecule bend or participate in a chemical reaction? If so, probably not directly:
-          single molecules are notoriously hard to observe for any length of time. For my MSc thesis I developed a
-          rigorous computational framework to create movies of individual molecules undergoing chemical reactions
-          using Coulomb explosion imaging (CEI), a technique of studying the ultrafast dynamics of smaller
-          molecules in the gas phase. While CEI has always promised that atomic structures may be measured, in
-          practice no rigorous method is available and instead the momentum vectors are studied. The momentum
-          vectors tell a large part of the story but aren't as satisfying to study as the actual structure
-          everyone seeks so a method of retrieving the structure is highly desirable.</p>
+        <p>
+          Have you ever seen a molecule bend or participate in a chemical reaction? If so, probably
+          not directly: single molecules are notoriously hard to observe for any length of time. For
+          my MSc thesis I developed a rigorous computational framework to create movies of
+          individual molecules undergoing chemical reactions using Coulomb explosion imaging (CEI),
+          a technique of studying the ultrafast dynamics of smaller molecules in the gas phase.
+          While CEI has always promised that atomic structures may be measured, in practice no
+          rigorous method is available and instead the momentum vectors are studied. The momentum
+          vectors tell a large part of the story but aren't as satisfying to study as the actual
+          structure everyone seeks so a method of retrieving the structure is highly desirable.
+        </p>
 
-        <p>The structure may be recovered by attempting to simulate the CEI experiment backwards in time; however,
-          solving for the molecular geometries constitutes an ill-posed nonconvex optimization problem that is
-          difficult to tackle computationally even for small molecules. I am actively trying different
-          optimization approaches and also collaborating with the Department of Statistics and Actuarial Science
-          on a fully statistical approach using Bayesian inference. So far the statistical approach seems more
-          promising as it will allow for the inclusion of measurement uncertainty which every previous study has
-          neglected and seems to scale well to larger molecules <a href="#msc-thesis">(Ramadhan, 2017)</a>.</p>
+        <p>
+          The structure may be recovered by attempting to simulate the CEI experiment backwards in
+          time; however, solving for the molecular geometries constitutes an ill-posed nonconvex
+          optimization problem that is difficult to tackle computationally even for small molecules.
+          I am actively trying different optimization approaches and also collaborating with the
+          Department of Statistics and Actuarial Science on a fully statistical approach using
+          Bayesian inference. So far the statistical approach seems more promising as it will allow
+          for the inclusion of measurement uncertainty which every previous study has neglected and
+          seems to scale well to larger molecules <a href="#msc-thesis">(Ramadhan, 2017)</a>.
+        </p>
       </div>
 
       <div class="project-image">
-        <img src="img/proton-migration.png" alt="Proton migration molecular movie">
-        <p>Molecular movie of proton migration in acetylene imaged in momentum space (by other members of my group).</p>
-        <img src="img/rainbow-plot.png" alt="Multiple molecular structures">
-        <p>Multiple (two) structures found in searching for molecular geometries showcasing the ill-posed nature of
-        the optimization problem.</p>
+        <img src="img/proton-migration.png" alt="Proton migration molecular movie" />
+        <p>
+          Molecular movie of proton migration in acetylene imaged in momentum space (by other
+          members of my group).
+        </p>
+        <img src="img/rainbow-plot.png" alt="Multiple molecular structures" />
+        <p>
+          Multiple (two) structures found in searching for molecular geometries showcasing the
+          ill-posed nature of the optimization problem.
+        </p>
       </div>
     </div>
   </div>
@@ -189,24 +275,30 @@
     Ultrafast molecular dynamics probed by synchrotron radiation
   </h3>
 
-  <div class="project-details" id="project3" style="display: none;">
+  <div class="project-details" id="project3" style="display: none">
     <div class="project-content">
       <div class="project-text">
-        <p>The geometries and dynamics of small gas molecules may be studied by Coulomb explosion imaging (CEI),
-          providing a means of directly probing the atomic structure and dynamics of smaller molecules in the gas
-          phase, a regime where no method is viable. CEI is usually performed using ultrashort laser pulses
-          (~10<sup>−15</sup> s) with the goal of "blowing up" the molecule as fast as possible to
-          minimize the disturbance to the molecule and ensure accurate imaging of the atomic structure.</p>
+        <p>
+          The geometries and dynamics of small gas molecules may be studied by Coulomb explosion
+          imaging (CEI), providing a means of directly probing the atomic structure and dynamics of
+          smaller molecules in the gas phase, a regime where no method is viable. CEI is usually
+          performed using ultrashort laser pulses (~10<sup>−15</sup> s) with the goal of "blowing
+          up" the molecule as fast as possible to minimize the disturbance to the molecule and
+          ensure accurate imaging of the atomic structure.
+        </p>
 
-        <p>As a proof of principle, we were able to use single X-ray photons from the Canadian Light Source
-          synchrotron to study the dynamics of dissociative ionization in the OCS molecule using CEI. The use of single X-ray
-          photons led to faster ionization and "blow up" compared to short laser pulses, showing promise for
-          greater temporal precision in CEI experiments. It also allowed us to identify a surprisingly rich set of
-          ultrafast molecular dynamics for the first time <a href="#synchrotron-paper">(Ramadhan et al., 2016)</a>.</p>
+        <p>
+          As a proof of principle, we were able to use single X-ray photons from the Canadian Light
+          Source synchrotron to study the dynamics of dissociative ionization in the OCS molecule
+          using CEI. The use of single X-ray photons led to faster ionization and "blow up" compared
+          to short laser pulses, showing promise for greater temporal precision in CEI experiments.
+          It also allowed us to identify a surprisingly rich set of ultrafast molecular dynamics for
+          the first time <a href="#synchrotron-paper">(Ramadhan et al., 2016)</a>.
+        </p>
       </div>
       <div class="project-image">
-        <img src="img/OCS-111-dalitz-plots.png" alt="OCS Dalitz plots">
-        <img src="img/dalitz-plots-y-projection.png" alt="Dalitz plots y-projection">
+        <img src="img/OCS-111-dalitz-plots.png" alt="OCS Dalitz plots" />
+        <img src="img/dalitz-plots-y-projection.png" alt="Dalitz plots y-projection" />
       </div>
     </div>
   </div>
@@ -218,27 +310,32 @@
     Easy end-cap control in polyyne synthesis using ultrafast lasers
   </h3>
 
-  <div class="project-details" id="project4" style="display: none;">
+  <div class="project-details" id="project4" style="display: none">
     <div class="project-content">
       <div class="project-text">
-        <p>The traditional synthesis method for polyynes, an allotrope of carbon with chemical structure
-          (−C≡C−)<sub>n</sub>, is a challenging and dangerous multistep procedure that provides little control
-          over the their end-caps. Yet polyynes are of great interest in interstellar chemistry and especially in
-          nanotechnology as potential elements for molecular machines and carbon cluster precursors. Their
-          end-caps may endow them with extra functionality and so a safe and controllable synthesis procedure is
-          highly desirable.</p>
+        <p>
+          The traditional synthesis method for polyynes, an allotrope of carbon with chemical
+          structure (−C≡C−)<sub>n</sub>, is a challenging and dangerous multistep procedure that
+          provides little control over the their end-caps. Yet polyynes are of great interest in
+          interstellar chemistry and especially in nanotechnology as potential elements for
+          molecular machines and carbon cluster precursors. Their end-caps may endow them with extra
+          functionality and so a safe and controllable synthesis procedure is highly desirable.
+        </p>
 
-        <p>By irradiating different liquid solvents with short laser pulses, we are able to easily synthesize
-          long-chain polyynes and demonstrate end-cap control for methyl caps. Using high-performance liquid
-          chromatography (HPLC), we have confirmed the synthesis of polyynes up to C<sub>18</sub>H<sub>2</sub> and
-          methyl-capped polyynes up to HC<sub>14</sub>CH<sub>3</sub>. This opens the possibility for controlling
-          the synthesis of other polyyne molecules and their efficient mass production
-          <a href="#polyyne-paper">(Ramadhan et al., 2016)</a>.</p>
+        <p>
+          By irradiating different liquid solvents with short laser pulses, we are able to easily
+          synthesize long-chain polyynes and demonstrate end-cap control for methyl caps. Using
+          high-performance liquid chromatography (HPLC), we have confirmed the synthesis of polyynes
+          up to C<sub>18</sub>H<sub>2</sub> and methyl-capped polyynes up to
+          HC<sub>14</sub>CH<sub>3</sub>. This opens the possibility for controlling the synthesis of
+          other polyyne molecules and their efficient mass production
+          <a href="#polyyne-paper">(Ramadhan et al., 2016)</a>.
+        </p>
       </div>
 
       <div class="project-image">
-        <img src="img/polyyne-irradiation-setup.png" alt="Polyyne irradiation setup">
-        <img src="img/polyyne-irradiation-HPLC.png" alt="Polyyne irradiation HPLC">
+        <img src="img/polyyne-irradiation-setup.png" alt="Polyyne irradiation setup" />
+        <img src="img/polyyne-irradiation-HPLC.png" alt="Polyyne irradiation HPLC" />
       </div>
     </div>
   </div>
@@ -250,26 +347,31 @@
     Synthesis of graphene oxide gels and thin films with tunable properties
   </h3>
 
-  <div class="project-details" id="project5" style="display: none;">
+  <div class="project-details" id="project5" style="display: none">
     <div class="project-content">
       <div class="project-text">
-        <p>Graphene has attracted an enormous amount of attention over the past decade owing to its peculiar
-          properties and vast applicability. However, large-scale single layers of pristine graphene are difficult
-          to obtain and thus much research has focused on graphene oxide gels which may be used to produce
-          high-quality graphene. These gels have their own applications too, such as drug delivery and sensor
-          engineering. To satisfy the large demand for graphene oxide gels, an efficient production method is
-          highly desirable.</p>
+        <p>
+          Graphene has attracted an enormous amount of attention over the past decade owing to its
+          peculiar properties and vast applicability. However, large-scale single layers of pristine
+          graphene are difficult to obtain and thus much research has focused on graphene oxide gels
+          which may be used to produce high-quality graphene. These gels have their own applications
+          too, such as drug delivery and sensor engineering. To satisfy the large demand for
+          graphene oxide gels, an efficient production method is highly desirable.
+        </p>
 
-        <p>By irradiating aqueous graphene oxide with femtosecond laser pulses, we were able to convert the
-          solution into a gel with physical and chemical properties comparable with those of a monolayer graphene
-          sheet. We were also able to control the properties of the synthesized gel by simply tuning the laser
-          pulse's properties allowing for the production of different gels suitable for building nano-sized
-          graphene photodetectors and transistors <a href="#graphene-paper">(Ibhrahim et al., 2014)</a>.</p>
+        <p>
+          By irradiating aqueous graphene oxide with femtosecond laser pulses, we were able to
+          convert the solution into a gel with physical and chemical properties comparable with
+          those of a monolayer graphene sheet. We were also able to control the properties of the
+          synthesized gel by simply tuning the laser pulse's properties allowing for the production
+          of different gels suitable for building nano-sized graphene photodetectors and transistors
+          <a href="#graphene-paper">(Ibhrahim et al., 2014)</a>.
+        </p>
       </div>
 
       <div class="project-image">
-        <img src="img/graphne-oxide-gel-setup.png" alt="Graphene oxide gel setup">
-        <img src="img/graphne-oxide-gel-sem.jpg" alt="Graphene oxide gel SEM">
+        <img src="img/graphne-oxide-gel-setup.png" alt="Graphene oxide gel setup" />
+        <img src="img/graphne-oxide-gel-sem.jpg" alt="Graphene oxide gel SEM" />
       </div>
     </div>
   </div>

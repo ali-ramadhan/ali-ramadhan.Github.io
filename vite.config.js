@@ -1,12 +1,12 @@
-import { defineConfig } from 'vite'
-import legacy from '@vitejs/plugin-legacy'
+import { defineConfig } from "vite";
+import legacy from "@vitejs/plugin-legacy";
 
 export default defineConfig({
   plugins: [
     legacy({
-      targets: ['defaults', 'not IE 11']
-    })
+      targets: ["defaults", "not IE 11"],
+    }),
   ],
   // Handle static assets
-  assetsInclude: ['**/*.webm', '**/*.png', '**/*.jpg', '**/*.svg']
-})
+  assetsInclude: ["**/*.webm", "**/*.png", "**/*.jpg", "**/*.svg"],
+});

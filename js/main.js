@@ -4,7 +4,9 @@
  */
 
 // Import all CSS - Vite will handle processing and bundling
-import "../css/earth-layers.css";
+import '/css/fonts.css';         // ensure @font-face is defined first
+import '/css/earth-layers.css';
+import '/css/blog.css';          // blog styles used on blog pages and listing
 
 // Import our application modules
 import "./earth-layers.js";

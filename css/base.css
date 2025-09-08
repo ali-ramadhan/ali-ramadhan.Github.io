@@ -63,7 +63,9 @@ html {
 }
 
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-feature-settings: 'liga' 1, 'calt' 1;
   overflow-x: hidden;
   transition: background-color 0.5s ease;
   background: var(--body-bg);

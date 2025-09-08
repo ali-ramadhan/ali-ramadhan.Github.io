@@ -8,5 +8,5 @@ export default defineConfig({
     }),
   ],
   // Handle static assets
-  assetsInclude: ["**/*.webm", "**/*.png", "**/*.jpg", "**/*.svg"],
+  assetsInclude: ["**/*.webm", "**/*.png", "**/*.jpg", "**/*.svg", "**/*.woff2"],
 });

@@ -93,7 +93,7 @@ body {
   transition: background-color 0.5s ease;
 }
 
-.content h1 {
+.content h2 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: var(--content-text);
@@ -128,7 +128,7 @@ body {
   text-align: left;
 }
 
-#resources .content h1 {
+#resources .content h2 {
   text-align: center;
   margin-bottom: 2rem;
 }
@@ -192,7 +192,7 @@ body {
   margin-bottom: 3rem;
 }
 
-#resources .publications-content h1 {
+#resources .publications-content h2 {
   text-align: center;
   margin-bottom: 2rem;
 }

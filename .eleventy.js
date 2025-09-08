@@ -17,16 +17,10 @@ export default function (eleventyConfig) {
     },
   });
 
-  // Pass through assets as-is
-  eleventyConfig.addPassthroughCopy("css");
-  eleventyConfig.addPassthroughCopy("js");
+  // Pass through assets - but let Vite handle CSS and JS processing
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("files");
   eleventyConfig.addPassthroughCopy("CNAME");
-
-  // Watch CSS and JS for changes during development
-  eleventyConfig.addWatchTarget("css/");
-  eleventyConfig.addWatchTarget("js/");
 
   // Create a collection for blog posts
   eleventyConfig.addCollection("posts", function (collectionApi) {

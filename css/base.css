@@ -171,6 +171,17 @@ body {
   transition: color 0.5s ease;
 }
 
+/* Publications styling within resources section */
+#resources .publications-content a {
+  color: var(--content-text);
+  text-decoration: underline;
+  transition: color 0.5s ease;
+}
+
+#resources .publications-content a:hover {
+  color: var(--nav-dot-active);
+}
+
 #resources .content a:hover {
   color: var(--nav-dot-active);
 }
@@ -205,16 +216,6 @@ body {
 #resources .publications-content ol.publications-list li i {
   color: var(--content-subtext);
   transition: color 0.5s ease;
-}
-
-#resources .publications-content a {
-  color: var(--content-text);
-  text-decoration: underline;
-  transition: color 0.5s ease;
-}
-
-#resources .publications-content a:hover {
-  color: var(--nav-dot-active);
 }
 
 #resources .publications-content a.publication-button {

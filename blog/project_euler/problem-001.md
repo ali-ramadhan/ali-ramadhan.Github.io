@@ -40,6 +40,7 @@ print(f"Sum of multiples of 3 or 5 below 1000: {result}")
 ### Approach 2: Mathematical Formula
 
 We can use the inclusion-exclusion principle:
+
 - Sum of multiples of 3 + Sum of multiples of 5 - Sum of multiples of 15
 
 ```python

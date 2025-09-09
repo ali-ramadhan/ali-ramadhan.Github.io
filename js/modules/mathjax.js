@@ -14,28 +14,33 @@ export class MathJaxManager {
       // Configure MathJax before loading
       window.MathJax = {
         tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+          displayMath: [
+            ["$$", "$$"],
+            ["\\[", "\\]"],
+          ],
           processEscapes: true,
           processEnvironments: true,
-          packages: ['base', 'ams', 'newcommand', 'configmacros']
+          packages: ["base", "ams", "newcommand", "configmacros"],
         },
         startup: {
           ready: () => {
-            console.log('📐 MathJax initialized successfully!');
+            console.log("📐 MathJax initialized successfully!");
             MathJax.startup.defaultReady();
             this.initialized = true;
             this.processMathCodeBlocks();
             this.reprocessMath();
-          }
-        }
+          },
+        },
       };
 
       // Load MathJax from CDN
       await this.loadMathJaxScript();
-
     } catch (error) {
-      console.error('Failed to initialize MathJax:', error);
+      console.error("Failed to initialize MathJax:", error);
     }
   }
 
@@ -48,18 +53,18 @@ export class MathJaxManager {
         return;
       }
 
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.id = 'MathJax-script';
+      const script = document.createElement("script");
+      script.type = "text/javascript";
+      script.id = "MathJax-script";
       script.async = true;
-      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js';
+      script.src = "https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js";
 
       script.onload = () => {
         resolve();
       };
 
       script.onerror = () => {
-        reject(new Error('Failed to load MathJax script'));
+        reject(new Error("Failed to load MathJax script"));
       };
 
       document.head.appendChild(script);
@@ -68,10 +73,10 @@ export class MathJaxManager {
 
   // Convert ```math code blocks to MathJax display math
   processMathCodeBlocks() {
-    const codeBlocks = document.querySelectorAll('pre code.language-math');
-    codeBlocks.forEach(block => {
+    const codeBlocks = document.querySelectorAll("pre code.language-math");
+    codeBlocks.forEach((block) => {
       const mathContent = block.textContent;
-      const mathDiv = document.createElement('div');
+      const mathDiv = document.createElement("div");
       mathDiv.innerHTML = `$$${mathContent}$$`;
       block.parentNode.parentNode.replaceChild(mathDiv, block.parentNode);
     });
@@ -80,8 +85,8 @@ export class MathJaxManager {
   // Method to re-process math if content is dynamically added
   reprocessMath() {
     if (this.initialized && window.MathJax && window.MathJax.typesetPromise) {
-      window.MathJax.typesetPromise().catch(err => {
-        console.error('MathJax typeset error:', err);
+      window.MathJax.typesetPromise().catch((err) => {
+        console.error("MathJax typeset error:", err);
       });
     }
   }

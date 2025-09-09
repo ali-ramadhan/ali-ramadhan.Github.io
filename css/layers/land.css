@@ -140,13 +140,13 @@
     text-align: center;
     gap: 15px;
   }
-  
+
   .profile-picture {
     align-self: center;
     width: 100px;
     height: 100px;
   }
-  
+
   .social-links {
     justify-content: center;
   }

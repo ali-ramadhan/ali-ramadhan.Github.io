@@ -556,11 +556,6 @@
 
 /* Section and sub-section numbering */
 .blog-post-content {
-  counter-reset: h1counter;
-}
-
-.blog-post-content h1 {
-  counter-increment: h1counter;
   counter-reset: h2counter;
 }
 
@@ -571,18 +566,23 @@
 
 .blog-post-content h3 {
   counter-increment: h3counter;
+  counter-reset: h4counter;
 }
 
-.blog-post-content h1::before {
-  content: counter(h1counter) ". ";
+.blog-post-content h4 {
+  counter-increment: h4counter;
 }
 
 .blog-post-content h2::before {
-  content: counter(h1counter) "." counter(h2counter) ". ";
+  content: counter(h2counter) ". ";
 }
 
 .blog-post-content h3::before {
-  content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
+  content: counter(h2counter) "." counter(h3counter) ". ";
+}
+
+.blog-post-content h4::before {
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
 }
 
 /* Footnotes Styling */

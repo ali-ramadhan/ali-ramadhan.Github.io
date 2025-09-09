@@ -41,7 +41,10 @@
     "markdown-it-anchor": "^9.2.0",
     "markdown-it-container": "^4.0.0",
     "markdown-it-footnote": "^4.0.0",
+    "markdown-it-prism": "^3.0.0",
     "markdown-it-table-of-contents": "^1.0.0",
+    "prism-themes": "^1.9.0",
+    "prismjs": "^1.30.0",
     "three": "^0.136.0"
   }
 }

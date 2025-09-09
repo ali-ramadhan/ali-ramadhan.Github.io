@@ -301,7 +301,8 @@
   background: rgb(116, 185, 255, 0.1);
 }
 
-.blog-post-content code {
+/* Inline code styling (not highlighted by Prism) */
+.blog-post-content code:not([class*="language-"]) {
   background: #f8f9fa;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
@@ -309,22 +310,90 @@
   font-size: 0.9em;
 }
 
-[data-theme="dark"] .blog-post-content code {
+[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
   background: #2d3748;
   color: #e2e8f0;
 }
 
-.blog-post-content pre {
-  background: #f8f9fa;
-  padding: 1.5rem;
+/* Prism code block container styling */
+.blog-post-content pre[class*="language-"] {
+  margin: 1.5rem 0;
   border-radius: 8px;
   overflow-x: auto;
-  margin: 1.5rem 0;
+  font-size: 0.9em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .blog-post-content pre {
-  background: #2d3748;
-  color: #e2e8f0;
+/* Line numbers styling */
+.blog-post-content pre.line-numbers {
+  padding-left: 3.8em;
+  counter-reset: linenumber;
+}
+
+.blog-post-content pre.line-numbers > code {
+  position: relative;
+  white-space: inherit;
+}
+
+.blog-post-content .line-numbers .line-numbers-rows {
+  position: absolute;
+  pointer-events: none;
+  top: 0;
+  font-size: 100%;
+  left: -3.8em;
+  width: 3em;
+  letter-spacing: -1px;
+  border-right: 1px solid #999;
+  user-select: none;
+}
+
+.blog-post-content .line-numbers-rows > span {
+  pointer-events: none;
+  display: block;
+  counter-increment: linenumber;
+}
+
+.blog-post-content .line-numbers-rows > span:before {
+  content: counter(linenumber);
+  color: #999;
+  display: block;
+  padding-right: 0.8em;
+  text-align: right;
+}
+
+/* Toolbar styling */
+.blog-post-content .toolbar {
+  position: relative;
+  top: 0;
+  right: 0;
+  background: transparent;
+  border: none;
+}
+
+.blog-post-content .toolbar-item {
+  display: inline-block;
+}
+
+.blog-post-content .toolbar-item button {
+  background: rgba(224, 224, 224, 0.2);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 0.8em;
+  padding: 0.2em 0.5em;
+  color: inherit;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.blog-post-content .toolbar-item button:hover {
+  opacity: 1;
+}
+
+/* Dark mode adjustments for toolbar */
+[data-theme="dark"] .blog-post-content .toolbar-item button {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .blog-post-full-footer {

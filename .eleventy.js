@@ -9,17 +9,15 @@ export default function (eleventyConfig) {
       server: {
         middlewareMode: true,
       },
-      build: {
-        rollupOptions: {
-          input: "js/main.js",
-        },
-      },
     },
   });
 
   // Pass through assets - but let Vite handle CSS and JS processing
   eleventyConfig.addPassthroughCopy("img");
   eleventyConfig.addPassthroughCopy("files");
+  eleventyConfig.addPassthroughCopy("fonts");
+  eleventyConfig.addPassthroughCopy("js");
+  eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("CNAME");
 
   // Create a collection for blog posts

@@ -399,6 +399,61 @@
   color: #b0b0b0;
 }
 
+/* Footnotes Styling */
+.blog-post-content .footnotes-sep {
+  margin: 3rem 0 2rem;
+  border: none;
+  border-top: 2px solid #eee;
+}
+
+[data-theme="dark"] .blog-post-content .footnotes-sep {
+  border-top-color: #444;
+}
+
+.blog-post-content .footnotes {
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.blog-post-content .footnotes ol {
+  padding-left: 1.5rem;
+}
+
+.blog-post-content .footnotes li {
+  margin-bottom: 0.8rem;
+}
+
+.blog-post-content .footnote-ref {
+  color: #3498db;
+  text-decoration: none;
+  font-size: 0.8em;
+  vertical-align: super;
+  margin: 0 0.1em;
+}
+
+.blog-post-content .footnote-ref:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .blog-post-content .footnote-ref {
+  color: #74b9ff;
+}
+
+.blog-post-content .footnote-backref {
+  color: #3498db;
+  text-decoration: none;
+  margin-left: 0.3rem;
+}
+
+.blog-post-content .footnote-backref:hover {
+  text-decoration: underline;
+}
+
+[data-theme="dark"] .blog-post-content .footnote-backref {
+  color: #74b9ff;
+}
+
 /* Responsive Design */
 @media (width <= 768px) {
   .blog-section {

@@ -4,10 +4,14 @@
  */
 
 import markdownItContainer from "markdown-it-container";
+import markdownItFootnote from "markdown-it-footnote";
 
 export function configureMarkdown(eleventyConfig) {
   // Configure markdown-it with custom extensions
   eleventyConfig.amendLibrary("md", (mdLib) => {
+    // Footnotes plugin
+    mdLib.use(markdownItFootnote);
+
     // Custom figure container syntax: ::: figure [classes]
     mdLib.use(markdownItContainer, "figure", {
       validate: function (params) {

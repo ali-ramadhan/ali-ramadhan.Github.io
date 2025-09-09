@@ -5,12 +5,29 @@
 
 import markdownItContainer from "markdown-it-container";
 import markdownItFootnote from "markdown-it-footnote";
+import markdownItAnchor from "markdown-it-anchor";
+import markdownItToc from "markdown-it-table-of-contents";
 
 export function configureMarkdown(eleventyConfig) {
   // Configure markdown-it with custom extensions
   eleventyConfig.amendLibrary("md", (mdLib) => {
     // Footnotes plugin
     mdLib.use(markdownItFootnote);
+
+    // Anchor plugin - must come before TOC plugin
+    mdLib.use(markdownItAnchor, {
+      permalink: markdownItAnchor.permalink.headerLink({
+        safariReaderFix: true,
+      }),
+    });
+
+    // Table of contents plugin
+    mdLib.use(markdownItToc, {
+      includeLevel: [1, 2, 3],
+      containerClass: "table-of-contents",
+      markerPattern: /^\[\[toc\]\]/im,
+      listType: "ul",
+    });
 
     // Custom figure container syntax: ::: figure [classes]
     mdLib.use(markdownItContainer, "figure", {

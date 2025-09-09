@@ -38,8 +38,10 @@
   },
   "dependencies": {
     "dat.gui": "^0.7.9",
+    "markdown-it-anchor": "^9.2.0",
     "markdown-it-container": "^4.0.0",
     "markdown-it-footnote": "^4.0.0",
+    "markdown-it-table-of-contents": "^1.0.0",
     "three": "^0.136.0"
   }
 }

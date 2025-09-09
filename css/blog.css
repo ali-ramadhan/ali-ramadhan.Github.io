@@ -96,6 +96,16 @@
   color: #74b9ff;
 }
 
+/* Header anchor links should inherit heading color, not link color */
+.blog-post-content .header-anchor {
+  color: inherit;
+  text-decoration: none;
+}
+
+.blog-post-content .header-anchor:hover {
+  text-decoration: underline;
+}
+
 [data-theme="dark"] .blog-post-title a:hover {
   color: #74b9ff;
 }
@@ -397,6 +407,113 @@
 
 [data-theme="dark"] .blog-post-content figcaption {
   color: #b0b0b0;
+}
+
+/* Table of Contents Styling */
+.blog-post-content .table-of-contents {
+  margin: 2rem 0;
+  counter-reset: toc1counter;
+}
+
+.blog-post-content .table-of-contents ul {
+  list-style-type: none;
+  margin: 0;
+  padding-left: 2rem;
+}
+
+.blog-post-content .table-of-contents > ul {
+  padding-left: 0;
+}
+
+.blog-post-content .table-of-contents li {
+  margin-bottom: 0.4rem;
+  line-height: 1.4;
+  counter-increment: toc1counter;
+}
+
+.blog-post-content .table-of-contents > ul > li > ul {
+  counter-reset: toc2counter;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 2rem;
+}
+
+.blog-post-content .table-of-contents > ul > li > ul > li {
+  counter-increment: toc2counter;
+  counter-reset: toc3counter;
+}
+
+.blog-post-content .table-of-contents > ul > li > ul > li > ul > li {
+  counter-increment: toc3counter;
+}
+
+.blog-post-content .table-of-contents a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline;
+  transition: color 0.3s ease;
+}
+
+.blog-post-content .table-of-contents a:hover {
+  color: #3498db;
+  text-decoration: none;
+}
+
+/* TOC numbering */
+.blog-post-content .table-of-contents > ul > li::before {
+  content: counter(toc1counter) ". ";
+  display: inline;
+}
+
+.blog-post-content .table-of-contents > ul > li > ul > li::before {
+  content: counter(toc1counter) "." counter(toc2counter) ". ";
+  display: inline;
+}
+
+.blog-post-content .table-of-contents > ul > li > ul > li > ul > li::before {
+  content: counter(toc1counter) "." counter(toc2counter) "." counter(toc3counter) ". ";
+  display: inline;
+}
+
+/* Dark mode support for TOC */
+[data-theme="dark"] .blog-post-content .table-of-contents a {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .blog-post-content .table-of-contents a:hover {
+  color: #74b9ff;
+}
+
+/* Section and sub-section numbering */
+.blog-post-content {
+  counter-reset: h1counter;
+}
+
+.blog-post-content h1 {
+  counter-increment: h1counter;
+  counter-reset: h2counter;
+}
+
+.blog-post-content h2 {
+  counter-increment: h2counter;
+  counter-reset: h3counter;
+}
+
+.blog-post-content h3 {
+  counter-increment: h3counter;
+}
+
+.blog-post-content h1::before {
+  content: counter(h1counter) ". ";
+}
+
+.blog-post-content h2::before {
+  content: counter(h1counter) "." counter(h2counter) ". ";
+}
+
+.blog-post-content h3::before {
+  content: counter(h1counter) "." counter(h2counter) "." counter(h3counter) ". ";
 }
 
 /* Footnotes Styling */

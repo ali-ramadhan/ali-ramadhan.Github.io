@@ -1,7 +1,7 @@
 ---
+layout: "blog-post"
 title: "Welcome to My Blog"
 date: 2024-09-07
-layout: "blog-post"
 ---
 
 # Welcome to My Blog

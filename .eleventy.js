@@ -1,6 +1,10 @@
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
+import { configureMarkdown } from "./config/markdown.js";
 
 export default function (eleventyConfig) {
+  // Configure custom markdown extensions and transforms
+  configureMarkdown(eleventyConfig);
+
   // Add Vite plugin
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {

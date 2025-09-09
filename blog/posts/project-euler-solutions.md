@@ -1,7 +1,7 @@
 ---
+layout: "blog-post"
 title: "Project Euler Solutions"
 date: 2024-09-09
-layout: "blog-post"
 ---
 
 # Project Euler Solutions

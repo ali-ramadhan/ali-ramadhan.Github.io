@@ -39,25 +39,24 @@
 }
 
 .blog-post-preview {
-  background: rgb(255, 255, 255, 0.9);
+  background: #ffffff;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 10px rgb(0, 0, 0, 0.05);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
-  border: 1px solid rgb(255, 255, 255, 0.2);
+  border: 1px solid #e0e0e0;
 }
 
 .blog-post-preview:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 30px rgb(0, 0, 0, 0.15);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.1);
 }
 
 [data-theme="dark"] .blog-post-preview {
-  background: rgb(45, 45, 45, 0.9);
-  border: 1px solid rgb(255, 255, 255, 0.1);
+  background: #2d2d2d;
+  border: 1px solid #555;
 }
 
 .blog-post-header {
@@ -163,30 +162,35 @@
 
 /* Individual Blog Post Styles */
 .blog-post-body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--body-bg);
   min-height: 100vh;
-  font-family: inherit;
-}
-
-[data-theme="dark"] .blog-post-body {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  font-family: 'Inter', sans-serif;
+  font-optical-sizing: auto;
+  font-feature-settings: 'liga' 1, 'calt' 1;
 }
 
 .blog-nav {
   padding: 1rem 2rem;
-  background: rgb(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  background: transparent;
 }
 
 .home-link {
-  color: white;
+  color: #333;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
 }
 
 .home-link:hover {
-  color: #f39c12;
+  color: #3498db;
+}
+
+[data-theme="dark"] .home-link {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .home-link:hover {
+  color: #74b9ff;
 }
 
 .blog-post-main {
@@ -196,15 +200,12 @@
 }
 
 .blog-post {
-  background: rgb(255, 255, 255, 0.95);
-  border-radius: 12px;
-  padding: 3rem;
-  box-shadow: 0 8px 40px rgb(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
+  background: transparent;
+  padding: 0;
 }
 
 [data-theme="dark"] .blog-post {
-  background: rgb(45, 45, 45, 0.95);
+  background: transparent;
   color: #e0e0e0;
 }
 

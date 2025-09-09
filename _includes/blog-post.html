@@ -16,21 +16,11 @@
           <h1 class="blog-post-full-title">{{ title }}</h1>
           <div class="blog-post-meta">
             <time class="blog-post-full-date"> {{ date }} </time>
-            {% if tags %}
-            <div class="blog-post-full-tags">
-              {% for tag in tags %}
-              <span class="blog-tag">{{ tag }}</span>
-              {% endfor %}
-            </div>
-            {% endif %}
           </div>
         </header>
 
-        <div class="blog-post-content">{{ content }}</div>
+        <div class="blog-post-content">{{ content | safe }}</div>
 
-        <footer class="blog-post-full-footer">
-          <a href="/" class="return-home">← Return to Home</a>
-        </footer>
       </article>
     </main>
 

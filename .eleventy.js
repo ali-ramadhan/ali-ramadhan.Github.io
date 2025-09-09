@@ -27,6 +27,16 @@ export default function (eleventyConfig) {
     });
   });
 
+  // Create a collection for Project Euler problems
+  eleventyConfig.addCollection("euler", function (collectionApi) {
+    return collectionApi.getFilteredByGlob("blog/project_euler/*.md").sort((a, b) => {
+      // Sort by problem number (extracted from filename)
+      const aNum = parseInt(a.fileSlug.match(/\d+/)?.[0] || "0");
+      const bNum = parseInt(b.fileSlug.match(/\d+/)?.[0] || "0");
+      return aNum - bNum;
+    });
+  });
+
   return {
     dir: {
       input: ".",

@@ -36,8 +36,8 @@ new ThemeManager();
 new MathJaxManager();
 
 // Initialize Prism manually to ensure plugins work
-document.addEventListener('DOMContentLoaded', () => {
-  if (typeof Prism !== 'undefined') {
+document.addEventListener("DOMContentLoaded", () => {
+  if (typeof Prism !== "undefined") {
     Prism.highlightAll();
   }
 });

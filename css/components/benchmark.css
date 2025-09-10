@@ -113,6 +113,27 @@
   font-kerning: none;
 }
 
+/* ANSI color classes */
+.ansi-red { color: #ff5555; }
+.ansi-green { color: #50fa7b; }
+.ansi-yellow { color: #f1fa8c; }
+.ansi-blue { color: #8be9fd; }
+.ansi-magenta { color: #ff79c6; }
+.ansi-cyan { color: #8be9fd; }
+.ansi-white { color: #f8f8f2; }
+.ansi-gray { color: #6272a4; }
+.ansi-bold { font-weight: bold; }
+
+/* Dark theme ANSI colors */
+[data-theme="dark"] .ansi-red { color: #ff5555; }
+[data-theme="dark"] .ansi-green { color: #50fa7b; }
+[data-theme="dark"] .ansi-yellow { color: #f1fa8c; }
+[data-theme="dark"] .ansi-blue { color: #8be9fd; }
+[data-theme="dark"] .ansi-magenta { color: #ff79c6; }
+[data-theme="dark"] .ansi-cyan { color: #8be9fd; }
+[data-theme="dark"] .ansi-white { color: #f8f8f2; }
+[data-theme="dark"] .ansi-gray { color: #6272a4; }
+
 /* CPU info styling */
 .benchmark-cpu {
   font-family: inherit; /* Use default font, not monospace */

@@ -2,12 +2,12 @@ solution1:
   cpu: AMD Ryzen Threadripper 7960X
   output: |
     BenchmarkTools.Trial: 10000 samples with 1 evaluation per sample.
-     Range (min … max):  135.895 μs …  1.284 ms  ┊ GC (min … max): 0.00% … 85.45%
-     Time  (median):     146.080 μs              ┊ GC (median):    0.00%
-     Time  (mean ± σ):   151.181 μs ± 22.380 μs  ┊ GC (mean ± σ):  0.78% ±  3.88%
+     Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m156.506 μs[22m[39m … [35m 1.425 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 83.02%
+     Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m201.578 μs              [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+     Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m203.234 μs[22m[39m ± [32m38.245 μs[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m1.19% ±  5.06%
 
-        ▁▂▅▇█▇▆▆▅▅▄▃▃▃▂▃▂▂▂▂                 ▁▂▁  ▁                ▂
-      ▄▇█████████████████████▇▇█▆▆▅▅▆▆▆▆▆▅▅▅▄██████▇▆▇▆▄▄▄▄▁▃▅▄▆▆▆ █
-      136 μs        Histogram: log(frequency) by time       218 μs <
+      [39m [39m [39m [39m [39m [39m [39m [39m█[39m▄[39m [39m [39m [39m [39m [39m [39m [34m [39m[32m [39m[39m [39m [39m▃[39m▄[39m▁[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+      [39m▃[39m▄[39m▃[39m▃[39m▃[39m▂[39m▄[39m█[39m█[39m▄[39m▅[39m▅[39m▅[39m▄[39m▄[39m▄[34m▄[39m[32m▃[39m[39m▄[39m▆[39m█[39m█[39m█[39m▅[39m▃[39m▃[39m▃[39m▃[39m▃[39m▃[39m▃[39m▃[39m▃[39m▃[39m▃[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▂[39m▁[39m▁[39m▁[39m▁[39m▁[39m▂[39m▁[39m▂[39m▂[39m▂[39m [39m▃
+      157 μs[90m          Histogram: frequency by time[39m          321 μs [0m[1m<[22m
 
-     Memory estimate: 115.91 KiB, allocs estimate: 242.
+     Memory estimate[90m: [39m[33m115.91 KiB[39m, allocs estimate[90m: [39m[33m242[39m.

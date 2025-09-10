@@ -3,6 +3,57 @@
  * Handles interactive benchmark tooltips and modals
  */
 
+function parseAnsiToHtml(text) {
+  // ANSI color codes to HTML class mapping
+  const ansiMap = {
+    '0': 'reset',
+    '1': 'bold',
+    '22': 'normal',
+    '30': 'black',
+    '31': 'red',
+    '32': 'green',
+    '33': 'yellow',
+    '34': 'blue',
+    '35': 'magenta',
+    '36': 'cyan',
+    '37': 'white',
+    '39': 'default',
+    '90': 'gray'
+  };
+  
+  // Stack to keep track of open spans
+  let openSpans = [];
+  
+  // Replace ANSI escape codes with HTML spans
+  return text
+    .replace(/\[(\d+)m/g, (match, code) => {
+      const colorClass = ansiMap[code];
+      
+      if (code === '0' || code === '39') {
+        // Reset - close all open spans
+        const closing = openSpans.map(() => '</span>').join('');
+        openSpans = [];
+        return closing;
+      } else if (code === '22') {
+        // Normal weight - just close bold if it's open
+        const boldIndex = openSpans.findIndex(span => span.includes('ansi-bold'));
+        if (boldIndex !== -1) {
+          openSpans.splice(boldIndex, 1);
+          return '</span>';
+        }
+        return '';
+      } else if (colorClass) {
+        const className = `ansi-${colorClass}`;
+        openSpans.push(className);
+        return `<span class="${className}">`;
+      }
+      
+      return match; // Unknown code, leave as is
+    })
+    // Close any remaining open spans at the end
+    + openSpans.map(() => '</span>').join('');
+}
+
 export class BenchmarkManager {
   constructor() {
     this.tooltip = null;
@@ -92,9 +143,9 @@ export class BenchmarkManager {
     try {
       const benchmarkData = JSON.parse(element.dataset.benchmark);
       
-      // Update tooltip content
+      // Update tooltip content with colored ANSI output
       const output = this.tooltip.querySelector('.benchmark-output');
-      output.textContent = benchmarkData.full_output;
+      output.innerHTML = parseAnsiToHtml(benchmarkData.full_output);
       
       // Update CPU info
       const cpuElement = this.tooltip.querySelector('.benchmark-cpu');

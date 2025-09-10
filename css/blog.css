@@ -252,12 +252,14 @@
 }
 
 .blog-post-full-date {
-  color: #666;
+  color: #999;
   font-style: italic;
+  font-size: 0.85rem;
+  font-weight: 400;
 }
 
 [data-theme="dark"] .blog-post-full-date {
-  color: #b0b0b0;
+  color: #777;
 }
 
 .blog-post-full-tags {

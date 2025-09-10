@@ -20,15 +20,15 @@ function parseAnsiToHtml(text) {
     '39': 'default',
     '90': 'gray'
   };
-  
+
   // Stack to keep track of open spans
   let openSpans = [];
-  
+
   // Replace ANSI escape codes with HTML spans
   return text
     .replace(/\[(\d+)m/g, (match, code) => {
       const colorClass = ansiMap[code];
-      
+
       if (code === '0' || code === '39') {
         // Reset - close all open spans
         const closing = openSpans.map(() => '</span>').join('');
@@ -47,7 +47,7 @@ function parseAnsiToHtml(text) {
         openSpans.push(className);
         return `<span class="${className}">`;
       }
-      
+
       return match; // Unknown code, leave as is
     })
     // Close any remaining open spans at the end
@@ -122,7 +122,7 @@ export class BenchmarkManager {
         clearTimeout(this.hoverTimeout);
         this.hoverTimeout = null;
       }
-      
+
       // Small delay to allow moving to tooltip
       setTimeout(() => {
         if (!this.tooltip.matches(':hover') && !e.target.matches(':hover')) {
@@ -142,22 +142,22 @@ export class BenchmarkManager {
   showTooltip(element, event, forceShow = false) {
     try {
       const benchmarkData = JSON.parse(element.dataset.benchmark);
-      
+
       // Update tooltip content with colored ANSI output
       const output = this.tooltip.querySelector('.benchmark-output');
       output.innerHTML = parseAnsiToHtml(benchmarkData.full_output);
-      
-      // Update CPU info
+
+      // Update system info (Julia version | CPU)
       const cpuElement = this.tooltip.querySelector('.benchmark-cpu');
-      cpuElement.textContent = `CPU: ${benchmarkData.cpu}`;
-      
+      cpuElement.textContent = `${benchmarkData.julia_version} | ${benchmarkData.cpu}`;
+
       // Show tooltip
       this.tooltip.classList.add('visible');
       this.activeReference = element;
-      
+
       // Position tooltip
       this.positionTooltip(event || element);
-      
+
     } catch (error) {
       console.error('Error displaying benchmark:', error);
     }
@@ -174,7 +174,7 @@ export class BenchmarkManager {
     if (!this.tooltip) return;
 
     let x, y;
-    
+
     if (eventOrElement.clientX !== undefined) {
       // Mouse event
       x = eventOrElement.clientX;

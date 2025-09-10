@@ -17,7 +17,7 @@ function markdownItMathBlocks(md) {
   const defaultFence = md.renderer.rules.fence || function(tokens, idx, options, env, slf) {
     return slf.renderToken(tokens, idx, options);
   };
-  
+
   md.renderer.rules.fence = function(tokens, idx, options, env, renderer) {
     const token = tokens[idx];
     if (token.info === 'math') {
@@ -31,43 +31,44 @@ function markdownItMathBlocks(md) {
 function markdownItBenchmark(md) {
   // Regex to match @benchmark[filename:key] pattern
   const benchmarkRegex = /@benchmark\[([^:]+):([^\]]+)\]/g;
-  
+
   md.core.ruler.after('inline', 'benchmark', function(state) {
     for (let i = 0; i < state.tokens.length; i++) {
       const token = state.tokens[i];
-      
+
       if (token.type === 'inline' && token.children) {
         for (let j = 0; j < token.children.length; j++) {
           const child = token.children[j];
-          
+
           if (child.type === 'text' && benchmarkRegex.test(child.content)) {
             benchmarkRegex.lastIndex = 0; // Reset regex
             let match;
             let content = child.content;
             let hasMatches = false;
-            
+
             while ((match = benchmarkRegex.exec(child.content)) !== null) {
               hasMatches = true;
               const [fullMatch, filename, key] = match;
-              
+
               try {
                 // Load benchmark data from YAML
                 const benchmarkPath = path.join(process.cwd(), '_data', 'project_euler', 'benchmarks', `${filename}.yaml`);
                 const benchmarkData = yaml.load(readFileSync(benchmarkPath, 'utf8'));
                 const benchmark = benchmarkData[key];
-                
+
                 if (benchmark && benchmark.output) {
                   // Extract median time from the benchmark output (accounting for ANSI codes)
                   const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[μm]?s)/);
                   const medianTime = medianMatch ? medianMatch[1] : 'Unknown';
-                  
+
                   // Create benchmark data object with extracted median time
                   const benchmarkObj = {
                     median_time: medianTime,
                     full_output: benchmark.output,
+                    julia_version: benchmark.julia_version,
                     cpu: benchmark.cpu
                   };
-                  
+
                   // Replace with HTML for interactive benchmark display
                   const escapedData = JSON.stringify(benchmarkObj).replace(/'/g, '&#39;');
                   const replacement = `<span class="benchmark-reference" data-benchmark='${escapedData}'>${medianTime}</span>`;
@@ -81,16 +82,16 @@ function markdownItBenchmark(md) {
                 content = content.replace(fullMatch, `[Benchmark file ${filename}.yaml not found]`);
               }
             }
-            
+
             if (hasMatches) {
               // Create new HTML inline token
               const htmlToken = new state.Token('html_inline', '', 0);
               htmlToken.content = content;
               htmlToken.level = child.level;
-              
+
               // Replace the text token with HTML token
               token.children[j] = htmlToken;
-              
+
               // Reset regex for safety
               benchmarkRegex.lastIndex = 0;
             }
@@ -98,7 +99,7 @@ function markdownItBenchmark(md) {
         }
       }
     }
-    
+
     return false;
   });
 }

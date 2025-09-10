@@ -7,9 +7,11 @@ import "/css/fonts.css";
 import "/css/base.css";
 import "/css/blog.css";
 import "/css/components/ui-controls.css";
+import "/css/components/benchmark.css";
 
 import { ThemeManager } from "./modules/theme.js";
 import { MathJaxManager } from "./modules/mathjax.js";
+import { BenchmarkManager } from "./modules/benchmark.js";
 
 // Import Prism.js core and components
 import Prism from "prismjs";
@@ -34,6 +36,7 @@ import "prismjs/plugins/toolbar/prism-toolbar.css";
 // Initialize minimal functionality for blog pages
 new ThemeManager();
 new MathJaxManager();
+new BenchmarkManager();
 
 // Initialize Prism manually to ensure plugins work
 document.addEventListener("DOMContentLoaded", () => {

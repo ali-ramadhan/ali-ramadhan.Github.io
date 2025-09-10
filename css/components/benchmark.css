@@ -1,0 +1,191 @@
+/* Benchmark Component Styles */
+
+/* Inline benchmark reference styling */
+.benchmark-reference {
+  display: inline;
+  padding: 2px 6px;
+  background: #e8f4fd;
+  border: 1px solid #bee5eb;
+  border-radius: 4px;
+  color: #0c5460;
+  font-family: "Fira Code", Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.9em;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  position: relative;
+}
+
+.benchmark-reference:hover {
+  background: #cce7f0;
+  border-color: #86cfda;
+  color: #0a4a54;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark theme support */
+[data-theme="dark"] .benchmark-reference {
+  background: #1e3a3f;
+  border-color: #2d5a61;
+  color: #7dd3fc;
+}
+
+[data-theme="dark"] .benchmark-reference:hover {
+  background: #2d5a61;
+  border-color: #3d7a81;
+  color: #87e5ff;
+}
+
+/* Benchmark tooltip/modal styling */
+.benchmark-tooltip {
+  position: fixed;
+  z-index: 1000;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  max-width: 90vw;
+  max-height: 80vh;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+.benchmark-tooltip.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.benchmark-tooltip-content {
+  position: relative;
+  padding: 1rem;
+  max-height: 80vh;
+  overflow: auto;
+}
+
+.benchmark-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  color: #666;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  z-index: 1001;
+}
+
+.benchmark-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* Benchmark output formatting */
+.benchmark-output {
+  font-family: "Fira Code", monospace !important;
+  font-size: 0.85rem;
+  line-height: 1.15;
+  background: #f8f9fa;
+  border: 1px solid #e9ecef;
+  border-radius: 6px;
+  padding: 1rem;
+  margin: 0;
+  white-space: pre;
+  overflow-x: auto;
+  color: #333;
+  min-width: 400px;
+
+  /* Fix Unicode histogram character gaps */
+  letter-spacing: -0.05em;
+  font-variant-ligatures: none;
+  font-feature-settings: "liga" 0, "calt" 0;
+  text-rendering: geometricPrecision;
+  font-kerning: none;
+}
+
+/* CPU info styling */
+.benchmark-cpu {
+  font-family: inherit; /* Use default font, not monospace */
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: #666;
+  padding: 0.75rem 1rem;
+  margin: 0;
+}
+
+/* Dark theme for tooltip */
+[data-theme="dark"] .benchmark-tooltip {
+  background: #2d2d2d;
+  border-color: #555;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .benchmark-close {
+  color: #ccc;
+}
+
+[data-theme="dark"] .benchmark-close:hover {
+  background: #555;
+  color: #fff;
+}
+
+[data-theme="dark"] .benchmark-output {
+  background: #1e1e1e;
+  border-color: #555;
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .benchmark-cpu {
+  color: #ccc;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .benchmark-tooltip {
+    max-width: 95vw;
+    max-height: 90vh;
+  }
+
+  .benchmark-tooltip-content {
+    padding: 0.75rem;
+  }
+
+  .benchmark-output {
+    font-size: 0.8rem;
+    min-width: unset;
+  }
+}
+
+/* Animation for better UX */
+@media (prefers-reduced-motion: no-preference) {
+  .benchmark-reference {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .benchmark-tooltip {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+/* Accessibility improvements */
+.benchmark-reference:focus {
+  outline: 2px solid #0066cc;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .benchmark-reference,
+  .benchmark-tooltip {
+    transition: none;
+  }
+}

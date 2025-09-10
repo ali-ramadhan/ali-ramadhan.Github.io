@@ -1,0 +1,13 @@
+solution1:
+  cpu: AMD Ryzen Threadripper 7960X
+  output: |
+    BenchmarkTools.Trial: 10000 samples with 1 evaluation per sample.
+     Range (min … max):  135.895 μs …  1.284 ms  ┊ GC (min … max): 0.00% … 85.45%
+     Time  (median):     146.080 μs              ┊ GC (median):    0.00%
+     Time  (mean ± σ):   151.181 μs ± 22.380 μs  ┊ GC (mean ± σ):  0.78% ±  3.88%
+
+        ▁▂▅▇█▇▆▆▅▅▄▃▃▃▂▃▂▂▂▂                 ▁▂▁  ▁                ▂
+      ▄▇█████████████████████▇▇█▆▆▅▅▆▆▆▆▆▅▅▅▄██████▇▆▇▆▄▄▄▄▁▃▅▄▆▆▆ █
+      136 μs        Histogram: log(frequency) by time       218 μs <
+
+     Memory estimate: 115.91 KiB, allocs estimate: 242.

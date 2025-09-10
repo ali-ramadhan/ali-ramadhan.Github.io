@@ -42,8 +42,8 @@ function markdownItBenchmark(md) {
                 const benchmark = benchmarkData[key];
                 
                 if (benchmark && benchmark.output) {
-                  // Extract median time from the benchmark output using regex
-                  const medianMatch = benchmark.output.match(/Time\s+\(median\):\s+([\d.]+\s+[μm]?s)/);
+                  // Extract median time from the benchmark output (accounting for ANSI codes)
+                  const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[μm]?s)/);
                   const medianTime = medianMatch ? medianMatch[1] : 'Unknown';
                   
                   // Create benchmark data object with extracted median time

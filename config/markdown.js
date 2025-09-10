@@ -12,6 +12,21 @@ import { readFileSync } from "fs";
 import path from "path";
 import yaml from "js-yaml";
 
+// Custom math blocks plugin for markdown-it
+function markdownItMathBlocks(md) {
+  const defaultFence = md.renderer.rules.fence || function(tokens, idx, options, env, slf) {
+    return slf.renderToken(tokens, idx, options);
+  };
+  
+  md.renderer.rules.fence = function(tokens, idx, options, env, renderer) {
+    const token = tokens[idx];
+    if (token.info === 'math') {
+      return '<div class="math-display">$$' + token.content.trim() + '$$</div>\n';
+    }
+    return defaultFence(tokens, idx, options, env, renderer);
+  };
+}
+
 // Custom benchmark plugin for markdown-it
 function markdownItBenchmark(md) {
   // Regex to match @benchmark[filename:key] pattern
@@ -91,6 +106,9 @@ function markdownItBenchmark(md) {
 export function configureMarkdown(eleventyConfig) {
   // Configure markdown-it with custom extensions
   eleventyConfig.amendLibrary("md", (mdLib) => {
+    // Custom math blocks plugin - must come before Prism plugin
+    mdLib.use(markdownItMathBlocks);
+
     // Custom benchmark plugin - must come before other plugins
     mdLib.use(markdownItBenchmark);
 
@@ -100,6 +118,10 @@ export function configureMarkdown(eleventyConfig) {
     // Prism syntax highlighting plugin
     mdLib.use(markdownItPrism, {
       plugins: ["line-numbers", "toolbar", "show-language", "copy-to-clipboard"],
+      init: (Prism) => {
+        // Define empty math language to prevent warnings
+        Prism.languages.math = {};
+      }
     });
 
     // Anchor plugin - must come before TOC plugin

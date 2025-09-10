@@ -71,15 +71,10 @@ export class MathJaxManager {
     });
   }
 
-  // Convert ```math code blocks to MathJax display math
+  // Process math display divs (math blocks are now server-side rendered)
   processMathCodeBlocks() {
-    const codeBlocks = document.querySelectorAll("pre code.language-math");
-    codeBlocks.forEach((block) => {
-      const mathContent = block.textContent;
-      const mathDiv = document.createElement("div");
-      mathDiv.innerHTML = `$$${mathContent}$$`;
-      block.parentNode.parentNode.replaceChild(mathDiv, block.parentNode);
-    });
+    // Math blocks are now rendered server-side as <div class="math-display">$$...$$</div>
+    // so no processing needed, but keeping method for compatibility
   }
 
   // Method to re-process math if content is dynamically added

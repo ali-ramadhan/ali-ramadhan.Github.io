@@ -306,8 +306,10 @@
   background: #f8f9fa;
   padding: 0.2rem 0.4rem;
   border-radius: 4px;
-  font-family: Monaco, Menlo, "Ubuntu Mono", monospace;
+  font-family: "Fira Code", monospace;
   font-size: 0.9em;
+  font-feature-settings: "liga" 1, "calt" 1;
+  font-variant-ligatures: contextual;
 }
 
 [data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
@@ -322,6 +324,14 @@
   overflow-x: auto;
   font-size: 0.9em;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Ensure all code elements use Fira Code with ligatures */
+.blog-post-content pre[class*="language-"] code,
+.blog-post-content code[class*="language-"] {
+  font-family: "Fira Code", monospace;
+  font-feature-settings: "liga" 1, "calt" 1;
+  font-variant-ligatures: contextual;
 }
 
 /* Line numbers styling */

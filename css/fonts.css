@@ -14,3 +14,13 @@
   font-display: swap;
   src: url("../assets/fonts/InterVariable-Italic.woff2") format("woff2");
 }
+
+/* Fira Code Variable Font */
+@font-face {
+  font-family: "Fira Code";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("../assets/fonts/FiraCode-VF.woff2") format("woff2");
+  font-feature-settings: "liga" 1, "calt" 1;
+}

@@ -8,182 +8,38 @@ import * as dat from "dat.gui";
 ///// Data
 /////
 
-let videos = [
-  {
-    title: "Surface air temperature",
-    src: "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_vp9_good_crf42.webm",
-    dateStart: new Date("2018-12-01T00:00:00"),
-    framePeriod: 3600,
-    colorbar: "img/colorbars/temperature_colorbar.png",
-    tooltips: {
-      "Diurnal cycle": {
-        // GPS @ Mankato, KS: Very close to the geographical center of the contiguous states.
-        latitude: 39.78723,
-        longitude: -98.21005,
-        color: "red",
-        title: "The diurnal cycle",
-        text: `As the sun pass over land it heats up the atmosphere. Looking at the surface air temperature, it almost looks like a beating heart.
-                        Peak daily temperatures usually occur 3-4 hours after high noon.
-                        The diurnal cycle is especially prominent in high desert regions such as the Tibetan and Andean Plateaus.`,
-      },
-      "Polar Vortex": {
-        latitude: 82.4987, // Same latitude as Alert, NU
-        longitude: -123.11934, // Same longitude as Vancouver, BC
-        color: "gold",
-        title: "The polar vortex",
-        text: `Strong circumpolar winds encircle the North Pole high up in the stratosphere (15-50 km high), trapping a huge mass of cold air.
-                        This feature of the atmosphere's circulation is called the polar vortex and another one exists at the South Pole too as well as on some other planets!
-                        The polar vortex can weaken allowing the Arctic air to escape and bring frigid temperatures to Canada and the United States like it did on December 30, 2018.`,
-      },
-      Extratropics: {
-        // GPS @ 10° south of Adak, AK.
-        latitude: 41.87395,
-        longitude: -176.63402,
-        color: "red",
-        title: "Extratropical weather",
-        text: `The weather of the extratropics is highly variable due to the constant clashing of cold polar air masses from the north and warm tropical air masses from the south,
-                         which leads to the creation of weather fronts. The jet stream flows eastward driving weather patterns and storms towards the east as well.
-                         You can see this here as the temperature patterns get advected eastward.`,
-      },
-      Tropics: {
-        // GPS @ 30° west of Managua, Nicaragua
-        latitude: 12.13282,
-        longitude: -116.2504,
-        color: "green",
-        title: "Tropical weather",
-        text: `The weather of the tropics is less variable than the extratropics.
-                         This is due to the relatively constant amount of solar radiation they receive throughout the year.
-                         The warm ocean also provides a constant source of warm moist air which inhibits weather systems from forming.
-                         You can still get powerful thunderstorms and monsoons over land, but the tropical ocean is pretty quiet.`,
-      },
-    },
-  },
+// Global variables for video data
+let videos = [];
+let videoFramerate = 24;
 
-  {
-    title: "Precipitation",
-    src: "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precipitation_vp9_good_crf54.webm",
-    dateStart: new Date("2017-08-16T00:00:00"),
-    framePeriod: 3600,
-    colorbar: "img/colorbars/precipitation_colorbar.png",
-    tooltips: {
-      "Hurricane Harvey": {
-        // GPS @ Rockport, TX where Hurricane Harvey made landfall.
-        latitude: 28.02077,
-        longitude: -97.05601,
-        color: "green",
-        title: "Hurricane Harvey",
-        text: `Here you can see where Hurricane Harvey made landfall near Rockport, Texas on August 25, 2017.
-                         It was a Category 4 hurricane with maximum sustained winds of 130 mph, making it the strongest hurricane to hit the United States since Hurricane Charley in 2004.
-                         It dumped over 40 inches of rain in some areas and caused an estimated $125 billion in damage, making it one of the costliest hurricanes in U.S. history.`,
-      },
-      ITCZ: {
-        // GPS @ 20° west of Cartago, Costa Rica
-        latitude: 9.86444,
-        longitude: -83.91944,
-        color: "brown",
-        title: "The InterTropical Convergence Zone (ITCZ)",
-        text: `The Intertropical Convergence Zone (ITCZ) is a region near the equator where trade winds from the northern and southern hemispheres converge.
-                         This leads to high precipitation rates, especially visible here over the Pacific.
-                         The ITCZ is a critical source of precipitation for many equatorial regions and drives ocean currents.
-                         It's location and intensity is sensitive to changes in climate and is expected to shift in response to climate change.`,
-      },
-      "Tropical precipitation": {
-        // GPS @ Mbuji-Mayi, Democratic Republic of the Congo
-        latitude: -6.13603,
-        longitude: 23.58979,
-        color: "brown",
-        title: "Tropical precipitation",
-        text: `Powerful thunderstorms tend to form near the equator due to the abundance of warm moist air, intense solar radiation, and atmospheric convergence of the trade winds.
-                         You can see this happening almost every day over the Congo basin.`,
-      },
-      "Orographic precipitation": {
-        // GPS @ Prince Rupert, BC
-        latitude: 54.31507,
-        longitude: -130.32098,
-        color: "brown",
-        title: "Orographic precipitation",
-        text: `Here the prevailing winds bring moist air from the Pacific Ocean and over the Rocky Mountains, where it cools and condenses into clouds as it rises.
-                         This leads to heavy precipitation, especially over the coastal Pacific Northwest due to the how steep the mountains are and how close they are to the coast.
-                         You can see several storms hitting the coast and dissipating before they get a chance to penetrate inland.`,
-      },
-      // Monsoons?
-      // Another tropical cyclone over China?
-      // Another one hitting Baja California?
-    },
-  },
+// Load video data from JSON file
+async function loadVideoData() {
+  try {
+    const response = await fetch("/_data/videos.json");
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
 
-  {
-    title: "Sea surface temperature",
-    src: "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/sst_vp9_good_crf32.webm",
-    dateStart: new Date("2019-01-01T00:00:00"),
-    framePeriod: 24 * 3600,
-    colorbar: "img/colorbars/sst_colorbar.png",
-    tooltips: {
-      "Gulf stream": {
-        // GPS @ 10° east of Cambridge, MA
-        latitude: 42.3751,
-        longitude: -71.10561,
-        color: "gold",
-        title: "The Gulf Stream",
-        text: `Here you can see the Gulf Stream, a warm ocean current that flows from the Gulf of Mexico to the North Atlantic.
-                         By transporting warm water from the tropics to higher latitudes, it moderates the climate of Western Europe.
-                         You can see the strong temperature gradient between the cold waters of the North Atlantic and warmer waters southward.`,
-      },
-      ACC: {
-        // GPS @ Marion Island, South Africa
-        latitude: -46.90337,
-        longitude: 37.75452,
-        color: "gold",
-        title: "The Antarctic Circumpolar Current (ACC)",
-        text: `Strong eastward winds encircle Antarctica clockwise and without any land to stop them the winds spin up the strongest ocean current on Earth.
-                         The ACC acts as a barrier to the mixing of warm and cold waters, allowing the Antarctic to maintain its huge ice sheet.
-                         You can see the strong temperature gradient between the cold waters of the Southern Ocean and warmer waters northward.`,
-      },
-    },
-  },
+    // Parse date strings back to Date objects
+    videos = data.videos.map((video) => ({
+      ...video,
+      dateStart: new Date(video.dateStart),
+    }));
 
-  {
-    title: "Ocean current speed",
-    src: "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/ocean_speed_vp9_good_crf32.webm",
-    dateStart: new Date("2020-01-01T00:00:00"),
-    framePeriod: 24 * 3600,
-    colorbar: "img/colorbars/ocean_speed_colorbar.png",
-    tooltips: {
-      "Gulf stream": {
-        // GPS @ 10° east of Cambridge, MA
-        latitude: 42.3751,
-        longitude: -71.10561,
-        color: "gold",
-        title: "The Gulf Stream",
-        text: `Here you can see the Gulf Stream, a warm ocean current that flows from the Gulf of Mexico to the North Atlantic.
-                         By transporting warm water from the tropics to higher latitudes, it moderates the climate of Western Europe.`,
-      },
-      ACC: {
-        // GPS @ Marion Island, South Africa
-        latitude: 0,
-        longitude: 37.75452,
-        color: "gold",
-        title: "The Antarctic Circumpolar Current",
-        text: `Strong eastward winds encircle Antarctica clockwise and without any land to stop them the winds spin up the strongest ocean current on Earth.
-                         The ACC acts as a barrier to the mixing of warm and cold waters, allowing the Antarctic to maintain its huge ice sheet.`,
-      },
-      "Agulhaus rings": {
-        // GPS @ Cape Town, South Africa
-        latitude: -33.92584,
-        longitude: 18.42322,
-        color: "gold",
-        title: "Agulhaus rings",
-        text: `Agulhas rings are large, swirling masses of water that are shed from the Agulhas Current off the coast of South Africa.
-                         The rings transport warm, salty water and nutrients from the Indian Ocean into the Atlantic Ocean. They also look pretty.`,
-      },
-      // Kuroshio?
-      // Gyres?
-    },
-  },
-];
+    videoFramerate = data.videoFramerate;
 
-// Saved all videos at 24 FPS so that 1 second video time = 1 day simulation time.
-const videoFramerate = 24;
+    console.log("Video data loaded successfully:", videos.length, "videos");
+    return videos;
+  } catch (error) {
+    console.error("Failed to load video data:", error);
+    // Fallback to empty array if loading fails
+    videos = [];
+    return videos;
+  }
+}
+
+// videoFramerate is now loaded from JSON data
 
 /////
 ///// Utils
@@ -272,11 +128,33 @@ function showVideoSphereError(message) {
   }
 }
 
-const sphereInit = initVideoSphere();
-if (!sphereInit) {
-  // Exit early if initialization failed - for modules we can't return at top level
-  console.warn("Video sphere initialization failed, skipping setup");
-} else {
+// Initialize video sphere with data loading
+async function initVideoSphereWithData() {
+  try {
+    // Load video data first
+    await loadVideoData();
+
+    // Check if we have videos before initializing
+    if (videos.length === 0) {
+      console.warn("No video data available, skipping video sphere initialization");
+      return;
+    }
+
+    // Initialize Three.js sphere
+    const sphereInit = initVideoSphere();
+    if (!sphereInit) {
+      console.warn("Video sphere initialization failed, skipping setup");
+      return;
+    }
+
+    setupVideoSphere(sphereInit);
+  } catch (error) {
+    console.error("Failed to initialize video sphere:", error);
+  }
+}
+
+// Setup the video sphere with the initialized Three.js components
+function setupVideoSphere(sphereInit) {
   const { scene, camera, renderer, video_width, video_height } = sphereInit;
 
   // Canvas element is created by initVideoSphere function
@@ -524,4 +402,12 @@ if (!sphereInit) {
       }
     });
   } // End of video element check
-} // End of sphereInit else block
+} // End of setupVideoSphere function
+
+// Initialize when the DOM is ready
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initVideoSphereWithData);
+} else {
+  // DOM is already ready
+  initVideoSphereWithData();
+}

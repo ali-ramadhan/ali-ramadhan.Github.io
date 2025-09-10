@@ -22,6 +22,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("fonts");
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("css");
+  eleventyConfig.addPassthroughCopy("_data");
   eleventyConfig.addPassthroughCopy("CNAME");
 
   // Create a collection for blog posts

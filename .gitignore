@@ -1,5 +1,6 @@
 # Eleventy output
 _site/
+.11ty-vite/
 
 # GitHub Node.js template
 

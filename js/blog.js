@@ -12,6 +12,7 @@ import "/css/components/benchmark.css";
 import { ThemeManager } from "./modules/theme.js";
 import { MathJaxManager } from "./modules/mathjax.js";
 import { BenchmarkManager } from "./modules/benchmark.js";
+import { CollapsibleHeadersManager } from "./modules/collapsible-headers.js";
 
 // Import Prism.js core and components
 import Prism from "prismjs";
@@ -37,6 +38,7 @@ import "prismjs/plugins/toolbar/prism-toolbar.css";
 new ThemeManager();
 new MathJaxManager();
 new BenchmarkManager();
+new CollapsibleHeadersManager();
 
 // Initialize Prism manually to ensure plugins work
 document.addEventListener("DOMContentLoaded", () => {

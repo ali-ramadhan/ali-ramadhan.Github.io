@@ -652,6 +652,117 @@
   color: #74b9ff;
 }
 
+/* Collapsible Headers Styling */
+.blog-post-content .collapsible-header {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  transition: color 0.2s ease;
+}
+
+.blog-post-content .collapsible-header:hover {
+  color: #3498db !important;
+}
+
+.blog-post-content .collapsible-header:focus {
+  outline: 2px solid #3498db;
+  outline-offset: 2px;
+}
+
+[data-theme="dark"] .blog-post-content .collapsible-header:hover {
+  color: #74b9ff !important;
+}
+
+[data-theme="dark"] .blog-post-content .collapsible-header:focus {
+  outline-color: #74b9ff;
+}
+
+/* Add rotating arrows as ::after pseudo-elements, positioned at the start */
+.blog-post-content h2.collapsible-header::after,
+.blog-post-content h3.collapsible-header::after,
+.blog-post-content h4.collapsible-header::after,
+.blog-post-content h5.collapsible-header::after,
+.blog-post-content h6.collapsible-header::after {
+  content: "▼";
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transition: transform 0.3s ease;
+  transform: translateY(-50%) rotate(0deg);
+  transform-origin: center;
+  width: 1em;
+  font-size: 0.8em;
+  color: #666;
+}
+
+[data-theme="dark"] .blog-post-content h2.collapsible-header::after,
+[data-theme="dark"] .blog-post-content h3.collapsible-header::after,
+[data-theme="dark"] .blog-post-content h4.collapsible-header::after,
+[data-theme="dark"] .blog-post-content h5.collapsible-header::after,
+[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
+  color: #b0b0b0;
+}
+
+/* Make collapsible headers position relative for absolute positioning of arrow */
+.blog-post-content h2.collapsible-header,
+.blog-post-content h3.collapsible-header,
+.blog-post-content h4.collapsible-header,
+.blog-post-content h5.collapsible-header,
+.blog-post-content h6.collapsible-header {
+  position: relative;
+}
+
+/* Add padding to accommodate the arrow */
+.blog-post-content h2.collapsible-header::before,
+.blog-post-content h3.collapsible-header::before,
+.blog-post-content h4.collapsible-header::before,
+.blog-post-content h5.collapsible-header::before,
+.blog-post-content h6.collapsible-header::before {
+  padding-left: 1.2em;
+}
+
+/* Rotate arrow when collapsed */
+.blog-post-content h2.collapsible-header.collapsed::after,
+.blog-post-content h3.collapsible-header.collapsed::after,
+.blog-post-content h4.collapsible-header.collapsed::after,
+.blog-post-content h5.collapsible-header.collapsed::after,
+.blog-post-content h6.collapsible-header.collapsed::after {
+  transform: translateY(-50%) rotate(-90deg);
+}
+
+/* Collapsible content styling */
+.blog-post-content .collapsible-content {
+  overflow: hidden;
+  max-height: none;
+  opacity: 1;
+  transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+}
+
+.blog-post-content .collapsible-content.collapsed {
+  max-height: 0 !important;
+  opacity: 0.3;
+}
+
+/* Responsive adjustments */
+@media (width <= 768px) {
+  .blog-post-content h2.collapsible-header::after,
+  .blog-post-content h3.collapsible-header::after,
+  .blog-post-content h4.collapsible-header::after,
+  .blog-post-content h5.collapsible-header::after,
+  .blog-post-content h6.collapsible-header::after {
+    transform-origin: center;
+  }
+
+  .blog-post-content h2.collapsible-header.collapsed::after,
+  .blog-post-content h3.collapsible-header.collapsed::after,
+  .blog-post-content h4.collapsible-header.collapsed::after,
+  .blog-post-content h5.collapsible-header.collapsed::after,
+  .blog-post-content h6.collapsible-header.collapsed::after {
+    transform: translateY(-50%) rotate(-90deg);
+  }
+}
+
 /* Responsive Design */
 @media (width <= 768px) {
   .blog-section {

@@ -51,6 +51,8 @@ export default function (eleventyConfig) {
     dir: {
       input: ".",
       output: "_site",
+      includes: "_includes",
+      layouts: "_layouts",
     },
     // Use Nunjucks for HTML files
     markdownTemplateEngine: "njk",

@@ -5,8 +5,7 @@
 @import url("layers/atmosphere.css");
 @import url("layers/land.css");
 @import url("layers/ocean-crust.css");
-@import url("components/navigation.css");
-@import url("components/theme-toggle.css");
+@import url("components/ui-controls.css");
 @import url("components/research.css");
 @import url("components/sun.css");
 @import url("components/video-sphere.css");

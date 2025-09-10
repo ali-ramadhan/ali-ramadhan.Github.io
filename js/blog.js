@@ -6,7 +6,7 @@
 import "/css/fonts.css";
 import "/css/base.css";
 import "/css/blog.css";
-import "/css/components/theme-toggle.css";
+import "/css/components/ui-controls.css";
 
 import { ThemeManager } from "./modules/theme.js";
 import { MathJaxManager } from "./modules/mathjax.js";

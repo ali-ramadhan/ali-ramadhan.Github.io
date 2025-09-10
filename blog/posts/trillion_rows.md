@@ -1,6 +1,7 @@
 ---
 layout: "blog-post"
 title: "Building a weather data warehouse part I: Loading a trillion rows of weather data into TimescaleDB"
+date: 2024-03-31
 github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discussions/2
 hacker_news: https://news.ycombinator.com/item?id=40051191
 ---
@@ -285,7 +286,7 @@ A quick test with inserting ~772 million rows with psycopg3's copy and 16 worker
 
 Now that we've concluded we want to be inserting data into a hypertable, let's take a look at the all hypertable insert rates we've considered in one plot.
 
-::: figure centered
+::: figure centered width-120
 ![benchmarks summary](/assets/images/blog/trillion_rows/benchmarks_summary.png)
 
 Sustained hypertable insert rates including overhead (writing CSV files) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.

@@ -16,12 +16,15 @@ import { CollapsibleHeadersManager } from "./modules/collapsible-headers.js";
 
 // Import Prism.js core and components
 import Prism from "prismjs";
+
 // Import languages needed for blog posts
-import "prismjs/components/prism-sql";
 import "prismjs/components/prism-python";
+import "prismjs/components/prism-julia";
 import "prismjs/components/prism-javascript";
+import "prismjs/components/prism-sql";
 import "prismjs/components/prism-bash";
 import "prismjs/components/prism-json";
+
 // Import Prism plugins
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/toolbar/prism-toolbar";
@@ -30,6 +33,7 @@ import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 
 // Import Prism theme (One Dark theme that works well with both light and dark modes)
 import "prism-themes/themes/prism-one-dark.css";
+
 // Import plugin CSS
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs/plugins/toolbar/prism-toolbar.css";

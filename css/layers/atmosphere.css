@@ -311,3 +311,41 @@
 [data-theme="dark"] .cumulus-cloud::after {
   background: #4a4a6a;
 }
+
+/* Blog Post Listing Styles for Homepage */
+.blog-posts-simple {
+  list-style-type: disc;
+  padding-left: 1.2rem;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.blog-post-item {
+  margin-bottom: 0.8rem;
+}
+
+.blog-post-item a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  display: block;
+}
+
+.blog-post-item a:hover {
+  color: #3498db;
+  text-decoration: underline;
+}
+
+/* Dark mode support for simple blog list */
+[data-theme="dark"] .blog-post-item a {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .blog-post-item a:hover {
+  color: #74b9ff;
+}

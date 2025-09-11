@@ -1,0 +1,282 @@
+/* Floating Table of Contents Styles */
+
+.floating-toc {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  width: 280px;
+  max-height: 80vh;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  overflow: hidden;
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+}
+
+[data-theme="dark"] .floating-toc {
+  background: #2d2d2d;
+  border: 1px solid #555;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Header */
+.floating-toc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  font-weight: 600;
+  border-bottom: 1px solid #ddd;
+  background: #f8f9fa;
+  color: #333;
+}
+
+[data-theme="dark"] .floating-toc-header {
+  background: #3a3a3a;
+  border-bottom-color: #555;
+  color: #e0e0e0;
+}
+
+/* Close button */
+.floating-toc-close {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #666;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.floating-toc-close:hover {
+  background: rgba(0, 0, 0, 0.1);
+  color: #333;
+}
+
+[data-theme="dark"] .floating-toc-close {
+  color: #b0b0b0;
+}
+
+[data-theme="dark"] .floating-toc-close:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e0e0e0;
+}
+
+/* Content */
+.floating-toc-content {
+  padding: 8px 16px 16px;
+  overflow-y: auto;
+  max-height: calc(80vh - 60px);
+}
+
+.floating-toc ol {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+/* Section styling */
+.floating-toc-section {
+  margin: 6px 0;
+}
+
+.floating-toc-section.no-subsections {
+  margin: 4px 0;
+}
+
+.floating-toc-section.collapsed .floating-toc-subsection {
+  display: none;
+}
+
+.section-heading {
+  position: relative;
+}
+
+.section-heading.no-toggle {
+  cursor: default;
+}
+
+.section-heading:not(.no-toggle) {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Section toggle arrow */
+.section-toggle {
+  display: inline-block;
+  font-size: 10px;
+  margin-right: 6px;
+  transition: transform 0.2s ease;
+  color: #666;
+}
+
+[data-theme="dark"] .section-toggle {
+  color: #b0b0b0;
+}
+
+.floating-toc-section.collapsed .section-toggle {
+  transform: rotate(-90deg);
+}
+
+/* Subsections */
+.floating-toc-subsection {
+  padding-left: 20px;
+  margin-top: 4px;
+}
+
+.floating-toc-item {
+  margin: 3px 0;
+}
+
+/* Links */
+.floating-toc a {
+  display: block;
+  padding: 4px 0;
+  color: #333;
+  text-decoration: none;
+  line-height: 1.4;
+  font-size: 14px;
+  transition: color 0.2s ease;
+  border-radius: 4px;
+}
+
+.floating-toc a:hover {
+  color: #3498db;
+}
+
+.floating-toc a.active {
+  color: #3498db;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .floating-toc a {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .floating-toc a:hover {
+  color: #74b9ff;
+}
+
+[data-theme="dark"] .floating-toc a.active {
+  color: #74b9ff;
+}
+
+/* Subsection links styling */
+.floating-toc-subsection a {
+  font-size: 13px;
+  padding: 3px 0;
+  color: #666;
+}
+
+.floating-toc-subsection a:hover {
+  color: #3498db;
+}
+
+.floating-toc-subsection a.active {
+  color: #3498db;
+  font-weight: 600;
+}
+
+[data-theme="dark"] .floating-toc-subsection a {
+  color: #b0b0b0;
+}
+
+[data-theme="dark"] .floating-toc-subsection a:hover {
+  color: #74b9ff;
+}
+
+[data-theme="dark"] .floating-toc-subsection a.active {
+  color: #74b9ff;
+}
+
+/* Responsive: Hide on smaller screens */
+@media (max-width: 1500px) {
+  .floating-toc {
+    display: none;
+  }
+}
+
+/* Smooth scrolling for the ToC content */
+.floating-toc-content {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for ToC content */
+.floating-toc-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.floating-toc-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.floating-toc-content::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.floating-toc-content::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb {
+  background: #555;
+}
+
+[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Restore button when ToC is hidden - styled like theme toggle */
+.floating-toc-restore {
+  position: fixed;
+  top: 100px;
+  right: 30px;
+  z-index: 1000;
+  background: var(--content-bg);
+  border: 2px solid var(--nav-dot-active);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.floating-toc-restore:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.2);
+}
+
+.floating-toc-restore:focus {
+  outline: 2px solid var(--nav-dot-active);
+  outline-offset: 2px;
+}
+
+.floating-toc-restore:focus-visible {
+  outline: 2px solid var(--nav-dot-active);
+  outline-offset: 2px;
+}
+
+.restore-icon {
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+/* Hide restore button on mobile */
+@media (max-width: 1500px) {
+  .floating-toc-restore {
+    display: none;
+  }
+}

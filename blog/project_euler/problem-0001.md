@@ -19,7 +19,7 @@ end
 ```
 
 Benchmarking `sum_multiples_two_generator(3, 5, 1000)`, it runs in
-@benchmark[problem-001:two_generator].
+@benchmark[problem-0001:two_generator].
 
 ## Using the inclusion-exclusion principle
 
@@ -75,7 +75,7 @@ end
 ```
 
 and benchmarking `sum_multiples_two(3, 5, 1000)` I get a median time of
-@benchmark[problem-001:two_ie] which is roughly 2000x faster. It might even be faster
+@benchmark[problem-0001:two_ie] which is roughly 2000x faster. It might even be faster
 but it's quite difficult to benchmark an operation that takes less than 1 ns as system
 clocks don't have sub-nanosecond resolution.
 
@@ -91,8 +91,9 @@ end
 
 Let's sum the multiples of 3, 5, and 6 below $10^6$. Benchmarking
 `sum_multiples_three_generator(3, 5, 7, 10^6)` we get
-@benchmark[problem-001:three_generator]. Taking ~1000x longer than the 2 factor case
-with $L = 10^3$ makes sense since it's now checking 1000 times more numbers.
+@benchmark[problem-0001:three_generator]. Taking ~1500x longer than the 2 factor case
+with $L = 10^3$ makes sense since it's now checking 1000 times more numbers and 50% more
+factors.
 
 The inclusion-exclusion principle extends to any number of finite sets, although it does
 get more complex. For three finite sets $A$, $B$, and $C$:
@@ -127,7 +128,7 @@ end
 ```
 
 and if we benchmark `sum_multiples_three_ie(3, 5, 7, 10^6)` we get
-@benchmark[problem-001:three_ie] which again is potentially sub-nanosecond.
+@benchmark[problem-0001:three_ie] which again is potentially sub-nanosecond.
 
 For more factors, I personally prefer the elegance of the generator expression but if
 performance was critical there's probably a nice way to generate the terms of the

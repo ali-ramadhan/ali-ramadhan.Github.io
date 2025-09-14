@@ -20,6 +20,9 @@
       <article class="blog-post">
         <header class="blog-post-full-header">
           <h1 class="blog-post-full-title">{{ title }}</h1>
+          {% if subtitle %}
+          <h2 class="blog-post-subtitle">{{ subtitle }}</h2>
+          {% endif %}
           <div class="blog-post-meta">
             <time class="blog-post-full-date">{{ date | dateDisplay }}</time>
           </div>

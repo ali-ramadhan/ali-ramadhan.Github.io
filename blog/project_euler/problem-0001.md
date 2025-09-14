@@ -1,6 +1,8 @@
 ---
 layout: "blog-post"
-title: "Proejct Euler Problem 1: Multiples of 3 or 5"
+title: "Project Euler Problem 1"
+subtitle: "Multiples of 3 or 5"
+problem_number: 1
 date: 2024-09-09
 ---
 
@@ -89,7 +91,7 @@ function sum_multiples_three_generator(a, b, c, L)
 end
 ```
 
-Let's sum the multiples of 3, 5, and 6 below $10^6$. Benchmarking
+Let's sum the multiples of 3, 5, and 7 below $10^6$. Benchmarking
 `sum_multiples_three_generator(3, 5, 7, 10^6)` we get
 @benchmark[problem-0001:three_generator]. Taking ~1500x longer than the 2 factor case
 with $L = 10^3$ makes sense since it's now checking 1000 times more numbers and 50% more

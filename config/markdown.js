@@ -58,7 +58,7 @@ function markdownItBenchmark(md) {
 
                 if (benchmark && benchmark.output) {
                   // Extract median time from the benchmark output (accounting for ANSI codes)
-                  const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[μm]?s)/);
+                  const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[nμm]?s)/);
                   const medianTime = medianMatch ? medianMatch[1] : 'Unknown';
 
                   // Create benchmark data object with extracted median time
@@ -66,7 +66,8 @@ function markdownItBenchmark(md) {
                     median_time: medianTime,
                     full_output: benchmark.output,
                     julia_version: benchmark.julia_version,
-                    cpu: benchmark.cpu
+                    cpu: benchmark.cpu,
+                    os: benchmark.os
                   };
 
                   // Replace with HTML for interactive benchmark display

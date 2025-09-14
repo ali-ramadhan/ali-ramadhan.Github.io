@@ -135,7 +135,7 @@
 [data-theme="dark"] .ansi-gray { color: #5f6368; }
 
 /* CPU info styling */
-.benchmark-cpu {
+.benchmark-metadata {
   font-family: inherit; /* Use default font, not monospace */
   font-size: 0.85rem;
   font-weight: 500;
@@ -166,7 +166,7 @@
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .benchmark-cpu {
+[data-theme="dark"] .benchmark-metadata {
   color: #ccc;
 }
 

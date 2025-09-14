@@ -72,7 +72,7 @@ export class BenchmarkManager {
     this.tooltip.className = 'benchmark-tooltip';
     this.tooltip.innerHTML = `
       <div class="benchmark-tooltip-content">
-        <div class="benchmark-cpu"></div>
+        <div class="benchmark-metadata"></div>
         <pre class="benchmark-output"></pre>
         <button class="benchmark-close" aria-label="Close benchmark details">&times;</button>
       </div>
@@ -147,9 +147,9 @@ export class BenchmarkManager {
       const output = this.tooltip.querySelector('.benchmark-output');
       output.innerHTML = parseAnsiToHtml(benchmarkData.full_output);
 
-      // Update system info (Julia version | CPU)
-      const cpuElement = this.tooltip.querySelector('.benchmark-cpu');
-      cpuElement.textContent = `${benchmarkData.julia_version} | ${benchmarkData.cpu}`;
+      // Update system info (Julia version | OS | CPU)
+      const metadataElement = this.tooltip.querySelector('.benchmark-metadata');
+      metadataElement.textContent = `${benchmarkData.julia_version} | ${benchmarkData.os} | ${benchmarkData.cpu}`;
 
       // Show tooltip
       this.tooltip.classList.add('visible');

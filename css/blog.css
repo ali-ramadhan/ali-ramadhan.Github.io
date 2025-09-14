@@ -96,14 +96,23 @@
   color: #74b9ff;
 }
 
-/* Header anchor links should inherit heading color, not link color */
+/* Header anchor links should use heading color, not link color */
 .blog-post-content .header-anchor {
-  color: inherit;
+  color: #2c3e50;
   text-decoration: none;
 }
 
 .blog-post-content .header-anchor:hover {
+  color: #3498db;
   text-decoration: underline;
+}
+
+[data-theme="dark"] .blog-post-content .header-anchor {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .blog-post-content .header-anchor:hover {
+  color: #74b9ff;
 }
 
 [data-theme="dark"] .blog-post-title a:hover {

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project Euler Problem {{ problem_number }}: {{ problem_name }} | Ali Ramadhan</title>
+    {% if collapsible_headers %}
+    <meta name="collapsible-headers" content="true" />
+    {% endif %}
+    {% if floating_toc %}
+    <meta name="floating-toc" content="true" />
+    {% endif %}
+  </head>
+  <body class="blog-post-body">
+    <nav class="blog-nav">
+      <a href="/" class="home-link">← Back to Home</a>
+    </nav>
+
+    <main class="blog-post-main">
+      <article class="blog-post">
+        <header class="blog-post-full-header">
+          <h1 class="blog-post-full-title">Project Euler Problem {{ problem_number }}</h1>
+          {% if problem_name %}
+          <h2 class="blog-post-subtitle">{{ problem_name }}</h2>
+          {% endif %}
+          <div class="blog-post-meta">
+            <time class="blog-post-full-date">{{ date | dateDisplay }}</time>
+          </div>
+        </header>
+
+        <div class="blog-post-content">{{ content | safe }}</div>
+      </article>
+    </main>
+
+    {% include "theme-toggle.html" %}
+
+    <!-- Entry point for Vite -->
+    <script type="module" src="/js/blog.js"></script>
+  </body>
+</html>

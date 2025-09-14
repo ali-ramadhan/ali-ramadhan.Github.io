@@ -1,8 +1,7 @@
 ---
-layout: "blog-post"
-title: "Project Euler Problem 1"
-subtitle: "Multiples of 3 or 5"
+layout: "project-euler-post"
 problem_number: 1
+problem_name: "Multiples of 3 or 5"
 date: 2024-09-09
 ---
 

@@ -129,7 +129,20 @@ end
 ```
 
 and if we benchmark `sum_multiples_three_ie(3, 5, 7, 10^6)` we get
-@benchmark[problem-0001:three_ie] which again is potentially sub-nanosecond.
+@benchmark[problem-0001:three_ie] which again is sub-nanosecond.
+
+## Complexity Analysis
+
+Let $f$ be the number of factors we're considering.
+
+The generator solutions take $\mathcal{O}(Lf)$ time as they iterate through every number
+until $L$ and perform $f$ modulo operations per number. They use $\mathcal{O}(1)$ space
+since generators don't allocate memory for intermediate results.
+
+The inclusion-exclusion solutions achieve $\mathcal{O}(2^f)$ time complexity, as they
+need to compute $2^f - 1$ non-empty subsets to apply the inclusion-exclusion principle.
+But otherwise computing an LCM and using the sum formula takes constant time.
+They also use $\mathcal{O}(1)$ space, storing only a few variables.
 
 For more factors, I personally prefer the elegance of the generator expression but if
 performance was critical there's probably a nice way to generate the terms of the

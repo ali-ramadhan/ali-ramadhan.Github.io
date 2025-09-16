@@ -1,0 +1,194 @@
+# References for time-series-zoo blog post
+# Extracted from manual HTML references
+
+dagum2016:
+  authors: "Dagum, E. B., & Bianconcini, S."
+  year: 2016
+  title: "Seasonal adjustment methods and real time trend-cycle estimation"
+  type: book
+  publisher: "Springer International Publishing"
+  pages: "283 pp."
+  doi: "https://doi.org/10.1007/978-3-319-31822-6"
+
+dickey1979:
+  authors: "Dickey, D. A., & Fuller, W. A."
+  year: 1979
+  title: "Distribution of the estimators for autoregressive time series with a unit root"
+  type: article
+  journal: "Journal of the American Statistical Association"
+  volume: "74"
+  issue: "366a"
+  pages: "427–431"
+  doi: "https://doi.org/10.1080%2F01621459.1979.10482531"
+
+findley1998:
+  authors: "Findley, D. F., Monsell, B. C., Bell, W. R., Otto, M. C., & Chen, B.-C."
+  year: 1998
+  title: "New Capabilities and Methods of the X-12-ARIMA Seasonal-Adjustment Program"
+  type: article
+  journal: "Journal of Business & Economic Statistics"
+  volume: "16"
+  issue: "2"
+  pages: "127-152"
+  doi: "https://doi.org/10.1080/07350015.1998.10524743"
+
+ham2019:
+  authors: "Ham, Y. G., Kim, J. H. & Luo, J. J."
+  year: 2019
+  title: "Deep learning for multi-year ENSO forecasts"
+  type: article
+  journal: "Nature"
+  volume: "573"
+  pages: "568–572"
+  doi: "https://doi.org/10.1038/s41586-019-1559-7"
+
+henderson1916:
+  authors: "Henderson, R."
+  year: 1916
+  title: "Note on Graduation by Adjusted Average"
+  type: article
+  journal: "Transactions of the American Society of Actuaries"
+  volume: "17"
+  pages: "43–48"
+  pdf: "/files/time-series-zoo/Henderson (1916), Note on Graduation by Adjusted Average, Transactions of the American Society of Actuaries.pdf"
+  source: "https://archive.org/details/transactions17actuuoft/page/42/mode/2up"
+
+henshaw2019:
+  authors: "Henshaw, J. L."
+  year: 2019
+  title: "The systemic growth constants of climate change: From its origin in 1780 to its major post-WWII acceleration"
+  type: preprint
+  journal: "arXiv"
+  arxiv: "arXiv:1911.04340"
+  doi: "https://doi.org/10.48550/arXiv.1911.04340"
+
+hyndman2021:
+  authors: "Hyndman, R. J., & Athanasopoulos, G."
+  year: 2021
+  title: "Forecasting: principles and practice"
+  type: book
+  edition: "3rd edition"
+  publisher: "OTexts: Melbourne, Australia"
+  url: "https://otexts.com/fpp3"
+
+keeling1960:
+  authors: "Keeling, C. D."
+  year: 1960
+  title: "The concentration and isotopic abundances of carbon dioxide in the atmosphere"
+  type: article
+  journal: "Tellus"
+  volume: "12"
+  issue: "2"
+  pages: "200-203"
+  doi: "https://doi.org/10.3402/tellusa.v12i2.9366"
+
+keeling2005:
+  authors: "Keeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A."
+  year: 2005
+  title: "Atmospheric CO₂ and ¹³CO₂ exchange with the terrestrial biosphere and oceans from 1978 to 2000: observations and carbon cycle implications"
+  type: chapter
+  book_title: "A History of Atmospheric CO2 and its effects on Plants, Animals, and Ecosystems"
+  editors: "Ehleringer, J.R., Cerling, T. E., & Dearing M. D."
+  pages: "83-113"
+  publisher: "Springer Verlag"
+  doi: "https://doi.org/10.3402/tellusa.v12i2.9366"
+
+kwiatkowski1992:
+  authors: "Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., Shin, Y."
+  year: 1992
+  title: "Testing the null hypothesis of stationarity against the alternative of a unit root: How sure are we that economic time series have a unit root?"
+  type: article
+  journal: "Journal of Econometrics"
+  volume: "54"
+  issue: "1-3"
+  pages: "159-178"
+  doi: "https://doi.org/10.1016/0304-4076(92)90104-Y"
+
+ladiray2001:
+  authors: "Ladiray, D., & Quenneville, B."
+  year: 2001
+  title: "Seasonal Adjustment with the X-11 Method"
+  type: book
+  publisher: "Springer Science+Business Media"
+  pages: "256 pp."
+
+macaulay1931:
+  authors: "Macaulay, F. R."
+  year: 1931
+  title: "The Smoothing of Time Series"
+  type: book
+  publisher: "National Bureau of Economic Research"
+  pages: "169 pp."
+  pdf: "/files/time-series-zoo/Macaulay (1931), The Smoothing of Time Series, National Bureau of Economic Research.pdf"
+  source: "https://www.nber.org/books-and-chapters/smoothing-time-series"
+
+mackinnon2010:
+  authors: "MacKinnon, J. G."
+  year: 2010
+  title: "Critical Values For Cointegration Tests"
+  type: report
+  series: "Working Paper 1227"
+  institution: "Economics Department, Queen's University"
+  url: "https://ideas.repec.org/p/qed/wpaper/1227.html"
+
+nandy2021:
+  authors: "Nandy, D."
+  year: 2021
+  title: "Progress in Solar Cycle Predictions: Sunspot Cycles 24–25 in Perspective"
+  type: article
+  journal: "Solar Physics"
+  volume: "296"
+  pages: "54"
+  doi: "https://doi.org/10.1007/s11207-021-01797-2"
+
+shiskin1967:
+  authors: "Shiskin, J., Young, A. H., & Musgrave, J. C."
+  year: 1967
+  title: "The X-11 Variant of the Census Method II Seasonal Adjustment Program"
+  type: report
+  series: "Technical Paper 15 (revised)"
+  institution: "US Department of Commerce, Bureau of the Census, Washington, DC"
+  url: "https://www.census.gov/library/working-papers/1967/adrm/shiskin-01.html"
+  pdf: "https://www.census.gov/content/dam/Census/library/working-papers/1967/adrm/shiskinyoungmusgrave1967.pdf"
+
+student1908:
+  authors: "Gosset, W.S."
+  year: 1908
+  title: "The probable error of a mean"
+  type: article
+  journal: "Biometrika"
+  volume: "6"
+  issue: "1"
+  pages: "1-25"
+  doi: "https://doi.org/10.2307/2331554"
+
+wolter2011:
+  authors: "Wolter, K. & Timlin, M. S."
+  year: 2011
+  title: "El Niño/Southern Oscillation behaviour since 1871 as diagnosed in an extended multivariate ENSO index (MEI.ext)"
+  type: article
+  journal: "International Journal of Climatology"
+  volume: "31"
+  pages: "1074-1087"
+  doi: "https://doi.org/10.1002/joc.2336"
+
+dagum1978:
+  authors: "Dagum, E. B."
+  year: 1978
+  title: "Modelling, Forecasting and Seasonally Adjusting Economic Time Series with the X-11-ARIMA Method"
+  type: article
+  journal: "The Statistician"
+  volume: "27"
+  issue: "4"
+  pages: "203-216"
+  doi: "https://doi.org/10.2307/2988066"
+
+cleveland1990:
+  authors: "Cleveland, R. B., Cleveland, W. S., McRae, J. E., & Terpenning, I."
+  year: 1990
+  title: "STL: A seasonal-trend decomposition procedure based on loess"
+  type: article
+  journal: "Journal of Official Statistics"
+  volume: "6"
+  issue: "1"
+  pages: "3-73"

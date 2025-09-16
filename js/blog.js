@@ -9,12 +9,14 @@ import "/css/blog.css";
 import "/css/components/ui-controls.css";
 import "/css/components/benchmark.css";
 import "/css/components/floating-toc.css";
+import "/css/citations.css";
 
 import { ThemeManager } from "./modules/theme.js";
 import { MathJaxManager } from "./modules/mathjax.js";
 import { BenchmarkManager } from "./modules/benchmark.js";
 import { CollapsibleHeadersManager } from "./modules/collapsible-headers.js";
 import { FloatingTocManager } from "./modules/floating-toc.js";
+import { CitationManager } from "./modules/citations.js";
 
 // Import Prism.js core and components
 import Prism from "prismjs";
@@ -46,6 +48,7 @@ new MathJaxManager();
 new BenchmarkManager();
 new CollapsibleHeadersManager();
 new FloatingTocManager();
+new CitationManager();
 
 // Initialize Prism manually to ensure plugins work
 document.addEventListener("DOMContentLoaded", () => {

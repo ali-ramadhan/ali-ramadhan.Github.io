@@ -8,6 +8,7 @@ import markdownItFootnote from "markdown-it-footnote";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
 import markdownItPrism from "markdown-it-prism";
+import { markdownItCitations } from "./citations.js";
 import { readFileSync } from "fs";
 import path from "path";
 import yaml from "js-yaml";
@@ -113,6 +114,14 @@ export function configureMarkdown(eleventyConfig) {
 
     // Custom benchmark plugin - must come before other plugins
     mdLib.use(markdownItBenchmark);
+
+    // Citations plugin - must come before other plugins that might process links
+    console.log('About to register citations plugin, function is:', typeof markdownItCitations);
+    mdLib.use(markdownItCitations, {
+      defaultReferenceFile: 'time-series-zoo',
+      citationClass: 'citation',
+      tooltipClass: 'citation-tooltip'
+    });
 
     // Footnotes plugin
     mdLib.use(markdownItFootnote);

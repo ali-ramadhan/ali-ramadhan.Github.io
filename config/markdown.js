@@ -15,14 +15,16 @@ import yaml from "js-yaml";
 
 // Custom math blocks plugin for markdown-it
 function markdownItMathBlocks(md) {
-  const defaultFence = md.renderer.rules.fence || function(tokens, idx, options, env, slf) {
-    return slf.renderToken(tokens, idx, options);
-  };
+  const defaultFence =
+    md.renderer.rules.fence ||
+    function (tokens, idx, options, env, slf) {
+      return slf.renderToken(tokens, idx, options);
+    };
 
-  md.renderer.rules.fence = function(tokens, idx, options, env, renderer) {
+  md.renderer.rules.fence = function (tokens, idx, options, env, renderer) {
     const token = tokens[idx];
-    if (token.info === 'math') {
-      return '<div class="math-display">$$' + token.content.trim() + '$$</div>\n';
+    if (token.info === "math") {
+      return '<div class="math-display">$$' + token.content.trim() + "$$</div>\n";
     }
     return defaultFence(tokens, idx, options, env, renderer);
   };
@@ -33,15 +35,15 @@ function markdownItBenchmark(md) {
   // Regex to match @benchmark[filename:key] pattern
   const benchmarkRegex = /@benchmark\[([^:]+):([^\]]+)\]/g;
 
-  md.core.ruler.after('inline', 'benchmark', function(state) {
+  md.core.ruler.after("inline", "benchmark", function (state) {
     for (let i = 0; i < state.tokens.length; i++) {
       const token = state.tokens[i];
 
-      if (token.type === 'inline' && token.children) {
+      if (token.type === "inline" && token.children) {
         for (let j = 0; j < token.children.length; j++) {
           const child = token.children[j];
 
-          if (child.type === 'text' && benchmarkRegex.test(child.content)) {
+          if (child.type === "text" && benchmarkRegex.test(child.content)) {
             benchmarkRegex.lastIndex = 0; // Reset regex
             let match;
             let content = child.content;
@@ -53,14 +55,20 @@ function markdownItBenchmark(md) {
 
               try {
                 // Load benchmark data from YAML
-                const benchmarkPath = path.join(process.cwd(), '_data', 'project_euler', 'benchmarks', `${filename}.yaml`);
-                const benchmarkData = yaml.load(readFileSync(benchmarkPath, 'utf8'));
+                const benchmarkPath = path.join(
+                  process.cwd(),
+                  "_data",
+                  "project_euler",
+                  "benchmarks",
+                  `${filename}.yaml`
+                );
+                const benchmarkData = yaml.load(readFileSync(benchmarkPath, "utf8"));
                 const benchmark = benchmarkData[key];
 
                 if (benchmark && benchmark.output) {
                   // Extract median time from the benchmark output (accounting for ANSI codes)
                   const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[nμm]?s)/);
-                  const medianTime = medianMatch ? medianMatch[1] : 'Unknown';
+                  const medianTime = medianMatch ? medianMatch[1] : "Unknown";
 
                   // Create benchmark data object with extracted median time
                   const benchmarkObj = {
@@ -68,11 +76,11 @@ function markdownItBenchmark(md) {
                     full_output: benchmark.output,
                     julia_version: benchmark.julia_version,
                     cpu: benchmark.cpu,
-                    os: benchmark.os
+                    os: benchmark.os,
                   };
 
                   // Replace with HTML for interactive benchmark display
-                  const escapedData = JSON.stringify(benchmarkObj).replace(/'/g, '&#39;');
+                  const escapedData = JSON.stringify(benchmarkObj).replace(/'/g, "&#39;");
                   const replacement = `<span class="benchmark-reference" data-benchmark='${escapedData}'>${medianTime}</span>`;
                   content = content.replace(fullMatch, replacement);
                 } else {
@@ -87,7 +95,7 @@ function markdownItBenchmark(md) {
 
             if (hasMatches) {
               // Create new HTML inline token
-              const htmlToken = new state.Token('html_inline', '', 0);
+              const htmlToken = new state.Token("html_inline", "", 0);
               htmlToken.content = content;
               htmlToken.level = child.level;
 
@@ -116,11 +124,11 @@ export function configureMarkdown(eleventyConfig) {
     mdLib.use(markdownItBenchmark);
 
     // Citations plugin - must come before other plugins that might process links
-    console.log('About to register citations plugin, function is:', typeof markdownItCitations);
+    console.log("About to register citations plugin, function is:", typeof markdownItCitations);
     mdLib.use(markdownItCitations, {
-      defaultReferenceFile: 'time-series-zoo',
-      citationClass: 'citation',
-      tooltipClass: 'citation-tooltip'
+      defaultReferenceFile: "time-series-zoo",
+      citationClass: "citation",
+      tooltipClass: "citation-tooltip",
     });
 
     // Footnotes plugin
@@ -132,7 +140,7 @@ export function configureMarkdown(eleventyConfig) {
       init: (Prism) => {
         // Define empty math language to prevent warnings
         Prism.languages.math = {};
-      }
+      },
     });
 
     // Anchor plugin - must come before TOC plugin

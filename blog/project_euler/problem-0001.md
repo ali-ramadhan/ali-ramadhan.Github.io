@@ -114,6 +114,7 @@ S([a, b, c], L) &= s(a, L) + s(b, L) + s(c, L) \\
                 &\quad + s(\operatorname{lcm}(a, b, c), L)
 \end{align}
 ```
+
 We can implement this as:
 
 ```julia

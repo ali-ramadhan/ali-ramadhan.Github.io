@@ -24,8 +24,8 @@ function loadReferences(filename) {
   }
 
   try {
-    const referencePath = path.join(process.cwd(), '_data', 'references', `${filename}.yaml`);
-    const referenceData = yaml.load(readFileSync(referencePath, 'utf8'));
+    const referencePath = path.join(process.cwd(), "_data", "references", `${filename}.yaml`);
+    const referenceData = yaml.load(readFileSync(referencePath, "utf8"));
     referenceCache.set(filename, referenceData);
     return referenceData;
   } catch (error) {
@@ -46,27 +46,27 @@ function formatReference(ref, key) {
   const authors = ref.authors || "Unknown Author";
   const year = ref.year || "Unknown Year";
   const title = ref.title || "Untitled";
-  
+
   let formatted = `<div id="${key}" class="reference">
     <span class="ref-author-list">${authors} (${year}).</span>
     <i>${title}</i>`;
 
-  if (ref.type === 'article' && ref.journal) {
+  if (ref.type === "article" && ref.journal) {
     formatted += `. <i>${ref.journal}</i>`;
     if (ref.volume) formatted += ` <b>${ref.volume}</b>`;
     if (ref.issue) formatted += `(${ref.issue})`;
     if (ref.pages) formatted += `, ${ref.pages}`;
-  } else if (ref.type === 'book') {
+  } else if (ref.type === "book") {
     if (ref.publisher) formatted += `. ${ref.publisher}`;
     if (ref.pages) formatted += `. ${ref.pages}`;
-  } else if (ref.type === 'chapter') {
+  } else if (ref.type === "chapter") {
     formatted += `. In <i>${ref.book_title}</i>`;
     if (ref.editors) formatted += `, ed. ${ref.editors}`;
     if (ref.pages) formatted += `, ${ref.pages}`;
     if (ref.publisher) formatted += `. ${ref.publisher}`;
   }
 
-  formatted += '.';
+  formatted += ".";
 
   // Add links
   const links = [];
@@ -76,10 +76,10 @@ function formatReference(ref, key) {
   if (ref.source) links.push(`<a href="${ref.source}" target="_blank">source</a>`);
 
   if (links.length > 0) {
-    formatted += ` ${links.join(' ')}`;
+    formatted += ` ${links.join(" ")}`;
   }
 
-  formatted += '\n</div>';
+  formatted += "\n</div>";
   return formatted;
 }
 
@@ -90,13 +90,13 @@ function formatReference(ref, key) {
  */
 function formatCitation(ref) {
   if (!ref) return "[Unknown]";
-  
+
   const authors = ref.authors || "Unknown";
   const year = ref.year || "Unknown";
-  
+
   // Simple author formatting - just take first author if multiple
-  const firstAuthor = authors.split(',')[0].split(' & ')[0];
-  
+  const firstAuthor = authors.split(",")[0].split(" & ")[0];
+
   return `${firstAuthor}, ${year}`;
 }
 
@@ -105,10 +105,10 @@ function formatCitation(ref) {
  */
 export function markdownItCitations(md, options = {}) {
   const defaultOptions = {
-    defaultReferenceFile: 'references',
-    citationClass: 'citation',
-    tooltipClass: 'citation-tooltip',
-    ...options
+    defaultReferenceFile: "references",
+    citationClass: "citation",
+    tooltipClass: "citation-tooltip",
+    ...options,
   };
 
   // Citation regex to match [@key] or [@key1; @key2] patterns
@@ -117,23 +117,23 @@ export function markdownItCitations(md, options = {}) {
   // Bibliography marker regex to match [[bibliography]] or [[bibliography:filename]]
   const bibliographyRegex = /^\[\[bibliography(?::([^\]]+))?\]\]/gm;
 
-  md.core.ruler.after('inline', 'citations', function(state) {
-    const pageUrl = state.env.page?.url || 'default';
-    
+  md.core.ruler.after("inline", "citations", function (state) {
+    const pageUrl = state.env.page?.url || "default";
+
     if (!pageCitations.has(pageUrl)) {
       pageCitations.set(pageUrl, new Set());
     }
-    
+
     const usedCitations = pageCitations.get(pageUrl);
-    
+
     for (let i = 0; i < state.tokens.length; i++) {
       const token = state.tokens[i];
 
-      if (token.type === 'inline' && token.children) {
+      if (token.type === "inline" && token.children) {
         for (let j = 0; j < token.children.length; j++) {
           const child = token.children[j];
 
-          if (child.type === 'text' && citationRegex.test(child.content)) {
+          if (child.type === "text" && citationRegex.test(child.content)) {
             citationRegex.lastIndex = 0; // Reset regex
             let match;
             let content = child.content;
@@ -142,16 +142,16 @@ export function markdownItCitations(md, options = {}) {
             while ((match = citationRegex.exec(child.content)) !== null) {
               hasMatches = true;
               const [fullMatch, keysString] = match;
-              
+
               // Split multiple keys by semicolon and remove @ prefix if present
-              const keys = keysString.split(';').map(k => k.trim().replace(/^@/, ''));
-              
+              const keys = keysString.split(";").map((k) => k.trim().replace(/^@/, ""));
+
               // Load references from the appropriate file
               const referenceFile = state.env.referenceFile || defaultOptions.defaultReferenceFile;
               const references = loadReferences(referenceFile);
-              
+
               // Process each citation key
-              const citationParts = keys.map(key => {
+              const citationParts = keys.map((key) => {
                 const ref = references[key];
                 if (ref) {
                   usedCitations.add(key);
@@ -160,27 +160,26 @@ export function markdownItCitations(md, options = {}) {
                     title: ref.title,
                     authors: ref.authors,
                     year: ref.year,
-                    journal: ref.journal || ref.publisher || '',
-                    doi: ref.doi || ref.url || ''
-                  }).replace(/'/g, '&#39;');
-                  
+                    journal: ref.journal || ref.publisher || "",
+                    doi: ref.doi || ref.url || "",
+                  }).replace(/'/g, "&#39;");
+
                   return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${displayText}</a>`;
                 } else {
                   console.warn(`Citation key "${key}" not found in ${referenceFile}.yaml`);
                   return `<span class="citation-missing">[${key}]</span>`;
                 }
               });
-              
-              const replacement = keys.length === 1 
-                ? `(${citationParts[0]})` 
-                : `(${citationParts.join('; ')})`;
-                
+
+              const replacement =
+                keys.length === 1 ? `(${citationParts[0]})` : `(${citationParts.join("; ")})`;
+
               content = content.replace(fullMatch, replacement);
             }
 
             if (hasMatches) {
               // Create new HTML inline token
-              const htmlToken = new state.Token('html_inline', '', 0);
+              const htmlToken = new state.Token("html_inline", "", 0);
               htmlToken.content = content;
               htmlToken.level = child.level;
 
@@ -199,29 +198,30 @@ export function markdownItCitations(md, options = {}) {
   });
 
   // Bibliography marker processing
-  md.core.ruler.after('citations', 'bibliography', function(state) {
-    const pageUrl = state.env.page?.url || 'default';
+  md.core.ruler.after("citations", "bibliography", function (state) {
+    const pageUrl = state.env.page?.url || "default";
 
     for (let i = 0; i < state.tokens.length; i++) {
       const token = state.tokens[i];
 
-      if (token.type === 'paragraph_open') {
+      if (token.type === "paragraph_open") {
         const nextToken = state.tokens[i + 1];
-        if (nextToken && nextToken.type === 'inline' && nextToken.children) {
+        if (nextToken && nextToken.type === "inline" && nextToken.children) {
           for (let j = 0; j < nextToken.children.length; j++) {
             const child = nextToken.children[j];
 
-            if (child.type === 'text' && bibliographyRegex.test(child.content)) {
+            if (child.type === "text" && bibliographyRegex.test(child.content)) {
               bibliographyRegex.lastIndex = 0; // Reset regex
               const match = bibliographyRegex.exec(child.content);
 
               if (match) {
                 // Extract reference file from marker or use default
-                const referenceFile = match[1] || state.env.referenceFile || defaultOptions.defaultReferenceFile;
+                const referenceFile =
+                  match[1] || state.env.referenceFile || defaultOptions.defaultReferenceFile;
 
                 // Generate bibliography using the stored citations for this page
                 const usedCitations = pageCitations.get(pageUrl);
-                let bibliography = '';
+                let bibliography = "";
 
                 if (usedCitations && usedCitations.size > 0) {
                   const references = loadReferences(referenceFile);
@@ -231,14 +231,14 @@ export function markdownItCitations(md, options = {}) {
                   for (const key of sortedKeys) {
                     const ref = references[key];
                     if (ref) {
-                      bibliography += formatReference(ref, key) + '\n';
+                      bibliography += formatReference(ref, key) + "\n";
                     }
                   }
-                  bibliography += '</div>';
+                  bibliography += "</div>";
                 }
 
                 // Replace the paragraph tokens with HTML token
-                const htmlToken = new state.Token('html_block', '', 0);
+                const htmlToken = new state.Token("html_block", "", 0);
                 htmlToken.content = bibliography;
                 htmlToken.level = token.level;
 
@@ -259,8 +259,8 @@ export function markdownItCitations(md, options = {}) {
   });
 
   // Store references in state for later use in bibliography generation
-  md.renderer.rules.citations = function(tokens, idx, options, env) {
-    return '';
+  md.renderer.rules.citations = function (tokens, idx, options, env) {
+    return "";
   };
 }
 
@@ -270,30 +270,30 @@ export function markdownItCitations(md, options = {}) {
  * @param {string} referenceFile - Reference file name (without .yaml)
  * @returns {string} - HTML bibliography
  */
-export function generateBibliography(pageUrl, referenceFile = 'references') {
+export function generateBibliography(pageUrl, referenceFile = "references") {
   const usedCitations = pageCitations.get(pageUrl);
 
   // If no citations collected from markdown processing, return empty
   if (!usedCitations || usedCitations.size === 0) {
-    return '';
+    return "";
   }
 
   const references = loadReferences(referenceFile);
   const sortedKeys = Array.from(usedCitations).sort();
-  
+
   let bibliography = '<div class="references">\n';
-  
+
   for (const key of sortedKeys) {
     const ref = references[key];
     if (ref) {
-      bibliography += formatReference(ref, key) + '\n';
+      bibliography += formatReference(ref, key) + "\n";
     } else {
       console.warn(`Reference not found: ${key}`);
     }
   }
-  
-  bibliography += '</div>';
-  
+
+  bibliography += "</div>";
+
   return bibliography;
 }
 
@@ -303,9 +303,10 @@ export function generateBibliography(pageUrl, referenceFile = 'references') {
  * @param {string} referenceFile - Reference file name (without .yaml)
  * @returns {string} - HTML bibliography
  */
-export function generateBibliographyFromContent(htmlContent, referenceFile = 'references') {
+export function generateBibliographyFromContent(htmlContent, referenceFile = "references") {
   // Extract citation keys from citation links (both orders: href first or class first)
-  const citationRegex = /(?:href="#([^"]+)"[^>]*class="citation"|class="citation"[^>]*href="#([^"]+)")/g;
+  const citationRegex =
+    /(?:href="#([^"]+)"[^>]*class="citation"|class="citation"[^>]*href="#([^"]+)")/g;
   const citationKeys = new Set();
 
   let match;
@@ -316,9 +317,8 @@ export function generateBibliographyFromContent(htmlContent, referenceFile = 're
   }
 
   if (citationKeys.size === 0) {
-    return '';
+    return "";
   }
-
 
   const references = loadReferences(referenceFile);
   const sortedKeys = Array.from(citationKeys).sort();
@@ -328,13 +328,13 @@ export function generateBibliographyFromContent(htmlContent, referenceFile = 're
   for (const key of sortedKeys) {
     const ref = references[key];
     if (ref) {
-      bibliography += formatReference(ref, key) + '\n';
+      bibliography += formatReference(ref, key) + "\n";
     } else {
       console.warn(`Reference not found: ${key}`);
     }
   }
 
-  bibliography += '</div>';
+  bibliography += "</div>";
 
   return bibliography;
 }

@@ -19,7 +19,7 @@ with $F_0 = 0$ and $F_1 = 1$ so the first 13 terms are
 Notice that $F_3 = 2$, $F_6 = 8$, $F_9 = 34$, and $F_{12} = 144$. So every third number
 is even, and all the others are odd. This is because $F_0 = 0$ is even and $F_1 = 1$ is
 odd, so $F_2 = F_1 + F_0$ will be odd because $\text{even} + \text{odd} = \text{odd}$
-by [parity](https://en.wikipedia.org/wiki/Parity_(mathematics)). Then $F_3 = F_2 + F_1$
+by [parity](<https://en.wikipedia.org/wiki/Parity_(mathematics)>). Then $F_3 = F_2 + F_1$
 will be even because $\text{odd} + \text{odd} = \text{even}$. This continues and so
 every third Fibonacci will be even, and all others are odd.
 

@@ -8,7 +8,6 @@ floating_toc: true
 
 [[toc]]
 
-
 ## What are we even doing?
 
 Why look at time series and forecasting methods?
@@ -20,11 +19,11 @@ Time series forecasting only seems possible if the forecasting method can model 
 
 For the scope of this post, I'll stick to single/univariate time series and fitting models to single time series. More advanced methods can make forecasts using external predictors. So for a stock price based on how the stock price is moving plus how other stock prices are moving too.
 
-* Scope of this post:
-* Explain that forecasting is only possible by capturing the underlying process.
-* Explain that we're doing one-shot learning and that some of these may benefit from external predictors.
-* Also we want to make some $h$-horizon forecast and act on it.
-* Explain that some can be used to make longer-term forecasts (e.g. AR) while some are only good for short-term.
+- Scope of this post:
+- Explain that forecasting is only possible by capturing the underlying process.
+- Explain that we're doing one-shot learning and that some of these may benefit from external predictors.
+- Also we want to make some $h$-horizon forecast and act on it.
+- Explain that some can be used to make longer-term forecasts (e.g. AR) while some are only good for short-term.
 
 I wanted to learn more about forecasting real-world time series and I thought this kind of material would be easy to find, but I actually found it difficult to find good examples online. Most exampels I found were either focused on time series modeling or the forecasting problem was too simple (simple time series or very short horizon). So I decided to try and pick a bunch of time series and a bunch of modeling methods and to write about my own experience learning to do time series forecasting.
 
@@ -178,14 +177,16 @@ Classical seasonal decomposition of the Keeling Curve. (Left column) Shows the d
 The components (left column) make sense: an upward trend $T_t$ and a seasonal component $S_t$ showing a regular annual cycles with a relatively stationary remainder component $R_t$, although it's not exactly looking like white noise (it seems to decrease in magnitude then increase again).
 
 The autocorrelation function (ACF) plots (middle-left column) also make sense and provide some insight into how each component behaves.
-* The ACF of the time series shows a high autocorrelation even at long lags. This is because even measurements taken many months apart (large lag values) remain highly correlated as they follow the same overall increasing trend. So the ACF of the trend component looks almost the same. As expected, this is a robust signal so it's well above the uncertainty bands. The bands widen at higher lag values because we're working with fewer data points which increases the uncertainty.
-* The seasonal component $S_t$ has a more interesting ACF which oscillates annually creating almost perfect autocorrelation at lags of 12, 24, 36, etc. months and almost perfect negative correlation at lags of 6, 18, 30, etc. months. This is just a reflection of the seasonal cycle: measurements are always higher than they were 12 months ago but due to the seasonal cycle they are always lower than they were 6 months ago.
-* The residual component $R_t$ should ideally looks like white noise. The values are small and mostly within the confidence bands but you can still see an oscillating signal with values that still exceed the confidence bands suggesting that some patterns have not been captured by the decomposition.
+
+- The ACF of the time series shows a high autocorrelation even at long lags. This is because even measurements taken many months apart (large lag values) remain highly correlated as they follow the same overall increasing trend. So the ACF of the trend component looks almost the same. As expected, this is a robust signal so it's well above the uncertainty bands. The bands widen at higher lag values because we're working with fewer data points which increases the uncertainty.
+- The seasonal component $S_t$ has a more interesting ACF which oscillates annually creating almost perfect autocorrelation at lags of 12, 24, 36, etc. months and almost perfect negative correlation at lags of 6, 18, 30, etc. months. This is just a reflection of the seasonal cycle: measurements are always higher than they were 12 months ago but due to the seasonal cycle they are always lower than they were 6 months ago.
+- The residual component $R_t$ should ideally looks like white noise. The values are small and mostly within the confidence bands but you can still see an oscillating signal with values that still exceed the confidence bands suggesting that some patterns have not been captured by the decomposition.
 
 The partial autocorrelation function (PACF) plots also make sense and help identify the direct relationship between an observation and its lag, after removing the effects of shorter lags.
-* The PACF at lag $k$ shows the autocorrelation left after accounting for the autocorrelation at lags 1 through $k-1$. So the fact that the PACF of the time series just shows a sharp spike at lag 1 then very small values afterward makes sense because most of the temporal dependence can be explained just by knowing the previous month's value. This is even clearer in the trend component's PACF where every lag beyond 1 is not visible in the plot.
-* The PACF of the seasonal component is kinda chaotic, showing numerous large and statistically significant spikes. This complex pattern emerges because a seasonal cycle cannot be fully explained by dependence on just one or two previous values. This is mathematically expected since seasonal patterns essentially represent sine waves (or combinations thereof), which inherently depend on multiple previous values to determine their future trajectory.
-* The PACF of the residual component should also ideally look like white noise but once again shows that some patterns have not been captured by the decomposition.
+
+- The PACF at lag $k$ shows the autocorrelation left after accounting for the autocorrelation at lags 1 through $k-1$. So the fact that the PACF of the time series just shows a sharp spike at lag 1 then very small values afterward makes sense because most of the temporal dependence can be explained just by knowing the previous month's value. This is even clearer in the trend component's PACF where every lag beyond 1 is not visible in the plot.
+- The PACF of the seasonal component is kinda chaotic, showing numerous large and statistically significant spikes. This complex pattern emerges because a seasonal cycle cannot be fully explained by dependence on just one or two previous values. This is mathematically expected since seasonal patterns essentially represent sine waves (or combinations thereof), which inherently depend on multiple previous values to determine their future trajectory.
+- The PACF of the residual component should also ideally look like white noise but once again shows that some patterns have not been captured by the decomposition.
 
 The periodograms (right column) also make sense. Most of the power is in very low frequencies due to the long-term trend of increasing CO2 being the time series' most prominent feature. You can see a couple of peaks: one at 1 cycles per year corresponding to the seasonal cycle, and the other at 2 cycles per year probably corresponding to the different seasonal patterns between the Northern and Southern hemispheres. These peaks are not present in the trend component's periodogram which is a good sign that the seasonal decomposition did something sensible. Due to the naive decomposition, the seasonal component's power is fully contained in a number of pure sine waves which decay in power with increasing frequency. Since the residual component is what's left after subtracting the trend and seasonal components, the residual does not contain any power at the annual frequencies so it's clearly not white noise.
 
@@ -263,10 +264,10 @@ where $y_t$ is the value at time $t$, $\rho$ is the autoregressive coefficient, 
 
 If there is no linear trend ($\beta = 0$) then we can say:
 
-* If $\|\rho\| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $\alpha / (1 - \rho)$, and shocks have temporary effects that decay over time.
-* If $\|\rho\| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
-* If $\|\rho\| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
-* If $\rho < 0$ then the values of $y_t$ will fluctuate between positive and negative values.
+- If $\|\rho\| < 1$ then we have a <i>stationary process</i>. The process will tend to revert to its long-run mean of $\alpha / (1 - \rho)$, and shocks have temporary effects that decay over time.
+- If $\|\rho\| = 1$ then we have a <i>unit root process</i>. The process does not revert to any fixed mean and shocks have permanent effects on the level of the series.
+- If $\|\rho\| > 1$ then we just have an <i>explosive process</i>. The process diverges growing exponentially over time and shocks not only persist but are amplified over time.
+- If $\rho < 0$ then the values of $y_t$ will fluctuate between positive and negative values.
 
 So the statistical tests try to check whether $\|\rho\| = 1$ or $\|\rho\| < 1$. Note that the constant coefficient $\alpha$ only leads to a constant value for $y_t$ in the stationary case. Similarly, the linear trend term $\beta t$ only leads to a linear trend in $y_t$ in the stationary case.
 
@@ -306,7 +307,7 @@ Although useful, the Dickey-Fuller test has some major limitations. It's based o
 
 The testing procedure is the same as for the Dickey–Fuller test but we instead use a more flexible autoregressive process of order $p$, denoted $\operatorname{AR}(p)$, again with constant and linear trend terms
 
-$y_t = \alpha + \beta t + \rho_1 y_{t-1} + \rho_2 y_{t-2} + \cdots + \rho_p y_{t-p} + \varepsilon_t $
+$y*t = \alpha + \beta t + \rho_1 y*{t-1} + \rho*2 y*{t-2} + \cdots + \rho*p y*{t-p} + \varepsilon_t $
 
 where we now have $p$ autoregressive coefficients $\rho_1, $\rho_2, \dots, \rho_p$. Now the first difference is
 
@@ -412,9 +413,10 @@ $$
 Here $m$ is the number of periods in a season (e.g. 12 for monthly data and 4 for quarterly data). The model maintains $m$ distinct seasonal components $s_1, s_2, \ldots, s_m$, where each $s_i$ represents the seasonal effect for the $i$-th period within the seasonal cycle. The parameter $k = \lfloor (h - 1) / m \rfloor$ ensures that when forecasting $h$ steps ahead, we cycle through the seasonal components correctly. $\lfloor x \rfloor$ is the floor function. $\alpha$, $\beta$, and $\gamma$ (all between 0 and 1) are smoothing parameters for the level, trend, and seasonal components respectively that control how quickly the model adapts to new data.
 
 So to produce a forecast, you take the level $\ell_t$, linearly extrapolate the trend $b_t$ by the number of time periods $h$, and add the seasonal component for time period $t+h$, which is $s_{t+h-m(k+1)}$.
-* The level $\ell_t$ is a weighted average of $y_t - s_{t-m}$ which is the current observation with seasonality removed and $\ell_{t-1} + b_{t-1}$ which is what we would expect the level to be if it followed the previous level and trend.
-* The slope $b_t$ is a weighted average of $\ell_t - \ell_{t-1}$ which is the most recent change in level and $b_{t-1}$ which is the previous trend.
-* The seasonal correction $s_t$ is a weighted average of $y_t - \ell_{t-1} - b_{t-1}$ which is an estimate of the seasonal component in the current observation (what's left after accounting for the previous level and trend) and $s_{t-m}$ which is the estimate from the previous season.
+
+- The level $\ell_t$ is a weighted average of $y_t - s_{t-m}$ which is the current observation with seasonality removed and $\ell_{t-1} + b_{t-1}$ which is what we would expect the level to be if it followed the previous level and trend.
+- The slope $b_t$ is a weighted average of $\ell_t - \ell_{t-1}$ which is the most recent change in level and $b_{t-1}$ which is the previous trend.
+- The seasonal correction $s_t$ is a weighted average of $y_t - \ell_{t-1} - b_{t-1}$ which is an estimate of the seasonal component in the current observation (what's left after accounting for the previous level and trend) and $s_{t-m}$ which is the estimate from the previous season.
 
 #### Multiplicative method
 
@@ -433,7 +435,7 @@ We can interpret the weighing similarly to how we did with the additive case exc
 
 #### Damping
 
-Sometimes, a simple linear trend $b_t$ can extrapolate a bit too enthusiastically into the future, leading to forecasts that shoot off. To tame this, we can introduce a *damping parameter* $\phi$ (usually between 0 and 1, often close to 1). Damping causes the trend to flatten out over longer forecast horizons. Damping can be applied to both additive and multiplicative Holt-Winters' methods. For example, adding a damped trend to the additive method we get:
+Sometimes, a simple linear trend $b_t$ can extrapolate a bit too enthusiastically into the future, leading to forecasts that shoot off. To tame this, we can introduce a _damping parameter_ $\phi$ (usually between 0 and 1, often close to 1). Damping causes the trend to flatten out over longer forecast horizons. Damping can be applied to both additive and multiplicative Holt-Winters' methods. For example, adding a damped trend to the additive method we get:
 
 $$
 \begin{aligned}
@@ -492,7 +494,8 @@ The vast majority of models are not good fits, mostly because $m = 12$ seasonal 
 
 Fitting exponential smoothing models to the monthly sunspot number time series requires a bit of pre-processing because the time series must always be non-negative (we cannot have a negative number/count of sunspots). So enforce this, we transform the time series using the Box-Cox transformation[^box-cox] then fit the exponential smoothing model to the transformed time series. We forecast the transformed time series and undo the transformation to plot forecasts and simulations alongside the oreiginal time series. The Box-Cox parameter $\lambda$ can be chosen as part of hyperparameter optimization.
 
-[^box-cox]: The Box-Cox transformation is a family of power transformations used to stabilize variance and make data more approximately normal. We can also use it to  The forward transformation is
+[^box-cox]:
+    The Box-Cox transformation is a family of power transformations used to stabilize variance and make data more approximately normal. We can also use it to The forward transformation is
 
     $$y^{(\lambda)} = \begin{cases} \frac{y^\lambda - 1}{\lambda} & \text{if } \lambda \neq 0 \\ \ln(y) & \text{if } \lambda = 0 \end{cases}$$
 
@@ -642,8 +645,8 @@ Compared to our exponential smoothing results from earlier, the autoregressive a
 
 ## What else can we do?
 
-* Covariates.
-* Multiple time series.
+- Covariates.
+- Multiple time series.
 
 ## Appendices
 

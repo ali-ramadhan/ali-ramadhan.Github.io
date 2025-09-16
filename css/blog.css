@@ -331,7 +331,9 @@
   border-radius: 4px;
   font-family: "Fira Code", monospace;
   font-size: 0.9em;
-  font-feature-settings: "liga" 1, "calt" 1;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1;
   font-variant-ligatures: contextual;
 }
 
@@ -353,7 +355,9 @@
 .blog-post-content pre[class*="language-"] code,
 .blog-post-content code[class*="language-"] {
   font-family: "Fira Code", monospace;
-  font-feature-settings: "liga" 1, "calt" 1;
+  font-feature-settings:
+    "liga" 1,
+    "calt" 1;
   font-variant-ligatures: contextual;
 }
 
@@ -757,7 +761,9 @@
   overflow: hidden;
   max-height: none;
   opacity: 1;
-  transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
+  transition:
+    max-height 0.3s ease-out,
+    opacity 0.2s ease-out;
 }
 
 .blog-post-content .collapsible-content.collapsed {

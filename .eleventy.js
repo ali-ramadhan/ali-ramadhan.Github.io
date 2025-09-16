@@ -6,10 +6,10 @@ export default function (eleventyConfig) {
   configureMarkdown(eleventyConfig);
 
   // Add date filter to format dates as YYYY-MM-DD
-  eleventyConfig.addFilter("dateDisplay", function(dateObj) {
+  eleventyConfig.addFilter("dateDisplay", function (dateObj) {
     if (!dateObj) return "";
     const date = new Date(dateObj);
-    return date.toISOString().split('T')[0]; // Returns YYYY-MM-DD format
+    return date.toISOString().split("T")[0]; // Returns YYYY-MM-DD format
   });
 
   // Add Vite plugin

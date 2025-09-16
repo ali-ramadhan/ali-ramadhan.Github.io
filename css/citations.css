@@ -39,13 +39,15 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
   pointer-events: none;
   white-space: normal;
 }
 
 .citation-tooltip::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -6px;
   left: 50%;
@@ -100,7 +102,8 @@
   color: #333 !important;
 }
 
-.reference, .reference * {
+.reference,
+.reference * {
   color: #333 !important;
 }
 
@@ -160,7 +163,8 @@
     color: #e5e7eb !important;
   }
 
-  .reference, .reference * {
+  .reference,
+  .reference * {
     color: #e5e7eb !important;
   }
 

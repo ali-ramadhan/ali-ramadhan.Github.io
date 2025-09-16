@@ -108,31 +108,67 @@
   /* Fix Unicode histogram character gaps */
   letter-spacing: -0.05em;
   font-variant-ligatures: none;
-  font-feature-settings: "liga" 0, "calt" 0;
+  font-feature-settings:
+    "liga" 0,
+    "calt" 0;
   text-rendering: geometricPrecision;
   font-kerning: none;
 }
 
 /* ANSI color classes - Tomorrow theme for light mode */
-.ansi-red { color: #c82829; }
-.ansi-green { color: #718c00; }
-.ansi-yellow { color: #eab700; }
-.ansi-blue { color: #4271ae; }
-.ansi-magenta { color: #8959a8; }
-.ansi-cyan { color: #3e999f; }
-.ansi-white { color: #1d1f21; }
-.ansi-gray { color: #8e908c; }
-.ansi-bold { font-weight: bold; }
+.ansi-red {
+  color: #c82829;
+}
+.ansi-green {
+  color: #718c00;
+}
+.ansi-yellow {
+  color: #eab700;
+}
+.ansi-blue {
+  color: #4271ae;
+}
+.ansi-magenta {
+  color: #8959a8;
+}
+.ansi-cyan {
+  color: #3e999f;
+}
+.ansi-white {
+  color: #1d1f21;
+}
+.ansi-gray {
+  color: #8e908c;
+}
+.ansi-bold {
+  font-weight: bold;
+}
 
 /* Dark theme ANSI colors - Google Dark theme */
-[data-theme="dark"] .ansi-red { color: #ea4335; }
-[data-theme="dark"] .ansi-green { color: #34a853; }
-[data-theme="dark"] .ansi-yellow { color: #fbbc05; }
-[data-theme="dark"] .ansi-blue { color: #4285f4; }
-[data-theme="dark"] .ansi-magenta { color: #a142f4; }
-[data-theme="dark"] .ansi-cyan { color: #24c1e0; }
-[data-theme="dark"] .ansi-white { color: #ffffff; }
-[data-theme="dark"] .ansi-gray { color: #5f6368; }
+[data-theme="dark"] .ansi-red {
+  color: #ea4335;
+}
+[data-theme="dark"] .ansi-green {
+  color: #34a853;
+}
+[data-theme="dark"] .ansi-yellow {
+  color: #fbbc05;
+}
+[data-theme="dark"] .ansi-blue {
+  color: #4285f4;
+}
+[data-theme="dark"] .ansi-magenta {
+  color: #a142f4;
+}
+[data-theme="dark"] .ansi-cyan {
+  color: #24c1e0;
+}
+[data-theme="dark"] .ansi-white {
+  color: #ffffff;
+}
+[data-theme="dark"] .ansi-gray {
+  color: #5f6368;
+}
 
 /* CPU info styling */
 .benchmark-metadata {

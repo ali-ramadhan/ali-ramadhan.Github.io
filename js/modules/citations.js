@@ -8,41 +8,41 @@ export class CitationManager {
   }
 
   initializeCitations() {
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
       this.setupCitationTooltips();
       this.setupCitationClicks();
     });
   }
 
   setupCitationTooltips() {
-    const citations = document.querySelectorAll('.citation[data-tooltip]');
+    const citations = document.querySelectorAll(".citation[data-tooltip]");
 
-    citations.forEach(citation => {
-      const tooltipData = JSON.parse(citation.getAttribute('data-tooltip'));
+    citations.forEach((citation) => {
+      const tooltipData = JSON.parse(citation.getAttribute("data-tooltip"));
 
       // Create tooltip element
-      const tooltip = document.createElement('div');
-      tooltip.className = 'citation-tooltip';
+      const tooltip = document.createElement("div");
+      tooltip.className = "citation-tooltip";
       tooltip.innerHTML = this.formatTooltipContent(tooltipData);
       document.body.appendChild(tooltip);
 
       // Show tooltip on hover
-      citation.addEventListener('mouseenter', (e) => {
+      citation.addEventListener("mouseenter", (e) => {
         const rect = e.target.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
 
         // Position above the citation
-        tooltip.style.left = (rect.left + scrollLeft) + 'px';
-        tooltip.style.top = (rect.top + scrollTop - tooltip.offsetHeight - 10) + 'px';
-        tooltip.style.opacity = '1';
-        tooltip.style.visibility = 'visible';
+        tooltip.style.left = rect.left + scrollLeft + "px";
+        tooltip.style.top = rect.top + scrollTop - tooltip.offsetHeight - 10 + "px";
+        tooltip.style.opacity = "1";
+        tooltip.style.visibility = "visible";
       });
 
       // Hide tooltip on leave
-      citation.addEventListener('mouseleave', () => {
-        tooltip.style.opacity = '0';
-        tooltip.style.visibility = 'hidden';
+      citation.addEventListener("mouseleave", () => {
+        tooltip.style.opacity = "0";
+        tooltip.style.visibility = "hidden";
       });
 
       // Store reference to tooltip for cleanup
@@ -51,20 +51,20 @@ export class CitationManager {
   }
 
   setupCitationClicks() {
-    const citations = document.querySelectorAll('.citation[href]');
+    const citations = document.querySelectorAll(".citation[href]");
 
-    citations.forEach(citation => {
-      citation.addEventListener('click', (e) => {
+    citations.forEach((citation) => {
+      citation.addEventListener("click", (e) => {
         e.preventDefault();
-        const targetId = citation.getAttribute('href').substring(1); // Remove #
+        const targetId = citation.getAttribute("href").substring(1); // Remove #
         const targetElement = document.getElementById(targetId);
 
         if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth' });
+          targetElement.scrollIntoView({ behavior: "smooth" });
           // Flash the target briefly
-          targetElement.style.backgroundColor = '#ffeb3b';
+          targetElement.style.backgroundColor = "#ffeb3b";
           setTimeout(() => {
-            targetElement.style.backgroundColor = '';
+            targetElement.style.backgroundColor = "";
           }, 1000);
         }
       });

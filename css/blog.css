@@ -39,7 +39,7 @@
 }
 
 .blog-post-preview {
-  background: #ffffff;
+  background: #fff;
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 2px 10px rgb(0, 0, 0, 0.05);
@@ -183,7 +183,7 @@
 .blog-post-body {
   background: var(--body-bg);
   min-height: 100vh;
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-optical-sizing: auto;
   font-feature-settings:
     "liga" 1,
@@ -348,7 +348,7 @@
   border-radius: 8px;
   overflow-x: auto;
   font-size: 0.9em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.1);
 }
 
 /* Ensure all code elements use Fira Code with ligatures */
@@ -390,7 +390,7 @@
   counter-increment: linenumber;
 }
 
-.blog-post-content .line-numbers-rows > span:before {
+.blog-post-content .line-numbers-rows > span::before {
   content: counter(linenumber);
   color: #999;
   display: block;
@@ -412,7 +412,7 @@
 }
 
 .blog-post-content .toolbar-item button {
-  background: rgba(224, 224, 224, 0.2);
+  background: rgb(224, 224, 224, 0.2);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -430,7 +430,7 @@
 
 /* Dark mode adjustments for toolbar */
 [data-theme="dark"] .blog-post-content .toolbar-item button {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255, 255, 255, 0.1);
 }
 
 .blog-post-full-footer {

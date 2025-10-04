@@ -1,24 +1,24 @@
 /* Citation Styles */
 .citation {
-  color: #0066cc;
+  color: #06c;
   text-decoration: none;
-  border-bottom: 1px dotted #0066cc;
+  border-bottom: 1px dotted #06c;
   position: relative;
   cursor: pointer;
 }
 
 .citation:hover {
-  color: #0066cc;
-  border-bottom-color: #0066cc;
+  color: #06c;
+  border-bottom-color: #06c;
 }
 
 .citation:visited {
-  color: #0066cc;
+  color: #06c;
 }
 
 .citation-missing {
-  color: #cc0000;
-  background-color: #ffeeee;
+  color: #c00;
+  background-color: #fee;
   padding: 2px 4px;
   border-radius: 3px;
   font-size: 0.9em;
@@ -36,7 +36,7 @@
   line-height: 1.4;
   max-width: 300px;
   z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.15);
   opacity: 0;
   visibility: hidden;
   transition:
@@ -108,7 +108,7 @@
 }
 
 .reference a {
-  color: #0066cc;
+  color: #06c;
   text-decoration: none;
   margin-right: 0.5rem;
 }
@@ -118,7 +118,7 @@
 }
 
 .reference a:visited {
-  color: #0066cc;
+  color: #06c;
 }
 
 /* Dark mode support */

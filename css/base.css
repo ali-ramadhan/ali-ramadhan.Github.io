@@ -59,7 +59,7 @@ html {
 }
 
 body {
-  font-family: "Inter", sans-serif;
+  font-family: Inter, sans-serif;
   font-optical-sizing: auto;
   font-feature-settings:
     "liga" 1,
@@ -150,6 +150,8 @@ body {
   margin-bottom: 0.8rem;
   padding-left: 1rem;
   position: relative;
+  color: var(--content-text);
+  transition: color 0.5s ease;
 }
 
 #resources .content ul.indented-list li::before {
@@ -206,6 +208,8 @@ body {
 #resources .publications-content ol.publications-list li {
   margin-bottom: 1.5rem;
   line-height: 1.6;
+  color: var(--content-text);
+  transition: color 0.5s ease;
 }
 
 #resources .publications-content ol.publications-list li b {
@@ -221,7 +225,7 @@ body {
 #resources .publications-content a.publication-button {
   display: inline-block;
   background: var(--nav-dot-active);
-  color: var(--content-bg);
+  color: var(--content-text);
   padding: 0.3rem 0.6rem;
   margin: 0.2rem 0.3rem 0.2rem 0;
   border-radius: 4px;
@@ -233,5 +237,10 @@ body {
 
 #resources .publications-content a.publication-button:hover {
   background: var(--content-text);
+  color: var(--content-bg);
   transform: translateY(-1px);
+}
+
+[data-theme="dark"] #resources .publications-content a.publication-button {
+  color: var(--content-bg);
 }

@@ -7,9 +7,11 @@
   height: 120px;
   z-index: 4;
   overflow: hidden;
+
   /* Light theme mountain colors */
   --mountain-color: #8b4513;
   --snow-color: #fff;
+
   background-image: url("/assets/images/backgrounds/mountains.svg");
   background-repeat: repeat-x;
   background-position: bottom;
@@ -31,10 +33,12 @@
   position: relative;
   margin-top: -15vh;
   padding-top: 15vh;
+
   /* Override .layer height and overflow constraints */
   height: auto;
   min-height: 165vh;
   overflow: visible;
+
   /* Adjust flex alignment for better content flow */
   align-items: center;
   padding-bottom: 4rem;
@@ -141,7 +145,7 @@
   font-size: 16px;
 }
 
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .profile-section {
     flex-direction: column;
     text-align: center;

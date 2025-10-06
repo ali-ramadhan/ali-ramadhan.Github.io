@@ -4,11 +4,13 @@
   transition: background 0.5s ease;
   padding: 4rem 0;
   margin-bottom: 0;
+
   /* Override the default flex centering to stack content vertically */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
+
   /* Override .layer height and overflow constraints */
   height: auto;
   min-height: 100vh;
@@ -21,7 +23,7 @@
   width: 0;
   height: 0;
   opacity: 0.3;
-  animation: crystalGlow 4s ease-in-out infinite alternate;
+  animation: crystal-glow 4s ease-in-out infinite alternate;
 }
 
 .crystal1 {
@@ -64,7 +66,7 @@
   position: absolute;
   border-radius: 50%;
   opacity: 0.4;
-  animation: bubbleRise 6s ease-in-out infinite;
+  animation: bubble-rise 6s ease-in-out infinite;
 }
 
 .bubble1 {
@@ -103,24 +105,27 @@
 }
 
 /* Animations */
-@keyframes crystalGlow {
+@keyframes crystal-glow {
   0% {
     opacity: 0.2;
   }
+
   100% {
     opacity: 0.5;
   }
 }
 
-@keyframes bubbleRise {
+@keyframes bubble-rise {
   0% {
     transform: translateY(0) scale(1);
     opacity: 0.4;
   }
+
   50% {
     transform: translateY(-20px) scale(1.1);
     opacity: 0.6;
   }
+
   100% {
     transform: translateY(0) scale(1);
     opacity: 0.4;

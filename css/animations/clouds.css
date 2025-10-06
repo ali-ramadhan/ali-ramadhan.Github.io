@@ -4,12 +4,15 @@
   100% {
     transform: translateX(0) translateY(0);
   }
+
   25% {
     transform: translateX(25px) translateY(-2px);
   }
+
   50% {
     transform: translateX(40px) translateY(0);
   }
+
   75% {
     transform: translateX(15px) translateY(2px);
   }
@@ -20,12 +23,15 @@
   100% {
     transform: translateX(0) translateY(0);
   }
+
   25% {
     transform: translateX(-20px) translateY(-2px);
   }
+
   50% {
     transform: translateX(-35px) translateY(0);
   }
+
   75% {
     transform: translateX(-10px) translateY(2px);
   }
@@ -36,9 +42,11 @@
   100% {
     transform: translateX(0) translateY(0);
   }
+
   33% {
     transform: translateX(-30px) translateY(-3px);
   }
+
   66% {
     transform: translateX(30px) translateY(3px);
   }
@@ -49,9 +57,11 @@
   100% {
     transform: translateX(0) translateY(0);
   }
+
   33% {
     transform: translateX(-18px) translateY(-3px);
   }
+
   66% {
     transform: translateX(-25px) translateY(3px);
   }
@@ -62,6 +72,7 @@
   100% {
     transform: translateX(0) translateY(0);
   }
+
   50% {
     transform: translateX(-20px) translateY(-5px);
   }
@@ -72,6 +83,7 @@
   100% {
     transform: translateX(0) translateY(0);
   }
+
   50% {
     transform: translateX(25px) translateY(-5px);
   }

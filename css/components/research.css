@@ -92,7 +92,7 @@
 
 /* Project sections styling */
 #ocean .content h2 {
-  margin: 2rem 0 1rem 0;
+  margin: 2rem 0 1rem;
   text-align: center;
 }
 
@@ -156,7 +156,7 @@
   height: auto;
   border-radius: 4px;
   margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.1);
 }
 
 .project-image p {
@@ -168,7 +168,7 @@
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .research-area {
     flex-direction: column;
     gap: 1.5rem;
@@ -210,7 +210,7 @@
   }
 }
 
-@media (max-width: 480px) {
+@media (width <= 480px) {
   .slideshow {
     height: 200px;
   }

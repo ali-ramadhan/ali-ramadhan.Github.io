@@ -22,7 +22,12 @@
   border-color: #86cfda;
   color: #0a4a54;
   transform: translateY(-1px);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgb(0, 0, 0, 0.1);
+}
+
+.benchmark-reference:focus {
+  outline: 2px solid #06c;
+  outline-offset: 2px;
 }
 
 /* Dark theme support */
@@ -45,7 +50,7 @@
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgb(0, 0, 0, 0.1);
   max-width: 90vw;
   max-height: 80vh;
   opacity: 0;
@@ -111,7 +116,7 @@
   font-feature-settings:
     "liga" 0,
     "calt" 0;
-  text-rendering: geometricPrecision;
+  text-rendering: geometricprecision;
   font-kerning: none;
 }
 
@@ -119,27 +124,35 @@
 .ansi-red {
   color: #c82829;
 }
+
 .ansi-green {
   color: #718c00;
 }
+
 .ansi-yellow {
   color: #eab700;
 }
+
 .ansi-blue {
   color: #4271ae;
 }
+
 .ansi-magenta {
   color: #8959a8;
 }
+
 .ansi-cyan {
   color: #3e999f;
 }
+
 .ansi-white {
   color: #1d1f21;
 }
+
 .ansi-gray {
   color: #8e908c;
 }
+
 .ansi-bold {
   font-weight: bold;
 }
@@ -148,24 +161,31 @@
 [data-theme="dark"] .ansi-red {
   color: #ea4335;
 }
+
 [data-theme="dark"] .ansi-green {
   color: #34a853;
 }
+
 [data-theme="dark"] .ansi-yellow {
   color: #fbbc05;
 }
+
 [data-theme="dark"] .ansi-blue {
   color: #4285f4;
 }
+
 [data-theme="dark"] .ansi-magenta {
   color: #a142f4;
 }
+
 [data-theme="dark"] .ansi-cyan {
   color: #24c1e0;
 }
+
 [data-theme="dark"] .ansi-white {
-  color: #ffffff;
+  color: #fff;
 }
+
 [data-theme="dark"] .ansi-gray {
   color: #5f6368;
 }
@@ -184,7 +204,7 @@
 [data-theme="dark"] .benchmark-tooltip {
   background: #2d2d2d;
   border-color: #555;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 8px 32px rgb(0, 0, 0, 0.3);
 }
 
 [data-theme="dark"] .benchmark-close {
@@ -207,7 +227,7 @@
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .benchmark-tooltip {
     max-width: 95vw;
     max-height: 90vh;
@@ -235,11 +255,6 @@
 }
 
 /* Accessibility improvements */
-.benchmark-reference:focus {
-  outline: 2px solid #0066cc;
-  outline-offset: 2px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .benchmark-reference,
   .benchmark-tooltip {

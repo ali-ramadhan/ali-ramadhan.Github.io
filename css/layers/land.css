@@ -33,10 +33,10 @@
   padding-top: 15vh;
   /* Override .layer height and overflow constraints */
   height: auto;
-  min-height: 100vh;
+  min-height: 165vh;
   overflow: visible;
   /* Adjust flex alignment for better content flow */
-  align-items: flex-start;
+  align-items: center;
   padding-bottom: 4rem;
 }
 
@@ -46,7 +46,7 @@
   top: 15vh; /* Start at mountain range level */
   left: 0;
   width: 100%;
-  height: calc(100vh - 15vh); /* Fill from mountain to bottom */
+  height: 150vh;
   z-index: 1;
   pointer-events: none;
 }

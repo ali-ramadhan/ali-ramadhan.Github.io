@@ -22,6 +22,33 @@
   margin: 2rem 0 1rem;
 }
 
+/* Section and sub-section numbering */
+.blog-post-content h2 {
+  counter-increment: h2counter;
+  counter-reset: h3counter;
+}
+
+.blog-post-content h3 {
+  counter-increment: h3counter;
+  counter-reset: h4counter;
+}
+
+.blog-post-content h4 {
+  counter-increment: h4counter;
+}
+
+.blog-post-content h2:not(.no-auto-numbering)::before {
+  content: counter(h2counter) ". ";
+}
+
+.blog-post-content h3::before {
+  content: counter(h2counter) "." counter(h3counter) ". ";
+}
+
+.blog-post-content h4::before {
+  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
+}
+
 [data-theme="dark"] .blog-section h2 {
   color: #e0e0e0;
 }
@@ -88,12 +115,25 @@
   color: #3498db;
 }
 
+.blog-post-content .table-of-contents a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline;
+  transition: color 0.3s ease;
+}
+
 [data-theme="dark"] .blog-post-title a {
   color: #e0e0e0;
 }
 
 [data-theme="dark"] .blog-post-content a {
   color: #74b9ff;
+}
+
+.blog-post-content .table-of-contents a:hover {
+  color: #3498db;
+  text-decoration: none;
 }
 
 /* Header anchor links should use heading color, not link color */
@@ -292,6 +332,7 @@
 .blog-post-content {
   line-height: 1.8;
   color: #444;
+  counter-reset: h2counter;
 }
 
 [data-theme="dark"] .blog-post-content {
@@ -341,11 +382,6 @@
   font-variant-ligatures: contextual;
 }
 
-[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
-  background: #2d3748;
-  color: #e2e8f0;
-}
-
 /* Prism code block container styling */
 .blog-post-content pre[class*="language-"] {
   margin: 1.5rem 0;
@@ -374,6 +410,11 @@
 .blog-post-content pre.line-numbers > code {
   position: relative;
   white-space: inherit;
+}
+
+[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
+  background: #2d3748;
+  color: #e2e8f0;
 }
 
 .blog-post-content .line-numbers .line-numbers-rows {
@@ -541,6 +582,10 @@
   counter-increment: toc1counter;
 }
 
+.blog-post-content .footnotes li {
+  margin-bottom: 0.8rem;
+}
+
 .blog-post-content .table-of-contents > ul > li > ul {
   counter-reset: toc2counter;
   margin-top: 0;
@@ -555,19 +600,6 @@
 
 .blog-post-content .table-of-contents > ul > li > ul > li > ul > li {
   counter-increment: toc3counter;
-}
-
-.blog-post-content .table-of-contents a {
-  color: #2c3e50;
-  text-decoration: none;
-  font-weight: 500;
-  display: inline;
-  transition: color 0.3s ease;
-}
-
-.blog-post-content .table-of-contents a:hover {
-  color: #3498db;
-  text-decoration: none;
 }
 
 /* TOC numbering */
@@ -595,36 +627,6 @@
   color: #74b9ff;
 }
 
-/* Section and sub-section numbering */
-.blog-post-content {
-  counter-reset: h2counter;
-}
-
-.blog-post-content h2 {
-  counter-increment: h2counter;
-  counter-reset: h3counter;
-}
-
-.blog-post-content h3 {
-  counter-increment: h3counter;
-  counter-reset: h4counter;
-}
-
-.blog-post-content h4 {
-  counter-increment: h4counter;
-}
-
-.blog-post-content h2:not(.no-auto-numbering)::before {
-  content: counter(h2counter) ". ";
-}
-
-.blog-post-content h3::before {
-  content: counter(h2counter) "." counter(h3counter) ". ";
-}
-
-.blog-post-content h4::before {
-  content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
-}
 
 /* Footnotes Styling */
 .blog-post-content .footnotes-sep {
@@ -645,10 +647,6 @@
 
 .blog-post-content .footnotes ol {
   padding-left: 1.5rem;
-}
-
-.blog-post-content .footnotes li {
-  margin-bottom: 0.8rem;
 }
 
 .blog-post-content .footnote-ref {

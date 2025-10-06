@@ -324,6 +324,10 @@
   background: rgb(116, 185, 255, 0.1);
 }
 
+.blog-post-content blockquote > *:last-child {
+  margin-bottom: 0;
+}
+
 /* Inline code styling (not highlighted by Prism) */
 .blog-post-content code:not([class*="language-"]) {
   background: #f8f9fa;

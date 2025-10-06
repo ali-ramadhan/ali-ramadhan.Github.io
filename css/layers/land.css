@@ -31,6 +31,13 @@
   position: relative;
   margin-top: -15vh;
   padding-top: 15vh;
+  /* Override .layer height and overflow constraints */
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  /* Adjust flex alignment for better content flow */
+  align-items: flex-start;
+  padding-bottom: 4rem;
 }
 
 /* External Land and River SVG */

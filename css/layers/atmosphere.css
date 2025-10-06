@@ -9,6 +9,12 @@
   padding-top: 20vh;
   padding-bottom: 15vh;
   margin-bottom: -15vh;
+  /* Override .layer height and overflow constraints */
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  /* Adjust flex alignment for better content flow */
+  align-items: flex-start;
 }
 
 .clouds {

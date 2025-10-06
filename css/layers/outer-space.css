@@ -6,6 +6,13 @@
   position: relative;
   padding-bottom: 20vh;
   margin-bottom: -20vh;
+  /* Override .layer height and overflow constraints */
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+  /* Adjust flex alignment for better content flow */
+  align-items: flex-start;
+  padding-top: 10vh;
 }
 
 .stars {

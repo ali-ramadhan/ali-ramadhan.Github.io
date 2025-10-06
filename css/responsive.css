@@ -46,6 +46,10 @@
   #ocean .content {
     max-width: 900px;
   }
+
+  #resources .content {
+    max-width: 850px;
+  }
 }
 
 /* Mobile breakpoint (up to 768px) */

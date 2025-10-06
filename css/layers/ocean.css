@@ -18,6 +18,11 @@
   overflow: visible;
 }
 
+/* Ocean content spacing */
+#ocean .content {
+  margin-bottom: 10rem; /* Add space below content box above bathymetry */
+}
+
 /* Ocean bathymetry SVG positioning */
 .ocean-bathymetry-svg {
   position: absolute;

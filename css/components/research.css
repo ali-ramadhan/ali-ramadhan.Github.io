@@ -112,15 +112,15 @@
 }
 
 .project-title:hover {
-  color: var(--nav-dot-active);
+  color: #3498db;
 }
 
-.project-title i {
-  font-size: 1rem;
+.project-title .project-toggle-icon {
+  font-size: 1.5rem;
   transition: transform 0.3s ease;
 }
 
-.project-title.expanded i {
+.project-title.expanded .project-toggle-icon {
   transform: rotate(45deg);
 }
 

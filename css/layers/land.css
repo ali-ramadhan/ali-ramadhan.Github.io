@@ -55,13 +55,18 @@
   pointer-events: none;
 }
 
-/* Theme switching for external SVG - uses CSS filters as fallback */
-[data-theme="dark"] .land-river-svg {
-  /* Apply subtle dark theme adjustments to external SVG */
-  filter: brightness(0.7) saturate(0.9) contrast(1.1);
+/* Theme-based SVG visibility */
+.land-river-svg.dark-theme {
+  display: none; /* Hide dark theme SVG by default */
 }
 
-/* Note: Animation and detailed theming are now handled within the SVG file itself */
+[data-theme="dark"] .land-river-svg.light-theme {
+  display: none; /* Hide light theme SVG in dark mode */
+}
+
+[data-theme="dark"] .land-river-svg.dark-theme {
+  display: block; /* Show dark theme SVG in dark mode */
+}
 
 #land::before {
   content: "";

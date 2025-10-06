@@ -1,5 +1,5 @@
 <!--
-  Land and River Background SVG - Light Theme
+  Land and River Background SVG - Dark Theme
 
   This SVG creates the land section background with three distinct regions:
   - Forest region (left): Green gradient representing woodland/vegetation
@@ -37,48 +37,48 @@
       }
 
       .ocean-region {
-        fill: #4682b4; /* Light ocean top color */
+        fill: #0f2536; /* Dark ocean top color */
       }
     ]]>
   </style>
 
   <defs>
     <!-- FOREST GRADIENTS (Left Side) -->
-    <!-- Forest: transitioning to deep greens then sandy beach -->
+    <!-- Forest: Darker atmospheric colors transitioning to dark sandy beach -->
     <linearGradient id="forestGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#228b22; stop-opacity:0.8" />  <!-- Forest green -->
-      <stop offset="30%" style="stop-color:#32cd32; stop-opacity:1"   /> <!-- Lime green -->
-      <stop offset="80%" style="stop-color:#228b22; stop-opacity:1"   /> <!-- Forest green -->
-      <stop offset="95%" style="stop-color:#deb887; stop-opacity:1"   /> <!-- Burlywood/sandy -->
-      <stop offset="100%" style="stop-color:#f4e4bc; stop-opacity:1"  /> <!-- Light sandy beach -->
+      <stop offset="0%" style="stop-color:#1a4a1a; stop-opacity:0.8" />  <!-- Dark forest -->
+      <stop offset="30%" style="stop-color:#0f3a0f; stop-opacity:1"   /> <!-- Deep green -->
+      <stop offset="80%" style="stop-color:#1a4a1a; stop-opacity:1"   /> <!-- Dark forest -->
+      <stop offset="95%" style="stop-color:#5d4e37; stop-opacity:1"   /> <!-- Dark sandy -->
+      <stop offset="100%" style="stop-color:#6b5b47; stop-opacity:1"  /> <!-- Dark beach -->
     </linearGradient>
 
     <!-- DESERT GRADIENTS (Right Side) -->
-    <!-- Desert: transitioning to warm browns then sandy beach -->
+    <!-- Desert: Muted earth tones transitioning to dark sandy beach -->
     <linearGradient id="desertGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#d2b48c; stop-opacity:0.8" />  <!-- Tan -->
-      <stop offset="30%" style="stop-color:#cd853f; stop-opacity:1"   /> <!-- Peru -->
-      <stop offset="80%" style="stop-color:#a0522d; stop-opacity:1"   /> <!-- Sienna -->
-      <stop offset="95%" style="stop-color:#deb887; stop-opacity:1"   /> <!-- Burlywood/sandy -->
-      <stop offset="100%" style="stop-color:#f4e4bc; stop-opacity:1"  /> <!-- Light sandy beach -->
+      <stop offset="0%" style="stop-color:#4a3820; stop-opacity:0.8" />  <!-- Dark tan -->
+      <stop offset="30%" style="stop-color:#3a2810; stop-opacity:1"   /> <!-- Dark brown -->
+      <stop offset="80%" style="stop-color:#2a1800; stop-opacity:1"   /> <!-- Very dark brown -->
+      <stop offset="95%" style="stop-color:#5d4e37; stop-opacity:1"   /> <!-- Dark sandy -->
+      <stop offset="100%" style="stop-color:#6b5b47; stop-opacity:1"  /> <!-- Dark beach -->
     </linearGradient>
 
     <!-- RIVER GRADIENTS (Center) -->
-    <!-- River: Transitioning to match ocean TOP color at bottom -->
+    <!-- River: Transitioning to match dark ocean TOP color at bottom -->
     <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"  style="stop-color:#87ceeb; stop-opacity:1" /> <!-- Sky blue -->
-      <stop offset="30%" style="stop-color:#4682b4; stop-opacity:1" /> <!-- Steel blue -->
-      <stop offset="70%" style="stop-color:#4682b4; stop-opacity:1"   /> <!-- Transitioning to ocean -->
-      <stop offset="100%" style="stop-color:#4682b4; stop-opacity:1"  /> <!-- Ocean TOP color -->
+      <stop offset="0%"  style="stop-color:#2c5f75; stop-opacity:1" /> <!-- Dark teal -->
+      <stop offset="30%" style="stop-color:#1a4960; stop-opacity:1" /> <!-- Darker teal -->
+      <stop offset="70%" style="stop-color:#0f2536; stop-opacity:1"   /> <!-- Transitioning to ocean -->
+      <stop offset="100%" style="stop-color:#0f2536; stop-opacity:1"  /> <!-- Dark ocean TOP color -->
     </linearGradient>
 
     <!-- CLIFF GRADIENTS (Bottom Edge) -->
-    <!-- Cliff: Rocky gray-brown tones -->
+    <!-- Cliff: Darker rocky tones -->
     <linearGradient id="cliffGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"  style="stop-color:#8b7d6b; stop-opacity:1" /> <!-- Light brown-gray -->
-      <stop offset="40%" style="stop-color:#696969; stop-opacity:1" /> <!-- Dim gray -->
-      <stop offset="70%" style="stop-color:#556b2f; stop-opacity:1" /> <!-- Dark olive green -->
-      <stop offset="100%" style="stop-color:#2f4f4f; stop-opacity:1" /> <!-- Dark slate gray -->
+      <stop offset="0%"  style="stop-color:#3d3d3d; stop-opacity:1" /> <!-- Dark gray -->
+      <stop offset="40%" style="stop-color:#2a2a2a; stop-opacity:1" /> <!-- Darker gray -->
+      <stop offset="70%" style="stop-color:#1a1a1a; stop-opacity:1" /> <!-- Very dark gray -->
+      <stop offset="100%" style="stop-color:#0f0f0f; stop-opacity:1" /> <!-- Almost black -->
     </linearGradient>
   </defs>
 

@@ -8,7 +8,6 @@ class NavigationManager {
     this.CONFIG = {
       STARTING_SECTION: 2, // Land section index
       TOUCH_THRESHOLD: 50, // Minimum swipe distance in pixels
-      SCROLL_DEBOUNCE_DELAY: 100, // Scroll event debounce in ms
       SCROLL_ANIMATION_DURATION: 1000, // Scroll animation timeout in ms
     };
 
@@ -20,7 +19,7 @@ class NavigationManager {
     this.eventListeners = [];
     this.touchStartY = 0;
     this.touchEndY = 0;
-    this.scrollTimeout = null;
+    this.intersectionObserver = null;
 
     this.init();
   }
@@ -28,6 +27,7 @@ class NavigationManager {
   init() {
     this.cacheSectionData();
     this.scrollToInitialSection();
+    this.setupIntersectionObserver();
     this.bindEvents();
   }
 
@@ -71,22 +71,53 @@ class NavigationManager {
     return section ? section.element : null;
   }
 
-  handleScroll() {
-    if (this.isScrolling) return;
+  setupIntersectionObserver() {
+    const options = {
+      root: null,
+      // Trigger when top 20% of section is in viewport
+      // This works for both fixed (100vh) and variable-height (auto) sections
+      rootMargin: "0px 0px -80% 0px",
+      threshold: 0,
+    };
 
-    const scrollTop = window.pageYOffset;
-    const windowHeight = window.innerHeight;
-    const currentScrollSection = Math.round(scrollTop / windowHeight);
+    this.intersectionObserver = new IntersectionObserver((entries) => {
+      // Don't update during programmatic scrolling
+      if (this.isScrolling) return;
 
-    if (
-      currentScrollSection !== this.currentSection &&
-      currentScrollSection >= 0 &&
-      currentScrollSection < this.layers.length
-    ) {
-      this.currentSection = currentScrollSection;
-      const activeLayer = this.layers[this.currentSection];
-      this.updateActiveNav(activeLayer.id);
-    }
+      // Find the section that's most prominently in view
+      let topMostSection = null;
+      let topMostY = Infinity;
+
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          // Get distance from top of viewport to top of section
+          const rect = entry.target.getBoundingClientRect();
+          const distanceFromTop = Math.abs(rect.top);
+
+          // Track the section closest to the top of viewport
+          if (distanceFromTop < topMostY) {
+            topMostY = distanceFromTop;
+            topMostSection = entry.target;
+          }
+        }
+      });
+
+      // Update navigation if we found an active section
+      if (topMostSection) {
+        const layerId = topMostSection.id;
+        const sectionIndex = this.getSectionIndex(layerId);
+
+        if (sectionIndex !== -1 && sectionIndex !== this.currentSection) {
+          this.currentSection = sectionIndex;
+          this.updateActiveNav(layerId);
+        }
+      }
+    }, options);
+
+    // Observe all sections
+    this.layers.forEach((layer) => {
+      this.intersectionObserver.observe(layer);
+    });
   }
 
   scrollToSection(targetId) {
@@ -126,14 +157,6 @@ class NavigationManager {
     }
   }
 
-  debouncedScrollHandler() {
-    clearTimeout(this.scrollTimeout);
-    this.scrollTimeout = setTimeout(() => {
-      if (!this.isScrolling) {
-        this.handleScroll();
-      }
-    }, this.CONFIG.SCROLL_DEBOUNCE_DELAY);
-  }
 
   handleTouchStart(e) {
     this.touchStartY = e.changedTouches[0].screenY;
@@ -180,13 +203,6 @@ class NavigationManager {
     document.addEventListener("keydown", keyHandler);
     this.eventListeners.push({ element: document, event: "keydown", handler: keyHandler });
 
-    // Scroll handling
-    const scrollHandler = () => this.debouncedScrollHandler();
-    document.addEventListener("wheel", scrollHandler);
-    window.addEventListener("scroll", scrollHandler);
-    this.eventListeners.push({ element: document, event: "wheel", handler: scrollHandler });
-    this.eventListeners.push({ element: window, event: "scroll", handler: scrollHandler });
-
     // Touch events
     const touchStartHandler = (e) => this.handleTouchStart(e);
     const touchEndHandler = (e) => this.handleTouchEnd(e);
@@ -206,10 +222,13 @@ class NavigationManager {
   }
 
   cleanup() {
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
+    // Disconnect Intersection Observer
+    if (this.intersectionObserver) {
+      this.intersectionObserver.disconnect();
+      this.intersectionObserver = null;
     }
 
+    // Remove event listeners
     this.eventListeners.forEach(({ element, event, handler }) => {
       element.removeEventListener(event, handler);
     });

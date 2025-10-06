@@ -1,0 +1,41 @@
+/* Ocean */
+#ocean {
+  background: var(--ocean-bg);
+  transition: background 0.5s ease;
+  padding: 4rem 0;
+  margin-bottom: 0;
+  position: relative;
+  /* Override the default flex centering to stack content vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  /* Override .layer height and overflow constraints */
+  height: auto;
+  min-height: 100vh;
+  overflow: visible;
+}
+
+/* Ocean bathymetry SVG positioning */
+.ocean-bathymetry-svg {
+  position: absolute;
+  bottom: -5vh; /* Extend beyond ocean section into crust */
+  left: 0;
+  width: 100%;
+  height: 25vh; /* Taller to ensure complete coverage */
+  z-index: 5; /* Below content but above ocean background */
+  pointer-events: none; /* Don't interfere with interactions */
+}
+
+/* Theme-based SVG visibility */
+.dark-theme {
+  display: none; /* Hide dark theme SVG by default */
+}
+
+[data-theme="dark"] .light-theme {
+  display: none; /* Hide light theme SVG in dark mode */
+}
+
+[data-theme="dark"] .dark-theme {
+  display: block; /* Show dark theme SVG in dark mode */
+}

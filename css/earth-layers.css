@@ -4,7 +4,8 @@
 @import url("layers/outer-space.css");
 @import url("layers/atmosphere.css");
 @import url("layers/land.css");
-@import url("layers/ocean-crust.css");
+@import url("layers/ocean.css");
+@import url("layers/resources.css");
 @import url("components/ui-controls.css");
 @import url("components/research.css");
 @import url("components/sun.css");

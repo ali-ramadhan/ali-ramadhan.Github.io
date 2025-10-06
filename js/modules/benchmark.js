@@ -136,11 +136,11 @@ export class BenchmarkManager {
   handleClick(e) {
     if (e.target.classList.contains("benchmark-reference")) {
       e.preventDefault();
-      this.showTooltip(e.target, e, true);
+      this.showTooltip(e.target, e);
     }
   }
 
-  showTooltip(element, event, forceShow = false) {
+  showTooltip(element, event) {
     try {
       const benchmarkData = JSON.parse(element.dataset.benchmark);
 

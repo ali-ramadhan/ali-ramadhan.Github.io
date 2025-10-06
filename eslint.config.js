@@ -10,6 +10,7 @@ export default [
       globals: {
         ...globals.browser,
         dat: "readonly",
+        MathJax: "readonly",
       },
     },
     rules: {

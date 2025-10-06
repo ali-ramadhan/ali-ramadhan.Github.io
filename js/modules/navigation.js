@@ -157,7 +157,6 @@ class NavigationManager {
     }
   }
 
-
   handleTouchStart(e) {
     this.touchStartY = e.changedTouches[0].screenY;
   }

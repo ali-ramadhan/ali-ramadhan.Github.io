@@ -1,5 +1,42 @@
 /* Responsive */
 
+/* Video sphere sizing based on viewport height (for tablets/small screens) */
+@media (max-height: 1080px) {
+  #video-outer-box {
+    top: 45%;
+    width: 60vh;
+    height: 45vh;
+  }
+
+  #canvas-video-sphere {
+    width: 60vh !important;
+    height: 45vh !important;
+  }
+
+  #video {
+    width: 60vh;
+    height: 45vh;
+  }
+
+  #video-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .arrow {
+    font-size: 1.25rem;
+    padding: 0.3rem;
+  }
+
+  #left-arrow {
+    left: 0.5rem;
+  }
+
+  #right-arrow {
+    right: 0.5rem;
+  }
+}
+
 /* Tablet breakpoint (769px - 1024px) */
 @media (width > 768px) and (width <= 1024px) {
   .content {

@@ -3,21 +3,21 @@
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 800px;
-  height: 600px;
+  width: 70vh;
+  height: 52.5vh;
   z-index: 1;
 }
 
 #canvas-video-sphere {
   display: block;
-  width: 800px !important;
-  height: 600px !important;
+  width: 70vh !important;
+  height: 52.5vh !important;
 }
 
 #video {
   display: none;
-  width: 800px;
-  height: 600px;
+  width: 70vh;
+  height: 52.5vh;
 }
 
 #video-title {

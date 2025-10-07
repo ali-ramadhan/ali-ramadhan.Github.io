@@ -1,10 +1,12 @@
-/* Shooting Star Elements - Moving yellow light streaks */
+/* Shooting Star Elements - Colored by chemical composition */
+/* Different meteor compositions produce different colors when burning in the atmosphere */
 .shooting-star {
   position: absolute;
   width: 100px;
   height: 2px;
   z-index: 1; /* In front of stars (0), behind video sphere children (20) */
   opacity: 0; /* Hidden by default, animation controls visibility */
+  /* Default yellow gradient for iron (used by shooting-star1) */
   background: linear-gradient(
     270deg,
     rgba(255, 215, 0, 1) 0%,
@@ -15,13 +17,15 @@
   border-radius: 50%;
 }
 
-/* Shooting star 1 - Diagonal down-right */
+/* Shooting star 1 - Diagonal down-right (Iron) */
+/* Iron meteors produce bright yellow light when burning up in the atmosphere */
 .shooting-star1 {
   top: 5%;
   left: 10%;
   transform: rotate(45deg);
   animation: shooting-star-1 40s linear infinite;
   animation-delay: 2s;
+  /* Yellow gradient for iron - already set in base class */
 }
 
 @keyframes shooting-star-1 {
@@ -52,13 +56,21 @@
   }
 }
 
-/* Shooting star 2 - Steeper diagonal */
+/* Shooting star 2 - Steeper diagonal (Nitrogen/Oxygen) */
+/* Nitrogen and oxygen produce bright red/orange light during atmospheric entry */
 .shooting-star2 {
   top: 8%;
   left: 50%;
   transform: rotate(55deg);
   animation: shooting-star-2 45s linear infinite;
   animation-delay: 12s;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 50, 50, 1) 0%,
+    rgba(255, 50, 50, 0.7) 30%,
+    rgba(255, 50, 50, 0.3) 60%,
+    transparent 100%
+  );
 }
 
 @keyframes shooting-star-2 {
@@ -89,13 +101,21 @@
   }
 }
 
-/* Shooting star 3 - More horizontal */
+/* Shooting star 3 - More horizontal (Calcium) */
+/* Calcium produces bright purple/violet light when ionized in the upper atmosphere */
 .shooting-star3 {
   top: 15%;
   left: 70%;
   transform: rotate(35deg);
   animation: shooting-star-3 38s linear infinite;
   animation-delay: 23s;
+  background: linear-gradient(
+    270deg,
+    rgba(200, 50, 255, 1) 0%,
+    rgba(200, 50, 255, 0.7) 30%,
+    rgba(200, 50, 255, 0.3) 60%,
+    transparent 100%
+  );
 }
 
 @keyframes shooting-star-3 {
@@ -126,13 +146,21 @@
   }
 }
 
-/* Shooting star 4 - Diagonal */
+/* Shooting star 4 - Diagonal (Sodium) */
+/* Sodium produces bright orange light, similar to sodium vapor street lamps */
 .shooting-star4 {
   top: 3%;
   left: 25%;
   transform: rotate(48deg);
   animation: shooting-star-4 42s linear infinite;
   animation-delay: 32s;
+  background: linear-gradient(
+    270deg,
+    rgba(255, 140, 0, 1) 0%,
+    rgba(255, 140, 0, 0.7) 30%,
+    rgba(255, 140, 0, 0.3) 60%,
+    transparent 100%
+  );
 }
 
 @keyframes shooting-star-4 {
@@ -163,13 +191,21 @@
   }
 }
 
-/* Shooting star 5 - Steep angle */
+/* Shooting star 5 - Steep angle (Magnesium) */
+/* Magnesium burns with an intense blue-white/cyan light in the atmosphere */
 .shooting-star5 {
   top: 10%;
   left: 82%;
   transform: rotate(60deg);
   animation: shooting-star-5 35s linear infinite;
   animation-delay: 18s;
+  background: linear-gradient(
+    270deg,
+    rgba(0, 255, 255, 1) 0%,
+    rgba(0, 255, 255, 0.7) 30%,
+    rgba(0, 255, 255, 0.3) 60%,
+    transparent 100%
+  );
 }
 
 @keyframes shooting-star-5 {

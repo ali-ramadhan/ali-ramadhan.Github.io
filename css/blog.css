@@ -434,11 +434,11 @@
 }
 
 .blog-post-content blockquote {
-  border-left: 4px solid #3498db;
+  border: 2px solid #3498db;
+  border-radius: 8px;
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
   background: rgb(52, 152, 219, 0.1);
-  font-style: italic;
 }
 
 [data-theme="dark"] .blog-post-content blockquote {

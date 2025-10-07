@@ -31,26 +31,30 @@ class ThemeManager {
   }
 
   setTheme(theme) {
-    document.body.setAttribute("data-theme", theme);
+    if (theme === "dark") {
+      document.body.setAttribute("data-theme", "dark");
+    } else {
+      document.body.removeAttribute("data-theme");
+    }
     localStorage.setItem("theme", theme);
     this.updateThemeIcon(theme);
   }
 
   toggleTheme() {
-    const currentTheme = document.body.getAttribute("data-theme") || "light";
+    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
     const newTheme = currentTheme === "light" ? "dark" : "light";
     this.setTheme(newTheme);
   }
 
   handleSunClick() {
-    const currentTheme = document.body.getAttribute("data-theme") || "light";
+    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
     if (currentTheme === "light") {
       this.setTheme("dark");
     }
   }
 
   handleMoonClick() {
-    const currentTheme = document.body.getAttribute("data-theme") || "light";
+    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
     if (currentTheme === "dark") {
       this.setTheme("light");
     }

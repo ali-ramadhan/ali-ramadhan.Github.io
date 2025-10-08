@@ -1,7 +1,7 @@
 // Dynamically rotate comets so their tails point away from the sun
 (function () {
-  const sun = document.getElementById('sun');
-  const comets = document.querySelectorAll('.comet');
+  const sun = document.getElementById("sun");
+  const comets = document.querySelectorAll(".comet");
 
   if (!sun || comets.length === 0) return;
 
@@ -21,7 +21,7 @@
       const angle = Math.atan2(dy, dx) * (180 / Math.PI);
 
       // Set CSS custom property for rotation (tail points away from sun)
-      comet.style.setProperty('--comet-rotation', `${angle}deg`);
+      comet.style.setProperty("--comet-rotation", `${angle}deg`);
     });
 
     requestAnimationFrame(updateCometRotations);

@@ -8,5 +8,6 @@ import "/css/earth-layers.css";
 
 import "./earth-layers.js";
 import "./video-sphere.js";
+import "./comet-rotation.js";
 
 console.log("🚀 Home loaded with Vite!");

@@ -46,7 +46,7 @@
 .cirrus1 {
   width: 300px;
   height: 8px;
-  top: 10%;
+  top: 8%;
   left: 0;
   transform: rotate(-5deg);
   animation: cirrus-travel 50s linear infinite;
@@ -82,11 +82,11 @@
 .cirrus2 {
   width: 250px;
   height: 6px;
-  top: 12%;
+  top: 18%;
   left: 0;
   transform: rotate(3deg);
   animation: cirrus-travel 45s linear infinite;
-  animation-delay: -25s;
+  animation-delay: -35s;
 }
 
 .cirrus2::before {
@@ -105,11 +105,11 @@
 .cirrus3 {
   width: 200px;
   height: 5px;
-  top: 15%;
+  top: 13%;
   left: 0;
   transform: rotate(-2deg);
   animation: cirrus-travel 55s linear infinite;
-  animation-delay: -40s;
+  animation-delay: -5s;
 }
 
 .cirrus3::before {
@@ -145,10 +145,10 @@
 .alto1 {
   width: 50%;
   height: 40px;
-  top: 30%;
+  top: 25%;
   left: 0;
   animation: altostratus-travel 90s linear infinite;
-  animation-delay: -30s;
+  animation-delay: -20s;
 }
 
 .alto1::before {
@@ -167,10 +167,10 @@
 .alto2 {
   width: 45%;
   height: 30px;
-  top: 35%;
+  top: 40%;
   left: 0;
   animation: altostratus-travel 100s linear infinite;
-  animation-delay: -70s;
+  animation-delay: -65s;
 }
 
 .alto2::before {

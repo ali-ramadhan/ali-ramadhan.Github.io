@@ -1,4 +1,5 @@
 /* Meteor Elements - Colored by chemical composition */
+
 /* Different meteor compositions produce different colors when burning in the atmosphere */
 .meteor {
   position: absolute;
@@ -6,18 +7,20 @@
   height: 2px;
   z-index: 0; /* LAYER 0: Deep background - renders after stars via DOM order */
   opacity: 0; /* Hidden by default, animation controls visibility */
+
   /* Default yellow gradient for iron (used by meteor1) */
   background: linear-gradient(
     270deg,
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 215, 0, 0.7) 30%,
-    rgba(255, 215, 0, 0.3) 60%,
+    rgb(255, 215, 0, 1) 0%,
+    rgb(255, 215, 0, 0.7) 30%,
+    rgb(255, 215, 0, 0.3) 60%,
     transparent 100%
   );
   border-radius: 50%;
 }
 
 /* Meteor 1 - Diagonal down-right (Iron) */
+
 /* Iron meteors produce bright yellow light when burning up in the atmosphere */
 .meteor1 {
   top: 5%;
@@ -25,6 +28,7 @@
   transform: rotate(45deg);
   animation: meteor-1 40s linear infinite;
   animation-delay: 2s;
+
   /* Yellow gradient for iron - already set in base class */
 }
 
@@ -57,6 +61,7 @@
 }
 
 /* Meteor 2 - Steeper diagonal (Nitrogen/Oxygen) */
+
 /* Nitrogen and oxygen produce bright red/orange light during atmospheric entry */
 .meteor2 {
   top: 8%;
@@ -66,9 +71,9 @@
   animation-delay: 12s;
   background: linear-gradient(
     270deg,
-    rgba(255, 50, 50, 1) 0%,
-    rgba(255, 50, 50, 0.7) 30%,
-    rgba(255, 50, 50, 0.3) 60%,
+    rgb(255, 50, 50, 1) 0%,
+    rgb(255, 50, 50, 0.7) 30%,
+    rgb(255, 50, 50, 0.3) 60%,
     transparent 100%
   );
 }
@@ -102,6 +107,7 @@
 }
 
 /* Meteor 3 - More horizontal (Calcium) */
+
 /* Calcium produces bright purple/violet light when ionized in the upper atmosphere */
 .meteor3 {
   top: 20%;
@@ -111,9 +117,9 @@
   animation-delay: 23s;
   background: linear-gradient(
     270deg,
-    rgba(200, 50, 255, 1) 0%,
-    rgba(200, 50, 255, 0.7) 30%,
-    rgba(200, 50, 255, 0.3) 60%,
+    rgb(200, 50, 255, 1) 0%,
+    rgb(200, 50, 255, 0.7) 30%,
+    rgb(200, 50, 255, 0.3) 60%,
     transparent 100%
   );
 }
@@ -147,6 +153,7 @@
 }
 
 /* Meteor 4 - Diagonal (Sodium) */
+
 /* Sodium produces bright orange light, similar to sodium vapor street lamps */
 .meteor4 {
   top: 3%;
@@ -156,9 +163,9 @@
   animation-delay: 32s;
   background: linear-gradient(
     270deg,
-    rgba(255, 140, 0, 1) 0%,
-    rgba(255, 140, 0, 0.7) 30%,
-    rgba(255, 140, 0, 0.3) 60%,
+    rgb(255, 140, 0, 1) 0%,
+    rgb(255, 140, 0, 0.7) 30%,
+    rgb(255, 140, 0, 0.3) 60%,
     transparent 100%
   );
 }
@@ -192,6 +199,7 @@
 }
 
 /* Meteor 5 - Steep angle (Magnesium) */
+
 /* Magnesium burns with an intense blue-white/cyan light in the atmosphere */
 .meteor5 {
   top: 12%;
@@ -201,9 +209,9 @@
   animation-delay: 18s;
   background: linear-gradient(
     270deg,
-    rgba(0, 255, 255, 1) 0%,
-    rgba(0, 255, 255, 0.7) 30%,
-    rgba(0, 255, 255, 0.3) 60%,
+    rgb(0, 255, 255, 1) 0%,
+    rgb(0, 255, 255, 0.7) 30%,
+    rgb(0, 255, 255, 0.3) 60%,
     transparent 100%
   );
 }

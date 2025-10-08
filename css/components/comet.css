@@ -5,6 +5,7 @@
   height: 8px;
   z-index: 0; /* LAYER 0: Deep background - renders after stars via DOM order */
   opacity: 0;
+
   /* Initial position off-screen, will be positioned by individual comet classes */
 }
 

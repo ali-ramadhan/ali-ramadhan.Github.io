@@ -85,7 +85,7 @@
   font-size: 0.9rem;
   line-height: 1.4;
   z-index: 1006; /* LAYER 1000: Overlays - video tooltips */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3);
   pointer-events: none;
 }
 

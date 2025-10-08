@@ -354,9 +354,16 @@ function setupVideoSphere(sphereInit) {
 
     const raycaster = new THREE.Raycaster();
 
+    // Cache DOM references and state outside the event handler
+    const tooltip = document.getElementById("video-tooltip");
+    const tooltipTitleEl = tooltip.querySelector(".tooltip-title");
+    const tooltipTextEl = tooltip.querySelector(".tooltip-text");
+    const canvas = document.getElementById("canvas-video-sphere");
+    let currentTooltipName = null;
+
     window.addEventListener("mousemove", function (e) {
       let mousePosition = new THREE.Vector2();
-      let canvasBounds = document.getElementById("canvas-video-sphere").getBoundingClientRect();
+      let canvasBounds = canvas.getBoundingClientRect();
       mousePosition.x =
         ((e.clientX - canvasBounds.left) / (canvasBounds.right - canvasBounds.left)) * 2 - 1;
       mousePosition.y =
@@ -365,31 +372,26 @@ function setupVideoSphere(sphereInit) {
       raycaster.setFromCamera(mousePosition, camera);
       let intersects = raycaster.intersectObject(tooltipMeshGroup);
 
-      let tooltip = document.getElementById("video-tooltip");
-
       if (intersects.length > 0) {
         let tooltipName = intersects[0].object.name;
 
-        // Position tooltip near cursor using viewport coordinates
+        // Only update content if tooltip changed
+        if (tooltipName !== currentTooltipName) {
+          let tooltipTitle = videos[currentVideo]["tooltips"][tooltipName]["title"];
+          let tooltipText = videos[currentVideo]["tooltips"][tooltipName]["text"];
+
+          tooltipTitleEl.textContent = tooltipTitle;
+          tooltipTextEl.textContent = tooltipText;
+          currentTooltipName = tooltipName;
+        }
+
+        // Always update position and visibility
         tooltip.style.display = "block";
         tooltip.style.left = e.clientX + 15 + "px";
         tooltip.style.top = e.clientY + "px";
-
-        let tooltipTitle = videos[currentVideo]["tooltips"][tooltipName]["title"];
-        let tooltipText = videos[currentVideo]["tooltips"][tooltipName]["text"];
-
-        let tooltipTitleDiv = document.createElement("div");
-        let tooltipTextDiv = document.createElement("div");
-
-        tooltipTitleDiv.className = "tooltip-title";
-        tooltipTitleDiv.innerHTML = tooltipTitle;
-
-        tooltipTextDiv.className = "tooltip-text";
-        tooltipTextDiv.innerHTML = tooltipText;
-
-        tooltip.replaceChildren(tooltipTitleDiv, tooltipTextDiv);
       } else {
         tooltip.style.display = "none";
+        currentTooltipName = null;
       }
     });
   } // End of video element check

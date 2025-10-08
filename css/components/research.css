@@ -15,8 +15,8 @@
 }
 
 .research-figure {
-  flex: 0 0 400px;
-  max-width: 400px;
+  width: 400px;
+  flex-shrink: 0;
 }
 
 /* Flexbox ordering is now handled by HTML structure - no need for complex CSS ordering */
@@ -175,8 +175,8 @@
   }
 
   .research-figure {
-    flex: none;
-    max-width: 100%;
+    width: 100%;
+    flex-shrink: 0;
     order: 1 !important;
   }
 

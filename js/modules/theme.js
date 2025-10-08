@@ -31,11 +31,9 @@ class ThemeManager {
   }
 
   setTheme(theme) {
-    if (theme === "dark") {
-      document.body.setAttribute("data-theme", "dark");
-    } else {
-      document.body.removeAttribute("data-theme");
-    }
+    // Explicitly set data-theme attribute for both themes
+    // Safari needs explicit "light" instead of no attribute
+    document.body.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
     this.updateThemeIcon(theme);
   }

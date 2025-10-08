@@ -179,7 +179,8 @@
     top: 15%;
   }
 
-  body:not([data-theme="dark"]) #outer-space .sun {
+  body[data-theme="light"] #outer-space .sun,
+  body:not([data-theme]) #outer-space .sun {
     right: 80px;
   }
 }

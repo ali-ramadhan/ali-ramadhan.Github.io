@@ -55,17 +55,27 @@
   pointer-events: none;
 }
 
-/* Theme-based SVG visibility */
+/* Theme-based SVG visibility - using opacity for Safari compatibility */
 .land-river-svg.dark-theme {
-  display: none; /* Hide dark theme SVG by default */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.land-river-svg.light-theme {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
 [data-theme="dark"] .land-river-svg.light-theme {
-  display: none; /* Hide light theme SVG in dark mode */
+  opacity: 0;
+  visibility: hidden;
 }
 
 [data-theme="dark"] .land-river-svg.dark-theme {
-  display: block; /* Show dark theme SVG in dark mode */
+  opacity: 1;
+  visibility: visible;
 }
 
 #land::before {
@@ -77,8 +87,8 @@
   height: 20%;
   background: linear-gradient(
     to bottom,
-    rgb(200, 230, 255, 0.2) 0%,
-    rgb(200, 230, 255, 0.1) 50%,
+    rgba(200, 230, 255, 0.2) 0%,
+    rgba(200, 230, 255, 0.1) 50%,
     transparent 100%
   );
   pointer-events: none;
@@ -88,8 +98,8 @@
 [data-theme="dark"] #land::before {
   background: linear-gradient(
     to bottom,
-    rgb(37, 48, 64, 0.3) 0%,
-    rgb(37, 48, 64, 0.15) 50%,
+    rgba(37, 48, 64, 0.3) 0%,
+    rgba(37, 48, 64, 0.15) 50%,
     transparent 100%
   );
 }
@@ -146,7 +156,7 @@
 .social-link:hover {
   opacity: 1;
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .social-icon {

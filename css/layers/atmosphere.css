@@ -486,11 +486,11 @@
   height: 28px;
 }
 
-/* Dark theme adjustments for new clouds */
+/* Dark theme adjustments for new clouds - use CSS variable for consistency */
 [data-theme="dark"] .cirrus-cloud,
 [data-theme="dark"] .altostratus-cloud,
 [data-theme="dark"] .cumulus-cloud {
-  background: #4a4a6a;
+  background: var(--cloud-color);
 }
 
 [data-theme="dark"] .cirrus-cloud::before,
@@ -499,7 +499,7 @@
 [data-theme="dark"] .altostratus-cloud::after,
 [data-theme="dark"] .cumulus-cloud::before,
 [data-theme="dark"] .cumulus-cloud::after {
-  background: #4a4a6a;
+  background: var(--cloud-color);
 }
 
 /* Blog Post Listing Styles for Homepage */

@@ -36,7 +36,7 @@
   line-height: 1.4;
   max-width: 300px;
   z-index: 1001; /* LAYER 1000: Overlays - citation tooltips */
-  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   opacity: 0;
   visibility: hidden;
   transition:

@@ -4,6 +4,7 @@
   width: 8px;
   height: 8px;
   z-index: 3;
+  opacity: 0;
   /* Initial position off-screen, will be positioned by individual comet classes */
 }
 
@@ -29,10 +30,10 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 100%;
   width: 120px;
-  height: 3px;
-  transform: translate(-10%, -50%);
+  height: 20px;
+  transform: translate(0%, -50%);
   background: linear-gradient(
     90deg,
     rgb(255, 255, 255, 0.9) 0%,
@@ -42,26 +43,26 @@
     rgb(66, 165, 245, 0.15) 70%,
     transparent 100%
   );
+  clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 70%);
   box-shadow:
     0 0 6px rgb(255, 255, 255, 0.4),
     0 0 12px rgb(144, 202, 249, 0.2);
-  border-radius: 50% 0 0 50%;
   z-index: 1;
 }
 
-/* Comet 1 - Diagonal from bottom-right to top-left */
+/* Comet 1 - From top-left across to right */
 .comet1 {
-  bottom: -50px;
-  right: 20%;
-  transform: rotate(180deg);
+  top: 10%;
+  left: -100px;
+  transform: rotate(var(--comet-rotation, 180deg));
   animation: comet-path-1 75s linear infinite;
   animation-delay: 5s;
 }
 
 @keyframes comet-path-1 {
   0% {
-    bottom: -50px;
-    right: 20%;
+    top: 10%;
+    left: -100px;
     opacity: 0;
   }
 
@@ -70,8 +71,8 @@
   }
 
   13% {
-    bottom: 120%;
-    right: 70%;
+    top: 40%;
+    left: 80%;
     opacity: 1;
   }
 
@@ -80,25 +81,25 @@
   }
 
   100% {
-    bottom: 120%;
-    right: 70%;
+    top: 40%;
+    left: 80%;
     opacity: 0;
   }
 }
 
-/* Comet 2 - Steeper angle from bottom-center to top-left */
+/* Comet 2 - From top-center moving diagonally up-right */
 .comet2 {
-  bottom: -50px;
-  right: 45%;
-  transform: rotate(180deg);
+  top: 5%;
+  left: 30%;
+  transform: rotate(var(--comet-rotation, 180deg));
   animation: comet-path-2 75s linear infinite;
   animation-delay: 30s;
 }
 
 @keyframes comet-path-2 {
   0% {
-    bottom: -50px;
-    right: 45%;
+    top: 5%;
+    left: 30%;
     opacity: 0;
   }
 
@@ -107,8 +108,8 @@
   }
 
   13% {
-    bottom: 120%;
-    right: 75%;
+    top: -50px;
+    left: 70%;
     opacity: 1;
   }
 
@@ -117,25 +118,25 @@
   }
 
   100% {
-    bottom: 120%;
-    right: 75%;
+    top: -50px;
+    left: 70%;
     opacity: 0;
   }
 }
 
-/* Comet 3 - Gentler angle from bottom-right to top-center */
+/* Comet 3 - From top-right moving left and up */
 .comet3 {
-  bottom: -50px;
-  right: 10%;
-  transform: rotate(180deg);
+  top: 15%;
+  left: 110%;
+  transform: rotate(var(--comet-rotation, 180deg));
   animation: comet-path-3 75s linear infinite;
   animation-delay: 55s;
 }
 
 @keyframes comet-path-3 {
   0% {
-    bottom: -50px;
-    right: 10%;
+    top: 15%;
+    left: 110%;
     opacity: 0;
   }
 
@@ -144,8 +145,8 @@
   }
 
   13% {
-    bottom: 120%;
-    right: 50%;
+    top: -50px;
+    left: 50%;
     opacity: 1;
   }
 
@@ -154,8 +155,8 @@
   }
 
   100% {
-    bottom: 120%;
-    right: 50%;
+    top: -50px;
+    left: 50%;
     opacity: 0;
   }
 }

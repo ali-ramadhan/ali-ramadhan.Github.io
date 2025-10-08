@@ -185,7 +185,7 @@
   }
 
   .slideshow {
-    height: 250px;
+    height: 350px;
   }
 
   .project-content {
@@ -212,7 +212,7 @@
 
 @media (width <= 480px) {
   .slideshow {
-    height: 200px;
+    height: 280px;
   }
 
   .research-area {

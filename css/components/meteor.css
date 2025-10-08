@@ -4,7 +4,7 @@
   position: absolute;
   width: 100px;
   height: 2px;
-  z-index: 1; /* In front of stars (0), behind video sphere children (20) */
+  z-index: 0; /* LAYER 0: Deep background - renders after stars via DOM order */
   opacity: 0; /* Hidden by default, animation controls visibility */
   /* Default yellow gradient for iron (used by meteor1) */
   background: linear-gradient(

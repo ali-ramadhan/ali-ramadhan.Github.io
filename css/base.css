@@ -82,7 +82,7 @@ body {
 
 .content {
   position: relative;
-  z-index: 15; /* Higher than land background and river */
+  z-index: 40; /* LAYER 40: Content boxes */
   text-align: center;
   background: var(--content-bg);
   padding: 2rem;

@@ -5,7 +5,7 @@
   right: -150px;
   width: 80px;
   height: 80px;
-  z-index: 5;
+  z-index: 10; /* LAYER 10: Celestial objects */
   transition:
     right 1s ease-in-out,
     transform 0.3s ease,
@@ -78,7 +78,7 @@
   right: -150px;
   width: 80px;
   height: 80px;
-  z-index: 5;
+  z-index: 10; /* LAYER 10: Celestial objects */
   transition:
     right 1s ease-in-out,
     transform 0.3s ease,

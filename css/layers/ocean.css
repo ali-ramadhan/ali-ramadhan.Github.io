@@ -30,7 +30,7 @@
   left: 0;
   width: 100%;
   height: 25vh; /* Taller to ensure complete coverage */
-  z-index: 5; /* Below content but above ocean background */
+  z-index: 32; /* LAYER 30: Terrain - ocean bathymetry */
   pointer-events: none; /* Don't interfere with interactions */
 }
 

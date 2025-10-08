@@ -10,7 +10,7 @@
   border: 1px solid #ddd;
   border-radius: 8px;
   box-shadow: 0 4px 12px rgb(0, 0, 0, 0.15);
-  z-index: 1000;
+  z-index: 1002; /* LAYER 1000: Overlays - floating TOC */
   overflow: hidden;
   font-size: 14px;
   font-family: Inter, sans-serif;
@@ -238,7 +238,7 @@
   position: fixed;
   top: 100px;
   right: 30px;
-  z-index: 1000;
+  z-index: 1003; /* LAYER 1000: Overlays - TOC restore button */
   background: var(--content-bg);
   border: 2px solid var(--nav-dot-active);
   border-radius: 50%;

@@ -46,7 +46,7 @@
 /* Benchmark tooltip/modal styling */
 .benchmark-tooltip {
   position: fixed;
-  z-index: 1000;
+  z-index: 1004; /* LAYER 1000: Overlays - benchmark tooltip */
   background: white;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
@@ -87,7 +87,7 @@
   line-height: 1;
   border-radius: 4px;
   transition: all 0.2s ease;
-  z-index: 1001;
+  z-index: 1005; /* LAYER 1000: Overlays - benchmark close button */
 }
 
 .benchmark-close:hover {

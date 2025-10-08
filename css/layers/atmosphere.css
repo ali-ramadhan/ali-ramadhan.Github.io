@@ -50,7 +50,7 @@
   left: 0;
   transform: rotate(-5deg);
   animation: cirrus-travel 50s linear infinite;
-  animation-delay: 0s;
+  animation-delay: -10s;
 }
 
 .cirrus1::before {
@@ -86,7 +86,7 @@
   left: 0;
   transform: rotate(3deg);
   animation: cirrus-travel 45s linear infinite;
-  animation-delay: 15s;
+  animation-delay: -25s;
 }
 
 .cirrus2::before {
@@ -109,7 +109,7 @@
   left: 0;
   transform: rotate(-2deg);
   animation: cirrus-travel 55s linear infinite;
-  animation-delay: 30s;
+  animation-delay: -40s;
 }
 
 .cirrus3::before {
@@ -148,7 +148,7 @@
   top: 30%;
   left: 0;
   animation: altostratus-travel 90s linear infinite;
-  animation-delay: 10s;
+  animation-delay: -30s;
 }
 
 .alto1::before {
@@ -170,7 +170,7 @@
   top: 35%;
   left: 0;
   animation: altostratus-travel 100s linear infinite;
-  animation-delay: 55s;
+  animation-delay: -70s;
 }
 
 .alto2::before {
@@ -218,7 +218,7 @@
   top: 50%;
   left: 0;
   animation: cumulus-travel 130s linear infinite;
-  animation-delay: 0s;
+  animation-delay: -20s;
 }
 
 .cumulus1::before {
@@ -241,7 +241,7 @@
   top: 55%;
   left: 0;
   animation: cumulus-travel 140s linear infinite;
-  animation-delay: 45s;
+  animation-delay: -60s;
 }
 
 .cumulus2::before {
@@ -264,7 +264,7 @@
   top: 62%;
   left: 0;
   animation: cumulus-travel 125s linear infinite;
-  animation-delay: 80s;
+  animation-delay: -90s;
 }
 
 .cumulus3::before {
@@ -287,7 +287,7 @@
   top: 68%;
   left: 0;
   animation: cumulus-travel 150s linear infinite;
-  animation-delay: 110s;
+  animation-delay: -120s;
 }
 
 .cumulus4::before {

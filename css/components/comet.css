@@ -88,10 +88,10 @@
   }
 }
 
-/* Comet 2 - From top-center moving diagonally up-right */
+/* Comet 2 - From top-left moving diagonally down-right */
 .comet2 {
-  top: 5%;
-  left: 30%;
+  top: -50px;
+  left: 20%;
   transform: rotate(var(--comet-rotation, 180deg));
   animation: comet-path-2 75s linear infinite;
   animation-delay: 30s;
@@ -99,8 +99,8 @@
 
 @keyframes comet-path-2 {
   0% {
-    top: 5%;
-    left: 30%;
+    top: -50px;
+    left: 20%;
     opacity: 0;
   }
 
@@ -109,8 +109,8 @@
   }
 
   13% {
-    top: -50px;
-    left: 70%;
+    top: 50%;
+    left: 110%;
     opacity: 1;
   }
 
@@ -119,15 +119,15 @@
   }
 
   100% {
-    top: -50px;
-    left: 70%;
+    top: 50%;
+    left: 110%;
     opacity: 0;
   }
 }
 
-/* Comet 3 - From top-right moving left and up */
+/* Comet 3 - From top-right moving diagonally down-left */
 .comet3 {
-  top: 15%;
+  top: 10%;
   left: 110%;
   transform: rotate(var(--comet-rotation, 180deg));
   animation: comet-path-3 75s linear infinite;
@@ -136,7 +136,7 @@
 
 @keyframes comet-path-3 {
   0% {
-    top: 15%;
+    top: 10%;
     left: 110%;
     opacity: 0;
   }
@@ -146,8 +146,8 @@
   }
 
   13% {
-    top: -50px;
-    left: 50%;
+    top: 55%;
+    left: -100px;
     opacity: 1;
   }
 
@@ -156,8 +156,8 @@
   }
 
   100% {
-    top: -50px;
-    left: 50%;
+    top: 55%;
+    left: -100px;
     opacity: 0;
   }
 }

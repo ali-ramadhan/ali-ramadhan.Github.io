@@ -104,9 +104,9 @@
 /* Meteor 3 - More horizontal (Calcium) */
 /* Calcium produces bright purple/violet light when ionized in the upper atmosphere */
 .meteor3 {
-  top: 15%;
-  left: 70%;
-  transform: rotate(35deg);
+  top: 20%;
+  left: 15%;
+  transform: rotate(40deg);
   animation: meteor-3 38s linear infinite;
   animation-delay: 23s;
   background: linear-gradient(
@@ -120,8 +120,8 @@
 
 @keyframes meteor-3 {
   0% {
-    top: 15%;
-    left: 70%;
+    top: 20%;
+    left: 15%;
     opacity: 0;
   }
 
@@ -130,8 +130,8 @@
   }
 
   1.9% {
-    top: 32%;
-    left: 95%;
+    top: 40%;
+    left: 45%;
     opacity: 1;
   }
 
@@ -140,8 +140,8 @@
   }
 
   100% {
-    top: 32%;
-    left: 95%;
+    top: 40%;
+    left: 45%;
     opacity: 0;
   }
 }
@@ -194,9 +194,9 @@
 /* Meteor 5 - Steep angle (Magnesium) */
 /* Magnesium burns with an intense blue-white/cyan light in the atmosphere */
 .meteor5 {
-  top: 10%;
-  left: 82%;
-  transform: rotate(60deg);
+  top: 12%;
+  left: 60%;
+  transform: rotate(50deg);
   animation: meteor-5 35s linear infinite;
   animation-delay: 18s;
   background: linear-gradient(
@@ -210,8 +210,8 @@
 
 @keyframes meteor-5 {
   0% {
-    top: 10%;
-    left: 82%;
+    top: 12%;
+    left: 60%;
     opacity: 0;
   }
 
@@ -220,8 +220,8 @@
   }
 
   1.4% {
-    top: 28%;
-    left: 95%;
+    top: 30%;
+    left: 80%;
     opacity: 1;
   }
 
@@ -230,8 +230,8 @@
   }
 
   100% {
-    top: 28%;
-    left: 95%;
+    top: 30%;
+    left: 80%;
     opacity: 0;
   }
 }

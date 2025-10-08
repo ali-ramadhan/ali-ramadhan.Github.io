@@ -304,6 +304,75 @@
   height: 25px;
 }
 
+.cumulus5 {
+  width: 110px;
+  height: 48px;
+  top: 53%;
+  left: 0;
+  animation: cumulus-travel 135s linear infinite;
+  animation-delay: -45s;
+}
+
+.cumulus5::before {
+  top: -22px;
+  left: 18px;
+  width: 65px;
+  height: 65px;
+}
+
+.cumulus5::after {
+  top: -12px;
+  right: 12px;
+  width: 55px;
+  height: 38px;
+}
+
+.cumulus6 {
+  width: 95px;
+  height: 42px;
+  top: 60%;
+  left: 0;
+  animation: cumulus-travel 145s linear infinite;
+  animation-delay: -75s;
+}
+
+.cumulus6::before {
+  top: -20px;
+  left: 14px;
+  width: 58px;
+  height: 58px;
+}
+
+.cumulus6::after {
+  top: -10px;
+  right: 14px;
+  width: 48px;
+  height: 32px;
+}
+
+.cumulus7 {
+  width: 85px;
+  height: 38px;
+  top: 66%;
+  left: 0;
+  animation: cumulus-travel 128s linear infinite;
+  animation-delay: -105s;
+}
+
+.cumulus7::before {
+  top: -17px;
+  left: 13px;
+  width: 50px;
+  height: 50px;
+}
+
+.cumulus7::after {
+  top: -9px;
+  right: 11px;
+  width: 42px;
+  height: 28px;
+}
+
 /* Dark theme adjustments for new clouds */
 [data-theme="dark"] .cirrus-cloud,
 [data-theme="dark"] .altostratus-cloud,

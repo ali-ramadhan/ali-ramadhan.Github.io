@@ -6,7 +6,7 @@
       "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_vp9_good_crf42.webm",
       "dateStart": "2018-12-01T00:00:00",
       "framePeriod": 3600,
-      "colorbar": "img/colorbars/temperature_colorbar.png",
+      "colorbar": "/assets/research/figures/temperature_colorbar.png",
       "tooltips": {
         "Diurnal cycle": {
           "latitude": 39.78723,
@@ -47,7 +47,7 @@
       "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precipitation_vp9_good_crf54.webm",
       "dateStart": "2017-08-16T00:00:00",
       "framePeriod": 3600,
-      "colorbar": "img/colorbars/precipitation_colorbar.png",
+      "colorbar": "/assets/research/figures/precipitation_colorbar.png",
       "tooltips": {
         "Hurricane Harvey": {
           "latitude": 28.02077,
@@ -88,7 +88,7 @@
       "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/sst_vp9_good_crf32.webm",
       "dateStart": "2019-01-01T00:00:00",
       "framePeriod": 86400,
-      "colorbar": "img/colorbars/sst_colorbar.png",
+      "colorbar": "/assets/research/figures/sst_colorbar.png",
       "tooltips": {
         "Gulf stream": {
           "latitude": 42.3751,
@@ -113,7 +113,7 @@
       "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/ocean_speed_vp9_good_crf32.webm",
       "dateStart": "2020-01-01T00:00:00",
       "framePeriod": 86400,
-      "colorbar": "img/colorbars/ocean_speed_colorbar.png",
+      "colorbar": "/assets/research/figures/ocean_speed_colorbar.png",
       "tooltips": {
         "Gulf stream": {
           "latitude": 42.3751,

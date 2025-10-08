@@ -7,7 +7,6 @@ class NavigationManager {
   constructor() {
     this.CONFIG = {
       STARTING_SECTION: 2, // Land section index
-      TOUCH_THRESHOLD: 50, // Minimum swipe distance in pixels
       SCROLL_ANIMATION_DURATION: 1000, // Scroll animation timeout in ms
     };
 
@@ -17,8 +16,6 @@ class NavigationManager {
     this.currentSection = this.CONFIG.STARTING_SECTION;
 
     this.eventListeners = [];
-    this.touchStartY = 0;
-    this.touchEndY = 0;
     this.intersectionObserver = null;
 
     this.init();
@@ -157,27 +154,6 @@ class NavigationManager {
     }
   }
 
-  handleTouchStart(e) {
-    this.touchStartY = e.changedTouches[0].screenY;
-  }
-
-  handleTouchEnd(e) {
-    this.touchEndY = e.changedTouches[0].screenY;
-    const touchDiff = this.touchStartY - this.touchEndY;
-
-    if (Math.abs(touchDiff) > this.CONFIG.TOUCH_THRESHOLD && !this.isScrolling) {
-      if (touchDiff > 0 && this.currentSection < this.layers.length - 1) {
-        // Swipe up - go down
-        const targetId = this.layers[this.currentSection + 1].id;
-        this.scrollToSection(targetId);
-      } else if (touchDiff < 0 && this.currentSection > 0) {
-        // Swipe down - go up
-        const targetId = this.layers[this.currentSection - 1].id;
-        this.scrollToSection(targetId);
-      }
-    }
-  }
-
   handleResize() {
     const activeLayer = this.layers[this.currentSection];
     if (activeLayer) {
@@ -201,18 +177,6 @@ class NavigationManager {
     const keyHandler = (e) => this.handleKeyboardNavigation(e);
     document.addEventListener("keydown", keyHandler);
     this.eventListeners.push({ element: document, event: "keydown", handler: keyHandler });
-
-    // Touch events
-    const touchStartHandler = (e) => this.handleTouchStart(e);
-    const touchEndHandler = (e) => this.handleTouchEnd(e);
-    document.addEventListener("touchstart", touchStartHandler);
-    document.addEventListener("touchend", touchEndHandler);
-    this.eventListeners.push({
-      element: document,
-      event: "touchstart",
-      handler: touchStartHandler,
-    });
-    this.eventListeners.push({ element: document, event: "touchend", handler: touchEndHandler });
 
     // Resize handling
     const resizeHandler = () => this.handleResize();

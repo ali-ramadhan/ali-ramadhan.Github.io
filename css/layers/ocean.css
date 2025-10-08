@@ -12,10 +12,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  /* Override .layer height and overflow constraints */
-  height: auto;
-  min-height: 100vh;
-  overflow: visible;
+  /* No need to override - base .layer now allows scrolling */
 }
 
 /* Ocean content spacing */

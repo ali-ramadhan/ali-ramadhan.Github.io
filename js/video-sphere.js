@@ -370,16 +370,10 @@ function setupVideoSphere(sphereInit) {
       if (intersects.length > 0) {
         let tooltipName = intersects[0].object.name;
 
-        tooltip.style.zIndex = 10;
-        tooltip.style.display = "inline-block";
-        tooltip.style.position = "absolute";
-        tooltip.style.left = e.pageX + 15 + "px";
-        tooltip.style.top = e.pageY + "px";
-        tooltip.style.background = "rgba(255, 255, 255, 0.9)";
-        tooltip.style.border = "1px solid black";
-        tooltip.style.borderRadius = "5px";
-        tooltip.style.padding = "0.3em";
-        tooltip.style.width = "400px";
+        // Position tooltip near cursor using viewport coordinates
+        tooltip.style.display = "block";
+        tooltip.style.left = e.clientX + 15 + "px";
+        tooltip.style.top = e.clientY + "px";
 
         let tooltipTitle = videos[currentVideo]["tooltips"][tooltipName]["title"];
         let tooltipText = videos[currentVideo]["tooltips"][tooltipName]["text"];
@@ -387,13 +381,10 @@ function setupVideoSphere(sphereInit) {
         let tooltipTitleDiv = document.createElement("div");
         let tooltipTextDiv = document.createElement("div");
 
-        tooltipTitleDiv.style.fontSize = "large";
-        tooltipTitleDiv.style.fontWeight = "bold";
-        tooltipTitleDiv.style.lineHeight = 1.2;
+        tooltipTitleDiv.className = "tooltip-title";
         tooltipTitleDiv.innerHTML = tooltipTitle;
 
-        tooltipTextDiv.style.fontSize = "medium";
-        tooltipTextDiv.style.lineHeight = 1;
+        tooltipTextDiv.className = "tooltip-text";
         tooltipTextDiv.innerHTML = tooltipText;
 
         tooltip.replaceChildren(tooltipTitleDiv, tooltipTextDiv);

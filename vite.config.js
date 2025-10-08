@@ -7,6 +7,8 @@ export default defineConfig({
       targets: ["defaults", "not IE 11"],
     }),
   ],
+  // Set public directory for static assets that should be copied as-is
+  publicDir: "public",
   // Handle static assets
-  assetsInclude: ["**/*.webm", "**/*.png", "**/*.jpg", "**/*.svg", "**/*.woff2"],
+  assetsInclude: ["**/*.webm", "**/*.png", "**/*.jpg", "**/*.svg", "**/*.woff2", "**/*.json", "**/*.mp4"],
 });

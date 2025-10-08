@@ -15,7 +15,7 @@ let videoFramerate = 24;
 // Load video data from JSON file
 async function loadVideoData() {
   try {
-    const response = await fetch("/_data/videos.json");
+    const response = await fetch("/assets/videos.json");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

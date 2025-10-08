@@ -3,7 +3,8 @@
   "videos": [
     {
       "title": "Surface air temperature",
-      "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_vp9_good_crf42.webm",
+      "src_av1": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_av1_preset3_crf38.mp4",
+      "src_h264": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_h264_veryslow_crf28.mp4",
       "dateStart": "2018-12-01T00:00:00",
       "framePeriod": 3600,
       "colorbar": "/assets/research/figures/temperature_colorbar.png",
@@ -44,7 +45,8 @@
     },
     {
       "title": "Precipitation",
-      "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precipitation_vp9_good_crf54.webm",
+      "src_av1": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precipitation_av1_preset3_crf52.mp4",
+      "src_h264": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/precipitation_h264_veryslow_crf34.mp4",
       "dateStart": "2017-08-16T00:00:00",
       "framePeriod": 3600,
       "colorbar": "/assets/research/figures/precipitation_colorbar.png",
@@ -85,7 +87,8 @@
     },
     {
       "title": "Sea surface temperature",
-      "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/sst_vp9_good_crf32.webm",
+      "src_av1": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/sst_av1_preset3_crf32.mp4",
+      "src_h264": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/sst_h264_veryslow_crf26.mp4",
       "dateStart": "2019-01-01T00:00:00",
       "framePeriod": 86400,
       "colorbar": "/assets/research/figures/sst_colorbar.png",
@@ -110,7 +113,8 @@
     },
     {
       "title": "Ocean current speed",
-      "src": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/ocean_speed_vp9_good_crf32.webm",
+      "src_av1": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/ocean_speed_av1_preset3_crf32.mp4",
+      "src_h264": "https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/ocean_speed_h264_veryslow_crf26.mp4",
       "dateStart": "2020-01-01T00:00:00",
       "framePeriod": 86400,
       "colorbar": "/assets/research/figures/ocean_speed_colorbar.png",

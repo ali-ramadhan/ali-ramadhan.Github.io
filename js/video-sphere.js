@@ -273,7 +273,16 @@ function setupVideoSphere(sphereInit) {
           videoTitle.innerHTML = videos[n]["title"];
         }
 
-        video.src = videos[n]["src"];
+        // Update both source elements for multi-format support
+        const sources = video.querySelectorAll("source");
+        if (sources.length >= 2) {
+          sources[0].src = videos[n]["src_av1"]; // AV1 for modern browsers
+          sources[1].src = videos[n]["src_h264"]; // H.264 fallback for older Safari
+        } else {
+          console.error("Video sources not found");
+        }
+
+        video.load(); // Reload video to pick new sources
         video.play().catch((error) => {
           console.error("Video play failed:", error);
           showVideoSphereError("Failed to play video");

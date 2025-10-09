@@ -84,5 +84,4 @@ the limit to a much larger number and still compute the sum quickly. For example
 benchmarking `sum_even_fibonacci(4 * 10^15)` only takes @benchmark[problem-0002:limit_4e15].
 
 This solution takes $\mathcal{O}(\log L)$ time because Fibonacci numbers grow
-exponentially, so only about $\log L$ terms are needed to reach the limit $L$. The
-solution takes $\mathcal{O}(1)$ space as it only stores a constant number of variables.
+exponentially, so only about $\log L$ terms are needed to reach the limit $L$.

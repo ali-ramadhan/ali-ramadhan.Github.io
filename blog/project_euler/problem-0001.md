@@ -141,17 +141,15 @@ and if we benchmark `sum_multiples_three_ie(3, 5, 7, 10^6)` we get
 Let $f$ be the number of factors we're considering.
 
 The generator solutions take $\mathcal{O}(Lf)$ time as they iterate through every number
-until $L$ and perform $f$ modulo operations per number. They use $\mathcal{O}(1)$ space
-since generators don't allocate memory for intermediate results.
+until $L$ and perform $f$ modulo operations per number.
 
-The inclusion-exclusion solutions achieve $\mathcal{O}(2^f \cdot \log M)$ time complexity,
+The inclusion-exclusion solutions achieve $\mathcal{O}(2^f \log M)$ time complexity,
 where $M$ is the maximum factor value. They need to compute $2^f - 1$ non-empty subsets
 to apply the inclusion-exclusion principle. Each subset requires computing an LCM using
 the Euclidean algorithm, which takes $\mathcal{O}(\log M)$ time, followed by using the
-sum formula which takes constant time. They use $\mathcal{O}(1)$ space, storing only a
-few variables.
+sum formula which takes constant time.
 
-For more factors, I personally prefer the elegance of the generator expression but if
-performance was critical there's probably a nice way to generate the terms of the
-inclusion-exclusion principle. But then, in the case of many factors and smaller $L$ the
-generator expression may end up being faster.
+If I have a lot of factors to crunch through, I personally prefer the elegance of the
+generator expression as $2^f - 1$ terms is a lot. If performance was critical there's
+probably a nice way to generate the terms of the inclusion-exclusion principle. But then,
+in the case of many factors and smaller $L$ the generator expression may end up being faster.

@@ -45,4 +45,4 @@ function sum_square_difference(n)
 end
 ```
 
-`sum_square_difference(100)` runs in @benchmark[problem-0006:n_100]
+`sum_square_difference(100)` returns the solution and runs in @benchmark[problem-0006:n_100].

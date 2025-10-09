@@ -144,10 +144,12 @@ The generator solutions take $\mathcal{O}(Lf)$ time as they iterate through ever
 until $L$ and perform $f$ modulo operations per number. They use $\mathcal{O}(1)$ space
 since generators don't allocate memory for intermediate results.
 
-The inclusion-exclusion solutions achieve $\mathcal{O}(2^f)$ time complexity, as they
-need to compute $2^f - 1$ non-empty subsets to apply the inclusion-exclusion principle.
-But otherwise computing an LCM and using the sum formula takes constant time.
-They also use $\mathcal{O}(1)$ space, storing only a few variables.
+The inclusion-exclusion solutions achieve $\mathcal{O}(2^f \cdot \log M)$ time complexity,
+where $M$ is the maximum factor value. They need to compute $2^f - 1$ non-empty subsets
+to apply the inclusion-exclusion principle. Each subset requires computing an LCM using
+the Euclidean algorithm, which takes $\mathcal{O}(\log M)$ time, followed by using the
+sum formula which takes constant time. They use $\mathcal{O}(1)$ space, storing only a
+few variables.
 
 For more factors, I personally prefer the elegance of the generator expression but if
 performance was critical there's probably a nice way to generate the terms of the

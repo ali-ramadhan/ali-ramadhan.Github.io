@@ -17,7 +17,7 @@ date: 2024-10-07
 > 
 > Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
-Not sure if there's much to say on this problem besides that
+Not sure if there's much to say on this problem besides that using two special cases of [Faulhaber's formula](https://en.wikipedia.org/wiki/Faulhaber%27s_formula) for powers of 1 and 2 we can write
 
 ```math
 \sum_{k=1}^n k = \frac{n(n+1)}{2}
@@ -29,11 +29,13 @@ and
 \sum_{k=1}^n k^2 = \frac{n(n+1)(2n+1)}{6}
 ```
 
-so we can compute the answer directly using
+So we can compute the answer directly using
 
 ```math
 \operatorname{SSD}(n) = \sum_{k=1}^n k^2 - \left( \sum_{k=1}^n k \right)^2 = \frac{n(n+1)(2n+1)}{6} - \left( \frac{n(n+1)}{2} \right)^2
 ```
+
+With a simple implementation
 
 ```julia
 function square_of_sum(n)
@@ -50,4 +52,4 @@ function sum_square_difference(n)
 end
 ```
 
-`sum_square_difference(100)` returns the solution and runs in @benchmark[problem-0006:n_100].
+we call `sum_square_difference(100)` to compute the solution which runs in @benchmark[problem-0006:n_100].

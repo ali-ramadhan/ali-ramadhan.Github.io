@@ -15,7 +15,7 @@ This can be done pretty easily and elegantly:
 ```julia
 function is_palindrome(n)
     n = abs(n)  # handle negative numbers
-    str(n) == reverse(str(n))
+    return str(n) == reverse(str(n))
 end
 ```
 
@@ -90,4 +90,6 @@ For the 6-digit case we call `largest_palindrome_product(100000, 999999)` to fin
 We can also do the 9-digit case and call `largest_palindrome_product(100000000, 999999999)` to find $999,900,665,566,009,999 = 999,920,317 \times 999,980,347$ in @benchmark[problem-0004:9_digits] which is still under a minute.
 
 Beyond that, for the 12-digit case we'll have to use 128-bit integers as the product of two 12-digit numbers
-will easily overflow if we keep using 64-bit integers.
+will easily overflow if we keep using 64-bit integers. It will probably also take a lot longer than 1 minute!
+
+Let $U$ denote the upper limit and $L$ the lower limit. Also let $R = U - L + 1$ and $d$ be the number of digits in the upper limit. In the worst case our solution takes $\mathcal{O}(R^2 d)$ time as it checks all $(i, j)$ pairs of which there are $R^2$ pairs and calls to `is_palindrome` take $\mathcal{O}(d)$ time. The early termination optimizations will reduce the number of pairs to check by a lot but in the worst case you're still searching a large space. The solution doesn't allocate any memory so that's another $\mathcal{O}(1)$ space.

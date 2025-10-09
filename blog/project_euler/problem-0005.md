@@ -9,10 +9,7 @@ date: 2024-10-07
 >
 > What is the smallest positive number that is evenly divisible by all of the numbers from $1$ to $20$?
 
-We want to basically find the [lowest common multiple](https://en.wikipedia.org/wiki/Least_common_multiple)
-(LCM) of 1, 2, ..., 20. Since $\operatorname{lcm}(a, b) = \operatorname{lcm}(b, a)$ and
-$\operatorname{lcm}(a, b, c) = \operatorname{lcm}(a, \operatorname{lcm}(b, c))$ we can iteratively compute the
-LCM using
+We want to basically find the [lowest common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) (LCM) of 1, 2, ..., 20. Since $\operatorname{lcm}(a, b) = \operatorname{lcm}(b, a)$ and $\operatorname{lcm}(a, b, c) = \operatorname{lcm}(a, \operatorname{lcm}(b, c))$ we can iteratively compute the LCM using
 
 ```julia
 function smallest_multiple(n)

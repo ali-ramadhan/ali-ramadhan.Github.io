@@ -353,12 +353,16 @@
 .blog-post-full-header {
   text-align: center;
   margin-bottom: 3rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1rem;
   border-bottom: 2px solid #eee;
 }
 
 [data-theme="dark"] .blog-post-full-header {
   border-bottom-color: #555;
+}
+
+.project-euler-body .blog-post-full-header {
+  padding-bottom: 0.5rem;
 }
 
 .blog-post-breadcrumb {
@@ -902,6 +906,20 @@
   .blog-post-content h6.collapsible-header.collapsed::after {
     transform: translateY(-50%) rotate(-90deg);
   }
+}
+
+/* Project Euler Problems List Styling */
+.euler-problems {
+  margin: 2rem 0;
+}
+
+.euler-problem {
+  margin-bottom: 0.5rem;
+}
+
+.euler-problem h2 {
+  font-size: 1.25rem;
+  margin: 0;
 }
 
 /* Responsive Design */

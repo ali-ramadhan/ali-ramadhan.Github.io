@@ -11,21 +11,41 @@
     <meta name="floating-toc" content="true" />
     {% endif %}
   </head>
-  <body class="blog-post-body">
+  <body class="blog-post-body project-euler-body">
     {% include "blog-nav-bar.html" %}
+
+    {# Find the current problem's position in the euler collection #}
+    {% set currentIndex = -1 %}
+    {% for problem in collections.euler %}
+      {% if problem.url == page.url %}
+        {% set currentIndex = loop.index0 %}
+      {% endif %}
+    {% endfor %}
+
+    {# Get previous and next problems if they exist #}
+    {% set prevProblem = collections.euler[currentIndex - 1] if currentIndex > 0 else null %}
+    {% set nextProblem = collections.euler[currentIndex + 1] if currentIndex < collections.euler.length - 1 else null %}
 
     <main class="blog-post-main">
       <article class="blog-post">
         <header class="blog-post-full-header">
           <div class="blog-post-breadcrumb">
-            <a href="/blog/posts/project-euler-solutions/">← Back to all problems</a>
+            {% if prevProblem %}
+            <a href="{{ prevProblem.url }}">← Previous</a>
+            <span class="breadcrumb-separator">|</span>
+            {% endif %}
+            <a href="/blog/posts/project-euler-solutions/">↑ All problems</a>
             <span class="breadcrumb-separator">|</span>
             <a
               href="https://projecteuler.net/problem={{ problem_number }}"
               target="_blank"
               rel="noopener noreferrer"
-              >Link to Problem Description</a
+              >Go to Project Euler</a
             >
+            {% if nextProblem %}
+            <span class="breadcrumb-separator">|</span>
+            <a href="{{ nextProblem.url }}">Next →</a>
+            {% endif %}
           </div>
           <h1 class="blog-post-full-title">Project Euler Problem {{ problem_number }}</h1>
           {% if problem_name %}

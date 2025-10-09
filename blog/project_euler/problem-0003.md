@@ -64,3 +64,12 @@ end up checking many factors. Finding the largest prime factor of a cool prime I
 $2^{55} - 55$ takes @benchmark[problem-0003:cool_prime]. And for the semiprime
 $268435399 \times 536870923$ it takes @benchmark[problem-0003:semiprime]. That's
 100,000x longer in both cases compared to solving the original problem.
+
+The runtime of `prime_factors` can vary wildly. In the best case when $n$ just has
+many small factors that are quickly found it runs in $\mathcal{O}(\log n)$ time. But
+in the worst case trial division will end up testing all odd divisors up to $\sqrt{n}$
+so it'll take $\mathcal{O}(\sqrt{n})$ time.
+
+As implemented, our algorithm uses $\mathcal{O}(\log n)$ space to keep track of all
+factors of $n$ but since we only care about the largest prime factor we could just
+track it using $\mathcal{O}(1)$ or constant space.

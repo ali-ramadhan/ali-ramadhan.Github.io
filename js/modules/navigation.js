@@ -37,10 +37,25 @@ class NavigationManager {
   }
 
   scrollToInitialSection() {
-    const landSection = this.getSectionById("land");
-    if (landSection) {
-      landSection.scrollIntoView({ behavior: "instant" });
-      this.updateActiveNav("land");
+    // Check if there's a hash in the URL
+    const hash = window.location.hash.slice(1); // Remove the # prefix
+
+    let targetSection;
+    let targetId;
+
+    if (hash && (targetSection = this.getSectionById(hash))) {
+      // If there's a valid hash, scroll to that section
+      targetId = hash;
+    } else {
+      // Otherwise, default to the land section
+      targetSection = this.getSectionById("land");
+      targetId = "land";
+    }
+
+    if (targetSection) {
+      targetSection.scrollIntoView({ behavior: "instant" });
+      this.updateActiveNav(targetId);
+      this.currentSection = this.getSectionIndex(targetId);
     }
   }
 

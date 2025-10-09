@@ -30,10 +30,10 @@
 
 #video-caption {
   text-align: center;
-  display: none;
   color: white;
   margin-top: 0.5rem;
   text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  font-family: "Fira Code", monospace;
 }
 
 .arrow {
@@ -66,11 +66,53 @@
 }
 
 #colorbar {
-  display: none;
+  display: block;
   width: 70%;
   margin-left: auto;
   margin-right: auto;
   padding-top: 0.5em;
+}
+
+#colorbar.hidden,
+#video-caption.hidden {
+  display: none;
+}
+
+/* Video Controls */
+#video-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.video-toggle-btn {
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.video-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.video-toggle-btn.active {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  color: white;
+  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+}
+
+.video-toggle-btn.active:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Video Tooltip */
@@ -106,10 +148,3 @@
   line-height: 1.4;
 }
 
-/*
- * dat.gui
- */
-
-.c div input {
-  font-size: 100%;
-}

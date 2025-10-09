@@ -2,7 +2,6 @@
 
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import * as dat from "dat.gui";
 
 /////
 ///// Data
@@ -189,52 +188,29 @@ function setupVideoSphere(sphereInit) {
   }
 
   /////
-  ///// dat.gui setup
+  ///// Toggle controls setup
   /////
 
-  let gui = new dat.GUI();
+  let videoCaption = document.getElementById("video-caption");
+  let colorbar = document.getElementById("colorbar");
+  let toggleTimestampBtn = document.getElementById("toggle-timestamp");
+  let toggleColorbarBtn = document.getElementById("toggle-colorbar");
 
-  let options = {
-    playback_rate: 1.0,
-    show_caption: false,
-    show_colorbar: false,
-  };
-
-  let video_options = gui.addFolder("Video options");
-
-  video_options
-    .add(options, "playback_rate", 0.0, 5.0, 0.1)
-    .name("Playback rate")
-    .onChange(function () {
-      let video = document.getElementById("video");
-      video.playbackRate = options.playback_rate;
+  // Toggle timestamp visibility
+  if (toggleTimestampBtn && videoCaption) {
+    toggleTimestampBtn.addEventListener("click", function () {
+      videoCaption.classList.toggle("hidden");
+      toggleTimestampBtn.classList.toggle("active");
     });
+  }
 
-  video_options
-    .add(options, "show_caption")
-    .name("Show timestamp")
-    .onChange(function () {
-      let videoCaption = document.getElementById("video-caption");
-      if (options.show_caption) {
-        videoCaption.style.display = "block";
-      } else {
-        videoCaption.style.display = "none";
-      }
+  // Toggle colorbar visibility
+  if (toggleColorbarBtn && colorbar) {
+    toggleColorbarBtn.addEventListener("click", function () {
+      colorbar.classList.toggle("hidden");
+      toggleColorbarBtn.classList.toggle("active");
     });
-
-  video_options
-    .add(options, "show_colorbar")
-    .name("Show colorbar")
-    .onChange(function () {
-      let colorbar = document.getElementById("colorbar");
-      if (options.show_colorbar) {
-        colorbar.style.display = "block";
-      } else {
-        colorbar.style.display = "none";
-      }
-    });
-
-  // video_options.open();
+  }
 
   /////
   ///// video sphere setup
@@ -256,7 +232,7 @@ function setupVideoSphere(sphereInit) {
     });
 
     video.defaultPlaybackRate = 1.0;
-    video.playbackRate = options.playback_rate;
+    video.playbackRate = 1.0;
 
     let videoTex = new THREE.VideoTexture(video);
     sphereMeshMaterial.map = videoTex;

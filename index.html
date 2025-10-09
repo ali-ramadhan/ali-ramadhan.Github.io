@@ -20,6 +20,13 @@
       type="font/woff2"
       crossorigin
     />
+    <link
+      rel="preload"
+      href="/assets/fonts/FiraCode-VF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
     <!-- Critical CSS to prevent FOUC -->
     <link rel="stylesheet" href="/css/fonts.css" />
@@ -41,8 +48,12 @@
         <span id="left-arrow" class="arrow" aria-hidden="true">◀</span>
         <span id="right-arrow" class="arrow" aria-hidden="true">▶</span>
 
-        <div id="video-caption"></div>
-        <div id="video-colorbar"><img id="colorbar" /></div>
+        <div id="video-caption" class="hidden"></div>
+        <div id="video-colorbar"><img id="colorbar" class="hidden" /></div>
+        <div id="video-controls">
+          <button id="toggle-timestamp" class="video-toggle-btn">Timestamp</button>
+          <button id="toggle-colorbar" class="video-toggle-btn">Colorbar</button>
+        </div>
       </div>
       <div id="video-tooltip">
         <div class="tooltip-title"></div>

@@ -160,7 +160,8 @@
 }
 
 .social-icon {
-  font-size: 18px;
+  height: 1rem;
+  width: auto;
   flex-shrink: 0;
 }
 

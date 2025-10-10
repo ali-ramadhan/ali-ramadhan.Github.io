@@ -50,7 +50,7 @@ henderson1916:
   journal: "Transactions of the American Society of Actuaries"
   volume: "17"
   pages: "43–48"
-  pdf: "/assets/documents/papers/Henderson (1916), Note on Graduation by Adjusted Average, Transactions of the American Society of Actuaries.pdf"
+  pdf: "/assets/blog/time-series-zoo/Henderson (1916), Note on Graduation by Adjusted Average, Transactions of the American Society of Actuaries.pdf"
   source: "https://archive.org/details/transactions17actuuoft/page/42/mode/2up"
 
 henshaw2019:
@@ -119,7 +119,7 @@ macaulay1931:
   type: book
   publisher: "National Bureau of Economic Research"
   pages: "169 pp."
-  pdf: "/assets/documents/papers/Macaulay (1931), The Smoothing of Time Series, National Bureau of Economic Research.pdf"
+  pdf: "/assets/blog/time-series-zoo/Macaulay (1931), The Smoothing of Time Series, National Bureau of Economic Research.pdf"
   source: "https://www.nber.org/books-and-chapters/smoothing-time-series"
 
 mackinnon2010:

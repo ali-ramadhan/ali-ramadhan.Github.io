@@ -25,7 +25,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ramadhan%20et%20al,%202023,%20Capturing%20missing%20physics%20in%20climate%20model%20parameterizations%20using%20neural%20differential%20equations.pdf"
+        "url": "/assets/documents/papers/Ramadhan%20et%20al,%202023,%20Capturing%20missing%20physics%20in%20climate%20model%20parameterizations%20using%20neural%20differential%20equations.pdf"
       }
     ]
   },
@@ -106,7 +106,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Bire%20et%20al,%202023,%20Divergent%20behavior%20of%20hydrothermal%20plumes%20in%20fresh%20versus%20salty%20icy%20ocean%20worlds.pdf"
+        "url": "/assets/documents/papers/Bire%20et%20al,%202023,%20Divergent%20behavior%20of%20hydrothermal%20plumes%20in%20fresh%20versus%20salty%20icy%20ocean%20worlds.pdf"
       }
     ]
   },
@@ -127,7 +127,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Essack%20et%20al,%202023,%20The%20Astronomical%20Journal,%20TOI-1075%20b%20A%20Dense,%20Massive,%20Ultra-short-period%20Hot%20Super-Earth%20Straddling%20the%20Radius%20Gap.pdf"
+        "url": "/assets/documents/papers/Essack%20et%20al,%202023,%20The%20Astronomical%20Journal,%20TOI-1075%20b%20A%20Dense,%20Massive,%20Ultra-short-period%20Hot%20Super-Earth%20Straddling%20the%20Radius%20Gap.pdf"
       }
     ]
   },
@@ -170,7 +170,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ramadhan%20et%20al,%202022,%20Frontiers%20in%20Marine%20Science,%20Observations%20of%20Upwelling%20and%20Downwelling%20Around%20Antarctica%20Mediated%20by%20Sea%20Ice.pdf"
+        "url": "/assets/documents/papers/Ramadhan%20et%20al,%202022,%20Frontiers%20in%20Marine%20Science,%20Observations%20of%20Upwelling%20and%20Downwelling%20Around%20Antarctica%20Mediated%20by%20Sea%20Ice.pdf"
       }
     ]
   },
@@ -190,7 +190,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Bire%20et%20al,%202022,%20Journal%20of%20Geophysical%20Research%20Planets,%20Exploring%20Ocean%20Circulation%20on%20Icy%20Moons%20Heated%20From%20Below.pdf"
+        "url": "/assets/documents/papers/Bire%20et%20al,%202022,%20Journal%20of%20Geophysical%20Research%20Planets,%20Exploring%20Ocean%20Circulation%20on%20Icy%20Moons%20Heated%20From%20Below.pdf"
       },
       {
         "type": "news",
@@ -215,7 +215,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Arnscheidt%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20%20On%20the%20Settling%20Depth%20of%20Meltwater%20Escaping%20from%20beneath%20Antarctic%20Ice%20Shelves.pdf"
+        "url": "/assets/documents/papers/Arnscheidt%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20%20On%20the%20Settling%20Depth%20of%20Meltwater%20Escaping%20from%20beneath%20Antarctic%20Ice%20Shelves.pdf"
       }
     ]
   },
@@ -236,7 +236,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Wagner%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20Near-Inertial%20Waves%20and%20Turbulence%20Driven%20by%20the%20Growth%20of%20Swell.pdf"
+        "url": "/assets/documents/papers/Wagner%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20Near-Inertial%20Waves%20and%20Turbulence%20Driven%20by%20the%20Growth%20of%20Swell.pdf"
       }
     ]
   },
@@ -269,7 +269,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Souza%20et%20al,%202020,%20Journal%20of%20Advances%20in%20Modeling%20Earth%20Systems,%20Uncertainty%20Quantification%20of%20Ocean%20Parameterizations.pdf"
+        "url": "/assets/documents/papers/Souza%20et%20al,%202020,%20Journal%20of%20Advances%20in%20Modeling%20Earth%20Systems,%20Uncertainty%20Quantification%20of%20Ocean%20Parameterizations.pdf"
       }
     ]
   },
@@ -301,7 +301,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ramadhan%20et%20al,%202020,%20Journal%20of%20Open%20Source%20Software,%20Oceananigans.jl%20Fast%20and%20friendly%20geophysical%20fluid%20dynamics%20on%20GPUs.pdf"
+        "url": "/assets/documents/papers/Ramadhan%20et%20al,%202020,%20Journal%20of%20Open%20Source%20Software,%20Oceananigans.jl%20Fast%20and%20friendly%20geophysical%20fluid%20dynamics%20on%20GPUs.pdf"
       }
     ]
   },
@@ -329,7 +329,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Rackauckas%20et%20al,%202020,%20arXiv,%20Universal%20Differential%20Equations%20for%20Scientific%20Machine%20Learning.pdf"
+        "url": "/assets/documents/papers/Rackauckas%20et%20al,%202020,%20arXiv,%20Universal%20Differential%20Equations%20for%20Scientific%20Machine%20Learning.pdf"
       }
     ]
   },
@@ -378,7 +378,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Wesolowski%20et%20al,%202017,%20IEEE%20Transactions%20on%20Nuclear%20Science,%20X-Ray%20Dosimetry%20During%20Low-Intensity%20Femtosecond%20Laser%20Ablation%20of%20Molybdenum%20in%20Ambient%20Conditions.pdf"
+        "url": "/assets/documents/papers/Wesolowski%20et%20al,%202017,%20IEEE%20Transactions%20on%20Nuclear%20Science,%20X-Ray%20Dosimetry%20During%20Low-Intensity%20Femtosecond%20Laser%20Ablation%20of%20Molybdenum%20in%20Ambient%20Conditions.pdf"
       }
     ]
   },
@@ -407,7 +407,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ramadhan%20et%20al,%202017,%20Carbon,%20Synthesis%20of%20hydrogen-%20and%20methyl-capped%20long-chain%20polyynes%20by%20intense%20ultrashort%20laser%20pulse.pdf"
+        "url": "/assets/documents/papers/Ramadhan%20et%20al,%202017,%20Carbon,%20Synthesis%20of%20hydrogen-%20and%20methyl-capped%20long-chain%20polyynes%20by%20intense%20ultrashort%20laser%20pulse.pdf"
       }
     ]
   },
@@ -435,7 +435,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ramadhan%20et%20al,%202016,%20Journal%20of%20Physics%20B%20Atomic,%20Molecular%20and%20Optical%20Physics,%20Ultrafast%20molecular%20dynamics%20of%20dissociative%20ionization%20in%20OCS%20probed%20by%20soft%20x-ray%20synchrotron.pdf"
+        "url": "/assets/documents/papers/Ramadhan%20et%20al,%202016,%20Journal%20of%20Physics%20B%20Atomic,%20Molecular%20and%20Optical%20Physics,%20Ultrafast%20molecular%20dynamics%20of%20dissociative%20ionization%20in%20OCS%20probed%20by%20soft%20x-ray%20synchrotron.pdf"
       }
     ]
   },
@@ -463,7 +463,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ibrahim%20et%20al,%202016,%20Advanced%20Materials%20Interfaces,%20A%20Novel%20Femtosecond%20Laser-Assisted%20Method%20for%20the%20Synthesis%20of%20Reduced%20Graphene%20Oxide%20Gels%20and%20Thin.pdf"
+        "url": "/assets/documents/papers/Ibrahim%20et%20al,%202016,%20Advanced%20Materials%20Interfaces,%20A%20Novel%20Femtosecond%20Laser-Assisted%20Method%20for%20the%20Synthesis%20of%20Reduced%20Graphene%20Oxide%20Gels%20and%20Thin.pdf"
       }
     ]
   },
@@ -491,7 +491,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ibrahim%20et%20al,%202014,%20Proceedings%20of%20the%2014th%20IEEE%20International%20Conference%20on%20Nanotechnology,%20Ultrafast%20light%20interaction%20with%20Graphene%20oxide%20aqueous%20solution.pdf"
+        "url": "/assets/documents/papers/Ibrahim%20et%20al,%202014,%20Proceedings%20of%20the%2014th%20IEEE%20International%20Conference%20on%20Nanotechnology,%20Ultrafast%20light%20interaction%20with%20Graphene%20oxide%20aqueous%20solution.pdf"
       }
     ]
   },
@@ -510,7 +510,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Ly%20et%20al,%202014,%20Proceedings%20of%20the%2014th%20IEEE%20International%20Conference%20on%20Nanotechnology,%20Welding%20of%20Au%20microwires%20by%20femtosecond%20laser%20irradiation.pdf"
+        "url": "/assets/documents/papers/Ly%20et%20al,%202014,%20Proceedings%20of%20the%2014th%20IEEE%20International%20Conference%20on%20Nanotechnology,%20Welding%20of%20Au%20microwires%20by%20femtosecond%20laser%20irradiation.pdf"
       }
     ]
   },
@@ -541,7 +541,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/research/papers/Wales%20et%20al,%202014,%20Journal%20of%20Electron%20Spectroscopy%20and%20Related%20Phenomena,%20Coulomb%20imaging%20of%20the%20concerted%20and%20stepwise%20break%20up%20processes%20of%20OCS%20ions%20in%20intense%20femtosecond.pdf"
+        "url": "/assets/documents/papers/Wales%20et%20al,%202014,%20Journal%20of%20Electron%20Spectroscopy%20and%20Related%20Phenomena,%20Coulomb%20imaging%20of%20the%20concerted%20and%20stepwise%20break%20up%20processes%20of%20OCS%20ions%20in%20intense%20femtosecond.pdf"
       }
     ]
   }

@@ -42,7 +42,7 @@ I collected some interesting and varied time series to play around with and popu
 The [Keeling Curve](https://en.wikipedia.org/wiki/Keeling_Curve) represents the CO<sub>2</sub> concentration in the Earth's atmosphere based on continuous measurements taken at the Mauna Loa Observatory on the island of Hawaii since 1958. It's a pretty simple time series with a slowly increasing trend and a pretty regular seasonal cycle with a period of 12 months corresponding to the seasonal cycle.
 
 ::: figure centered width-80
-![Keeling Curve time series](/assets/images/blog/time-series-zoo/time_series_keeling.png)
+![Keeling Curve time series](/assets/blog/time-series-zoo/time_series_keeling.png)
 :::
 
 CO<sub>2</sub> level increase in the spring and summer as new vegetation growth pulls CO<sub>2</sub> out of the atmosphere through photosynthesis, then decrease in the fall as plants and leaves die off and decay, releasing CO<sub>2</sub> back into the atmosphere. Since Hawaii is quite isolated from sources of pollution and human activity and Mauna Loa is quite high up, the seasonal cycle exhibits little noise or variability, which will make it easier to forecast. In the Southern Hemisphere the cycle is reversed but it is also less pronounced as the Southern Hemisphere has less land and less vegetation as a result.
@@ -56,7 +56,7 @@ We'll just look at monthly measurements (from the 15th of each month) but more f
 This is the number of [sunspots](https://en.wikipedia.org/wiki/Sunspot) on the Sun's surface. It's the monthly mean total sunspot number since 1749 obtained by taking a simple arithmetic mean of the daily total sunspot number over all days of each calendar month.
 
 ::: figure centered width-80
-![Sunspots time series](/assets/images/blog/time-series-zoo/time_series_sunspots.png)
+![Sunspots time series](/assets/blog/time-series-zoo/time_series_sunspots.png)
 :::
 
 Sunspots are cold dark spots on the solar surface caused by concentrations of magnetic flux that inhibit convection. The cyclical behavior is the [solar cycle](https://en.wikipedia.org/wiki/Solar_cycle), a roughly 11-year cycle with significant amplitude variations. Each cycle the sun exhibits increased magnetic activity in the form of sunspots, solar flares, and coronal mass ejections. The period of low sunspot count from roughly 1796 to 1820 correspond to the [Dalton Minimum](https://en.wikipedia.org/wiki/Dalton_Minimum). The exact cause of such minima is not well understood. Predicting future solar cycles may be impossible due to the chaotic nature of the solar surface magnetic field, however short-term predictions of the upcoming solar cycle are possible based on a causal relationship between the Sun's polar field and the toroidal field of the next sunspot cycle [@nandy2021]. This suggests that we should be forecasting one solar cycle ahead for validation and testing.
@@ -66,7 +66,7 @@ Sunspots are cold dark spots on the solar surface caused by concentrations of ma
 ENSO is the [El Niño-Southern Oscillation](https://en.wikipedia.org/wiki/El_Ni%C3%B1o%E2%80%93Southern_Oscillation). It's a large scale pattern of warm sea surface temperatures in the tropical Pacific Ocean during El Niño, and cold during La Niña, with worldwide effects. It's the strongest [climate oscillation](https://en.wikipedia.org/wiki/Climate_variability_and_change#Oscillations) and the most prominent source of inter-annual variability.
 
 ::: figure centered width-80
-![mei time series](/assets/images/blog/time-series-zoo/time_series_mei.png)
+![mei time series](/assets/blog/time-series-zoo/time_series_mei.png)
 :::
 
 The Multivariate ENSO Index (MEI) is a method used to characterize the intensity of an ENSO event [@wolter2011]. Like other climate oscillations, ENSO is quasi-periodic with a period of 2-7 years making it difficult to forecast. While Earth's climate is a chaotic system, convolutional neural networks looking at sea surface temperature and oceanic heat content in the Pacific can provide skillful forecasts with a lead time of 1.5 years and older methods can go up to a year [@ham2019]. This suggests that we may be able to forecast a year out, but a forecast based solely on the MEI (like what we're doing) might not actually be skillful.
@@ -76,7 +76,7 @@ The Multivariate ENSO Index (MEI) is a method used to characterize the intensity
 This is an hourly time series of surface air temperature near Durban, South Africa from 1940-2023 obtained from the ERA5 climate reanalysis product. It has many more observations than the previous time series so . There are multiple scales of seasonality and variability from the diurnal cycle and day-to-day variability of weather to the seasonal cycle and inter-annual variability, with potentially signals of climate change on top.
 
 ::: figure centered width-80
-![Durban temperature time series](/assets/images/blog/time-series-zoo/zoom_plot_temperature_Durban.png)
+![Durban temperature time series](/assets/blog/time-series-zoo/zoom_plot_temperature_Durban.png)
 :::
 
 ### Global price of wheat
@@ -84,7 +84,7 @@ This is an hourly time series of surface air temperature near Durban, South Afri
 This is the global price of wheat for each month since 1990. The underlying generating process behind this time series is the entire global economy so there's probably no hope of being able to forecast this with any significant lead. But it's worth seeing what the forecasts look like, maybe we can identify some false positives. It might also be worth seeing if we can successfully make short-term forecasts.
 
 ::: figure centered width-80
-![Wheat time series](/assets/images/blog/time-series-zoo/time_series_wheat.png)
+![Wheat time series](/assets/blog/time-series-zoo/time_series_wheat.png)
 :::
 
 ### USD-JPY exchange rate
@@ -92,7 +92,7 @@ This is the global price of wheat for each month since 1990. The underlying gene
 Daily exchange rate since 2005. Same comments as above.
 
 ::: figure centered width-80
-![Exchange rate time series](/assets/images/blog/time-series-zoo/time_series_exchange.png)
+![Exchange rate time series](/assets/blog/time-series-zoo/time_series_exchange.png)
 :::
 
 ### LW stock price
@@ -100,7 +100,7 @@ Daily exchange rate since 2005. Same comments as above.
 This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during March 2024 trading hours at a resolution of a few minutes. The above comments on unpredictibility still hold, but what might be interesting here is whether we are able to make forecasts on what the stock price does in the second half of the trading day given we know what it did in the first.
 
 ::: figure centered width-80
-![Lamb-Weston time series](/assets/images/blog/time-series-zoo/time_series_lamb_weston.png)
+![Lamb-Weston time series](/assets/blog/time-series-zoo/time_series_lamb_weston.png)
 :::
 
 ### ERCOT electrical load
@@ -108,7 +108,7 @@ This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during
 This is the hourly electrical load in Texas for each control area served by ERCOT (Electric Reliability Council of Texas) between 2004-2023. There are multiple scales of seasonality and variability again with a long-term increasing trend.
 
 ::: figure centered width-80
-![ERCOT time series](/assets/images/blog/time-series-zoo/time_series_ercot.png)
+![ERCOT time series](/assets/blog/time-series-zoo/time_series_ercot.png)
 :::
 
 https://en.wikipedia.org/wiki/January_31_%E2%80%93_February_2,_2023_North_American_ice_storm
@@ -118,7 +118,7 @@ https://en.wikipedia.org/wiki/January_31_%E2%80%93_February_2,_2023_North_Americ
 Electrical load and oil temperature at 15-minute and 1-hour intervals from two electricity transformers in China.
 
 ::: figure centered width-80
-![Transformer time series](/assets/images/blog/time-series-zoo/time_series_transformer.png)
+![Transformer time series](/assets/blog/time-series-zoo/time_series_transformer.png)
 :::
 
 ### Cheese sales
@@ -126,7 +126,7 @@ Electrical load and oil temperature at 15-minute and 1-hour intervals from two e
 Store-level scanner data of cheese sales at Dominick's Finer Foods, a now-defunct grocery store chain in the Chicago area, from 1989-1994. We will be looking at and forecasting chain-wide weekly cheese sales.
 
 ::: figure centered width-80
-![Cheese time series](/assets/images/blog/time-series-zoo/time_series_cheese.png)
+![Cheese time series](/assets/blog/time-series-zoo/time_series_cheese.png)
 :::
 
 ### Uber pickups
@@ -134,7 +134,7 @@ Store-level scanner data of cheese sales at Dominick's Finer Foods, a now-defunc
 Uber pickups from January to June 2015 in New York City. We'll be looking at and forecasting hourly pickups.
 
 ::: figure centered width-80
-![Uber time series](/assets/images/blog/time-series-zoo/time_series_uber.png)
+![Uber time series](/assets/blog/time-series-zoo/time_series_uber.png)
 :::
 
 ## Time series decomposition
@@ -168,7 +168,7 @@ We'll also also look at a periodogram (or power spectrum) of each component to s
 
 ::: figure centered
 
-![Classical seasonal decomposition of the Keeling Curve](/assets/images/blog/time-series-zoo/seasonal_decomposition_keeling_classical.png)
+![Classical seasonal decomposition of the Keeling Curve](/assets/blog/time-series-zoo/seasonal_decomposition_keeling_classical.png)
 
 Classical seasonal decomposition of the Keeling Curve. (Left column) Shows the decomposition into trend, seasonal, and residual components. (Middle columns) Shows the autocorrelation (ACF) and partial autocorrelation (PACF) functions for each component. The light blue shading shows the confidence bands for testing whether the correlations are significantly different from zero. (Right column) Shows periodograms for each component on a log scale, highlighting the frequency content.
 
@@ -216,7 +216,7 @@ We can apply X13-ARIMA-SEATS to the Keeling Curve and compare the decomposition 
 
 ::: figure centered
 
-![X13-ARIMA decomposition of the Keeling Curve](/assets/images/blog/time-series-zoo/seasonal_decomposition_keeling_x13_arima_seats.png)
+![X13-ARIMA decomposition of the Keeling Curve](/assets/blog/time-series-zoo/seasonal_decomposition_keeling_x13_arima_seats.png)
 
 X13-ARIMA-SEATS decomposition of the Keeling Curve.
 
@@ -234,7 +234,7 @@ X13-ARIMA-SEATS assumes fixed seasonal periods but STL and LOESS can handle diff
 
 ::: figure centered
 
-![STL decomposition of the Keeling Curve](/assets/images/blog/time-series-zoo/seasonal_decomposition_keeling_stl.png)
+![STL decomposition of the Keeling Curve](/assets/blog/time-series-zoo/seasonal_decomposition_keeling_stl.png)
 
 STL decomposition of the Keeling Curve.
 
@@ -293,7 +293,7 @@ If your time series data exhibits a Dickey-Fuller static below say the 1% critic
 
 ::: figure centered
 
-![Dickey-Fuller test statistic distribution under the null hypothesis](/assets/images/blog/time-series-zoo/dickey_fuller_null_hypothesis_distribution.png)
+![Dickey-Fuller test statistic distribution under the null hypothesis](/assets/blog/time-series-zoo/dickey_fuller_null_hypothesis_distribution.png)
 
 Dickey-Fuller test statistic distribution under the null hypothesis for the case of no constant term ($\alpha = 0$) and no linear trend ($\beta = 0$). The distribution was estimated using Monte Carlo sampling with 100,000 AR(1) simulations, each consisting of 2,000 data points. The critical values agree closely with table 2 ($\tau_c$ and $N=1$ rows) of MacKinnon (2010).
 
@@ -355,7 +355,7 @@ The test statistic examines how much the cumulative sum of the residuals fluctua
 
 ::: figure centered
 
-![KPSS test statistic distribution under the null hypothesis](/assets/images/blog/time-series-zoo/kpss_no_trend_null_hypothesis_distribution.png)
+![KPSS test statistic distribution under the null hypothesis](/assets/blog/time-series-zoo/kpss_no_trend_null_hypothesis_distribution.png)
 
 KPSS test statistic distribution under the null hypothesis assuming no trend. The distribution was estimated using Monte Carlo sampling with 100,000 simulations, each consisting of 2,000 data points. The critical values agree with Table 1 of [@kwiatkowski1992]. Code to produce this figure (and corresponding figure with trend) can be found in <a href="https://github.com/ali-ramadhan/time-series-forecasting/blob/main/kpss_distribution.ipynb"><code>kpss_distribution.ipynb</code></a>
 
@@ -464,7 +464,7 @@ Exponential smoothing does quite well on the Keeling Curve, which isn't too surp
 
 ::: figure centered
 
-![exponential smoothing best model keeling](/assets/images/blog/time-series-zoo/exponential_smoothing_best_model_keeling.png)
+![exponential smoothing best model keeling](/assets/blog/time-series-zoo/exponential_smoothing_best_model_keeling.png)
 
 The best fitting exponential smoothing model for the Keeling Curve.
 
@@ -481,7 +481,7 @@ If the trend is accelerating, then training only on more recent observation migh
 ::: figure centered
 
 <video class="full-width-video" controls>
-  <source src="/assets/images/blog/time-series-zoo/exponential_smoothing_models_keeling.mp4" type="video/mp4">
+  <source src="/assets/blog/time-series-zoo/exponential_smoothing_models_keeling.mp4" type="video/mp4">
 </video>
 
 Comparison of different exponential smoothing models for the Keeling Curve, shown in order from worst to best performing configurations based on validation error.
@@ -509,7 +509,7 @@ The time series also has a quasi-periodic cycle averaging around 11 years so we'
 
 ::: figure centered
 
-![exponential smoothing best model sunspots](/assets/images/blog/time-series-zoo/exponential_smoothing_best_model_sunspots.png)
+![exponential smoothing best model sunspots](/assets/blog/time-series-zoo/exponential_smoothing_best_model_sunspots.png)
 
 The best fitting exponential smoothing model for the yearly-mean sunspot number time series.
 
@@ -528,7 +528,7 @@ This example highlights a fundamental limitation of exponential smoothing: it wo
 ::: figure centered
 
 <video class="full-width-video" controls>
-  <source src="/assets/images/blog/time-series-zoo/exponential_smoothing_models_sunspots.mp4" type="video/mp4">
+  <source src="/assets/blog/time-series-zoo/exponential_smoothing_models_sunspots.mp4" type="video/mp4">
 </video>
 
 Comparison of different exponential smoothing configurations for sunspot prediction, ordered from worst to best performing models based on validation error. Note how different combinations of trend and seasonal components affect forecast quality.
@@ -559,7 +559,7 @@ Let's see how autoregressive models perform on our time series, starting with th
 
 ::: figure centered
 
-![Autoregressive best model Keeling](/assets/images/blog/time-series-zoo/autoregressive_best_model_keeling.png)
+![Autoregressive best model Keeling](/assets/blog/time-series-zoo/autoregressive_best_model_keeling.png)
 
 Autoregressive best model Keeling Curve.
 
@@ -568,7 +568,7 @@ Autoregressive best model Keeling Curve.
 ::: figure centered
 
 <video class="full-width-video" controls>
-  <source src="/assets/images/blog/time-series-zoo/autoregressive_models_keeling.mp4" type="video/mp4">
+  <source src="/assets/blog/time-series-zoo/autoregressive_models_keeling.mp4" type="video/mp4">
 </video>
 
 Autoregressive models for the Keeling Curve.
@@ -595,7 +595,7 @@ Next, let's examine how autoregressive models handle the more challenging sunspo
 
 ::: figure centered
 
-![Autoregressive best model sunspots](/assets/images/blog/time-series-zoo/autoregressive_best_model_sunspots.png)
+![Autoregressive best model sunspots](/assets/blog/time-series-zoo/autoregressive_best_model_sunspots.png)
 
 Autoregressive best model for sunspot number prediction.
 
@@ -604,7 +604,7 @@ Autoregressive best model for sunspot number prediction.
 ::: figure centered
 
 <video class="full-width-video" controls>
-  <source src="/assets/images/blog/time-series-zoo/autoregressive_models_sunspots.mp4" type="video/mp4">
+  <source src="/assets/blog/time-series-zoo/autoregressive_models_sunspots.mp4" type="video/mp4">
 </video>
 
 Comparison of different autoregressive configurations for sunspot prediction.

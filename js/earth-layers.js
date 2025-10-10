@@ -6,7 +6,6 @@
 import { ThemeManager } from "./modules/theme.js";
 import { NavigationManager } from "./modules/navigation.js";
 import { SlideshowManager } from "./modules/slideshow.js";
-import { ProjectSectionsManager } from "./modules/project-sections.js";
 
 class EarthLayersApp {
   constructor() {
@@ -35,9 +34,6 @@ class EarthLayersApp {
 
       // Initialize slideshow functionality
       this.managers.set("slideshow", new SlideshowManager());
-
-      // Initialize project sections
-      this.managers.set("projectSections", new ProjectSectionsManager());
 
       console.log("Earth Layers app initialized successfully");
     } catch (error) {

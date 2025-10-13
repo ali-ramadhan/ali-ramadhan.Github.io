@@ -58,6 +58,33 @@
     ]
   },
   {
+    "id": "geometry-reconstruction-paper",
+    "title": "Approaches for constraining uncertainty and degeneracy in geometry reconstruction of molecules from simulated Coulomb explosion data",
+    "authors": [
+      "K. Tian",
+      "A. Ramadhan",
+      "M. Nooijen",
+      "S. V. Pantazi",
+      "R. Karimi",
+      "J. H. Sanderson"
+    ],
+    "status": "published",
+    "journal": "Computer Physics Communications",
+    "volume": 297,
+    "pages": "109074",
+    "year": 2024,
+    "links": [
+      {
+        "type": "doi",
+        "url": "https://doi.org/10.1016/j.cpc.2023.109074"
+      },
+      {
+        "type": "pdf",
+        "url": "/assets/documents/papers/Tian%20et%20al,%202024,%20Computer%20Physics%20Communications,%20Approaches%20for%20constraining%20uncertainty%20and%20degeneracy%20in%20geometry%20reconstruction%20of%20molecules%20from%20simulated%20Coulomb%20explosion%20data.pdf"
+      }
+    ]
+  },
+  {
     "id": "ndes-paper",
     "title": "Capturing missing physics in climate model parameterizations using neural differential equations",
     "authors": [
@@ -188,33 +215,6 @@
       {
         "type": "pdf",
         "url": "/assets/documents/papers/Essack%20et%20al,%202023,%20The%20Astronomical%20Journal,%20TOI-1075%20b%20A%20Dense,%20Massive,%20Ultra-short-period%20Hot%20Super-Earth%20Straddling%20the%20Radius%20Gap.pdf"
-      }
-    ]
-  },
-  {
-    "id": "geometry-reconstruction-paper",
-    "title": "Approaches for constraining uncertainty and degeneracy in geometry reconstruction of molecules from simulated Coulomb explosion data",
-    "authors": [
-      "K. Tian",
-      "A. Ramadhan",
-      "M. Nooijen",
-      "S. V. Pantazi",
-      "R. Karimi",
-      "J. H. Sanderson"
-    ],
-    "status": "published",
-    "journal": "Computer Physics Communications",
-    "volume": 297,
-    "pages": "109074",
-    "year": 2024,
-    "links": [
-      {
-        "type": "doi",
-        "url": "https://doi.org/10.1016/j.cpc.2023.109074"
-      },
-      {
-        "type": "pdf",
-        "url": "/assets/documents/papers/Tian%20et%20al,%202024,%20Computer%20Physics%20Communications,%20Approaches%20for%20constraining%20uncertainty%20and%20degeneracy%20in%20geometry%20reconstruction%20of%20molecules%20from%20simulated%20Coulomb%20explosion%20data.pdf"
       }
     ]
   },

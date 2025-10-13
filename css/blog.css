@@ -2,7 +2,8 @@
 
 /* Blog Post Listing Styles */
 .blog-section {
-  max-width: 800px;
+  /* Fluid max-width: scales from 800px to 1200px on larger screens */
+  max-width: clamp(800px, 85vw, 1200px);
   margin: 0 auto;
   padding: 2rem;
 }
@@ -335,7 +336,8 @@
 }
 
 .blog-post-main {
-  max-width: 800px;
+  /* Fluid max-width: scales from 800px to 1200px on larger screens */
+  max-width: clamp(800px, 85vw, 1200px);
   margin: 0 auto;
   padding: 2rem;
 }
@@ -923,6 +925,36 @@
 }
 
 /* Responsive Design */
+
+/* Large screens - scale up typography */
+@media (width >= 1440px) {
+  .blog-section h2 {
+    font-size: 2.75rem;
+  }
+
+  .blog-post-full-title {
+    font-size: 2.75rem;
+  }
+
+  .blog-post-subtitle {
+    font-size: 1.65rem;
+  }
+
+  .blog-post-content {
+    font-size: 1.05rem;
+  }
+
+  .blog-post-content h1,
+  .blog-post-content h2,
+  .blog-post-content h3 {
+    font-size: 1.1em; /* Relative to parent font-size */
+  }
+
+  .blog-post-title {
+    font-size: 1.65rem;
+  }
+}
+
 @media (width <= 768px) {
   .blog-section {
     padding: 1rem;

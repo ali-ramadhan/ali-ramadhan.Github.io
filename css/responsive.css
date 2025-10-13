@@ -1,21 +1,21 @@
 /* Responsive */
 
-/* Video sphere sizing based on viewport height (for tablets/small screens) */
-@media (height <= 1080px) {
+/* Video sphere sizing based on viewport (for tablets/smaller screens) */
+@media (height <= 1080px) or (width <= 1024px) {
   #video-outer-box {
     top: 45%;
-    width: 60vh;
-    height: 45vh;
+    width: min(60vh, 45vw);
+    height: min(45vh, 33.75vw);
   }
 
   #canvas-video-sphere {
-    width: 60vh !important;
-    height: 45vh !important;
+    width: min(60vh, 45vw) !important;
+    height: min(45vh, 33.75vw) !important;
   }
 
   #video {
-    width: 60vh;
-    height: 45vh;
+    width: min(60vh, 45vw);
+    height: min(45vh, 33.75vw);
   }
 
   #video-title {
@@ -37,18 +37,113 @@
   }
 }
 
+/* Video sphere sizing for large screens */
+@media (width >= 1920px) and (height >= 1080px) {
+  #video-outer-box {
+    top: 22%;
+    width: min(75vh, 55vw);
+    height: min(56.25vh, 41.25vw);
+  }
+
+  #canvas-video-sphere {
+    width: min(75vh, 55vw) !important;
+    height: min(56.25vh, 41.25vw) !important;
+  }
+
+  #video {
+    width: min(75vh, 55vw);
+    height: min(56.25vh, 41.25vw);
+  }
+
+  #video-title {
+    font-size: 1.4rem;
+  }
+
+  .arrow {
+    font-size: 2.5rem;
+  }
+}
+
 /* Tablet breakpoint (769px - 1024px) */
 @media (width > 768px) and (width <= 1024px) {
   .content {
-    max-width: 800px;
+    max-width: clamp(700px, 80vw, 900px);
   }
 
   #ocean .content {
-    max-width: 900px;
+    max-width: clamp(900px, 85vw, 1100px);
   }
 
   #resources .content {
-    max-width: 850px;
+    max-width: clamp(850px, 85vw, 1000px);
+  }
+}
+
+/* Desktop breakpoint (1025px - 1439px) */
+@media (width >= 1025px) and (width <= 1439px) {
+  .content {
+    max-width: clamp(800px, 75vw, 1100px);
+  }
+
+  #ocean .content {
+    max-width: clamp(1000px, 85vw, 1400px);
+  }
+
+  #resources .content {
+    max-width: clamp(900px, 80vw, 1300px);
+  }
+}
+
+/* Large desktop breakpoint (1440px - 1919px) */
+@media (width >= 1440px) and (width <= 1919px) {
+  .content {
+    max-width: clamp(900px, 70vw, 1200px);
+  }
+
+  #ocean .content {
+    max-width: clamp(1100px, 80vw, 1500px);
+  }
+
+  #resources .content {
+    max-width: clamp(1000px, 75vw, 1400px);
+  }
+
+  /* Increase heading sizes for larger screens */
+  .content h2 {
+    font-size: 2.75rem;
+  }
+
+  .content p {
+    font-size: 1.15rem;
+  }
+}
+
+/* Extra large desktop / 4K breakpoint (1920px+) */
+@media (width >= 1920px) {
+  .content {
+    max-width: clamp(1000px, 65vw, 1400px);
+  }
+
+  #ocean .content {
+    max-width: clamp(1200px, 75vw, 1800px);
+  }
+
+  #resources .content {
+    max-width: clamp(1100px, 70vw, 1600px);
+  }
+
+  /* Further increase typography for 4K screens */
+  .content h2 {
+    font-size: 3rem;
+  }
+
+  .content p {
+    font-size: 1.2rem;
+  }
+
+  /* Scale up padding for better proportions */
+  .content {
+    padding: 2.5rem;
   }
 }
 

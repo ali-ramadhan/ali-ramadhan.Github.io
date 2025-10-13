@@ -20,9 +20,9 @@
   background: radial-gradient(circle, #fff 0%, #e3f2fd 40%, #90caf9 70%, transparent 100%);
   border-radius: 50%;
   box-shadow:
-    0 0 8px rgba(255, 255, 255, 0.9),
-    0 0 15px rgba(227, 242, 253, 0.6),
-    0 0 25px rgba(144, 202, 249, 0.4);
+    0 0 8px rgb(255, 255, 255, 0.9),
+    0 0 15px rgb(227, 242, 253, 0.6),
+    0 0 25px rgb(144, 202, 249, 0.4);
 }
 
 /* Comet icy tail */
@@ -36,18 +36,18 @@
   transform: translate(0%, -50%);
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(227, 242, 253, 0.7) 15%,
-    rgba(144, 202, 249, 0.5) 30%,
-    rgba(100, 181, 246, 0.3) 50%,
-    rgba(66, 165, 245, 0.15) 70%,
-    rgba(66, 165, 245, 0.08) 85%,
+    rgb(255, 255, 255, 0.9) 0%,
+    rgb(227, 242, 253, 0.7) 15%,
+    rgb(144, 202, 249, 0.5) 30%,
+    rgb(100, 181, 246, 0.3) 50%,
+    rgb(66, 165, 245, 0.15) 70%,
+    rgb(66, 165, 245, 0.08) 85%,
     transparent 100%
   );
   clip-path: polygon(0% 30%, 100% 0%, 100% 100%, 0% 70%);
   box-shadow:
-    0 0 6px rgba(255, 255, 255, 0.3),
-    0 0 12px rgba(144, 202, 249, 0.1);
+    0 0 6px rgb(255, 255, 255, 0.3),
+    0 0 12px rgb(144, 202, 249, 0.1);
 }
 
 /* Comet 1 - From top-left across to right */

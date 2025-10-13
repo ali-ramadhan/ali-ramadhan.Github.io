@@ -11,9 +11,9 @@
   /* Default yellow gradient for iron (used by meteor1) */
   background: linear-gradient(
     270deg,
-    rgba(255, 215, 0, 1) 0%,
-    rgba(255, 215, 0, 0.7) 30%,
-    rgba(255, 215, 0, 0.3) 60%,
+    rgb(255, 215, 0, 1) 0%,
+    rgb(255, 215, 0, 0.7) 30%,
+    rgb(255, 215, 0, 0.3) 60%,
     transparent 100%
   );
   border-radius: 50%;
@@ -71,9 +71,9 @@
   animation-delay: 12s;
   background: linear-gradient(
     270deg,
-    rgba(255, 50, 50, 1) 0%,
-    rgba(255, 50, 50, 0.7) 30%,
-    rgba(255, 50, 50, 0.3) 60%,
+    rgb(255, 50, 50, 1) 0%,
+    rgb(255, 50, 50, 0.7) 30%,
+    rgb(255, 50, 50, 0.3) 60%,
     transparent 100%
   );
 }
@@ -117,9 +117,9 @@
   animation-delay: 23s;
   background: linear-gradient(
     270deg,
-    rgba(200, 50, 255, 1) 0%,
-    rgba(200, 50, 255, 0.7) 30%,
-    rgba(200, 50, 255, 0.3) 60%,
+    rgb(200, 50, 255, 1) 0%,
+    rgb(200, 50, 255, 0.7) 30%,
+    rgb(200, 50, 255, 0.3) 60%,
     transparent 100%
   );
 }
@@ -163,9 +163,9 @@
   animation-delay: 32s;
   background: linear-gradient(
     270deg,
-    rgba(255, 140, 0, 1) 0%,
-    rgba(255, 140, 0, 0.7) 30%,
-    rgba(255, 140, 0, 0.3) 60%,
+    rgb(255, 140, 0, 1) 0%,
+    rgb(255, 140, 0, 0.7) 30%,
+    rgb(255, 140, 0, 0.3) 60%,
     transparent 100%
   );
 }
@@ -209,9 +209,9 @@
   animation-delay: 18s;
   background: linear-gradient(
     270deg,
-    rgba(0, 255, 255, 1) 0%,
-    rgba(0, 255, 255, 0.7) 30%,
-    rgba(0, 255, 255, 0.3) 60%,
+    rgb(0, 255, 255, 1) 0%,
+    rgb(0, 255, 255, 0.7) 30%,
+    rgb(0, 255, 255, 0.3) 60%,
     transparent 100%
   );
 }

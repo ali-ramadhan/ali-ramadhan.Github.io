@@ -3,21 +3,23 @@
   top: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70vh;
-  height: 52.5vh;
+
+  /* Use min() to ensure video doesn't overflow on narrow or short screens */
+  width: min(70vh, 50vw);
+  height: min(52.5vh, 37.5vw);
   z-index: 15; /* LAYER 10: Celestial objects - video sphere */
 }
 
 #canvas-video-sphere {
   display: block;
-  width: 70vh !important;
-  height: 52.5vh !important;
+  width: min(70vh, 50vw) !important;
+  height: min(52.5vh, 37.5vw) !important;
 }
 
 #video {
   display: none;
-  width: 70vh;
-  height: 52.5vh;
+  width: min(70vh, 50vw);
+  height: min(52.5vh, 37.5vw);
 }
 
 #video-title {
@@ -25,14 +27,14 @@
   color: white;
   font-size: 1.2rem;
   margin-bottom: 1rem;
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 10px rgb(0, 0, 0, 0.8);
 }
 
 #video-caption {
   text-align: center;
   color: white;
   margin-top: 0.5rem;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 5px rgb(0, 0, 0, 0.8);
   font-family: "Fira Code", monospace;
 }
 
@@ -42,15 +44,15 @@
   transform: translateY(-50%);
   cursor: pointer;
   font-size: 2rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgb(255, 255, 255, 0.8);
   user-select: none;
   z-index: 16; /* LAYER 10: Celestial objects - video sphere controls */
-  text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 10px rgb(0, 0, 0, 0.8);
   transition: opacity 0.3s ease;
   backdrop-filter: blur(2px);
   padding: 0.5rem;
   border-radius: 50%;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgb(0, 0, 0, 0.2);
 }
 
 .arrow:hover {
@@ -93,26 +95,26 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: rgba(255, 255, 255, 0.6);
+  background: rgb(255, 255, 255, 0.1);
+  border: 1px solid rgb(255, 255, 255, 0.3);
+  color: rgb(255, 255, 255, 0.6);
   backdrop-filter: blur(4px);
 }
 
 .video-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgb(255, 255, 255, 0.15);
+  border-color: rgb(255, 255, 255, 0.4);
 }
 
 .video-toggle-btn.active {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.6);
+  background: rgb(255, 255, 255, 0.25);
+  border-color: rgb(255, 255, 255, 0.6);
   color: white;
-  text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+  text-shadow: 0 0 5px rgb(0, 0, 0, 0.8);
 }
 
 .video-toggle-btn.active:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgb(255, 255, 255, 0.3);
 }
 
 /* Video Tooltip */
@@ -127,7 +129,7 @@
   font-size: 0.9rem;
   line-height: 1.4;
   z-index: 1006; /* LAYER 1000: Overlays - video tooltips */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3);
   pointer-events: none;
 }
 

@@ -9,7 +9,7 @@
   background: white;
   border: 1px solid #ddd;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.15);
   z-index: 1002; /* LAYER 1000: Overlays - floating TOC */
   overflow: hidden;
   font-size: 14px;
@@ -19,7 +19,7 @@
 [data-theme="dark"] .floating-toc {
   background: #2d2d2d;
   border: 1px solid #555;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3);
 }
 
 /* Header */
@@ -59,7 +59,7 @@
 }
 
 .floating-toc-close:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgb(0, 0, 0, 0.1);
   color: #333;
 }
 
@@ -68,7 +68,7 @@
 }
 
 [data-theme="dark"] .floating-toc-close:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255, 255, 255, 0.1);
   color: #e0e0e0;
 }
 
@@ -254,7 +254,7 @@
 
 .floating-toc-restore:hover {
   transform: scale(1.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.2);
 }
 
 .floating-toc-restore:focus {

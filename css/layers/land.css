@@ -87,8 +87,8 @@
   height: 20%;
   background: linear-gradient(
     to bottom,
-    rgba(200, 230, 255, 0.2) 0%,
-    rgba(200, 230, 255, 0.1) 50%,
+    rgb(200, 230, 255, 0.2) 0%,
+    rgb(200, 230, 255, 0.1) 50%,
     transparent 100%
   );
   pointer-events: none;
@@ -98,8 +98,8 @@
 [data-theme="dark"] #land::before {
   background: linear-gradient(
     to bottom,
-    rgba(37, 48, 64, 0.3) 0%,
-    rgba(37, 48, 64, 0.15) 50%,
+    rgb(37, 48, 64, 0.3) 0%,
+    rgb(37, 48, 64, 0.15) 50%,
     transparent 100%
   );
 }
@@ -156,7 +156,7 @@
 .social-link:hover {
   opacity: 1;
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.15);
 }
 
 .social-icon {

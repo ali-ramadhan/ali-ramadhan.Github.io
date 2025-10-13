@@ -1,5 +1,33 @@
 [
   {
+    "title": "High-level, high-resolution ocean modeling at all scales with Oceananigans",
+    "authors": [
+      "G. L. Wagner",
+      "S. Silvestri",
+      "N. C. Constantinou",
+      "A. Ramadhan",
+      "J.-M. Campin",
+      "C. Hill",
+      "T. Chor",
+      "J. Strong-Wright",
+      "X. K. Lee",
+      "F. Poulin",
+      "A. Souza",
+      "K. J. Burns",
+      "J. Marshall",
+      "R. Ferrari"
+    ],
+    "status": "arxiv",
+    "arxiv": "2502.14148 [physics.ao-ph]",
+    "year": 2025,
+    "links": [
+      {
+        "type": "arXiv",
+        "url": "https://arxiv.org/abs/2502.14148"
+      }
+    ]
+  },
+  {
     "id": "ndes-paper",
     "title": "Capturing missing physics in climate model parameterizations using neural differential equations",
     "authors": [

@@ -1,5 +1,35 @@
 [
   {
+    "id": "enceladus-transit-time-paper",
+    "title": "Long transit time from the Seafloor to the Ice Shell on Enceladus",
+    "authors": [
+      "Y. Zhang",
+      "S. Bire",
+      "S. Wang",
+      "A. Nath",
+      "A. Ramadhan",
+      "W. Kang",
+      "J. Marshall"
+    ],
+    "status": "published",
+    "journal": "Monthly Notices of the Royal Astronomical Society",
+    "volume": 541,
+    "subvolume": 2,
+    "pages": "859–871",
+    "year": 2025,
+    "links": [
+      {
+        "type": "doi",
+        "url": "https://doi.org/10.1093/mnras/staf1008"
+      },
+      {
+        "type": "pdf",
+        "url": "/assets/documents/papers/Zhang%20et%20al,%202025,%20Monthly%20Notices%20of%20the%20Royal%20Astronomical%20Society,%20Long%20transit%20time%20from%20the%20Seafloor%20to%20the%20Ice%20Shell%20on%20Enceladus.pdf"
+      }
+    ]
+  },
+  {
+    "id": "oceananigans-high-level-paper",
     "title": "High-level, high-resolution ocean modeling at all scales with Oceananigans",
     "authors": [
       "G. L. Wagner",

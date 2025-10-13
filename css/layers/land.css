@@ -113,8 +113,8 @@
 }
 
 .profile-picture {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -134,7 +134,7 @@
 .social-links {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px 20px;
+  gap: 8px 12px;
   margin: 20px auto 10px;
   max-width: 400px;
 }
@@ -142,8 +142,8 @@
 .social-link {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
+  gap: 6px;
+  padding: 6px 10px;
   background: var(--content-bg);
   border: 1px solid var(--content-text);
   border-radius: 8px;

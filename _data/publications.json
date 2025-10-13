@@ -91,22 +91,24 @@
       "T. Mittal",
       "W. Kang",
       "A. Ramadhan",
-      "P. Tuckman",
+      "P. J. Tuckman",
       "C. R. German",
       "A. M. Thurnherr",
-      "J. C. Marshall"
+      "J. Marshall"
     ],
-    "status": "submitted",
+    "status": "published",
     "journal": "Journal of Geophysical Research: Planets",
+    "volume": 128,
+    "pages": "e2023JE007740",
     "year": 2023,
     "links": [
       {
-        "type": "ESSOAr",
-        "url": "https://doi.org/10.22541/essoar.167397346.61500980/v1"
+        "type": "doi",
+        "url": "https://doi.org/10.1029/2023JE007740"
       },
       {
         "type": "pdf",
-        "url": "/assets/documents/papers/Bire%20et%20al,%202023,%20Divergent%20behavior%20of%20hydrothermal%20plumes%20in%20fresh%20versus%20salty%20icy%20ocean%20worlds.pdf"
+        "url": "/assets/documents/papers/Bire%20et%20al,%202023,%20Journal%20of%20Geophysical%20Research%20Planets,%20Divergent%20behavior%20of%20hydrothermal%20plumes%20in%20fresh%20versus%20salty%20icy%20ocean%20worlds.pdf"
       }
     ]
   },

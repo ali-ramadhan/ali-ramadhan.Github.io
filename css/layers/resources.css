@@ -131,3 +131,10 @@
     opacity: 0.4;
   }
 }
+
+/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
+@media (width <= 768px) {
+  #resources {
+    min-height: 100svh;
+  }
+}

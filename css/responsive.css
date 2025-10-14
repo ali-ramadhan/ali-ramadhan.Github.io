@@ -278,4 +278,20 @@
   body:not([data-theme]) #outer-space .sun {
     right: 80px;
   }
+
+  /* Video sphere: Use svh to prevent resizing when browser UI shows/hides */
+  #video-outer-box {
+    width: min(60svh, 45vw);
+    height: min(45svh, 33.75vw);
+  }
+
+  #canvas-video-sphere {
+    width: min(60svh, 45vw) !important;
+    height: min(45svh, 33.75vw) !important;
+  }
+
+  #video {
+    width: min(60svh, 45vw);
+    height: min(45svh, 33.75vw);
+  }
 }

@@ -230,11 +230,12 @@
 @media (width <= 768px) {
   .benchmark-tooltip {
     max-width: 95vw;
-    max-height: 90vh;
+    max-height: 90svh;
   }
 
   .benchmark-tooltip-content {
     padding: 0.75rem;
+    max-height: 90svh;
   }
 
   .benchmark-output {

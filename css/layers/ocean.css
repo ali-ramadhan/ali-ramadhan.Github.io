@@ -56,3 +56,11 @@
   visibility: visible;
   pointer-events: auto;
 }
+
+/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
+@media (width <= 768px) {
+  .ocean-bathymetry-svg {
+    bottom: -5svh;
+    height: 25svh;
+  }
+}

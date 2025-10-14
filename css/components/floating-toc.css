@@ -278,3 +278,14 @@
     display: none;
   }
 }
+
+/* Mobile/Tablet: Use svh to prevent resizing when browser UI shows/hides */
+@media (width <= 768px) {
+  .floating-toc {
+    max-height: 80svh;
+  }
+
+  .floating-toc-content {
+    max-height: calc(80svh - 60px);
+  }
+}

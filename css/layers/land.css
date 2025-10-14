@@ -191,15 +191,21 @@
 }
 
 @media (width <= 768px) {
-  /* Increase height to accommodate tall about me box */
+  /* Use svh for all vh-based properties on mobile */
   #land {
     height: 200svh;
     align-items: flex-start;
+    margin-top: -15svh;
+    padding-top: 15svh;
   }
 
   .land-river-svg {
     top: 15svh;
     height: 200svh;
+  }
+
+  #land::before {
+    top: 15svh;
   }
 
   /* Add top spacing to content in land section for gap from mountains */

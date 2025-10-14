@@ -130,3 +130,13 @@
     opacity: 0.7;
   }
 }
+
+/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
+@media (width <= 768px) {
+  #outer-space {
+    min-height: 100svh;
+    padding-top: 10svh;
+    padding-bottom: 20svh;
+    margin-bottom: -20svh;
+  }
+}

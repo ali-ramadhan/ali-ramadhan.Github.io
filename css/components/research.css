@@ -205,7 +205,7 @@ details[open] summary .project-toggle-icon {
   }
 
   .slideshow {
-    height: 350px;
+    height: clamp(300px, 30svh, 500px);
   }
 
   .project-content {

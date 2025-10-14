@@ -150,3 +150,21 @@
   line-height: 1.4;
 }
 
+/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
+@media (width <= 768px) {
+  #video-outer-box {
+    width: min(70svh, 50vw);
+    height: min(52.5svh, 37.5vw);
+  }
+
+  #canvas-video-sphere {
+    width: min(70svh, 50vw) !important;
+    height: min(52.5svh, 37.5vw) !important;
+  }
+
+  #video {
+    width: min(70svh, 50vw);
+    height: min(52.5svh, 37.5vw);
+  }
+}
+

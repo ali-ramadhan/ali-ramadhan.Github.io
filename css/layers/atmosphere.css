@@ -539,3 +539,21 @@
 [data-theme="dark"] .blog-post-item a:hover {
   color: #74b9ff;
 }
+
+/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
+@media (width <= 768px) {
+  #atmosphere {
+    min-height: 100svh;
+    margin-top: -20svh;
+    padding-top: 20svh;
+    padding-bottom: 15svh;
+    margin-bottom: -15svh;
+  }
+
+  .clouds,
+  .cirrus-clouds,
+  .altostratus-clouds,
+  .cumulus-clouds {
+    top: 20svh;
+  }
+}

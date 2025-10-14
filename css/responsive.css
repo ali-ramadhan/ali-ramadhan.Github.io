@@ -121,24 +121,24 @@
 /* Extra large desktop / 4K breakpoint (1920px+) */
 @media (width >= 1920px) {
   .content {
-    max-width: clamp(1000px, 65vw, 1400px);
+    max-width: clamp(900px, 55vw, 1200px);
   }
 
   #ocean .content {
-    max-width: clamp(1200px, 75vw, 1800px);
+    max-width: clamp(1100px, 65vw, 1500px);
   }
 
   #resources .content {
-    max-width: clamp(1100px, 70vw, 1600px);
+    max-width: clamp(1000px, 60vw, 1400px);
   }
 
-  /* Further increase typography for 4K screens */
+  /* Adjust typography for 4K screens */
   .content h2 {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .content p {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
   }
 
   /* Scale up padding for better proportions */

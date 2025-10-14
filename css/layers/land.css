@@ -36,6 +36,8 @@
 
   /* Override .layer height and overflow constraints */
   height: auto;
+
+  /* Base min-height for tablets and normal desktops */
   min-height: 165vh;
   overflow: visible;
 
@@ -50,6 +52,8 @@
   top: 15vh; /* Start at mountain range level */
   left: 0;
   width: 100%;
+
+  /* Base height for tablets and normal desktops */
   height: 150vh;
   z-index: 30; /* LAYER 30: Terrain - land and river */
   pointer-events: none;
@@ -170,7 +174,39 @@
   font-weight: 500;
 }
 
+/* Large screen adjustments for 4K displays */
+@media (width >= 1920px) and (height >= 1080px) {
+  #land {
+    min-height: 100vh;
+  }
+
+  .land-river-svg {
+    height: 90vh;
+  }
+
+  /* Make about me box narrower on 4K */
+  #land .content {
+    max-width: clamp(700px, 45vw, 900px);
+  }
+}
+
 @media (width <= 768px) {
+  /* Increase height to accommodate tall about me box */
+  #land {
+    height: 200svh;
+    align-items: flex-start;
+  }
+
+  .land-river-svg {
+    top: 15svh;
+    height: 200svh;
+  }
+
+  /* Add top spacing to content in land section for gap from mountains */
+  #land .content {
+    margin-top: 20px;
+  }
+
   .profile-section {
     flex-direction: column;
     text-align: center;
@@ -184,9 +220,24 @@
   }
 
   .social-links {
-    grid-template-columns: 1fr;
-    max-width: 300px;
+    /* Keep 2 columns on mobile for better space usage */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 8px;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .social-link {
+    padding: 5px 8px;
+    font-size: 0.85rem;
+  }
+
+  .social-text {
+    font-size: 0.8rem;
+  }
+
+  .social-icon {
+    height: 0.9rem;
   }
 }

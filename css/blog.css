@@ -927,7 +927,7 @@
 /* Responsive Design */
 
 /* Large screens - scale up typography */
-@media (width >= 1440px) {
+@media (width >= 1440px) and (width < 1920px) {
   .blog-section h2 {
     font-size: 2.75rem;
   }
@@ -952,6 +952,37 @@
 
   .blog-post-title {
     font-size: 1.65rem;
+  }
+}
+
+/* 4K screens - reduce widths and font sizes */
+@media (width >= 1920px) {
+  .blog-section {
+    max-width: clamp(700px, 55vw, 1000px);
+  }
+
+  .blog-post-main {
+    max-width: clamp(700px, 55vw, 1000px);
+  }
+
+  .blog-section h2 {
+    font-size: 2.25rem;
+  }
+
+  .blog-post-full-title {
+    font-size: 2.25rem;
+  }
+
+  .blog-post-subtitle {
+    font-size: 1.4rem;
+  }
+
+  .blog-post-content {
+    font-size: 1rem;
+  }
+
+  .blog-post-title {
+    font-size: 1.4rem;
   }
 }
 

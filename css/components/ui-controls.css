@@ -6,7 +6,7 @@
   right: 30px;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 100;
+  z-index: var(--z-nav);
 }
 
 .nav-dot {
@@ -46,7 +46,7 @@
   position: fixed;
   top: 30px;
   right: 30px;
-  z-index: 1000;
+  z-index: var(--z-theme-toggle);
   background: var(--content-bg);
   border: 2px solid var(--nav-dot-active);
   border-radius: 50%;

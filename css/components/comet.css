@@ -3,7 +3,7 @@
   position: absolute;
   width: 8px;
   height: 8px;
-  z-index: 0; /* LAYER 0: Deep background - renders after stars via DOM order */
+  z-index: var(--z-comets);
   opacity: 0;
 
   /* Initial position off-screen, will be positioned by individual comet classes */

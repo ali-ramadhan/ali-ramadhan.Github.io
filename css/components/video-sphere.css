@@ -7,7 +7,7 @@
   /* Use min() to ensure video doesn't overflow on narrow or short screens */
   width: min(70vh, 50vw);
   height: min(52.5vh, 37.5vw);
-  z-index: 15; /* LAYER 10: Celestial objects - video sphere */
+  z-index: var(--z-video-sphere);
 }
 
 #canvas-video-sphere {
@@ -46,7 +46,7 @@
   font-size: 2rem;
   color: rgb(255, 255, 255, 0.8);
   user-select: none;
-  z-index: 16; /* LAYER 10: Celestial objects - video sphere controls */
+  z-index: var(--z-video-controls);
   text-shadow: 0 0 10px rgb(0, 0, 0, 0.8);
   transition: opacity 0.3s ease;
   backdrop-filter: blur(2px);
@@ -128,7 +128,7 @@
   border-radius: 6px;
   font-size: 0.9rem;
   line-height: 1.4;
-  z-index: 1006; /* LAYER 1000: Overlays - video tooltips */
+  z-index: var(--z-tooltips);
   box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3);
   pointer-events: none;
 }
@@ -150,21 +150,5 @@
   line-height: 1.4;
 }
 
-/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
-@media (width <= 768px) {
-  #video-outer-box {
-    width: min(70svh, 50vw);
-    height: min(52.5svh, 37.5vw);
-  }
-
-  #canvas-video-sphere {
-    width: min(70svh, 50vw) !important;
-    height: min(52.5svh, 37.5vw) !important;
-  }
-
-  #video {
-    width: min(70svh, 50vw);
-    height: min(52.5svh, 37.5vw);
-  }
-}
+/* Mobile: dvh already handles dynamic UI, no special adjustments needed */
 

@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   height: 120px;
-  z-index: 31; /* LAYER 30: Terrain - mountains */
+  z-index: var(--z-mountains);
   overflow: hidden;
 
   /* Light theme mountain colors */
@@ -31,31 +31,28 @@
   background: transparent; /* Using unified SVG now */
   transition: background 0.5s ease;
   position: relative;
-  margin-top: -15vh;
-  padding-top: 15vh;
 
-  /* Override .layer height and overflow constraints */
-  height: auto;
+  /* Layer sizing - let content determine height with reasonable minimum */
+  min-height: 100dvh;
 
-  /* Base min-height for tablets and normal desktops */
-  min-height: 165vh;
-  overflow: visible;
+  /* Visual overlap with atmosphere using transform */
+  /* Cumulative overlap: space (20dvh) + atmosphere (15dvh) = 35dvh */
+  transform: translateY(calc(-1 * (var(--space-overlap) + var(--atmosphere-overlap))));
 
-  /* Adjust flex alignment for better content flow */
+  /* Content positioning */
   align-items: center;
+  padding-top: calc(var(--atmosphere-overlap) + 10dvh);
   padding-bottom: 4rem;
 }
 
 /* External Land and River SVG */
 .land-river-svg {
   position: absolute;
-  top: 15vh; /* Start at mountain range level */
+  top: var(--atmosphere-overlap);
   left: 0;
   width: 100%;
-
-  /* Base height for tablets and normal desktops */
-  height: 150vh;
-  z-index: 30; /* LAYER 30: Terrain - land and river */
+  height: 100%;
+  z-index: var(--z-terrain);
   pointer-events: none;
 }
 
@@ -85,7 +82,7 @@
 #land::before {
   content: "";
   position: absolute;
-  top: 15vh;
+  top: var(--atmosphere-overlap);
   left: 0;
   right: 0;
   height: 20%;
@@ -176,14 +173,6 @@
 
 /* Large screen adjustments for 4K displays */
 @media (width >= 1920px) and (height >= 1080px) {
-  #land {
-    min-height: 100vh;
-  }
-
-  .land-river-svg {
-    height: 90vh;
-  }
-
   /* Make about me box narrower on 4K */
   #land .content {
     max-width: clamp(700px, 45vw, 900px);
@@ -191,21 +180,8 @@
 }
 
 @media (width <= 768px) {
-  /* Use svh for all vh-based properties on mobile */
   #land {
-    height: 200svh;
     align-items: flex-start;
-    margin-top: -15svh;
-    padding-top: 15svh;
-  }
-
-  .land-river-svg {
-    top: 15svh;
-    height: 200svh;
-  }
-
-  #land::before {
-    top: 15svh;
   }
 
   /* Add top spacing to content in land section for gap from mountains */

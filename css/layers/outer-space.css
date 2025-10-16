@@ -4,17 +4,14 @@
   color: white;
   transition: background 0.5s ease;
   position: relative;
-  padding-bottom: 20vh;
-  margin-bottom: -20vh;
 
-  /* Override .layer height and overflow constraints */
-  height: auto;
-  min-height: 100vh;
-  overflow: visible;
+  /* Layer sizing - natural height with minimum viewport height */
+  min-height: 100dvh;
 
-  /* Adjust flex alignment for better content flow */
+  /* Content positioning */
   align-items: flex-start;
-  padding-top: 10vh;
+  padding-top: 10dvh;
+  padding-bottom: 10dvh;
 }
 
 .stars {
@@ -131,12 +128,4 @@
   }
 }
 
-/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
-@media (width <= 768px) {
-  #outer-space {
-    min-height: 100svh;
-    padding-top: 10svh;
-    padding-bottom: 20svh;
-    margin-bottom: -20svh;
-  }
-}
+/* Mobile: dvh already handles dynamic UI, no special adjustments needed */

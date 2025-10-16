@@ -22,6 +22,28 @@
   --star-color-2: #fff;
   --star-color-3: #ddd;
   --body-bg: #fff;
+
+  /* Layer overlap distances - use dvh (dynamic viewport height) for better mobile support */
+  --space-overlap: 20dvh;
+  --atmosphere-overlap: 15dvh;
+
+  /* Z-index system for layer stacking */
+  --z-comets: 0;
+  --z-meteors: 0;
+  --z-stars: 10;
+  --z-celestial: 10;
+  --z-video-sphere: 15;
+  --z-video-controls: 16;
+  --z-cirrus-clouds: 21;
+  --z-alto-clouds: 22;
+  --z-cumulus-clouds: 23;
+  --z-terrain: 30;
+  --z-mountains: 31;
+  --z-bathymetry: 32;
+  --z-content: 40;
+  --z-nav: 100;
+  --z-theme-toggle: 1000;
+  --z-tooltips: 1006;
 }
 
 [data-theme="dark"] {
@@ -47,6 +69,8 @@
   --star-color-2: #eee;
   --star-color-3: #ddd;
   --body-bg: #000;
+
+  /* Layer overlap distances inherit from :root */
 }
 
 * {
@@ -76,17 +100,17 @@ body {
 
 .layer {
   position: relative;
-  min-height: 100vh;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible;
+  /* Let individual layers control their height and overflow */
+  /* Removed: min-height and overflow declarations - layers should specify their own needs */
 }
 
 .content {
   position: relative;
-  z-index: 40; /* LAYER 40: Content boxes */
+  z-index: var(--z-content);
   text-align: center;
   background: var(--content-bg);
   padding: 2rem;

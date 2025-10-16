@@ -3,18 +3,20 @@
   background: var(--crust-bg);
   transition: background 0.5s ease;
   padding: 4rem 0;
-  margin-bottom: 0;
+  position: relative;
+
+  /* Layer sizing */
+  min-height: 100dvh;
+
+  /* Visual overlap with ocean using transform */
+  /* Cumulative overlap continues from ocean */
+  transform: translateY(calc(-1 * (var(--space-overlap) + var(--atmosphere-overlap))));
 
   /* Override the default flex centering to stack content vertically */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
-  /* Override .layer height and overflow constraints */
-  height: auto;
-  min-height: 100vh;
-  overflow: visible;
 }
 
 /* Crystal formations - triangular shapes */
@@ -132,9 +134,4 @@
   }
 }
 
-/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
-@media (width <= 768px) {
-  #resources {
-    min-height: 100svh;
-  }
-}
+/* Mobile: dvh already handles dynamic UI, no special adjustments needed */

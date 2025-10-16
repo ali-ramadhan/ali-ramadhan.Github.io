@@ -5,7 +5,7 @@
   position: absolute;
   width: 100px;
   height: 2px;
-  z-index: 0; /* LAYER 0: Deep background - renders after stars via DOM order */
+  z-index: var(--z-meteors);
   opacity: 0; /* Hidden by default, animation controls visibility */
 
   /* Default yellow gradient for iron (used by meteor1) */

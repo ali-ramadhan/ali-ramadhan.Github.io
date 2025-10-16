@@ -3,16 +3,20 @@
   background: var(--ocean-bg);
   transition: background 0.5s ease;
   padding: 4rem 0;
-  margin-bottom: 0;
   position: relative;
+
+  /* Layer sizing */
+  min-height: 100dvh;
+
+  /* Visual overlap with land using transform */
+  /* Cumulative overlap continues from land */
+  transform: translateY(calc(-1 * (var(--space-overlap) + var(--atmosphere-overlap))));
 
   /* Override the default flex centering to stack content vertically */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-
-  /* No need to override - base .layer now allows scrolling */
 }
 
 /* Ocean content spacing */
@@ -23,11 +27,11 @@
 /* Ocean bathymetry SVG positioning */
 .ocean-bathymetry-svg {
   position: absolute;
-  bottom: -5vh; /* Extend beyond ocean section into crust */
+  bottom: -5dvh; /* Extend beyond ocean section into crust */
   left: 0;
   width: 100%;
-  height: 25vh; /* Taller to ensure complete coverage */
-  z-index: 32; /* LAYER 30: Terrain - ocean bathymetry */
+  height: 25dvh; /* Taller to ensure complete coverage */
+  z-index: var(--z-bathymetry);
   pointer-events: none; /* Don't interfere with interactions */
 }
 
@@ -57,10 +61,4 @@
   pointer-events: auto;
 }
 
-/* Mobile: Use svh to prevent resizing when browser UI shows/hides */
-@media (width <= 768px) {
-  .ocean-bathymetry-svg {
-    bottom: -5svh;
-    height: 25svh;
-  }
-}
+/* Mobile: dvh already handles dynamic UI, no special adjustments needed */

@@ -45,26 +45,28 @@
   </head>
   <body>
     <section class="layer" id="outer-space">
-      <!-- Video sphere background -->
-      <div id="video-outer-box">
-        <div id="video-title">Temperature</div>
-
-        <div id="video-inner-box">
-          <video id="video" crossorigin="anonymous" autoplay muted loop playsinline>
-            <source type="video/mp4; codecs=av01.0.05M.08">
-            <source type="video/mp4; codecs=avc1.4d002a">
-          </video>
-        </div>
-
+      <div id="video-sphere-container">
         <span id="left-arrow" class="arrow" aria-hidden="true">◀</span>
-        <span id="right-arrow" class="arrow" aria-hidden="true">▶</span>
 
-        <div id="video-caption" class="hidden"></div>
-        <div id="video-colorbar"><img id="colorbar" class="hidden" /></div>
-        <div id="video-controls">
-          <button id="toggle-timestamp" class="video-toggle-btn">Timestamp</button>
-          <button id="toggle-colorbar" class="video-toggle-btn">Colorbar</button>
+        <div id="video-sphere-player">
+          <div id="video-title">Temperature</div>
+
+          <div id="video-inner-box">
+            <video id="video" crossorigin="anonymous" autoplay muted loop playsinline>
+              <source type="video/mp4; codecs=av01.0.05M.08">
+              <source type="video/mp4; codecs=avc1.4d002a">
+            </video>
+          </div>
+
+          <div id="video-caption" class="hidden"></div>
+          <div id="video-colorbar"><img id="colorbar" class="hidden" /></div>
+          <div id="video-controls">
+            <button id="toggle-timestamp" class="video-toggle-btn">Timestamp</button>
+            <button id="toggle-colorbar" class="video-toggle-btn">Colorbar</button>
+          </div>
         </div>
+
+        <span id="right-arrow" class="arrow" aria-hidden="true">▶</span>
       </div>
       <div id="video-tooltip">
         <div class="tooltip-title"></div>

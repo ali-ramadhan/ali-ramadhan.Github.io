@@ -1,25 +1,32 @@
-#video-outer-box {
+#video-sphere-container {
   position: absolute;
-  top: 20%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-
-  /* Use min() to ensure video doesn't overflow on narrow or short screens */
-  width: min(70vh, 50vw);
-  height: min(52.5vh, 37.5vw);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
   z-index: var(--z-video-sphere);
+}
+
+#video-sphere-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(70vh, 50vw, 900px);
+  height: min(52.5vh, 37.5vw, 675px);
 }
 
 #canvas-video-sphere {
   display: block;
-  width: min(70vh, 50vw) !important;
-  height: min(52.5vh, 37.5vw) !important;
+  width: min(70vh, 50vw, 900px) !important;
+  height: min(52.5vh, 37.5vw, 675px) !important;
 }
 
 #video {
   display: none;
-  width: min(70vh, 50vw);
-  height: min(52.5vh, 37.5vw);
+  width: min(70vh, 50vw, 900px);
+  height: min(52.5vh, 37.5vw, 675px);
 }
 
 #video-title {
@@ -39,14 +46,11 @@
 }
 
 .arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  flex-shrink: 0;
   cursor: pointer;
   font-size: 2rem;
   color: rgb(255, 255, 255, 0.8);
   user-select: none;
-  z-index: var(--z-video-controls);
   text-shadow: 0 0 10px rgb(0, 0, 0, 0.8);
   transition: opacity 0.3s ease;
   backdrop-filter: blur(2px);
@@ -57,14 +61,6 @@
 
 .arrow:hover {
   opacity: 0.7;
-}
-
-#left-arrow {
-  left: 2rem;
-}
-
-#right-arrow {
-  right: 2rem;
 }
 
 #colorbar {

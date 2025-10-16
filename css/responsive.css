@@ -2,8 +2,11 @@
 
 /* Video sphere sizing based on viewport (for tablets/smaller screens) */
 @media (height <= 1080px) or (width <= 1024px) {
-  #video-outer-box {
-    top: 45%;
+  #video-sphere-container {
+    gap: 1.5rem;
+  }
+
+  #video-sphere-player {
     width: min(60vh, 45vw);
     height: min(45vh, 33.75vw);
   }
@@ -27,32 +30,27 @@
     font-size: 1.25rem;
     padding: 0.3rem;
   }
-
-  #left-arrow {
-    left: 0.5rem;
-  }
-
-  #right-arrow {
-    right: 0.5rem;
-  }
 }
 
-/* Video sphere sizing for large screens */
+/* Video sphere sizing for large screens - now capped at same maximum */
 @media (width >= 1920px) and (height >= 1080px) {
-  #video-outer-box {
-    top: 22%;
-    width: min(75vh, 55vw);
-    height: min(56.25vh, 41.25vw);
+  #video-sphere-container {
+    gap: 2.5rem;
+  }
+
+  #video-sphere-player {
+    width: min(75vh, 55vw, 800px);
+    height: min(56.25vh, 41.25vw, 675px);
   }
 
   #canvas-video-sphere {
-    width: min(75vh, 55vw) !important;
-    height: min(56.25vh, 41.25vw) !important;
+    width: min(75vh, 55vw, 800px);
+    height: min(56.25vh, 41.25vw, 675px);
   }
 
   #video {
-    width: min(75vh, 55vw);
-    height: min(56.25vh, 41.25vw);
+    width: min(75vh, 55vw, 800px);
+    height: min(56.25vh, 41.25vw, 675px);
   }
 
   #video-title {
@@ -279,19 +277,5 @@
     right: 80px;
   }
 
-  /* Video sphere: Use svh to prevent resizing when browser UI shows/hides */
-  #video-outer-box {
-    width: min(60svh, 45vw);
-    height: min(45svh, 33.75vw);
-  }
-
-  #canvas-video-sphere {
-    width: min(60svh, 45vw) !important;
-    height: min(45svh, 33.75vw) !important;
-  }
-
-  #video {
-    width: min(60svh, 45vw);
-    height: min(45svh, 33.75vw);
-  }
+  /* Mobile-specific adjustments already handled in tablet breakpoint above */
 }

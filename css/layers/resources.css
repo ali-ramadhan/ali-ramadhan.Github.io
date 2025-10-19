@@ -8,9 +8,7 @@
   /* Layer sizing */
   min-height: 100dvh;
 
-  /* Visual overlap with ocean using transform */
-  /* Cumulative overlap continues from ocean */
-  transform: translateY(calc(-1 * (var(--space-overlap) + var(--atmosphere-overlap))));
+  /* No additional margin needed - cumulative overlap maintained from previous layers */
 
   /* Override the default flex centering to stack content vertically */
   display: flex;

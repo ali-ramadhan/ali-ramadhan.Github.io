@@ -9,8 +9,8 @@
   /* Layer sizing */
   min-height: 100dvh;
 
-  /* Visual overlap with outer-space using transform */
-  transform: translateY(calc(-1 * var(--space-overlap)));
+  /* Visual overlap with outer-space using negative margin */
+  margin-top: calc(-1 * var(--space-overlap));
 
   /* Content positioning */
   align-items: flex-start;

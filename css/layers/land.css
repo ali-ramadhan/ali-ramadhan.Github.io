@@ -35,9 +35,9 @@
   /* Layer sizing - let content determine height with reasonable minimum */
   min-height: 100dvh;
 
-  /* Visual overlap with atmosphere using transform */
-  /* Cumulative overlap: space (20dvh) + atmosphere (15dvh) = 35dvh */
-  transform: translateY(calc(-1 * (var(--space-overlap) + var(--atmosphere-overlap))));
+  /* Visual overlap with atmosphere using negative margin */
+  /* Additional overlap: atmosphere (15dvh) - cumulative from previous margins */
+  margin-top: calc(-1 * var(--atmosphere-overlap));
 
   /* Content positioning */
   align-items: center;

@@ -19,7 +19,7 @@
 
 /* Ocean content spacing */
 #ocean .content {
-  margin-bottom: 10rem; /* Add space below content box above bathymetry */
+  margin-bottom: 30dvh; /* Add space below content box above bathymetry - scales with viewport */
 }
 
 /* Ocean bathymetry SVG positioning */

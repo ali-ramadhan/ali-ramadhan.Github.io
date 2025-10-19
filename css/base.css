@@ -10,8 +10,10 @@
     #b8d4f0 80%,
     #c8e6ff 100%
   );
-  --ocean-bg: linear-gradient(180deg, #4682b4 0%, #191970 100%);
-  --crust-bg: linear-gradient(180deg, #8b4513 0%, #ff4500 50%, #ff6347 100%);
+  --ocean-top-color: #4682b4; /* Steel blue - matches SVG ocean color */
+  --ocean-bg: linear-gradient(180deg, var(--ocean-top-color) 0%, #191970 100%);
+  --crust-top-color: #8b4513; /* Saddle brown - matches bathymetry SVG */
+  --crust-bg: linear-gradient(180deg, var(--crust-top-color) 0%, #ff4500 50%, #ff6347 100%);
   --content-bg: rgba(255, 255, 255, 0.9);
   --content-text: #333;
   --content-subtext: #666;
@@ -57,8 +59,10 @@
     #1f2a3e 80%,
     #253040 100%
   );
-  --ocean-bg: linear-gradient(180deg, #0f2536 0%, #0c1426 100%);
-  --crust-bg: linear-gradient(180deg, #3d2817 0%, #5a2c0a 50%, #4a2c2a 100%);
+  --ocean-top-color: #0f2536; /* Dark ocean blue - matches SVG ocean color */
+  --ocean-bg: linear-gradient(180deg, var(--ocean-top-color) 0%, #0c1426 100%);
+  --crust-top-color: #3d2817; /* Dark brown - matches bathymetry SVG */
+  --crust-bg: linear-gradient(180deg, var(--crust-top-color) 0%, #5a2c0a 50%, #4a2c2a 100%);
   --content-bg: rgba(26, 26, 46, 0.9);
   --content-text: #e0e0e0;
   --content-subtext: #b0b0b0;

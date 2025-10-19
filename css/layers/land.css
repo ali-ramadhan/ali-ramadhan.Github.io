@@ -1,7 +1,7 @@
 /* Mountain Range Transition */
 .mountain-range {
   position: absolute;
-  bottom: 0;
+  bottom: var(--atmosphere-overlap); /* Adjusted to match SVG shift with negative margins */
   left: 0;
   width: 100%;
   height: 120px;
@@ -48,7 +48,7 @@
 /* External Land and River SVG */
 .land-river-svg {
   position: absolute;
-  top: var(--atmosphere-overlap);
+  top: 0; /* With negative margins, SVG should start at layer top */
   left: 0;
   width: 100%;
   height: 100%;
@@ -82,7 +82,7 @@
 #land::before {
   content: "";
   position: absolute;
-  top: var(--atmosphere-overlap);
+  top: 0; /* With negative margins, overlay should start at layer top */
   left: 0;
   right: 0;
   height: 20%;

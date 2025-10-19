@@ -241,7 +241,14 @@ function setupVideoSphere(sphereInit) {
     let tooltipMeshGroup = new THREE.Group();
 
     function selectVideo(n) {
+      // Prevent simultaneous video switches
+      if (isLoadingVideo) {
+        console.log("Video is already loading, ignoring switch request");
+        return;
+      }
+
       try {
+        isLoadingVideo = true;
         video.pause();
 
         let videoTitle = document.getElementById("video-title");
@@ -259,10 +266,17 @@ function setupVideoSphere(sphereInit) {
         }
 
         video.load(); // Reload video to pick new sources
-        video.play().catch((error) => {
-          console.error("Video play failed:", error);
-          showVideoSphereError("Failed to play video");
-        });
+
+        // Handle play promise properly
+        video.play()
+          .then(() => {
+            isLoadingVideo = false;
+          })
+          .catch((error) => {
+            console.error("Video play failed:", error);
+            isLoadingVideo = false;
+            // Don't destroy the sphere for play errors - they're often temporary
+          });
 
         let colorbar = document.getElementById("colorbar");
         if (colorbar) {
@@ -272,7 +286,8 @@ function setupVideoSphere(sphereInit) {
         tooltipMeshGroup.clear();
       } catch (error) {
         console.error("Error selecting video:", error);
-        showVideoSphereError("Failed to switch video");
+        isLoadingVideo = false;
+        // Only show error UI for fatal errors, not temporary play issues
       }
 
       for (const [name, tooltip] of Object.entries(videos[n]["tooltips"])) {
@@ -300,6 +315,7 @@ function setupVideoSphere(sphereInit) {
     }
 
     let currentVideo = 0;
+    let isLoadingVideo = false;
     selectVideo(0);
 
     let leftArrow = document.getElementById("left-arrow");

@@ -53,10 +53,6 @@
   user-select: none;
   text-shadow: 0 0 10px rgb(0, 0, 0, 0.8);
   transition: opacity 0.3s ease;
-  backdrop-filter: blur(2px);
-  padding: 0.5rem;
-  border-radius: 50%;
-  background: rgb(0, 0, 0, 0.2);
 }
 
 .arrow:hover {

@@ -40,9 +40,9 @@
   margin-top: calc(-1 * var(--atmosphere-overlap));
 
   /* Content positioning */
-  align-items: center;
-  padding-top: calc(var(--atmosphere-overlap) + 10dvh);
-  padding-bottom: 4rem;
+  align-items: start;
+  padding-top: 10svh;
+  padding-bottom: 20svh;
 }
 
 /* External Land and River SVG */

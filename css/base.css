@@ -13,7 +13,7 @@
   --ocean-top-color: #4682b4; /* Steel blue - matches SVG ocean color */
   --ocean-bg: linear-gradient(180deg, var(--ocean-top-color) 0%, #191970 100%);
   --crust-top-color: #8b4513; /* Saddle brown - matches bathymetry SVG */
-  --crust-bg: linear-gradient(180deg, var(--crust-top-color) 0%, #ff4500 50%, #ff6347 100%);
+  --crust-bg: linear-gradient(180deg, var(--crust-top-color) 0%, #704214 50%, #5c4033 100%);
   --content-bg: rgba(255, 255, 255, 0.9);
   --content-text: #333;
   --content-subtext: #666;

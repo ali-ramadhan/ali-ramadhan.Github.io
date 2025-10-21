@@ -279,9 +279,10 @@ body {
   display: inline-block;
   background: var(--nav-dot-active);
   color: var(--content-text);
-  padding: 0.3rem 0.6rem;
+  padding: 0.1rem 0.4rem;
   margin: 0.2rem 0.3rem 0.2rem 0;
   border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: bold;
@@ -295,5 +296,12 @@ body {
 }
 
 [data-theme="dark"] #resources .publications-content a.publication-button {
-  color: var(--content-bg);
+  background: rgba(224, 224, 224, 0.15);
+  color: var(--content-text);
+  border: 1px solid rgba(224, 224, 224, 0.3);
+}
+
+[data-theme="dark"] #resources .publications-content a.publication-button:hover {
+  background: rgba(224, 224, 224, 0.25);
+  border-color: rgba(224, 224, 224, 0.5);
 }

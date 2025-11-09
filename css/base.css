@@ -221,24 +221,24 @@ body {
 }
 
 #resources .content a {
-  color: var(--content-text);
-  text-decoration: underline;
-  transition: color 0.5s ease;
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 /* Publications styling within resources section */
 #resources .publications-content a {
-  color: var(--content-text);
-  text-decoration: underline;
-  transition: color 0.5s ease;
+  color: #3498db;
+  text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 #resources .publications-content a:hover {
-  color: var(--nav-dot-active);
+  text-decoration: underline;
 }
 
 #resources .content a:hover {
-  color: var(--nav-dot-active);
+  text-decoration: underline;
 }
 
 /* Publications styling within resources section */

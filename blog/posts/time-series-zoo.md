@@ -4,6 +4,7 @@ title: "Touring a mini-zoo of time series and forecasting methods"
 date: 2025-09-15
 collapsible_headers: true
 floating_toc: true
+hidden: true
 ---
 
 [[toc]]

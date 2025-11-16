@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% if description %}
+    <meta name="description" content="{{ description }}" />
+    {% endif %}
+    <link rel="canonical" href="https://aliramadhan.me{{ page.url }}" />
+    <title>{{ title }} - Ali Ramadhan</title>
+    {% if collapsible_headers %}
+    <meta name="collapsible-headers" content="true" />
+    {% endif %}
+    {% if floating_toc %}
+    <meta name="floating-toc" content="true" />
+    {% endif %}
+
+    {% include "favicons.html" %}
+
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/blog.css" />
+    <link rel="stylesheet" href="/css/components/ui-controls.css" />
+    <link rel="stylesheet" href="/css/components/benchmark.css" />
+    <link rel="stylesheet" href="/css/components/floating-toc.css" />
+    <link rel="stylesheet" href="/css/citations.css" />
+
+    {% include "google-analytics.html" %}
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ title }}",
+      {% if description %}
+      "description": "{{ description }}",
+      {% endif %}
+      "author": {
+        "@type": "Person",
+        "name": "Ali Ramadhan",
+        "url": "https://aliramadhan.me"
+      },
+      "datePublished": "{{ date | dateDisplay }}",
+      "dateModified": "{{ date | dateDisplay }}",
+      "url": "https://aliramadhan.me{{ page.url }}"
+    }
+    </script>
+  </head>
+  <body class="blog-post-body">
+    {% include "blog-nav-bar.html" %}
+
+    <main class="blog-post-main">
+      <article class="blog-post">
+        <header class="blog-post-full-header">
+          <h1 class="blog-post-full-title">{{ title }}</h1>
+          {% if subtitle %}
+          <h2 class="blog-post-subtitle">{{ subtitle }}</h2>
+          {% endif %}
+          <div class="blog-post-meta">
+            <time class="blog-post-full-date">{{ date | dateDisplay }}</time>
+          </div>
+        </header>
+
+        <div class="blog-post-content">{{ content | safe }}</div>
+      </article>
+    </main>
+
+    {% include "theme-toggle.html" %}
+
+    <!-- Entry point for Vite -->
+    <script type="module" src="/js/blog.js"></script>
+  </body>
+</html>

@@ -1,0 +1,282 @@
+/* Mountain Range Transition */
+.mountain-range {
+  position: absolute;
+  bottom: var(--atmosphere-overlap); /* Adjusted to match SVG shift with negative margins */
+  left: 0;
+  width: 100%;
+  height: 120px;
+  z-index: var(--z-mountains);
+  overflow: hidden;
+
+  /* Light theme mountain colors */
+  --mountain-color: #8b4513;
+  --snow-color: #fff;
+
+  background-image: url("/assets/images/backgrounds/mountains.svg");
+  background-repeat: repeat-x;
+  background-position: bottom;
+  background-size: 400px 120px;
+  transition: background-image 0.5s ease;
+}
+
+/* Dark theme mountains */
+[data-theme="dark"] .mountain-range {
+  /* Dark theme mountain colors */
+  --mountain-color: #4a3820;
+  --snow-color: #e0e0e0;
+}
+
+/* Land */
+#land {
+  background: transparent; /* Using unified SVG now */
+  transition: background 0.5s ease;
+  position: relative;
+
+  /* Layer sizing - let content determine height with reasonable minimum */
+  min-height: 100dvh;
+
+  /* Visual overlap with atmosphere using negative margin */
+
+  /* Additional overlap: atmosphere (15dvh) - cumulative from previous margins */
+  margin-top: calc(-1 * var(--atmosphere-overlap));
+
+  /* Content positioning */
+  align-items: start;
+  padding-top: 10svh;
+  padding-bottom: 20svh;
+}
+
+/* External Land and River SVG */
+.land-river-svg {
+  position: absolute;
+  top: 0; /* With negative margins, SVG should start at layer top */
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: var(--z-terrain);
+  pointer-events: none;
+}
+
+/* Theme-based SVG visibility - using opacity for Safari compatibility */
+.land-river-svg.dark-theme {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.land-river-svg.light-theme {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+[data-theme="dark"] .land-river-svg.light-theme {
+  opacity: 0;
+  visibility: hidden;
+}
+
+[data-theme="dark"] .land-river-svg.dark-theme {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Forest Trees */
+.forest-trees {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 35; /* Between terrain (30) and content (40) */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.tree {
+  position: absolute;
+  background-image: url("/assets/images/backgrounds/evergreen-tree_1f332.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  will-change: transform;
+  transition: filter 0.5s ease;
+  filter: brightness(0.95) saturate(1.1);
+}
+
+/* Dark theme tree styling - darker and slightly desaturated */
+[data-theme="dark"] .tree {
+  filter: brightness(0.4) saturate(0.7);
+}
+
+/* Desert Cacti */
+.desert-cacti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 35; /* Between terrain (30) and content (40) */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.cactus {
+  position: absolute;
+  background-image: url("/assets/images/backgrounds/cactus_1f335.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  will-change: transform;
+  transition: filter 0.5s ease;
+  filter: brightness(0.95) saturate(1.1);
+}
+
+/* Dark theme cactus styling - darker and slightly desaturated */
+[data-theme="dark"] .cactus {
+  filter: brightness(0.4) saturate(0.7);
+}
+
+#land::before {
+  content: "";
+  position: absolute;
+  top: 0; /* With negative margins, overlay should start at layer top */
+  left: 0;
+  right: 0;
+  height: 20%;
+  background: linear-gradient(
+    to bottom,
+    rgb(200, 230, 255, 0.2) 0%,
+    rgb(200, 230, 255, 0.1) 50%,
+    transparent 100%
+  );
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+[data-theme="dark"] #land::before {
+  background: linear-gradient(
+    to bottom,
+    rgb(37, 48, 64, 0.3) 0%,
+    rgb(37, 48, 64, 0.15) 50%,
+    transparent 100%
+  );
+}
+
+/* Profile Section */
+.profile-section {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+  border: 3px solid var(--content-text);
+  opacity: 0.95;
+}
+
+.profile-content {
+  flex: 1;
+}
+
+.profile-content h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 12px;
+  margin: 20px auto 10px;
+  max-width: 400px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--content-bg);
+  border: 1px solid var(--content-text);
+  border-radius: 8px;
+  color: var(--content-text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
+
+.social-link:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.15);
+}
+
+.social-icon {
+  height: 1rem;
+  width: auto;
+  flex-shrink: 0;
+}
+
+.social-text {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* Large screen adjustments for 4K displays */
+@media (width >= 1920px) and (height >= 1080px) {
+  /* Make about me box narrower on 4K */
+  #land .content {
+    max-width: clamp(700px, 45vw, 900px);
+  }
+}
+
+@media (width <= 768px) {
+  #land {
+    align-items: flex-start;
+  }
+
+  /* Add top spacing to content in land section for gap from mountains */
+  #land .content {
+    margin-top: 20px;
+  }
+
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+
+  .profile-picture {
+    align-self: center;
+    width: 100px;
+    height: 100px;
+  }
+
+  .social-links {
+    /* Keep 2 columns on mobile for better space usage */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 8px;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .social-link {
+    padding: 5px 8px;
+    font-size: 0.85rem;
+  }
+
+  .social-text {
+    font-size: 0.8rem;
+  }
+
+  .social-icon {
+    height: 0.9rem;
+  }
+}

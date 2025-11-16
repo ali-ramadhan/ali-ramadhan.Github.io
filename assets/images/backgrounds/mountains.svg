@@ -1,0 +1,79 @@
+<!--
+  Mountain Range SVG - Transition between atmosphere and land layers
+  
+  Features:
+  - 5 mountains of varying heights
+  - Snow caps on peaks
+  - Seamless tiling pattern (400px width)
+  - CSS variable support for theming
+  
+  Usage: background-image with repeat-x
+-->
+<svg xmlns="http://www.w3.org/2000/svg" 
+     width="400" 
+     height="120" 
+     viewBox="0 0 400 120">
+  
+  <!-- CSS for theming -->
+  <style>
+    .mountain {
+      fill: var(--mountain-color, #8b4513);
+      transition: fill 0.5s ease;
+    }
+    .snow-cap {
+      fill: var(--snow-color, #fff);
+      transition: fill 0.5s ease;
+    }
+  </style>
+  
+  <!-- Mountain 1: Small peak on the left -->
+  <g id="mountain-1">
+    <!-- Main mountain body -->
+    <polygon class="mountain" 
+             points="0,120 50,20 100,120" />
+    <!-- Snow cap -->
+    <polygon class="snow-cap" 
+             points="40,35 50,20 60,35" />
+  </g>
+  
+  <!-- Mountain 2: Medium height -->
+  <g id="mountain-2">
+    <!-- Main mountain body -->
+    <polygon class="mountain" 
+             points="60,120 110,35 160,120" />
+    <!-- Snow cap -->
+    <polygon class="snow-cap" 
+             points="100,50 110,35 120,50" />
+  </g>
+  
+  <!-- Mountain 3: Tallest peak (dramatic silhouette) -->
+  <g id="mountain-3">
+    <!-- Main mountain body -->
+    <polygon class="mountain" 
+             points="120,120 180,10 240,120" />
+    <!-- Snow cap -->
+    <polygon class="snow-cap" 
+             points="170,25 180,10 190,25" />
+  </g>
+  
+  <!-- Mountain 4: Medium-low height -->
+  <g id="mountain-4">
+    <!-- Main mountain body -->
+    <polygon class="mountain" 
+             points="200,120 250,40 300,120" />
+    <!-- Snow cap -->
+    <polygon class="snow-cap" 
+             points="240,55 250,40 260,55" />
+  </g>
+  
+  <!-- Mountain 5: Tall peak on the right (creates seamless tile) -->
+  <g id="mountain-5">
+    <!-- Main mountain body -->
+    <polygon class="mountain" 
+             points="280,120 340,25 400,120" />
+    <!-- Snow cap -->
+    <polygon class="snow-cap" 
+             points="330,40 340,25 350,40" />
+  </g>
+  
+</svg>

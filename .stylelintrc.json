@@ -1,0 +1,10 @@
+{
+  "extends": ["stylelint-config-standard"],
+  "rules": {
+    "alpha-value-notation": "number",
+    "color-function-notation": "legacy",
+    "color-hex-length": "short",
+    "selector-class-pattern": "^[a-z][a-z0-9-]*$",
+    "no-duplicate-selectors": true
+  }
+}

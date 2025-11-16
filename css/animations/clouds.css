@@ -1,0 +1,34 @@
+/* Cloud Animation Keyframes - Traveling across sky */
+
+/* Cirrus clouds: Fast jet stream, left to right */
+@keyframes cirrus-travel {
+  0% {
+    transform: translateX(-120vw);
+  }
+
+  100% {
+    transform: translateX(120vw);
+  }
+}
+
+/* Altostratus clouds: Medium speed, right to left for visual contrast */
+@keyframes altostratus-travel {
+  0% {
+    transform: translateX(120vw);
+  }
+
+  100% {
+    transform: translateX(-120vw);
+  }
+}
+
+/* Cumulus clouds: Slow surface winds, left to right */
+@keyframes cumulus-travel {
+  0% {
+    transform: translateX(-120vw);
+  }
+
+  100% {
+    transform: translateX(120vw);
+  }
+}

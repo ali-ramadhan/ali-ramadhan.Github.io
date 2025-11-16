@@ -1,0 +1,29 @@
+<!--
+  Ocean Bathymetry Background SVG - Dark Theme
+  
+  Simple single curve at the bottom of the ocean section
+  using dark theme crust color.
+-->
+<svg class="ocean-bathymetry-svg"
+     viewBox="0 -2 400 64"
+     preserveAspectRatio="none"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <!-- CSS styles for theme responsiveness -->
+  <style>
+    <![CDATA[
+      .bathymetry-floor {
+        fill: #3d2817; /* Dark theme crust top color */
+      }
+    ]]>
+  </style>
+
+  <!-- Simple single curve -->
+  <path class="bathymetry-floor"
+        d="M 0,-2
+           C 100,20 300,20 400,-2
+           L 400,62
+           L 0,62
+           Z" />
+
+</svg>

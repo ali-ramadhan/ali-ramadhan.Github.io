@@ -1,0 +1,281 @@
+/* Responsive */
+
+/* Video sphere sizing based on viewport (for tablets/smaller screens) */
+@media (height <= 1080px) or (width <= 1024px) {
+  #video-sphere-container {
+    gap: 1.5rem;
+  }
+
+  #video-sphere-player {
+    width: min(60vh, 45vw);
+    height: min(45vh, 33.75vw);
+  }
+
+  #canvas-video-sphere {
+    width: min(60vh, 45vw) !important;
+    height: min(45vh, 33.75vw) !important;
+  }
+
+  #video {
+    width: min(60vh, 45vw);
+    height: min(45vh, 33.75vw);
+  }
+
+  #video-title {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .arrow {
+    font-size: 1.25rem;
+    padding: 0.3rem;
+  }
+}
+
+/* Video sphere sizing for large screens - now capped at same maximum */
+@media (width >= 1920px) and (height >= 1080px) {
+  #video-sphere-container {
+    gap: 2.5rem;
+  }
+
+  #video-sphere-player {
+    width: min(75vh, 55vw, 800px);
+    height: min(56.25vh, 41.25vw, 675px);
+  }
+
+  #canvas-video-sphere {
+    width: min(75vh, 55vw, 800px);
+    height: min(56.25vh, 41.25vw, 675px);
+  }
+
+  #video {
+    width: min(75vh, 55vw, 800px);
+    height: min(56.25vh, 41.25vw, 675px);
+  }
+
+  #video-title {
+    font-size: 1.4rem;
+  }
+
+  .arrow {
+    font-size: 2.5rem;
+  }
+}
+
+/* Tablet breakpoint (769px - 1024px) */
+@media (width > 768px) and (width <= 1024px) {
+  .content {
+    max-width: clamp(700px, 80vw, 900px);
+  }
+
+  #ocean .content {
+    max-width: clamp(900px, 85vw, 1100px);
+  }
+
+  #resources .content {
+    max-width: clamp(850px, 85vw, 1000px);
+  }
+}
+
+/* Desktop breakpoint (1025px - 1439px) */
+@media (width >= 1025px) and (width <= 1439px) {
+  .content {
+    max-width: clamp(800px, 75vw, 1100px);
+  }
+
+  #ocean .content {
+    max-width: clamp(1000px, 85vw, 1400px);
+  }
+
+  #resources .content {
+    max-width: clamp(900px, 80vw, 1300px);
+  }
+}
+
+/* Large desktop breakpoint (1440px - 1919px) */
+@media (width >= 1440px) and (width <= 1919px) {
+  .content {
+    max-width: clamp(900px, 70vw, 1200px);
+  }
+
+  #ocean .content {
+    max-width: clamp(1100px, 80vw, 1500px);
+  }
+
+  #resources .content {
+    max-width: clamp(1000px, 75vw, 1400px);
+  }
+
+  /* Increase heading sizes for larger screens */
+  .content h2 {
+    font-size: 2.75rem;
+  }
+
+  .content p {
+    font-size: 1.15rem;
+  }
+}
+
+/* Extra large desktop / 4K breakpoint (1920px+) */
+@media (width >= 1920px) {
+  .content {
+    max-width: clamp(900px, 55vw, 1200px);
+  }
+
+  #ocean .content {
+    max-width: clamp(1100px, 65vw, 1500px);
+  }
+
+  #resources .content {
+    max-width: clamp(1000px, 60vw, 1400px);
+  }
+
+  /* Adjust typography for 4K screens */
+  .content h2 {
+    font-size: 2.5rem;
+  }
+
+  .content p {
+    font-size: 1.05rem;
+  }
+
+  /* Scale up padding for better proportions */
+  .content {
+    padding: 2.5rem;
+  }
+}
+
+/* Mobile breakpoint (up to 768px) */
+@media (width <= 768px) {
+  .content {
+    padding: 1.5rem;
+    margin: 0 1rem;
+  }
+
+  .content h1 {
+    font-size: 2rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+  }
+
+  .layer-nav {
+    right: 15px;
+  }
+
+  /* Responsive cloud adjustments for mobile */
+  .cirrus1 {
+    width: 200px;
+    height: 6px;
+  }
+
+  .cirrus1::before {
+    width: 120px;
+    height: 3px;
+  }
+
+  .cirrus1::after {
+    width: 80px;
+    height: 2px;
+  }
+
+  .cirrus2 {
+    width: 180px;
+    height: 5px;
+  }
+
+  .cirrus2::before {
+    width: 100px;
+    height: 2px;
+  }
+
+  .cirrus3 {
+    width: 150px;
+    height: 4px;
+  }
+
+  .cirrus3::before {
+    width: 80px;
+    height: 2px;
+  }
+
+  .alto1 {
+    width: 90%;
+    height: 30px;
+  }
+
+  .alto1::before {
+    height: 20px;
+  }
+
+  .alto2 {
+    width: 80%;
+    height: 25px;
+  }
+
+  .alto2::before {
+    height: 15px;
+  }
+
+  .cumulus1,
+  .cumulus2,
+  .cumulus3,
+  .cumulus4 {
+    width: 80px;
+    height: 35px;
+  }
+
+  .cumulus1::before,
+  .cumulus2::before,
+  .cumulus3::before,
+  .cumulus4::before {
+    width: 45px;
+    height: 45px;
+    top: -18px;
+  }
+
+  .cumulus1::after,
+  .cumulus2::after,
+  .cumulus3::after,
+  .cumulus4::after {
+    width: 35px;
+    height: 25px;
+    top: -10px;
+  }
+
+  /* Mountain range responsive adjustments */
+  .mountain-range {
+    height: 80px;
+    background-size: 300px 80px;
+  }
+
+  /* River responsive adjustments */
+  .river {
+    width: 80px;
+  }
+
+  .theme-toggle {
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+
+  .toggle-icon {
+    font-size: 1.2rem;
+  }
+
+  .sun {
+    width: 60px;
+    height: 60px;
+    top: 15%;
+  }
+
+  body[data-theme="light"] #outer-space .sun,
+  body:not([data-theme]) #outer-space .sun {
+    right: 80px;
+  }
+
+  /* Mobile-specific adjustments already handled in tablet breakpoint above */
+}

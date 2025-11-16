@@ -1,0 +1,245 @@
+/* Meteor Elements - Colored by chemical composition */
+
+/* Different meteor compositions produce different colors when burning in the atmosphere */
+.meteor {
+  position: absolute;
+  width: 100px;
+  height: 2px;
+  z-index: var(--z-meteors);
+  opacity: 0; /* Hidden by default, animation controls visibility */
+
+  /* Default yellow gradient for iron (used by meteor1) */
+  background: linear-gradient(
+    270deg,
+    rgb(255, 215, 0, 1) 0%,
+    rgb(255, 215, 0, 0.7) 30%,
+    rgb(255, 215, 0, 0.3) 60%,
+    transparent 100%
+  );
+  border-radius: 50%;
+}
+
+/* Meteor 1 - Diagonal down-right (Iron) */
+
+/* Iron meteors produce bright yellow light when burning up in the atmosphere */
+.meteor1 {
+  top: 5%;
+  left: 10%;
+  transform: rotate(45deg);
+  animation: meteor-1 40s linear infinite;
+  animation-delay: 2s;
+
+  /* Yellow gradient for iron - already set in base class */
+}
+
+@keyframes meteor-1 {
+  0% {
+    top: 5%;
+    left: 10%;
+    opacity: 0;
+  }
+
+  0.5% {
+    opacity: 1;
+  }
+
+  1.8% {
+    top: 30%;
+    left: 35%;
+    opacity: 1;
+  }
+
+  2.2% {
+    opacity: 0;
+  }
+
+  100% {
+    top: 30%;
+    left: 35%;
+    opacity: 0;
+  }
+}
+
+/* Meteor 2 - Steeper diagonal (Nitrogen/Oxygen) */
+
+/* Nitrogen and oxygen produce bright red/orange light during atmospheric entry */
+.meteor2 {
+  top: 8%;
+  left: 50%;
+  transform: rotate(55deg);
+  animation: meteor-2 45s linear infinite;
+  animation-delay: 12s;
+  background: linear-gradient(
+    270deg,
+    rgb(255, 50, 50, 1) 0%,
+    rgb(255, 50, 50, 0.7) 30%,
+    rgb(255, 50, 50, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+@keyframes meteor-2 {
+  0% {
+    top: 8%;
+    left: 50%;
+    opacity: 0;
+  }
+
+  0.5% {
+    opacity: 1;
+  }
+
+  1.6% {
+    top: 35%;
+    left: 70%;
+    opacity: 1;
+  }
+
+  2% {
+    opacity: 0;
+  }
+
+  100% {
+    top: 35%;
+    left: 70%;
+    opacity: 0;
+  }
+}
+
+/* Meteor 3 - More horizontal (Calcium) */
+
+/* Calcium produces bright purple/violet light when ionized in the upper atmosphere */
+.meteor3 {
+  top: 20%;
+  left: 15%;
+  transform: rotate(40deg);
+  animation: meteor-3 38s linear infinite;
+  animation-delay: 23s;
+  background: linear-gradient(
+    270deg,
+    rgb(200, 50, 255, 1) 0%,
+    rgb(200, 50, 255, 0.7) 30%,
+    rgb(200, 50, 255, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+@keyframes meteor-3 {
+  0% {
+    top: 20%;
+    left: 15%;
+    opacity: 0;
+  }
+
+  0.5% {
+    opacity: 1;
+  }
+
+  1.9% {
+    top: 40%;
+    left: 45%;
+    opacity: 1;
+  }
+
+  2.3% {
+    opacity: 0;
+  }
+
+  100% {
+    top: 40%;
+    left: 45%;
+    opacity: 0;
+  }
+}
+
+/* Meteor 4 - Diagonal (Sodium) */
+
+/* Sodium produces bright orange light, similar to sodium vapor street lamps */
+.meteor4 {
+  top: 3%;
+  left: 25%;
+  transform: rotate(48deg);
+  animation: meteor-4 42s linear infinite;
+  animation-delay: 32s;
+  background: linear-gradient(
+    270deg,
+    rgb(255, 140, 0, 1) 0%,
+    rgb(255, 140, 0, 0.7) 30%,
+    rgb(255, 140, 0, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+@keyframes meteor-4 {
+  0% {
+    top: 3%;
+    left: 25%;
+    opacity: 0;
+  }
+
+  0.5% {
+    opacity: 1;
+  }
+
+  2% {
+    top: 35%;
+    left: 55%;
+    opacity: 1;
+  }
+
+  2.4% {
+    opacity: 0;
+  }
+
+  100% {
+    top: 35%;
+    left: 55%;
+    opacity: 0;
+  }
+}
+
+/* Meteor 5 - Steep angle (Magnesium) */
+
+/* Magnesium burns with an intense blue-white/cyan light in the atmosphere */
+.meteor5 {
+  top: 12%;
+  left: 60%;
+  transform: rotate(50deg);
+  animation: meteor-5 35s linear infinite;
+  animation-delay: 18s;
+  background: linear-gradient(
+    270deg,
+    rgb(0, 255, 255, 1) 0%,
+    rgb(0, 255, 255, 0.7) 30%,
+    rgb(0, 255, 255, 0.3) 60%,
+    transparent 100%
+  );
+}
+
+@keyframes meteor-5 {
+  0% {
+    top: 12%;
+    left: 60%;
+    opacity: 0;
+  }
+
+  0.5% {
+    opacity: 1;
+  }
+
+  1.4% {
+    top: 30%;
+    left: 80%;
+    opacity: 1;
+  }
+
+  1.8% {
+    opacity: 0;
+  }
+
+  100% {
+    top: 30%;
+    left: 80%;
+    opacity: 0;
+  }
+}

@@ -1,0 +1,198 @@
+/* Citation Styles */
+.citation {
+  color: #06c;
+  text-decoration: none;
+  border-bottom: 1px dotted #06c;
+  position: relative;
+  cursor: pointer;
+}
+
+.citation:hover {
+  color: #06c;
+  border-bottom-color: #06c;
+}
+
+.citation:visited {
+  color: #06c;
+}
+
+.citation-missing {
+  color: #c00;
+  background-color: #fee;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+/* Citation Tooltip */
+.citation-tooltip {
+  position: absolute;
+  background: #333;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85em;
+  line-height: 1.4;
+  max-width: 300px;
+  z-index: 1001; /* LAYER 1000: Overlays - citation tooltips */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+  pointer-events: none;
+  white-space: normal;
+}
+
+.citation-tooltip::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 6px solid #333;
+}
+
+[data-theme="dark"] .citation-tooltip {
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .citation-tooltip::before {
+  border-bottom-color: #1f2937;
+}
+
+.citation:hover .citation-tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* References Section */
+.references {
+  color: #333 !important;
+}
+
+.references h2 {
+  color: #333;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.reference {
+  margin-bottom: 1rem;
+  font-size: 0.95em;
+  line-height: 1.5;
+  color: #333 !important;
+}
+
+.reference,
+.reference * {
+  color: #333 !important;
+}
+
+.reference:target {
+  background: #fffacd;
+  transition: background 0.5s ease;
+}
+
+.ref-author-list {
+  font-weight: 600;
+  color: #333 !important;
+}
+
+.reference i {
+  font-style: italic;
+  color: #333 !important;
+}
+
+.reference b {
+  font-weight: 600;
+  color: #333 !important;
+}
+
+.reference a {
+  color: #06c;
+  text-decoration: none;
+  margin-right: 0.5rem;
+}
+
+.reference a:hover {
+  text-decoration: underline;
+}
+
+.reference a:visited {
+  color: #06c;
+}
+
+/* Dark mode support */
+[data-theme="dark"] {
+  .citation {
+    color: #66b3ff;
+    border-bottom-color: #66b3ff;
+  }
+
+  .citation:hover {
+    color: #66b3ff;
+    border-bottom-color: #66b3ff;
+  }
+
+  .citation:visited {
+    color: #66b3ff;
+  }
+
+  .citation-missing {
+    color: #fca5a5;
+    background-color: #431313;
+  }
+
+  .references {
+    color: #e5e7eb !important;
+  }
+
+  .references h2 {
+    color: #f9fafb;
+  }
+
+  .reference {
+    color: #e5e7eb !important;
+  }
+
+  .reference,
+  .reference * {
+    color: #e5e7eb !important;
+  }
+
+  .reference:target {
+    background: #1a365d;
+  }
+
+  .ref-author-list {
+    color: #f3f4f6 !important;
+  }
+
+  .reference i {
+    color: #e5e7eb !important;
+  }
+
+  .reference b {
+    color: #e5e7eb !important;
+  }
+
+  .reference a {
+    color: #66b3ff;
+  }
+
+  .reference a:hover {
+    text-decoration: underline;
+  }
+
+  .reference a:visited {
+    color: #66b3ff;
+  }
+}

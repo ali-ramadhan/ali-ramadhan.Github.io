@@ -1,0 +1,18 @@
+/* Resources (formerly Crust) */
+#resources {
+  background: var(--crust-bg);
+  transition: background 0.5s ease;
+  padding: 4rem 0;
+  position: relative;
+
+  /* Layer sizing */
+  min-height: 100dvh;
+
+  /* No additional margin needed - cumulative overlap maintained from previous layers */
+
+  /* Override the default flex centering to stack content vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}

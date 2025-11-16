@@ -1,0 +1,542 @@
+/* Atmosphere */
+@import url("../animations/clouds.css");
+
+#atmosphere {
+  background: var(--atmosphere-bg);
+  transition: background 0.5s ease;
+  position: relative;
+
+  /* Layer sizing */
+  min-height: 100dvh;
+
+  /* Visual overlap with outer-space using negative margin */
+  margin-top: calc(-1 * var(--space-overlap));
+
+  /* Content positioning */
+  align-items: flex-start;
+  padding-top: calc(var(--space-overlap) + 5dvh);
+  padding-bottom: 10dvh;
+}
+
+.clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: var(--space-overlap);
+}
+
+/* Cirrus Clouds (Highest Altitude - 10-15% from top) */
+.cirrus-clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: var(--space-overlap);
+  z-index: var(--z-cirrus-clouds);
+}
+
+.cirrus-cloud {
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.25;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus1 {
+  width: 300px;
+  height: 8px;
+  top: 5%;
+  left: 0;
+  transform: rotate(-5deg);
+  animation: cirrus-travel 50s linear infinite;
+  animation-delay: -10s;
+}
+
+.cirrus1::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 80px;
+  width: 180px;
+  height: 4px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.7;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus1::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  right: 50px;
+  width: 120px;
+  height: 3px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.5;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus2 {
+  width: 250px;
+  height: 6px;
+  top: 11%;
+  left: 0;
+  transform: rotate(3deg);
+  animation: cirrus-travel 45s linear infinite;
+  animation-delay: -30s;
+}
+
+.cirrus2::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 60px;
+  width: 140px;
+  height: 3px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.8;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus3 {
+  width: 200px;
+  height: 5px;
+  top: 17%;
+  left: 0;
+  transform: rotate(-2deg);
+  animation: cirrus-travel 55s linear infinite;
+  animation-delay: -45s;
+}
+
+.cirrus3::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 40px;
+  width: 100px;
+  height: 2px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.6;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus4 {
+  width: 280px;
+  height: 7px;
+  top: 8%;
+  left: 0;
+  transform: rotate(4deg);
+  animation: cirrus-travel 48s linear infinite;
+  animation-delay: -15s;
+}
+
+.cirrus4::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 70px;
+  width: 160px;
+  height: 4px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.7;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus5 {
+  width: 220px;
+  height: 6px;
+  top: 14%;
+  left: 0;
+  transform: rotate(-3deg);
+  animation: cirrus-travel 52s linear infinite;
+  animation-delay: -5s;
+}
+
+.cirrus5::before {
+  content: "";
+  position: absolute;
+  top: -1px;
+  left: 50px;
+  width: 130px;
+  height: 3px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.65;
+  transition: background-color 0.5s ease;
+}
+
+.cirrus6 {
+  width: 260px;
+  height: 7px;
+  top: 20%;
+  left: 0;
+  transform: rotate(2deg);
+  animation: cirrus-travel 46s linear infinite;
+  animation-delay: -38s;
+}
+
+.cirrus6::before {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 60px;
+  width: 150px;
+  height: 3px;
+  background: var(--cloud-color);
+  border-radius: 100px;
+  opacity: 0.75;
+  transition: background-color 0.5s ease;
+}
+
+/* Altostratus Clouds (Mid Altitude - 30-40% from top) */
+.altostratus-clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: var(--space-overlap);
+  z-index: var(--z-alto-clouds);
+}
+
+.altostratus-cloud {
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 200px;
+  opacity: 0.4;
+  transition: background-color 0.5s ease;
+}
+
+.alto1 {
+  width: 50%;
+  height: 40px;
+  top: 25%;
+  left: 0;
+  animation: altostratus-travel 90s linear infinite;
+  animation-delay: -20s;
+}
+
+.alto1::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 20%;
+  width: 40%;
+  height: 25px;
+  background: var(--cloud-color);
+  border-radius: 200px;
+  opacity: 0.6;
+  transition: background-color 0.5s ease;
+}
+
+.alto2 {
+  width: 45%;
+  height: 30px;
+  top: 40%;
+  left: 0;
+  animation: altostratus-travel 100s linear infinite;
+  animation-delay: -65s;
+}
+
+.alto2::before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 15%;
+  width: 35%;
+  height: 20px;
+  background: var(--cloud-color);
+  border-radius: 200px;
+  opacity: 0.7;
+  transition: background-color 0.5s ease;
+}
+
+.alto3 {
+  width: 48%;
+  height: 35px;
+  top: 28%;
+  left: 0;
+  animation: altostratus-travel 95s linear infinite;
+  animation-delay: -48s;
+}
+
+.alto3::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 18%;
+  width: 38%;
+  height: 22px;
+  background: var(--cloud-color);
+  border-radius: 200px;
+  opacity: 0.65;
+  transition: background-color 0.5s ease;
+}
+
+.alto4 {
+  width: 42%;
+  height: 32px;
+  top: 36%;
+  left: 0;
+  animation: altostratus-travel 88s linear infinite;
+  animation-delay: -10s;
+}
+
+.alto4::before {
+  content: "";
+  position: absolute;
+  top: -11px;
+  left: 20%;
+  width: 32%;
+  height: 21px;
+  background: var(--cloud-color);
+  border-radius: 200px;
+  opacity: 0.68;
+  transition: background-color 0.5s ease;
+}
+
+/* Cumulus Clouds (Low Altitude - 50-70% from top) */
+.cumulus-clouds {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: var(--space-overlap);
+  z-index: var(--z-cumulus-clouds);
+}
+
+.cumulus-cloud {
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 50px;
+  opacity: 0.75;
+  transition: background-color 0.5s ease;
+}
+
+.cumulus-cloud::before,
+.cumulus-cloud::after {
+  content: "";
+  position: absolute;
+  background: var(--cloud-color);
+  border-radius: 50px;
+  transition: background-color 0.5s ease;
+}
+
+.cumulus1 {
+  width: 120px;
+  height: 50px;
+  top: 50%;
+  left: 0;
+  animation: cumulus-travel 130s linear infinite;
+  animation-delay: -20s;
+}
+
+.cumulus1::before {
+  top: -25px;
+  left: 20px;
+  width: 70px;
+  height: 70px;
+}
+
+.cumulus1::after {
+  top: -15px;
+  right: 10px;
+  width: 60px;
+  height: 40px;
+}
+
+.cumulus2 {
+  width: 100px;
+  height: 45px;
+  top: 55%;
+  left: 0;
+  animation: cumulus-travel 140s linear infinite;
+  animation-delay: -60s;
+}
+
+.cumulus2::before {
+  top: -20px;
+  left: 15px;
+  width: 60px;
+  height: 60px;
+}
+
+.cumulus2::after {
+  top: -10px;
+  right: 15px;
+  width: 50px;
+  height: 35px;
+}
+
+.cumulus3 {
+  width: 90px;
+  height: 40px;
+  top: 62%;
+  left: 0;
+  animation: cumulus-travel 125s linear infinite;
+  animation-delay: -90s;
+}
+
+.cumulus3::before {
+  top: -18px;
+  left: 10px;
+  width: 55px;
+  height: 55px;
+}
+
+.cumulus3::after {
+  top: -8px;
+  right: 12px;
+  width: 45px;
+  height: 30px;
+}
+
+.cumulus4 {
+  width: 80px;
+  height: 35px;
+  top: 68%;
+  left: 0;
+  animation: cumulus-travel 150s linear infinite;
+  animation-delay: -120s;
+}
+
+.cumulus4::before {
+  top: -15px;
+  left: 12px;
+  width: 45px;
+  height: 45px;
+}
+
+.cumulus4::after {
+  top: -8px;
+  right: 10px;
+  width: 40px;
+  height: 25px;
+}
+
+.cumulus5 {
+  width: 110px;
+  height: 48px;
+  top: 53%;
+  left: 0;
+  animation: cumulus-travel 135s linear infinite;
+  animation-delay: -45s;
+}
+
+.cumulus5::before {
+  top: -22px;
+  left: 18px;
+  width: 65px;
+  height: 65px;
+}
+
+.cumulus5::after {
+  top: -12px;
+  right: 12px;
+  width: 55px;
+  height: 38px;
+}
+
+.cumulus6 {
+  width: 95px;
+  height: 42px;
+  top: 60%;
+  left: 0;
+  animation: cumulus-travel 145s linear infinite;
+  animation-delay: -75s;
+}
+
+.cumulus6::before {
+  top: -20px;
+  left: 14px;
+  width: 58px;
+  height: 58px;
+}
+
+.cumulus6::after {
+  top: -10px;
+  right: 14px;
+  width: 48px;
+  height: 32px;
+}
+
+.cumulus7 {
+  width: 85px;
+  height: 38px;
+  top: 66%;
+  left: 0;
+  animation: cumulus-travel 128s linear infinite;
+  animation-delay: -105s;
+}
+
+.cumulus7::before {
+  top: -17px;
+  left: 13px;
+  width: 50px;
+  height: 50px;
+}
+
+.cumulus7::after {
+  top: -9px;
+  right: 11px;
+  width: 42px;
+  height: 28px;
+}
+
+/* Dark theme adjustments for new clouds - use CSS variable for consistency */
+[data-theme="dark"] .cirrus-cloud,
+[data-theme="dark"] .altostratus-cloud,
+[data-theme="dark"] .cumulus-cloud {
+  background: var(--cloud-color);
+}
+
+[data-theme="dark"] .cirrus-cloud::before,
+[data-theme="dark"] .cirrus-cloud::after,
+[data-theme="dark"] .altostratus-cloud::before,
+[data-theme="dark"] .altostratus-cloud::after,
+[data-theme="dark"] .cumulus-cloud::before,
+[data-theme="dark"] .cumulus-cloud::after {
+  background: var(--cloud-color);
+}
+
+/* Blog Post Listing Styles for Homepage */
+.blog-posts-simple {
+  list-style-type: disc;
+  padding-left: 1.2rem;
+  margin: 0;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+.blog-post-item {
+  margin-bottom: 0.8rem;
+}
+
+.blog-post-item a {
+  color: #2c3e50;
+  text-decoration: none;
+  font-size: 1.1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  display: block;
+}
+
+.blog-post-item a:hover {
+  color: #3498db;
+  text-decoration: underline;
+}
+
+/* Dark mode support for simple blog list */
+[data-theme="dark"] .blog-post-item a {
+  color: #e0e0e0;
+}
+
+[data-theme="dark"] .blog-post-item a:hover {
+  color: #74b9ff;
+}
+
+/* Mobile: dvh already handles dynamic UI, no special adjustments needed */

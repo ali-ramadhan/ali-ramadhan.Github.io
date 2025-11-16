@@ -1,0 +1,134 @@
+/* Sun Element */
+.sun {
+  position: absolute;
+  top: 20%;
+  right: -150px;
+  width: 80px;
+  height: 80px;
+  z-index: var(--z-celestial);
+  transition:
+    right 1s ease-in-out,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+/* Sun rays (behind the sun) */
+.sun::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 200px;
+  height: 200px;
+  margin: -100px 0 0 -100px;
+  z-index: -1;
+  background:
+    linear-gradient(0deg, transparent 48%, rgb(255, 235, 59, 0.3) 50%, transparent 52%),
+    linear-gradient(45deg, transparent 48%, rgb(255, 235, 59, 0.25) 50%, transparent 52%),
+    linear-gradient(90deg, transparent 48%, rgb(255, 235, 59, 0.3) 50%, transparent 52%),
+    linear-gradient(135deg, transparent 48%, rgb(255, 235, 59, 0.25) 50%, transparent 52%),
+    linear-gradient(22.5deg, transparent 49%, rgb(255, 235, 59, 0.2) 50%, transparent 51%),
+    linear-gradient(67.5deg, transparent 49%, rgb(255, 235, 59, 0.2) 50%, transparent 51%),
+    linear-gradient(112.5deg, transparent 49%, rgb(255, 235, 59, 0.2) 50%, transparent 51%),
+    linear-gradient(157.5deg, transparent 49%, rgb(255, 235, 59, 0.2) 50%, transparent 51%);
+  mask-image: radial-gradient(circle, black 25%, transparent 70%);
+  animation: rays 4s linear infinite;
+}
+
+/* Sun core (in front of rays) */
+.sun::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #ffeb3b 0%, #ffc107 60%, #ff9800 90%, #f57c00 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 20px rgb(255, 235, 59, 0.4),
+    0 0 40px rgb(255, 193, 7, 0.3),
+    0 0 60px rgb(255, 152, 0, 0.2);
+}
+
+.sun:hover {
+  transform: scale(1.05);
+}
+
+.sun:hover::before,
+.sun:hover::after {
+  transform: scale(1.05) rotate(var(--rotation, 0deg));
+}
+
+@keyframes rays {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Moon Element */
+.moon {
+  position: absolute;
+  top: 20%;
+  right: -150px;
+  width: 80px;
+  height: 80px;
+  z-index: var(--z-celestial);
+  transition:
+    right 1s ease-in-out,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.moon:hover {
+  transform: scale(1.05);
+}
+
+/* Moon surface with craters */
+.moon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #f5f5f5 0%, #e0e0e0 50%, #bdbdbd 100%);
+  border-radius: 50%;
+  box-shadow:
+    0 0 15px rgb(255, 255, 255, 0.3),
+    0 0 30px rgb(255, 255, 255, 0.2),
+    inset -10px -10px 20px rgb(0, 0, 0, 0.1);
+}
+
+/* Moon craters */
+.moon::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse 8px 6px at 25% 30%, rgb(0, 0, 0, 0.15) 50%, transparent 51%),
+    radial-gradient(ellipse 12px 8px at 70% 40%, rgb(0, 0, 0, 0.12) 50%, transparent 51%),
+    radial-gradient(ellipse 6px 4px at 60% 70%, rgb(0, 0, 0, 0.18) 50%, transparent 51%),
+    radial-gradient(ellipse 4px 3px at 80% 20%, rgb(0, 0, 0, 0.2) 50%, transparent 51%),
+    radial-gradient(ellipse 5px 4px at 40% 80%, rgb(0, 0, 0, 0.15) 50%, transparent 51%);
+  border-radius: 50%;
+}
+
+/* Sun visible in light mode, moon visible in dark mode */
+body[data-theme="light"] #outer-space .sun,
+body:not([data-theme]) #outer-space .sun {
+  right: 100px;
+}
+
+body[data-theme="dark"] #outer-space .moon {
+  right: 100px;
+}

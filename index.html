@@ -1,44 +1,183 @@
----
-title: Ali Ramadhan
-show_profile_picture: true
----
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Ali Ramadhan's personal website" />
+    <link rel="canonical" href="https://aliramadhan.me/" />
+    <title>Ali Ramadhan</title>
 
-<!DOCTYPE HTML>
+    {% include "favicons.html" %}
 
-<!--
-  Prologue by HTML5 UP
-  html5up.net | @ajlkn
-  Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+    <!-- Preload fonts to prevent font flash -->
+    <link
+      rel="preload"
+      href="/assets/fonts/InterVariable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/InterVariable-Italic.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      href="/assets/fonts/FiraCode-VF.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
 
-<html>
+    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/css/base.css" />
+    <link rel="stylesheet" href="/css/layers/outer-space.css" />
+    <link rel="stylesheet" href="/css/layers/atmosphere.css" />
+    <link rel="stylesheet" href="/css/layers/land.css" />
+    <link rel="stylesheet" href="/css/layers/ocean.css" />
+    <link rel="stylesheet" href="/css/layers/resources.css" />
+    <link rel="stylesheet" href="/css/components/ui-controls.css" />
+    <link rel="stylesheet" href="/css/components/research.css" />
+    <link rel="stylesheet" href="/css/components/sun.css" />
+    <link rel="stylesheet" href="/css/components/comet.css" />
+    <link rel="stylesheet" href="/css/components/meteor.css" />
+    <link rel="stylesheet" href="/css/components/video-sphere.css" />
+    <link rel="stylesheet" href="/css/responsive.css" />
 
-<head>
-  {% include head.html %}
-</head>
+    {% include "google-analytics.html" %}
+  </head>
+  <body>
+    <section class="layer" id="outer-space">
+      <div id="video-sphere-container">
+        <span id="left-arrow" class="arrow" aria-hidden="true">◀</span>
 
-<body>
-  {% include sidebar.html %}
-  
-  <div id="main">
-    {% include about.html %}
-    {% include blog.html %}
-    {% include research.html %}
-    {% include publications.html %}
-    {% include resources.html %}
-  </div>
+        <div id="video-sphere-player">
+          <div id="video-title">Temperature</div>
 
-  {% include footer.html %}
+          <div id="video-inner-box">
+            <!-- Default video (surface air temperature) - kept in sync with first entry in videos.json -->
+            <video id="video" crossorigin="anonymous" autoplay muted loop playsinline>
+              <source
+                type="video/mp4; codecs=av01.0.05M.08"
+                src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_av1_preset3_crf38.mp4">
+              <source
+                type="video/mp4; codecs=avc1.4d002a"
+                src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_h264_veryslow_crf28.mp4">
+            </video>
+          </div>
 
-  <script src="/assets/js/jquery.min.js"></script>
-  <script src="/assets/js/jquery.scrolly.min.js"></script>
-  <script src="/assets/js/jquery.scrollzer.min.js"></script>
-  <script src="/assets/js/skel.min.js"></script>
-  <script src="/assets/js/util.js"></script>
-  <script src="/assets/js/main.js"></script>
-  <script src="/assets/js/expandable_descriptions.js"></script>
-  <script src="/assets/js/slideshow.js"></script>
+          <div id="video-caption" class="hidden"></div>
+          <div id="video-colorbar"><img id="colorbar" class="hidden" /></div>
+          <div id="video-controls">
+            <button id="toggle-timestamp" class="video-toggle-btn">Timestamp</button>
+            <button id="toggle-colorbar" class="video-toggle-btn">Colorbar</button>
+          </div>
+        </div>
 
-</body>
+        <span id="right-arrow" class="arrow" aria-hidden="true">▶</span>
+      </div>
+      <div id="video-tooltip">
+        <div class="tooltip-title"></div>
+        <div class="tooltip-text"></div>
+      </div>
+      <div class="stars"></div>
+      <div class="meteor meteor1"></div>
+      <div class="meteor meteor2"></div>
+      <div class="meteor meteor3"></div>
+      <div class="meteor meteor4"></div>
+      <div class="meteor meteor5"></div>
+      <div class="sun" id="sun"></div>
+      <div class="moon" id="moon"></div>
+      <div class="comet comet1"></div>
+      <div class="comet comet2"></div>
+      <div class="comet comet3"></div>
+    </section>
 
+    <section class="layer" id="atmosphere">
+      <div class="content">{% include "blog-listing.html" %}</div>
+      <!-- Cirrus clouds (highest altitude) -->
+      <div class="cirrus-clouds">
+        <div class="cirrus-cloud cirrus1"></div>
+        <div class="cirrus-cloud cirrus2"></div>
+        <div class="cirrus-cloud cirrus3"></div>
+        <div class="cirrus-cloud cirrus4"></div>
+        <div class="cirrus-cloud cirrus5"></div>
+        <div class="cirrus-cloud cirrus6"></div>
+      </div>
+      <!-- Altostratus clouds (mid altitude) -->
+      <div class="altostratus-clouds">
+        <div class="altostratus-cloud alto1"></div>
+        <div class="altostratus-cloud alto2"></div>
+        <div class="altostratus-cloud alto3"></div>
+        <div class="altostratus-cloud alto4"></div>
+      </div>
+      <!-- Cumulus clouds (low altitude) -->
+      <div class="cumulus-clouds">
+        <div class="cumulus-cloud cumulus1"></div>
+        <div class="cumulus-cloud cumulus2"></div>
+        <div class="cumulus-cloud cumulus3"></div>
+        <div class="cumulus-cloud cumulus4"></div>
+        <div class="cumulus-cloud cumulus5"></div>
+        <div class="cumulus-cloud cumulus6"></div>
+        <div class="cumulus-cloud cumulus7"></div>
+      </div>
+      <!-- Mountain range transition -->
+      <div class="mountain-range"></div>
+    </section>
+
+    <section class="layer" id="land">
+      <!-- External SVG for land and river background - Light theme -->
+      <object
+        class="land-river-svg light-theme"
+        data="/assets/images/backgrounds/land-river.svg"
+        type="image/svg+xml"
+      ></object>
+
+      <!-- External SVG for land and river background - Dark theme -->
+      <object
+        class="land-river-svg dark-theme"
+        data="/assets/images/backgrounds/land-river-dark.svg"
+        type="image/svg+xml"
+      ></object>
+
+      <!-- Forest of trees (background scenery) -->
+      <div class="forest-trees"></div>
+
+      <!-- Desert cacti (background scenery) -->
+      <div class="desert-cacti"></div>
+
+      <div class="content">{% include "about-me.html" %}</div>
+    </section>
+
+    <section class="layer" id="ocean">
+      <div class="content">{% include "research.html" %}</div>
+      <!-- Ocean bathymetry at the bottom - Light theme -->
+      <object
+        class="ocean-bathymetry-svg light-theme"
+        data="/assets/images/backgrounds/ocean-bathymetry-light.svg"
+        type="image/svg+xml"
+      ></object>
+
+      <!-- Ocean bathymetry at the bottom - Dark theme -->
+      <object
+        class="ocean-bathymetry-svg dark-theme"
+        data="/assets/images/backgrounds/ocean-bathymetry-dark.svg"
+        type="image/svg+xml"
+      ></object>
+    </section>
+
+    <section class="layer" id="resources">
+      <div class="content publications-content">{% include "publications.html" %}</div>
+      <div class="content resources-content">{% include "resources.html" %}</div>
+    </section>
+
+    {% include "nav.html" %}
+    {% include "theme-toggle.html" %}
+
+    <!-- Entry point for Vite -->
+    <script type="module" src="/js/home.js"></script>
+  </body>
 </html>

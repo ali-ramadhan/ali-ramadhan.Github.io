@@ -1,0 +1,132 @@
+<!--
+  Land and River Background SVG - Light Theme
+
+  This SVG creates the land section background with three distinct regions:
+  - Forest region (left): Green gradient representing woodland/vegetation
+  - Desert region (right): Brown gradient representing arid landscape
+  - River (center): Blue gradient with flowing animation down the middle
+
+  Features:
+  - Organic, meandering river path
+  - Seamless integration with mountain range above
+  - Responsive design that scales to viewport
+  - Animated river flow effect
+-->
+<svg class="land-river-svg"
+     viewBox="0 0 400 680"
+     preserveAspectRatio="none"
+     xmlns="http://www.w3.org/2000/svg">
+
+  <!-- CSS styles -->
+  <style>
+    <![CDATA[
+      .forest-region {
+        fill: url(#forestGradient);
+      }
+
+      .desert-region {
+        fill: url(#desertGradient);
+      }
+
+      .river-path {
+        fill: url(#riverGradient);
+      }
+
+      .cliff-pattern {
+        fill: url(#cliffGradient);
+      }
+
+      .ocean-region {
+        fill: #4682b4; /* Light ocean top color */
+      }
+    ]]>
+  </style>
+
+  <defs>
+    <!-- FOREST GRADIENTS (Left Side) -->
+    <!-- Forest: transitioning to deep greens then sandy beach -->
+    <linearGradient id="forestGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#228b22; stop-opacity:0.8" />  <!-- Forest green -->
+      <stop offset="30%" style="stop-color:#32cd32; stop-opacity:1"   /> <!-- Lime green -->
+      <stop offset="80%" style="stop-color:#228b22; stop-opacity:1"   /> <!-- Forest green -->
+      <stop offset="95%" style="stop-color:#deb887; stop-opacity:1"   /> <!-- Burlywood/sandy -->
+      <stop offset="100%" style="stop-color:#f4e4bc; stop-opacity:1"  /> <!-- Light sandy beach -->
+    </linearGradient>
+
+    <!-- DESERT GRADIENTS (Right Side) -->
+    <!-- Desert: transitioning to warm browns then sandy beach -->
+    <linearGradient id="desertGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#d2b48c; stop-opacity:0.8" />  <!-- Tan -->
+      <stop offset="30%" style="stop-color:#cd853f; stop-opacity:1"   /> <!-- Peru -->
+      <stop offset="80%" style="stop-color:#a0522d; stop-opacity:1"   /> <!-- Sienna -->
+      <stop offset="95%" style="stop-color:#deb887; stop-opacity:1"   /> <!-- Burlywood/sandy -->
+      <stop offset="100%" style="stop-color:#f4e4bc; stop-opacity:1"  /> <!-- Light sandy beach -->
+    </linearGradient>
+
+    <!-- RIVER GRADIENTS (Center) -->
+    <!-- River: Transitioning to match ocean TOP color at bottom -->
+    <linearGradient id="riverGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#87ceeb; stop-opacity:1" /> <!-- Sky blue -->
+      <stop offset="30%" style="stop-color:#4682b4; stop-opacity:1" /> <!-- Steel blue -->
+      <stop offset="70%" style="stop-color:#4682b4; stop-opacity:1"   /> <!-- Transitioning to ocean -->
+      <stop offset="100%" style="stop-color:#4682b4; stop-opacity:1"  /> <!-- Ocean TOP color -->
+    </linearGradient>
+
+    <!-- CLIFF GRADIENTS (Bottom Edge) -->
+    <!-- Cliff: Rocky gray-brown tones -->
+    <linearGradient id="cliffGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"  style="stop-color:#8b7d6b; stop-opacity:1" /> <!-- Light brown-gray -->
+      <stop offset="40%" style="stop-color:#696969; stop-opacity:1" /> <!-- Dim gray -->
+      <stop offset="70%" style="stop-color:#556b2f; stop-opacity:1" /> <!-- Dark olive green -->
+      <stop offset="100%" style="stop-color:#2f4f4f; stop-opacity:1" /> <!-- Dark slate gray -->
+    </linearGradient>
+  </defs>
+
+  <!-- FOREST REGION (Left Half with wavy bottom) -->
+  <path class="forest-region"
+        d="M 0,0
+           L 0,620
+           C 20,640 40,630 60,635
+           C 80,640 100,650 120,645
+           C 140,640 160,635 180,640
+           L 200,645
+           L 200,0
+           Z" />
+
+  <!-- DESERT REGION (Right Half with wavy bottom) -->
+  <path class="desert-region"
+        d="M 200,0
+           L 200,645
+           C 220,640 240,635 260,640
+           C 280,645 300,650 320,645
+           C 340,640 360,635 380,640
+           L 400,645
+           L 400,0
+           Z" />
+
+  <!-- OCEAN REGION (Below wavy boundary) -->
+  <path class="ocean-region"
+        d="M 0,620
+           C 20,640 40,630 60,635
+           C 80,640 100,650 120,645
+           C 140,640 160,635 180,640
+           L 200,645
+           C 220,640 240,635 260,640
+           C 280,645 300,650 320,645
+           C 340,640 360,635 380,640
+           L 400,645
+           L 400,680
+           L 0,680
+           Z" />
+
+
+  <!-- RIVER (Center) -->
+  <!-- River with perspective - very narrow at top, wider at bottom -->
+  <path class="river-path"
+        d="M 199,0
+           L 201,0
+           L 220,680
+           L 180,680
+           Z" />
+
+</svg>

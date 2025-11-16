@@ -1,0 +1,6 @@
+# Allow all crawlers to access everything
+User-agent: *
+Allow: /
+
+# Tell crawlers where to find the sitemap
+Sitemap: https://aliramadhan.me/sitemap.xml

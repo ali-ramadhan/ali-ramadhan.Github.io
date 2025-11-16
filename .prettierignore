@@ -1,0 +1,7 @@
+node_modules/
+.git/
+*.min.js
+*.min.css
+_site/
+public/
+dist/

@@ -1,0 +1,62 @@
+/* Ocean */
+#ocean {
+  background: var(--ocean-bg);
+  transition: background 0.5s ease;
+  padding: 4rem 0;
+  position: relative;
+
+  /* Layer sizing */
+  min-height: 100dvh;
+
+  /* No additional margin needed - cumulative overlap maintained from previous layers */
+
+  /* Override the default flex centering to stack content vertically */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Ocean content spacing */
+#ocean .content {
+  margin-bottom: 30dvh; /* Add space below content box above bathymetry - scales with viewport */
+}
+
+/* Ocean bathymetry SVG positioning */
+.ocean-bathymetry-svg {
+  position: absolute;
+  bottom: 0; /* Align flush with ocean bottom for seamless transition */
+  left: 0;
+  width: 100%;
+  height: 25dvh; /* Taller to ensure complete coverage */
+  z-index: var(--z-bathymetry);
+  pointer-events: none; /* Don't interfere with interactions */
+}
+
+/* Theme-based SVG visibility - using opacity for Safari compatibility */
+.dark-theme {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.light-theme {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+[data-theme="dark"] .light-theme {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+[data-theme="dark"] .dark-theme {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Mobile: dvh already handles dynamic UI, no special adjustments needed */

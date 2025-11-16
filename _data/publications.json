@@ -85,6 +85,24 @@
     ]
   },
   {
+    "id": "phd-thesis",
+    "title": "Data-driven ocean modeling using neural differential equations",
+    "authors": ["A. Ramadhan"],
+    "status": "thesis",
+    "info": "Ph.D. thesis, Massachusetts Institute of Technology",
+    "year": 2023,
+    "links": [
+      {
+        "type": "uri",
+        "url": "https://hdl.handle.net/1721.1/153671"
+      },
+      {
+        "type": "pdf",
+        "url": "https://dspace.mit.edu/bitstream/handle/1721.1/153671/ramadhan-alir-phd-eaps-2024-thesis.pdf?sequence=1&isAllowed=y"
+      }
+    ]
+  },
+  {
     "id": "ndes-paper",
     "title": "Capturing missing physics in climate model parameterizations using neural differential equations",
     "authors": [

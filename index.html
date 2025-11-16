@@ -58,9 +58,14 @@
           <div id="video-title">Temperature</div>
 
           <div id="video-inner-box">
+            <!-- Default video (surface air temperature) - kept in sync with first entry in videos.json -->
             <video id="video" crossorigin="anonymous" autoplay muted loop playsinline>
-              <source type="video/mp4; codecs=av01.0.05M.08">
-              <source type="video/mp4; codecs=avc1.4d002a">
+              <source
+                type="video/mp4; codecs=av01.0.05M.08"
+                src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_av1_preset3_crf38.mp4">
+              <source
+                type="video/mp4; codecs=avc1.4d002a"
+                src="https://raw.githubusercontent.com/ali-ramadhan/artifact-sandbox/main/temperature_h264_veryslow_crf28.mp4">
             </video>
           </div>
 

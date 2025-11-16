@@ -27,6 +27,11 @@ import "prismjs/plugins/toolbar/prism-toolbar";
 import "prismjs/plugins/show-language/prism-show-language";
 import "prismjs/plugins/copy-to-clipboard/prism-copy-to-clipboard";
 
+// Import Prism CSS (Vite will bundle these)
+import "prism-themes/themes/prism-one-dark.css";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "prismjs/plugins/toolbar/prism-toolbar.css";
+
 // Initialize minimal functionality for blog pages
 new ThemeManager();
 new MathJaxManager();

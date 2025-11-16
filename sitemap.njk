@@ -1,0 +1,28 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {# Homepage #}
+  <url>
+    <loc>https://aliramadhan.me/</loc>
+    <lastmod>2025-11-16</lastmod>
+  </url>
+
+  {# Blog posts collection #}
+  {%- for post in collections.posts %}
+  <url>
+    <loc>https://aliramadhan.me{{ post.url }}</loc>
+    <lastmod>{{ post.date | dateDisplay }}</lastmod>
+  </url>
+  {%- endfor %}
+
+  {# Project Euler collection #}
+  {%- for problem in collections.euler %}
+  <url>
+    <loc>https://aliramadhan.me{{ problem.url }}</loc>
+    <lastmod>{{ problem.date | dateDisplay }}</lastmod>
+  </url>
+  {%- endfor %}
+</urlset>

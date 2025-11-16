@@ -28,7 +28,6 @@ export class MathJaxManager {
         },
         startup: {
           ready: () => {
-            console.log("📐 MathJax initialized successfully!");
             MathJax.startup.defaultReady();
             this.initialized = true;
             this.processMathCodeBlocks();

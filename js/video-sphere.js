@@ -28,7 +28,6 @@ async function loadVideoData() {
 
     videoFramerate = data.videoFramerate;
 
-    console.log("Video data loaded successfully:", videos.length, "videos");
     return videos;
   } catch (error) {
     console.error("Failed to load video data:", error);
@@ -228,7 +227,7 @@ function setupVideoSphere(sphereInit) {
     });
 
     video.addEventListener("loadeddata", function () {
-      console.log("Video loaded successfully");
+      // Video loaded successfully
     });
 
     video.defaultPlaybackRate = 1.0;
@@ -243,7 +242,6 @@ function setupVideoSphere(sphereInit) {
     function selectVideo(n) {
       // Prevent simultaneous video switches
       if (isLoadingVideo) {
-        console.log("Video is already loading, ignoring switch request");
         return;
       }
 

@@ -34,8 +34,6 @@ class EarthLayersApp {
 
       // Initialize slideshow functionality
       this.managers.set("slideshow", new SlideshowManager());
-
-      console.log("Earth Layers app initialized successfully");
     } catch (error) {
       console.error("Error initializing Earth Layers app:", error);
     }

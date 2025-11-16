@@ -46,5 +46,3 @@ document.addEventListener("DOMContentLoaded", () => {
     Prism.highlightAll();
   }
 });
-
-console.log("📝 Blog loaded with Vite!");

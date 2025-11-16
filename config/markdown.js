@@ -124,7 +124,6 @@ export function configureMarkdown(eleventyConfig) {
     mdLib.use(markdownItBenchmark);
 
     // Citations plugin - must come before other plugins that might process links
-    console.log("About to register citations plugin, function is:", typeof markdownItCitations);
     mdLib.use(markdownItCitations, {
       defaultReferenceFile: "time-series-zoo",
       citationClass: "citation",

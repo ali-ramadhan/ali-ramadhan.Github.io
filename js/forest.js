@@ -24,13 +24,11 @@ class ForestGenerator {
       this.treeContainer = document.querySelector(".forest-trees");
       if (this.treeContainer) {
         this.generateForest();
-        console.log(`Forest generated with ${this.treeCount} trees`);
       }
 
       this.cactusContainer = document.querySelector(".desert-cacti");
       if (this.cactusContainer) {
         this.generateDesert();
-        console.log(`Desert generated with ${this.cactusCount} cacti`);
       }
     });
   }

@@ -36,6 +36,7 @@
   min-height: 100dvh;
 
   /* Visual overlap with atmosphere using negative margin */
+
   /* Additional overlap: atmosphere (15dvh) - cumulative from previous margins */
   margin-top: calc(-1 * var(--atmosphere-overlap));
 
@@ -99,10 +100,6 @@
   background-position: center bottom;
   will-change: transform;
   transition: filter 0.5s ease;
-}
-
-/* Light theme tree styling */
-.tree {
   filter: brightness(0.95) saturate(1.1);
 }
 
@@ -131,10 +128,6 @@
   background-position: center bottom;
   will-change: transform;
   transition: filter 0.5s ease;
-}
-
-/* Light theme cactus styling */
-.cactus {
   filter: brightness(0.95) saturate(1.1);
 }
 

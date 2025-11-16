@@ -1,6 +1,7 @@
 ---
 layout: "blog-post"
 title: "Building a weather data warehouse part I: Loading a trillion rows of weather data into TimescaleDB"
+description: "Benchmarking methods to load almost a trillion rows of weather data into PostgreSQL and TimescaleDB."
 date: 2024-03-31
 collapsible_headers: true
 floating_toc: true

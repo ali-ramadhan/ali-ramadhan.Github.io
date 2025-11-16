@@ -24,6 +24,24 @@
     <link rel="stylesheet" href="/css/citations.css" />
 
     {% include "google-analytics.html" %}
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "Project Euler Problem {{ problem_number }}: {{ problem_name }}",
+      "description": "Solution to Project Euler Problem {{ problem_number }}: {{ problem_name }}",
+      "author": {
+        "@type": "Person",
+        "name": "Ali Ramadhan",
+        "url": "https://aliramadhan.me"
+      },
+      "datePublished": "{{ date | dateDisplay }}",
+      "dateModified": "{{ date | dateDisplay }}",
+      "url": "https://aliramadhan.me{{ page.url }}"
+    }
+    </script>
   </head>
   <body class="blog-post-body project-euler-body">
     {% include "blog-nav-bar.html" %}

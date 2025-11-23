@@ -7,12 +7,14 @@ class NavigationManager {
   constructor() {
     this.CONFIG = {
       STARTING_SECTION: 2, // Land section index
-      SCROLL_ANIMATION_DURATION: 1000, // Scroll animation timeout in ms
+      SCROLL_ANIMATION_DURATION: 2000, // Scroll animation timeout in ms (increased for iOS momentum scrolling)
+      USER_SCROLL_TIMEOUT: 150, // Debounce timeout for detecting end of user scroll
     };
 
     this.layers = document.querySelectorAll(".layer");
     this.navDots = document.querySelectorAll(".nav-dot");
     this.isScrolling = false;
+    this.scrollTimeout = null;
     this.currentSection = this.CONFIG.STARTING_SECTION;
 
     this.eventListeners = [];
@@ -176,6 +178,22 @@ class NavigationManager {
     }
   }
 
+  handleUserScroll() {
+    // Set scrolling flag to prevent IntersectionObserver updates during user scroll
+    this.isScrolling = true;
+
+    // Clear existing timeout
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+    }
+
+    // Reset flag after user stops scrolling (debounced)
+    this.scrollTimeout = setTimeout(() => {
+      this.isScrolling = false;
+      this.scrollTimeout = null;
+    }, this.CONFIG.USER_SCROLL_TIMEOUT);
+  }
+
   bindEvents() {
     // Navigation dot clicks
     this.navDots.forEach((dot) => {
@@ -193,6 +211,11 @@ class NavigationManager {
     document.addEventListener("keydown", keyHandler);
     this.eventListeners.push({ element: document, event: "keydown", handler: keyHandler });
 
+    // User scroll detection (prevents IntersectionObserver updates during manual scroll)
+    const scrollHandler = () => this.handleUserScroll();
+    window.addEventListener("scroll", scrollHandler, { passive: true });
+    this.eventListeners.push({ element: window, event: "scroll", handler: scrollHandler });
+
     // Resize handling
     const resizeHandler = () => this.handleResize();
     window.addEventListener("resize", resizeHandler);
@@ -200,6 +223,12 @@ class NavigationManager {
   }
 
   cleanup() {
+    // Clear any pending scroll timeout
+    if (this.scrollTimeout) {
+      clearTimeout(this.scrollTimeout);
+      this.scrollTimeout = null;
+    }
+
     // Disconnect Intersection Observer
     if (this.intersectionObserver) {
       this.intersectionObserver.disconnect();

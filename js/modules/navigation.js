@@ -7,18 +7,15 @@ class NavigationManager {
   constructor() {
     this.CONFIG = {
       STARTING_SECTION: 2, // Land section index
-      SCROLL_ANIMATION_DURATION: 2000, // Scroll animation timeout in ms (increased for iOS momentum scrolling)
-      USER_SCROLL_TIMEOUT: 150, // Debounce timeout for detecting end of user scroll
+      SCROLL_ANIMATION_DURATION: 1000, // Scroll animation timeout in ms (prevents rapid keyboard nav)
     };
 
     this.layers = document.querySelectorAll(".layer");
     this.navDots = document.querySelectorAll(".nav-dot");
     this.isScrolling = false;
-    this.scrollTimeout = null;
     this.currentSection = this.CONFIG.STARTING_SECTION;
 
     this.eventListeners = [];
-    this.intersectionObserver = null;
 
     this.init();
   }
@@ -26,7 +23,6 @@ class NavigationManager {
   init() {
     this.cacheSectionData();
     this.scrollToInitialSection();
-    this.setupIntersectionObserver();
     this.bindEvents();
   }
 
@@ -85,55 +81,6 @@ class NavigationManager {
     return section ? section.element : null;
   }
 
-  setupIntersectionObserver() {
-    const options = {
-      root: null,
-      // Trigger when top 20% of section is in viewport
-      // This works for both fixed (100vh) and variable-height (auto) sections
-      rootMargin: "0px 0px -80% 0px",
-      threshold: 0,
-    };
-
-    this.intersectionObserver = new IntersectionObserver((entries) => {
-      // Don't update during programmatic scrolling
-      if (this.isScrolling) return;
-
-      // Find the section that's most prominently in view
-      let topMostSection = null;
-      let topMostY = Infinity;
-
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          // Get distance from top of viewport to top of section
-          const rect = entry.target.getBoundingClientRect();
-          const distanceFromTop = Math.abs(rect.top);
-
-          // Track the section closest to the top of viewport
-          if (distanceFromTop < topMostY) {
-            topMostY = distanceFromTop;
-            topMostSection = entry.target;
-          }
-        }
-      });
-
-      // Update navigation if we found an active section
-      if (topMostSection) {
-        const layerId = topMostSection.id;
-        const sectionIndex = this.getSectionIndex(layerId);
-
-        if (sectionIndex !== -1 && sectionIndex !== this.currentSection) {
-          this.currentSection = sectionIndex;
-          this.updateActiveNav(layerId);
-        }
-      }
-    }, options);
-
-    // Observe all sections
-    this.layers.forEach((layer) => {
-      this.intersectionObserver.observe(layer);
-    });
-  }
-
   scrollToSection(targetId) {
     this.isScrolling = true;
     const targetSection = this.getSectionById(targetId);
@@ -178,22 +125,6 @@ class NavigationManager {
     }
   }
 
-  handleUserScroll() {
-    // Set scrolling flag to prevent IntersectionObserver updates during user scroll
-    this.isScrolling = true;
-
-    // Clear existing timeout
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-    }
-
-    // Reset flag after user stops scrolling (debounced)
-    this.scrollTimeout = setTimeout(() => {
-      this.isScrolling = false;
-      this.scrollTimeout = null;
-    }, this.CONFIG.USER_SCROLL_TIMEOUT);
-  }
-
   bindEvents() {
     // Navigation dot clicks
     this.navDots.forEach((dot) => {
@@ -211,11 +142,6 @@ class NavigationManager {
     document.addEventListener("keydown", keyHandler);
     this.eventListeners.push({ element: document, event: "keydown", handler: keyHandler });
 
-    // User scroll detection (prevents IntersectionObserver updates during manual scroll)
-    const scrollHandler = () => this.handleUserScroll();
-    window.addEventListener("scroll", scrollHandler, { passive: true });
-    this.eventListeners.push({ element: window, event: "scroll", handler: scrollHandler });
-
     // Resize handling
     const resizeHandler = () => this.handleResize();
     window.addEventListener("resize", resizeHandler);
@@ -223,18 +149,6 @@ class NavigationManager {
   }
 
   cleanup() {
-    // Clear any pending scroll timeout
-    if (this.scrollTimeout) {
-      clearTimeout(this.scrollTimeout);
-      this.scrollTimeout = null;
-    }
-
-    // Disconnect Intersection Observer
-    if (this.intersectionObserver) {
-      this.intersectionObserver.disconnect();
-      this.intersectionObserver = null;
-    }
-
     // Remove event listeners
     this.eventListeners.forEach(({ element, event, handler }) => {
       element.removeEventListener(event, handler);

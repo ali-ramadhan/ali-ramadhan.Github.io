@@ -7,6 +7,7 @@
   top: 50%;
   transform: translateY(-50%);
   z-index: var(--z-nav);
+  will-change: transform; /* Promote to compositor layer for smoother iOS scrolling */
 }
 
 .nav-dot {

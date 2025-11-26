@@ -172,10 +172,53 @@ function setupVideoSphere(sphereInit) {
 
   window.addEventListener("resize", onWindowResize);
 
+  // Track visibility to pause rendering and intervals when off-screen
+  let isVisible = true;
+  let animationFrameId = null;
+  let captionIntervalId = null;
+
+  // Functions to start/stop caption updates (will be set after video setup)
+  let startCaptionUpdates = null;
+  let stopCaptionUpdates = null;
+
+  // Set up IntersectionObserver to pause rendering when off-screen
+  const videoSphereContainer = document.getElementById("video-sphere-container");
+  if (videoSphereContainer && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const wasVisible = isVisible;
+          isVisible = entry.isIntersecting;
+
+          if (isVisible && !wasVisible) {
+            // Became visible - restart animation and caption updates
+            if (!animationFrameId) {
+              animate();
+            }
+            if (startCaptionUpdates) {
+              startCaptionUpdates();
+            }
+          } else if (!isVisible && wasVisible) {
+            // Became hidden - stop caption updates
+            if (stopCaptionUpdates) {
+              stopCaptionUpdates();
+            }
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    observer.observe(videoSphereContainer);
+  }
+
   animate();
 
   function animate() {
-    requestAnimationFrame(animate);
+    if (!isVisible) {
+      animationFrameId = null;
+      return;
+    }
+    animationFrameId = requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
 
@@ -339,7 +382,22 @@ function setupVideoSphere(sphereInit) {
       videoCaption.textContent = `${dateFrame.toISOString().slice(0, -8)}Z`;
     }
 
-    setInterval(updateVideoCaption, 1000 / videoFramerate);
+    // Set up controllable caption updates that pause when off-screen
+    startCaptionUpdates = function () {
+      if (!captionIntervalId) {
+        captionIntervalId = setInterval(updateVideoCaption, 1000 / videoFramerate);
+      }
+    };
+
+    stopCaptionUpdates = function () {
+      if (captionIntervalId) {
+        clearInterval(captionIntervalId);
+        captionIntervalId = null;
+      }
+    };
+
+    // Start caption updates (will be paused by IntersectionObserver when off-screen)
+    startCaptionUpdates();
 
     // Convert geographical (lat, lon) corresponds to (x, y, z) three.js coordinates on our sphere.
     function latlon2xyz(lat, lon) {
@@ -360,7 +418,8 @@ function setupVideoSphere(sphereInit) {
     const canvas = document.getElementById("canvas-video-sphere");
     let currentTooltipName = null;
 
-    window.addEventListener("mousemove", function (e) {
+    // Scope mousemove to canvas only (not window) to avoid firing on every mouse movement
+    canvas.addEventListener("mousemove", function (e) {
       let mousePosition = new THREE.Vector2();
       let canvasBounds = canvas.getBoundingClientRect();
       mousePosition.x =
@@ -392,6 +451,12 @@ function setupVideoSphere(sphereInit) {
         tooltip.style.display = "none";
         currentTooltipName = null;
       }
+    });
+
+    // Hide tooltip when mouse leaves the canvas
+    canvas.addEventListener("mouseleave", function () {
+      tooltip.style.display = "none";
+      currentTooltipName = null;
     });
   } // End of video element check
 } // End of setupVideoSphere function

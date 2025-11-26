@@ -98,7 +98,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
-  will-change: transform;
   transition: filter 0.5s ease;
   filter: brightness(0.95) saturate(1.1);
 }
@@ -126,7 +125,6 @@
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center bottom;
-  will-change: transform;
   transition: filter 0.5s ease;
   filter: brightness(0.95) saturate(1.1);
 }

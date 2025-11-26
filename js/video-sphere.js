@@ -172,10 +172,35 @@ function setupVideoSphere(sphereInit) {
 
   window.addEventListener("resize", onWindowResize);
 
+  // Track visibility to pause rendering when off-screen
+  let isVisible = true;
+  let animationFrameId = null;
+
+  // Set up IntersectionObserver to pause rendering when off-screen
+  const videoSphereContainer = document.getElementById("video-sphere-container");
+  if (videoSphereContainer && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
+          if (isVisible && !animationFrameId) {
+            animate();
+          }
+        });
+      },
+      { threshold: 0 }
+    );
+    observer.observe(videoSphereContainer);
+  }
+
   animate();
 
   function animate() {
-    requestAnimationFrame(animate);
+    if (!isVisible) {
+      animationFrameId = null;
+      return;
+    }
+    animationFrameId = requestAnimationFrame(animate);
     renderer.render(scene, camera);
   }
 

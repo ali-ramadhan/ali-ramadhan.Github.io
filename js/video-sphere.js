@@ -418,7 +418,8 @@ function setupVideoSphere(sphereInit) {
     const canvas = document.getElementById("canvas-video-sphere");
     let currentTooltipName = null;
 
-    window.addEventListener("mousemove", function (e) {
+    // Scope mousemove to canvas only (not window) to avoid firing on every mouse movement
+    canvas.addEventListener("mousemove", function (e) {
       let mousePosition = new THREE.Vector2();
       let canvasBounds = canvas.getBoundingClientRect();
       mousePosition.x =
@@ -450,6 +451,12 @@ function setupVideoSphere(sphereInit) {
         tooltip.style.display = "none";
         currentTooltipName = null;
       }
+    });
+
+    // Hide tooltip when mouse leaves the canvas
+    canvas.addEventListener("mouseleave", function () {
+      tooltip.style.display = "none";
+      currentTooltipName = null;
     });
   } // End of video element check
 } // End of setupVideoSphere function

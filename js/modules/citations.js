@@ -80,7 +80,7 @@ export class CitationManager {
     }
 
     if (data.doi) {
-      content += `<br><a href="${data.doi}" target="_blank">DOI</a>`;
+      content += `<br><a href="${data.doi}" target="_blank" rel="noopener">DOI</a>`;
     }
 
     return content;

@@ -45,6 +45,8 @@
   --z-content: 40;
   --z-nav: 100;
   --z-theme-toggle: 1000;
+  --z-floating-toc: 1002;
+  --z-floating-toc-restore: 1003;
   --z-tooltips: 1006;
 }
 

@@ -11,7 +11,6 @@ class NavigationManager {
     };
 
     this.layers = document.querySelectorAll(".layer");
-    this.navDots = document.querySelectorAll(".nav-dot");
     this.isScrolling = false;
     this.currentSection = this.CONFIG.STARTING_SECTION;
 
@@ -52,23 +51,8 @@ class NavigationManager {
 
     if (targetSection) {
       targetSection.scrollIntoView({ behavior: "instant" });
-      this.updateActiveNav(targetId);
       this.currentSection = this.getSectionIndex(targetId);
     }
-  }
-
-  updateActiveNav(layerId) {
-    this.navDots.forEach((dot) => {
-      const isActive = dot.getAttribute("data-layer") === layerId;
-
-      dot.classList.toggle("active", isActive);
-
-      if (isActive) {
-        dot.setAttribute("aria-current", "page");
-      } else {
-        dot.removeAttribute("aria-current");
-      }
-    });
   }
 
   getSectionIndex(layerId) {
@@ -92,7 +76,6 @@ class NavigationManager {
       });
 
       this.currentSection = this.getSectionIndex(targetId);
-      this.updateActiveNav(targetId);
     }
 
     setTimeout(() => {
@@ -118,34 +101,11 @@ class NavigationManager {
     }
   }
 
-  handleResize() {
-    const activeLayer = this.layers[this.currentSection];
-    if (activeLayer) {
-      activeLayer.scrollIntoView({ behavior: "instant" });
-    }
-  }
-
   bindEvents() {
-    // Navigation dot clicks
-    this.navDots.forEach((dot) => {
-      const clickHandler = (e) => {
-        e.preventDefault();
-        const targetLayer = dot.getAttribute("data-layer");
-        this.scrollToSection(targetLayer);
-      };
-      dot.addEventListener("click", clickHandler);
-      this.eventListeners.push({ element: dot, event: "click", handler: clickHandler });
-    });
-
-    // Keyboard navigation
+    // Keyboard navigation (arrow keys to move between sections)
     const keyHandler = (e) => this.handleKeyboardNavigation(e);
     document.addEventListener("keydown", keyHandler);
     this.eventListeners.push({ element: document, event: "keydown", handler: keyHandler });
-
-    // Resize handling
-    const resizeHandler = () => this.handleResize();
-    window.addEventListener("resize", resizeHandler);
-    this.eventListeners.push({ element: window, event: "resize", handler: resizeHandler });
   }
 
   cleanup() {

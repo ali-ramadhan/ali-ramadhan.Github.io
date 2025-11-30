@@ -23,6 +23,10 @@ export default function (eleventyConfig) {
     },
   });
 
+  // Pass through files for Vite to process
+  eleventyConfig.addPassthroughCopy("js");
+  eleventyConfig.addPassthroughCopy("css");
+
   // Pass through root-level files needed for GitHub Pages and SEO
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy("robots.txt");

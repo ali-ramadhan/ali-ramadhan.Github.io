@@ -3,9 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% if bonus_problem %}
+    <meta name="description" content="Solution to Project Euler Bonus Problem: {{ problem_name }}" />
+    {% else %}
     <meta name="description" content="Solution to Project Euler Problem {{ problem_number }}: {{ problem_name }}" />
+    {% endif %}
     <link rel="canonical" href="https://aliramadhan.me{{ page.url }}" />
+    {% if bonus_problem %}
+    <title>Project Euler Bonus Problem: {{ problem_name }} | Ali Ramadhan</title>
+    {% else %}
     <title>Project Euler Problem {{ problem_number }}: {{ problem_name }} | Ali Ramadhan</title>
+    {% endif %}
     {% if collapsible_headers %}
     <meta name="collapsible-headers" content="true" />
     {% endif %}
@@ -30,8 +38,13 @@
     {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
+      {% if bonus_problem %}
+      "headline": "Project Euler Bonus Problem: {{ problem_name }}",
+      "description": "Solution to Project Euler Bonus Problem: {{ problem_name }}",
+      {% else %}
       "headline": "Project Euler Problem {{ problem_number }}: {{ problem_name }}",
       "description": "Solution to Project Euler Problem {{ problem_number }}: {{ problem_name }}",
+      {% endif %}
       "author": {
         "@type": "Person",
         "name": "Ali Ramadhan",
@@ -46,17 +59,17 @@
   <body class="blog-post-body project-euler-body">
     {% include "blog-nav-bar.html" %}
 
-    {# Find the current problem's position in the euler collection #}
+    {# Find the current problem's position in the allEuler collection (regular + bonus) #}
     {% set currentIndex = -1 %}
-    {% for problem in collections.euler %}
+    {% for problem in collections.allEuler %}
       {% if problem.url == page.url %}
         {% set currentIndex = loop.index0 %}
       {% endif %}
     {% endfor %}
 
     {# Get previous and next problems if they exist #}
-    {% set prevProblem = collections.euler[currentIndex - 1] if currentIndex > 0 else null %}
-    {% set nextProblem = collections.euler[currentIndex + 1] if currentIndex < collections.euler.length - 1 else null %}
+    {% set prevProblem = collections.allEuler[currentIndex - 1] if currentIndex > 0 else null %}
+    {% set nextProblem = collections.allEuler[currentIndex + 1] if currentIndex < collections.allEuler.length - 1 else null %}
 
     <main class="blog-post-main">
       <article class="blog-post">
@@ -66,19 +79,25 @@
             <a href="{{ prevProblem.url }}">← Previous</a>
             <span class="breadcrumb-separator">|</span>
             {% endif %}
-            <a href="/blog/posts/project-euler-solutions/">↑ All problems</a>
+            <a href="/blog/posts/project-euler-notes/">↑ All problems</a>
+            {% if not bonus_problem %}
             <span class="breadcrumb-separator">|</span>
             <a
               href="https://projecteuler.net/problem={{ problem_number }}"
               target="_blank" rel="noopener"
               >Go to Project Euler</a
             >
+            {% endif %}
             {% if nextProblem %}
             <span class="breadcrumb-separator">|</span>
             <a href="{{ nextProblem.url }}">Next →</a>
             {% endif %}
           </div>
+          {% if bonus_problem %}
+          <h1 class="blog-post-full-title">Project Euler Bonus Problem</h1>
+          {% else %}
           <h1 class="blog-post-full-title">Project Euler Problem {{ problem_number }}</h1>
+          {% endif %}
           {% if problem_name %}
           <h2 class="blog-post-subtitle">{{ problem_name }}</h2>
           {% endif %}

@@ -878,7 +878,8 @@
 
 /* Collapsible content styling */
 .blog-post-content .collapsible-content {
-  overflow: hidden;
+  overflow-x: visible;
+  overflow-y: clip;
   max-height: none;
   opacity: 1;
   transition:

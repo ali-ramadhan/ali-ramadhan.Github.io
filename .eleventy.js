@@ -23,10 +23,7 @@ export default function (eleventyConfig) {
     },
   });
 
-  // Pass through files - Vite handles assets via public/ directory
-  eleventyConfig.addPassthroughCopy("js");
-  eleventyConfig.addPassthroughCopy("css");
-  eleventyConfig.addPassthroughCopy("_data");
+  // Pass through root-level files needed for GitHub Pages and SEO
   eleventyConfig.addPassthroughCopy("CNAME");
   eleventyConfig.addPassthroughCopy("robots.txt");
 

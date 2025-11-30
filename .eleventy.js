@@ -42,7 +42,7 @@ export default function (eleventyConfig) {
 
   // Create a collection for Project Euler problems
   eleventyConfig.addCollection("euler", function (collectionApi) {
-    return collectionApi.getFilteredByGlob("blog/project_euler/*.md")
+    return collectionApi.getFilteredByGlob("blog/project-euler/problem-*.md")
       .filter(problem => !problem.data.hidden)
       .sort((a, b) => {
         // Sort by problem number (extracted from filename)
@@ -50,6 +50,27 @@ export default function (eleventyConfig) {
         const bNum = parseInt(b.fileSlug.match(/\d+/)?.[0] || "0");
         return aNum - bNum;
       });
+  });
+
+  // Create a combined collection for navigation (regular + bonus problems)
+  eleventyConfig.addCollection("allEuler", function (collectionApi) {
+    const regular = collectionApi.getFilteredByGlob("blog/project-euler/problem-*.md")
+      .filter(p => !p.data.hidden)
+      .sort((a, b) => {
+        const aNum = parseInt(a.fileSlug.match(/\d+/)?.[0] || "0");
+        const bNum = parseInt(b.fileSlug.match(/\d+/)?.[0] || "0");
+        return aNum - bNum;
+      });
+
+    const bonus = collectionApi.getFilteredByGlob("blog/project-euler/bonus-*.md")
+      .filter(p => !p.data.hidden)
+      .sort((a, b) => {
+        const aNum = a.data.bonus_problem_number || 0;
+        const bNum = b.data.bonus_problem_number || 0;
+        return aNum - bNum;
+      });
+
+    return [...regular, ...bonus];
   });
 
   return {

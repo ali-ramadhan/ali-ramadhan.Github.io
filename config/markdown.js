@@ -58,7 +58,7 @@ function markdownItBenchmark(md) {
                 const benchmarkPath = path.join(
                   process.cwd(),
                   "_data",
-                  "project_euler",
+                  "project-euler",
                   "benchmarks",
                   `${filename}.yaml`
                 );

@@ -11,7 +11,11 @@ I solve the problems using [Julia](https://julialang.org/) and benchmark code us
 <div class="euler-problems">
 {% for problem in collections.euler %}
   <div class="euler-problem">
-    <h2 class="no-auto-numbering">{{ problem.data.problem_number }}. <a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></h2>
+    {{ problem.data.problem_number }}. <a href="{{ problem.url }}">{{ problem.data.problem_name }}</a>
   </div>
 {% endfor %}
 </div>
+
+<h2 class="no-auto-numbering">Bonus problems</h2>
+
+- [-1](/blog/project-euler/bonus-minus1/)

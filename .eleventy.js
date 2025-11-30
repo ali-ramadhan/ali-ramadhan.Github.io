@@ -23,8 +23,7 @@ export default function (eleventyConfig) {
     },
   });
 
-  // Pass through assets - but let Vite handle CSS and JS processing
-  eleventyConfig.addPassthroughCopy("assets");
+  // Pass through files - Vite handles assets via public/ directory
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("css");
   eleventyConfig.addPassthroughCopy("_data");

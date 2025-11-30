@@ -18,4 +18,4 @@ I solve the problems using [Julia](https://julialang.org/) and benchmark code us
 
 <h2 class="no-auto-numbering">Bonus problems</h2>
 
-- [-1](/blog/project_euler/bonus-minus1/)
+- [-1](/blog/project-euler/bonus-minus1/)

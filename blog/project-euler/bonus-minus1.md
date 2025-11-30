@@ -10,7 +10,7 @@ date: 2024-11-27
 >
 > Find the sum of all the multiples of $3$ or $5$ below infinity.
 
-We won't need to write any code to solve this bonus problem. This is a twist on [Problem 1](/blog/project_euler/problem-0001/) where we used a formula for the sum of multiples of $a$ or $b$ below $L$ using the inclusion-exclusion principle:
+We won't need to write any code to solve this bonus problem. This is a twist on [Problem 1](/blog/project-euler/problem-0001/) where we used a formula for the sum of multiples of $a$ or $b$ below $L$ using the inclusion-exclusion principle:
 
 ```math
 S([a, b], L) = s(a, L) + s(b, L) - s(\operatorname{lcm}(a, b), L)

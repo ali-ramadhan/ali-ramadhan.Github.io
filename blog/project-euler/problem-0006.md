@@ -32,7 +32,7 @@ and
 So we can compute the answer directly using
 
 ```math
-\operatorname{SSD}(n) = \sum_{k=1}^n k^2 - \left( \sum_{k=1}^n k \right)^2 = \frac{n(n+1)(2n+1)}{6} - \left( \frac{n(n+1)}{2} \right)^2
+\operatorname{SSD}(n) = \left( \sum_{k=1}^n k \right)^2 - \sum_{k=1}^n k^2 = \left( \frac{n(n+1)}{2} \right)^2 - \frac{n(n+1)(2n+1)}{6}
 ```
 
 With a simple implementation

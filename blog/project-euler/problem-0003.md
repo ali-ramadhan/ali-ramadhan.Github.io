@@ -11,7 +11,7 @@ date: 2024-09-14
 
 We want to find the largest prime factor of a given integer $n$.
 
-There are plenty of algorithms for [integer factorization](https://en.wikipedia.org/wiki/Integer_factorization) but since the numbers here aren't too large, we'll just use [trial division](https://en.wikipedia.org/wiki Trial_division).
+There are plenty of algorithms for [integer factorization](https://en.wikipedia.org/wiki/Integer_factorization) but since the numbers here aren't too large, we'll just use [trial division](https://en.wikipedia.org/wiki/Trial_division).
 
 We just keep dividing by 2, then by 3, 5, 7, and so on. And each time we're able to divide $n$ we have found another prime factor. And each time we find one factor $d$, we now only have to search for prime factors of $n/d$ so we've knocked down the size of the problem. When searching for a factor, there's no need to search beyond $\sqrt{n}$ because if there are no factors of $n$ smaller than $\sqrt{n}$ then $n$ is prime.
 

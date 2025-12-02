@@ -31,7 +31,7 @@ We can do better because we know that the [sum of the first $n$ integers](https:
 \sum_{k=1}^n k = \frac{n(n+1)}{2}
 ```
 
-We can use this to derive a formula for the sum of the first $m$ integers below $L$, which we'll denote $s(m, L)$. There are $\ell = \lfloor \frac{L-1}{m} \rfloor$ multiples of $m$ below $L$. So
+We can use this to derive a formula for the sum of all multiples of $m$ below $L$, which we'll denote $s(m, L)$. There are $\ell = \lfloor \frac{L-1}{m} \rfloor$ multiples of $m$ below $L$. So
 
 ```math
 s(m, L) = m + 2m + \cdots + \ell m = m \sum_{k=1}^\ell k = m \frac{\ell (\ell + 1)}{2}

@@ -44,7 +44,7 @@ F_{n+6} &= 2F_{n+4} + F_{n+3} \\
 \end{align}
 ```
 
-So knowing that $F_3 = 2$ and $F_6 = 8$ we can use the reccurence relation
+So knowing that $F_3 = 2$ and $F_6 = 8$ we can use the recurrence relation
 
 ```math
 F_n = 4F_{n-3} + F_{n-6}
@@ -57,6 +57,7 @@ We can implement this in Julia:
 ```julia
 function sum_even_fibonacci(limit)
     limit < 2 && return 0
+    limit < 8 && return 2
 
     a, b = 2, 8
     result = a + b

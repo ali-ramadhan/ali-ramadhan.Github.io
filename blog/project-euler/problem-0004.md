@@ -14,7 +14,7 @@ First let's write a function that can quickly test whether an integer $n$ is a p
 ```julia
 function is_palindrome(n)
     n = abs(n)  # handle negative numbers
-    return str(n) == reverse(str(n))
+    return string(n) == reverse(string(n))
 end
 ```
 
@@ -73,7 +73,7 @@ function largest_palindrome_product(lower_limit, upper_limit; max_product=nothin
 end
 ```
 
-So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're search for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We added the option to specify a `max_product` to solve the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) of this problem.
+So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're searching for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We added the option to specify a `max_product` to solve the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) of this problem.
 
 Benchmarking the 3-digit case we find the solution `largest_palindrome_product(100, 999)` in @benchmark[problem-0004:3_digits].
 

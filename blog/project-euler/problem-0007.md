@@ -11,7 +11,7 @@ date: 2024-10-09
 
 If we knew the upper bound on which numbers to check up to and we didn't mind allocating a bunch of memory we could use the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes). But we don't know the upper bound and want to solve this using no memory allocations.
 
-So we'll just through the natural numbers until we've counted enough prime numbers. The hard part is defining a fast `is_prime` function then. A simple yet decently fast method of checking whether a number $n$ is prime or not is to make sure it's not a multiple of 2 or 3, then we just need to check numbers of the form $6k \pm 1$ for all $k > 1$ up until $\sqrt{n}$:
+So we'll just go through the natural numbers until we've counted enough prime numbers. The hard part is defining a fast `is_prime` function then. A simple yet decently fast method of checking whether a number $n$ is prime or not is to make sure it's not a multiple of 2 or 3, then we just need to check numbers of the form $6k \pm 1$ for all $k > 1$ up until $\sqrt{n}$:
 
 ```julia
 function is_prime(n)

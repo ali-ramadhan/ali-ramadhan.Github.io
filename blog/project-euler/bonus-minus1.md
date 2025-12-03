@@ -46,4 +46,4 @@ S([3, 5], \infty) &= s(3, \infty) + s(5, \infty) - s(15, \infty) \\
 \end{align}
 ```
 
-There's a pretty good 2015 film about Ramanujan, [The Man Who Knew Infinity](https://en.wikipedia.org/wiki/The_Man_Who_Knew_Infinity), based on a book of the same name.
+Numberphile has a [pretty good YouTube video](https://www.youtube.com/watch?v=w-I6XTVZXww) on how $\zeta(-1) = -1/12$. Also, there's a pretty good 2015 film about Ramanujan, [The Man Who Knew Infinity](https://en.wikipedia.org/wiki/The_Man_Who_Knew_Infinity), based on a book of the same name.

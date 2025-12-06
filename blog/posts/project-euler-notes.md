@@ -20,3 +20,4 @@ Project Euler strongly discourages the sharing or publishing of any solutions be
 <h2 class="no-auto-numbering">Bonus problems</h2>
 
 - [-1](/blog/project-euler/bonus-minus1/)
+- [√13](/blog/project-euler/bonus-root13/)

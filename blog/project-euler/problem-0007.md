@@ -2,7 +2,7 @@
 layout: "project-euler-post"
 problem_number: 7
 problem_name: "10 001st Prime"
-date: 2024-10-09
+date: 2025-10-09
 ---
 
 > By listing the first six prime numbers: $2, 3, 5, 7, 11$, and $13$, we can see that the $6$th prime is $13$.

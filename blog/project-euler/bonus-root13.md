@@ -3,7 +3,7 @@ layout: "project-euler-post"
 bonus_problem: true
 bonus_problem_number: 2
 problem_name: "√13"
-date: 2024-12-05
+date: 2025-12-05
 ---
 
 > The decimal expansion of the square root of two is $1.\underline{4142135623}730...$

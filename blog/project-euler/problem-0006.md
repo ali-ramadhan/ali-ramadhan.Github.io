@@ -2,19 +2,19 @@
 layout: "project-euler-post"
 problem_number: 6
 problem_name: "Sum Square Difference"
-date: 2024-10-07
+date: 2025-10-07
 ---
 
 > The sum of the squares of the first ten natural numbers is,
-> 
+>
 > $$1^2 + 2^2 + ... + 10^2 = 385.$$
-> 
+>
 > The square of the sum of the first ten natural numbers is,
-> 
+>
 > $$(1 + 2 + ... + 10)^2 = 55^2 = 3025.$$
-> 
+>
 > Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is $3025 - 385 = 2640$.
-> 
+>
 > Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
 Not sure if there's much to say on this problem besides that using two special cases of [Faulhaber's formula](https://en.wikipedia.org/wiki/Faulhaber%27s_formula) for powers of 1 and 2 we can write

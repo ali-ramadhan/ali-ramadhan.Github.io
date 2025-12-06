@@ -2,7 +2,7 @@
 layout: "project-euler-post"
 problem_number: 9
 problem_name: "Special Pythagorean Triplet"
-date: 2024-11-30
+date: 2025-11-30
 ---
 
 > A Pythagorean triplet is a set of three natural numbers, $a \lt b \lt c$, for which, $$a^2 + b^2 = c^2.$$

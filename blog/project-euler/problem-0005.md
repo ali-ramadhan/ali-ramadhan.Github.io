@@ -2,7 +2,7 @@
 layout: "project-euler-post"
 problem_number: 5
 problem_name: "Smallest Multiple"
-date: 2024-10-07
+date: 2025-10-07
 ---
 
 > $2520$ is the smallest number that can be divided by each of the numbers from $1$ to $10$ without any remainder.

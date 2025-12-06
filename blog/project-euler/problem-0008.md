@@ -2,7 +2,7 @@
 layout: "project-euler-post"
 problem_number: 8
 problem_name: "Largest Product in a Series"
-date: 2024-10-09
+date: 2025-10-09
 ---
 
 > The four adjacent digits in the $1000$-digit number that have the greatest product are $9 \times 9 \times 8 \times 9 = 5832$.

@@ -36,7 +36,7 @@ date: 2025-12-06
 
 We'll take a brute force approach here and just go through each grid location and compute the product in each direction as long as we don't hit the edge of the grid.
 
-The fun part is coding it up compactly and allowing for the number of adjacent numbers `len` to vary
+The fun part is coding it up compactly and allowing for the number of adjacent numbers `len` to vary.
 
 ```julia
 const DIRECTIONS = [
@@ -65,4 +65,4 @@ function find_greatest_product(grid, len = 4)
 end
 ```
 
-which computes the solution in @benchmark[problem-0011:len4].
+This computes the solution in @benchmark[problem-0011:len4].

@@ -9,7 +9,7 @@ date: 2025-12-05
 >
 > Find the sum of all the primes below two million.
 
-This is a perfect problem to solve using the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes) which Wikipedia has a great animation it uses to explain how the sieve works.
+This is a perfect problem to solve using the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes), and Wikipedia has a great animation showing how it works.
 
 Coding it up in Julia
 

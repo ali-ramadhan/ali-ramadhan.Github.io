@@ -19,7 +19,7 @@ First thing to notice is that when $n > 0$ then $\cos(\pi \sqrt n)$ just oscilla
 = \cos \left( \pi \sqrt{-|n|} \right)
 = \cos \left( i \pi \sqrt{|n|} \right)
 = \cosh \left(\pi \sqrt{|n|} \right)
-= \frac{e^{\pi \sqrt n} + e^{-\pi \sqrt n}}{2}
+= \frac{e^{\pi \sqrt{|n|}} + e^{-\pi \sqrt{|n|}}}{2}
 ```
 
 which grows exponentially.
@@ -35,7 +35,7 @@ function required_precision_bits(limit; fractional_digits=32)
 end
 ```
 
-We can code then code up the search:
+We can then code up the search:
 
 ```julia
 using Printf

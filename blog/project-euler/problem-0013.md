@@ -42,4 +42,4 @@ end
 
 This computes the answer in @benchmark[problem-0013:first_ten_digits_of_sum].
 
-I guess it would be slightly faster to just work with the first 12-13 digits as adding 100 numbers of 50 digits each can produce at most a 52-digit number. But for 100 numbers, I feel like it would be negligible. And maybe this problem isn't interesting enough to explore this.
+I guess it would be slightly faster to just work with the first 12-13 digits as adding 100 numbers of 50 digits each can produce at most a 53-digit number. But for 100 numbers, I feel like it would be negligible. And maybe this problem isn't interesting enough to explore this.

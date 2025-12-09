@@ -15,7 +15,7 @@ date: 2025-12-07
 
 This is a pretty classic combinatorics problem. To travel from the top-left corner to the bottom-right corner of an $n \times m$ grid, we need to make exactly $n$ moves to the right and $m$ moves down for a total of $n + m$ moves. The order of these moves doesn't matter, but there are many choices.
 
-Arranging $n$ right movies and $m$ down moves is equivalent to choosing which $n$ of the $n + m$ moves will be right moves (or which $m$ will be down moves). This is given by the [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient)
+Arranging $n$ right moves and $m$ down moves is equivalent to choosing which $n$ of the $n + m$ moves will be right moves (or which $m$ will be down moves). This is given by the [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient)
 
 ```math
 \binom{n+m}{n} = \binom{n+m}{m} = \frac{(n+m)!}{n! m!}

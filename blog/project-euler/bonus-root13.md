@@ -59,7 +59,7 @@ We can keep going but let's generalize what we're doing here.
 
 Instead of keeping track of the quotient with $k$ digits $q_k$ (so far we have found that $q_0 = 3$, $q_1 = 3.6$, and $q_2 = 3.60$ in our case) we will keep track of a scaled integer version $p_k = 10^k q_k$ which will always be a non-negative integer (so $p_0 = 3$, $p_1 = 36$, and $p_2 = 360$ in our case).
 
-It will also be helpful to denote the _remainder_ as the difference between $n$ and the square of our best quotient so far $q_k^2$. That would just be $r_k = n - q_k^2$ but we'll define a scaled integer version. As $q_k^2 = p_k^2 / 10^{2k}$ we will scale $r_k$ by $10^{2n}$ and denote the scaled version $R_k$ so $R_k = 10^{2k} n - p_k^2$ is always an integer as well.
+It will also be helpful to denote the _remainder_ as the difference between $n$ and the square of our best quotient so far $q_k^2$. That would just be $r_k = n - q_k^2$ but we'll define a scaled integer version. As $q_k^2 = p_k^2 / 10^{2k}$ we will scale $r_k$ by $10^{2k}$ and denote the scaled version $R_k$ so $R_k = 10^{2k} n - p_k^2$ is always an integer as well.
 
 Then to find the next digit $d_k$ when we have a quotient with $k-1$ digits $q_{k-1}$ we have the inequality
 

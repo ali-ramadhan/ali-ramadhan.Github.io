@@ -60,6 +60,14 @@ export class BenchmarkManager {
     this.tooltip = null;
     this.activeReference = null;
     this.currentBenchmarkData = null;
+    this.hoverTimeout = null;
+
+    // Store bound handlers for cleanup
+    this.boundHandleMouseEnter = this.handleMouseEnter.bind(this);
+    this.boundHandleMouseLeave = this.handleMouseLeave.bind(this);
+    this.boundHandleClick = this.handleClick.bind(this);
+    this.boundHandleKeydown = this.handleKeydown.bind(this);
+
     this.init();
   }
 
@@ -118,27 +126,14 @@ export class BenchmarkManager {
         dropdown.dispatchEvent(new Event("change"));
       }
     });
-
-    // Hide tooltip when clicking outside
-    document.addEventListener("click", (e) => {
-      if (!this.tooltip.contains(e.target) && !e.target.classList.contains("benchmark-reference")) {
-        this.hideTooltip();
-      }
-    });
-
-    // Hide tooltip on escape key
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") {
-        this.hideTooltip();
-      }
-    });
   }
 
   attachEventListeners() {
     // Use event delegation for benchmark references
-    document.addEventListener("mouseenter", this.handleMouseEnter.bind(this), true);
-    document.addEventListener("mouseleave", this.handleMouseLeave.bind(this), true);
-    document.addEventListener("click", this.handleClick.bind(this), true);
+    document.addEventListener("mouseenter", this.boundHandleMouseEnter, true);
+    document.addEventListener("mouseleave", this.boundHandleMouseLeave, true);
+    document.addEventListener("click", this.boundHandleClick, true);
+    document.addEventListener("keydown", this.boundHandleKeydown);
   }
 
   handleMouseEnter(e) {
@@ -170,7 +165,21 @@ export class BenchmarkManager {
   handleClick(e) {
     if (e.target.classList.contains("benchmark-reference")) {
       e.preventDefault();
+      // Clear any pending hover timeout to prevent race condition
+      if (this.hoverTimeout) {
+        clearTimeout(this.hoverTimeout);
+        this.hoverTimeout = null;
+      }
       this.showTooltip(e.target, e);
+    } else if (!this.tooltip.contains(e.target)) {
+      // Click outside tooltip - hide it
+      this.hideTooltip();
+    }
+  }
+
+  handleKeydown(e) {
+    if (e.key === "Escape") {
+      this.hideTooltip();
     }
   }
 
@@ -295,6 +304,19 @@ export class BenchmarkManager {
   }
 
   cleanup() {
+    // Remove document-level event listeners
+    document.removeEventListener("mouseenter", this.boundHandleMouseEnter, true);
+    document.removeEventListener("mouseleave", this.boundHandleMouseLeave, true);
+    document.removeEventListener("click", this.boundHandleClick, true);
+    document.removeEventListener("keydown", this.boundHandleKeydown);
+
+    // Clear any pending timeout
+    if (this.hoverTimeout) {
+      clearTimeout(this.hoverTimeout);
+      this.hoverTimeout = null;
+    }
+
+    // Remove tooltip element
     if (this.tooltip && this.tooltip.parentNode) {
       this.tooltip.parentNode.removeChild(this.tooltip);
     }

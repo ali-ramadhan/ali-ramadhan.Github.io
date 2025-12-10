@@ -1,0 +1,32 @@
+n_1M:
+  "AMD Ryzen Threadripper 7960X":
+    julia_version: "Julia 1.12.2"
+    output: |-
+      BenchmarkTools.Trial: 5 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m168.702 s[22m[39m … [35m 169.291 s[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m2.91% … 3.02%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m168.927 s               [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m2.87%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m168.944 s[22m[39m ± [32m249.763 ms[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m2.88% ± 0.10%
+      
+        [39m█[39m█[34m [39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m█[39m [39m [32m [39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m█[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m█[39m [39m 
+        [39m█[39m█[34m▁[39m[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m█[39m▁[39m▁[32m▁[39m[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m█[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m█[39m [39m▁
+        169 s[90m           Histogram: frequency by time[39m           169 s [0m[1m<[22m
+      
+       Memory estimate[90m: [39m[33m30.76 GiB[39m, allocs estimate[90m: [39m[33m93727881[39m.
+    date: "2025-12-09T23:05:12.785"
+    os: "Linux"
+n_1k:
+  "AMD Ryzen Threadripper 7960X":
+    julia_version: "Julia 1.12.2"
+    output: |-
+      BenchmarkTools.Trial: 1037 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m4.386 ms[22m[39m … [35m 23.193 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 57.84%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m4.585 ms               [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m4.813 ms[22m[39m ± [32m849.741 μs[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m1.72% ±  4.60%
+      
+        [39m▆[39m█[39m▇[39m▆[34m▅[39m[39m▄[39m▄[39m▂[39m▂[32m▂[39m[39m▂[39m▃[39m▃[39m▅[39m▅[39m▃[39m▂[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+        [39m█[39m█[39m█[39m█[34m█[39m[39m█[39m█[39m█[39m█[32m█[39m[39m█[39m█[39m█[39m█[39m█[39m█[39m█[39m█[39m▇[39m▆[39m▄[39m▆[39m▅[39m▄[39m▁[39m▄[39m▁[39m▁[39m▅[39m▇[39m▁[39m▅[39m▅[39m▆[39m▆[39m▆[39m▅[39m▆[39m▇[39m▆[39m▄[39m▄[39m▁[39m▆[39m▁[39m▄[39m▄[39m▄[39m▅[39m▅[39m▅[39m▁[39m▆[39m▆[39m▄[39m▁[39m▄[39m▁[39m▄[39m [39m█
+        4.39 ms[90m      [39m[90mHistogram: [39m[90m[1mlog([22m[39m[90mfrequency[39m[90m[1m)[22m[39m[90m by time[39m      7.11 ms [0m[1m<[22m
+      
+       Memory estimate[90m: [39m[33m2.26 MiB[39m, allocs estimate[90m: [39m[33m46711[39m.
+    date: "2025-12-09T22:45:27.841"
+    os: "Linux"

@@ -31,7 +31,7 @@ function S_not_creative(n, d)
 end
 ```
 
-Using this we can compute $S(13, 10^3)$ in @benchmark[problem-bonus-root13:S_not_creative_13_1000].
+Using this we can compute $S(13, 10^3)$ in @benchmark[bonus-root13:S_not_creative_13_1000].
 
 ## Going digit-by-digit
 
@@ -142,13 +142,13 @@ function sum_sqrt_decimal_digits(n, num_digits)
 end
 ```
 
-which computes $S(13, 10^3)$ in @benchmark[problem-bonus-root13:S_13_1000]. But damn that's like 150x slower than the uncreative solution!
+which computes $S(13, 10^3)$ in @benchmark[bonus-root13:S_13_1000]. But damn that's like 150x slower than the uncreative solution!
 
 | $d$     | Uncreative | Creative |
 |---------|------------|----------|
-| $10^3$  | @benchmark[problem-bonus-root13:S_not_creative_13_1000] | @benchmark[problem-bonus-root13:S_13_1000] |
-| $10^4$  | @benchmark[problem-bonus-root13:S_not_creative_13_10000] | @benchmark[problem-bonus-root13:S_13_10000] |
-| $10^5$  | @benchmark[problem-bonus-root13:S_not_creative_13_100000] | @benchmark[problem-bonus-root13:S_13_100000] |
+| $10^3$  | @benchmark[bonus-root13:S_not_creative_13_1000] | @benchmark[bonus-root13:S_13_1000] |
+| $10^4$  | @benchmark[bonus-root13:S_not_creative_13_10000] | @benchmark[bonus-root13:S_13_10000] |
+| $10^5$  | @benchmark[bonus-root13:S_not_creative_13_100000] | @benchmark[bonus-root13:S_13_100000] |
 
 Both solutions agree that $S(13, 10^4) = 45,101$ and $S(13, 10^5) = 449,304$.
 

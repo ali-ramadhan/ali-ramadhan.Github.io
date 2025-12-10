@@ -81,9 +81,9 @@ function find_closest_cos_to_integer(limit)
 end
 ```
 
-Going up to $n = 10^3$ requires 250 bits of precision and produces the correct answer in @benchmark[problem-bonus-heegner:n_1k].
+Going up to $n = 10^3$ requires 250 bits of precision and produces the correct answer in @benchmark[bonus-heegner:n_1k].
 
-Going up to $n = 10^6$ requires 4641 bits of precision and actually does not find a closer value after searching for @benchmark[problem-bonus-heegner:n_1M]!
+Going up to $n = 10^6$ requires 4641 bits of precision and actually does not find a closer value after searching for @benchmark[bonus-heegner:n_1M]!
 
 ## Just knowing the solution
 

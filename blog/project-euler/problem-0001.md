@@ -13,7 +13,7 @@ Let's consider the problem of summing all multiples of $a$ or $b$ below $L$.
 
 ## Generator expression
 
-The cleanest solution is to just sum over all integers below $L$ that divide $a$ or $b$ using a generator expression to avoid memory allocations if we used a list comprehension:
+The cleanest solution is to just sum over all integers below $L$ that are multiples of $a$ or $b$ using a generator expression instead of a list comprehension to avoid memory allocations:
 
 ```julia
 function sum_multiples_two_generator(a, b, L)

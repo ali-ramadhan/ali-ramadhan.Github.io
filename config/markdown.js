@@ -63,25 +63,66 @@ function markdownItBenchmark(md) {
                   `${filename}.yaml`
                 );
                 const benchmarkData = yaml.load(readFileSync(benchmarkPath, "utf8"));
-                const benchmark = benchmarkData[key];
+                const cpuBenchmarks = benchmarkData[key];
 
-                if (benchmark && benchmark.output) {
-                  // Extract median time from the benchmark output (accounting for ANSI codes)
-                  const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[nμm]?s)/);
-                  const medianTime = medianMatch ? medianMatch[1] : "Unknown";
+                if (cpuBenchmarks && typeof cpuBenchmarks === "object") {
+                  const cpuNames = Object.keys(cpuBenchmarks);
 
-                  // Create benchmark data object with extracted median time
+                  if (cpuNames.length === 0) {
+                    console.warn(`No CPU benchmarks found for "${key}" in ${filename}.yaml`);
+                    content = content.replace(fullMatch, `[No benchmarks for ${filename}:${key}]`);
+                    continue;
+                  }
+
+                  // Build cpus object with all CPU data
+                  const cpus = {};
+                  for (const cpuName of cpuNames) {
+                    const benchmark = cpuBenchmarks[cpuName];
+                    if (benchmark && benchmark.output) {
+                      // Extract median time from the benchmark output (accounting for ANSI codes)
+                      const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[nμm]?s)/);
+                      const medianTime = medianMatch ? medianMatch[1] : "Unknown";
+
+                      cpus[cpuName] = {
+                        median_time: medianTime,
+                        full_output: benchmark.output,
+                        julia_version: benchmark.julia_version,
+                        os: benchmark.os,
+                        date: benchmark.date,
+                      };
+                    }
+                  }
+
+                  // Find fastest CPU for inline display
+                  const parseTime = (timeStr) => {
+                    const match = timeStr.match(/([\d.]+)\s*([nμm]?s)/);
+                    if (!match) return Infinity;
+                    const value = parseFloat(match[1]);
+                    const unit = match[2];
+                    if (unit === "ns") return value;
+                    if (unit === "μs") return value * 1000;
+                    if (unit === "ms") return value * 1000000;
+                    if (unit === "s") return value * 1000000000;
+                    return value;
+                  };
+
+                  const fastestCpu = Object.keys(cpus).reduce((fastest, cpu) => {
+                    const currentTime = parseTime(cpus[cpu].median_time);
+                    const fastestTime = parseTime(cpus[fastest].median_time);
+                    return currentTime < fastestTime ? cpu : fastest;
+                  });
+                  const defaultMedian = cpus[fastestCpu]?.median_time || "Unknown";
+
+                  // Create benchmark data object with all CPUs
                   const benchmarkObj = {
-                    median_time: medianTime,
-                    full_output: benchmark.output,
-                    julia_version: benchmark.julia_version,
-                    cpu: benchmark.cpu,
-                    os: benchmark.os,
+                    cpus: cpus,
+                    default_cpu: fastestCpu,
+                    default_median: defaultMedian,
                   };
 
                   // Replace with HTML for interactive benchmark display
                   const escapedData = JSON.stringify(benchmarkObj).replace(/'/g, "&#39;");
-                  const replacement = `<span class="benchmark-reference" data-benchmark='${escapedData}'>${medianTime}</span>`;
+                  const replacement = `<span class="benchmark-reference" data-benchmark='${escapedData}'>${defaultMedian}</span>`;
                   content = content.replace(fullMatch, replacement);
                 } else {
                   console.warn(`Benchmark key "${key}" not found in ${filename}.yaml`);

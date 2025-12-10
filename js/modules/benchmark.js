@@ -59,6 +59,7 @@ export class BenchmarkManager {
   constructor() {
     this.tooltip = null;
     this.activeReference = null;
+    this.currentBenchmarkData = null;
     this.init();
   }
 
@@ -73,7 +74,9 @@ export class BenchmarkManager {
     this.tooltip.className = "benchmark-tooltip";
     this.tooltip.innerHTML = `
       <div class="benchmark-tooltip-content">
-        <div class="benchmark-metadata"></div>
+        <div class="benchmark-cpu-selector">
+          <select class="benchmark-cpu-dropdown" aria-label="Select CPU"></select>
+        </div>
         <pre class="benchmark-output"></pre>
         <button class="benchmark-close" aria-label="Close benchmark details">&times;</button>
       </div>
@@ -83,6 +86,37 @@ export class BenchmarkManager {
     // Add click handler for close button
     this.tooltip.querySelector(".benchmark-close").addEventListener("click", () => {
       this.hideTooltip();
+    });
+
+    // Add change handler for CPU dropdown
+    const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
+    dropdown.addEventListener("change", (e) => {
+      if (this.currentBenchmarkData) {
+        this.updateTooltipForCpu(e.target.value);
+      }
+    });
+
+    // Add scroll wheel navigation for CPU dropdown
+    dropdown.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const options = dropdown.options;
+      if (options.length <= 1) return;
+
+      const currentIndex = dropdown.selectedIndex;
+      let newIndex;
+
+      if (e.deltaY > 0) {
+        // Scroll down - next option
+        newIndex = Math.min(currentIndex + 1, options.length - 1);
+      } else {
+        // Scroll up - previous option
+        newIndex = Math.max(currentIndex - 1, 0);
+      }
+
+      if (newIndex !== currentIndex) {
+        dropdown.selectedIndex = newIndex;
+        dropdown.dispatchEvent(new Event("change"));
+      }
     });
 
     // Hide tooltip when clicking outside
@@ -143,14 +177,45 @@ export class BenchmarkManager {
   showTooltip(element, event) {
     try {
       const benchmarkData = JSON.parse(element.dataset.benchmark);
+      this.currentBenchmarkData = benchmarkData;
 
-      // Update tooltip content with colored ANSI output
-      const output = this.tooltip.querySelector(".benchmark-output");
-      output.innerHTML = parseAnsiToHtml(benchmarkData.full_output);
+      // Populate CPU dropdown, sorted by median time (fastest first)
+      const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
+      dropdown.innerHTML = "";
 
-      // Update system info (Julia version | OS | CPU)
-      const metadataElement = this.tooltip.querySelector(".benchmark-metadata");
-      metadataElement.textContent = `${benchmarkData.julia_version} | ${benchmarkData.os} | ${benchmarkData.cpu}`;
+      // Parse median time to numeric value for sorting
+      const parseTime = (timeStr) => {
+        const match = timeStr.match(/([\d.]+)\s*([nμm]?s)/);
+        if (!match) return Infinity;
+        const value = parseFloat(match[1]);
+        const unit = match[2];
+        // Convert to nanoseconds for comparison
+        if (unit === "ns") return value;
+        if (unit === "μs") return value * 1000;
+        if (unit === "ms") return value * 1000000;
+        if (unit === "s") return value * 1000000000;
+        return value;
+      };
+
+      const cpuNames = Object.keys(benchmarkData.cpus).sort((a, b) => {
+        const timeA = parseTime(benchmarkData.cpus[a].median_time);
+        const timeB = parseTime(benchmarkData.cpus[b].median_time);
+        return timeA - timeB;
+      });
+
+      for (const cpuName of cpuNames) {
+        const cpuData = benchmarkData.cpus[cpuName];
+        const option = document.createElement("option");
+        option.value = cpuName;
+        option.textContent = `${cpuName} | ${cpuData.julia_version} | ${cpuData.os}`;
+        dropdown.appendChild(option);
+      }
+
+      // Select the fastest CPU (first in sorted list)
+      dropdown.value = cpuNames[0];
+
+      // Update tooltip content for the fastest CPU
+      this.updateTooltipForCpu(cpuNames[0]);
 
       // Show tooltip
       this.tooltip.classList.add("visible");
@@ -161,6 +226,18 @@ export class BenchmarkManager {
     } catch (error) {
       console.error("Error displaying benchmark:", error);
     }
+  }
+
+  updateTooltipForCpu(cpuName) {
+    if (!this.currentBenchmarkData || !this.currentBenchmarkData.cpus[cpuName]) {
+      return;
+    }
+
+    const cpuData = this.currentBenchmarkData.cpus[cpuName];
+
+    // Update tooltip content with colored ANSI output
+    const output = this.tooltip.querySelector(".benchmark-output");
+    output.innerHTML = parseAnsiToHtml(cpuData.full_output);
   }
 
   hideTooltip() {

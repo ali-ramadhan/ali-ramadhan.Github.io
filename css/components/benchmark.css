@@ -43,6 +43,31 @@
   color: #87e5ff;
 }
 
+/* Memory variant - purple */
+.benchmark-reference--memory {
+  background: #f3e8ff;
+  border-color: #d8b4fe;
+  color: #6b21a8;
+}
+
+.benchmark-reference--memory:hover {
+  background: #e9d5ff;
+  border-color: #c084fc;
+  color: #581c87;
+}
+
+[data-theme="dark"] .benchmark-reference--memory {
+  background: #3b1f5c;
+  border-color: #6b21a8;
+  color: #d8b4fe;
+}
+
+[data-theme="dark"] .benchmark-reference--memory:hover {
+  background: #4c1d95;
+  border-color: #7c3aed;
+  color: #e9d5ff;
+}
+
 /* Benchmark tooltip/modal styling */
 .benchmark-tooltip {
   position: fixed;

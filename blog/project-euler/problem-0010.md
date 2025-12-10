@@ -38,9 +38,9 @@ function sum_of_primes_below(limit)
 end
 ```
 
-we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using ~5 MiB of memory.
+we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using @benchmark[problem-0010:sum_of_primes_below_2M:memory].
 
-We can go a bit further and compute the sum of all primes below $10^8$ in @benchmark[problem-0010:sum_of_primes_below_100M] using ~237 MiB of memory.
+We can go a bit further and compute the sum of all primes below $10^8$ in @benchmark[problem-0010:sum_of_primes_below_100M] using @benchmark[problem-0010:sum_of_primes_below_100M:memory].
 
 The sieve uses $\mathcal{O}(n)$ space for the boolean array. For time complexity, consider how much work we do crossing off multiples. For each prime $p$, we cross off roughly $n/p$ multiples. The total work is
 

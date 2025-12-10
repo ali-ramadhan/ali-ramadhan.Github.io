@@ -32,8 +32,8 @@ function markdownItMathBlocks(md) {
 
 // Custom benchmark plugin for markdown-it
 function markdownItBenchmark(md) {
-  // Regex to match @benchmark[filename:key] pattern
-  const benchmarkRegex = /@benchmark\[([^:]+):([^\]]+)\]/g;
+  // Regex to match @benchmark[filename:key] or @benchmark[filename:key:display_type] pattern
+  const benchmarkRegex = /@benchmark\[([^:]+):([^:\]]+)(?::([^\]]+))?\]/g;
 
   md.core.ruler.after("inline", "benchmark", function (state) {
     for (let i = 0; i < state.tokens.length; i++) {
@@ -51,7 +51,7 @@ function markdownItBenchmark(md) {
 
             while ((match = benchmarkRegex.exec(child.content)) !== null) {
               hasMatches = true;
-              const [fullMatch, filename, key] = match;
+              const [fullMatch, filename, key, displayType = "median_time"] = match;
 
               try {
                 // Load benchmark data from YAML
@@ -83,8 +83,13 @@ function markdownItBenchmark(md) {
                       const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[nμm]?s)/);
                       const medianTime = medianMatch ? medianMatch[1] : "Unknown";
 
+                      // Extract memory estimate from the benchmark output
+                      const memoryMatch = benchmark.output.match(/Memory estimate[^:]*:.*?([\d.]+\s*(?:bytes|[KMG]iB|[KMG]B))/i);
+                      const memoryEstimate = memoryMatch ? memoryMatch[1] : "Unknown";
+
                       cpus[cpuName] = {
                         median_time: medianTime,
+                        memory_estimate: memoryEstimate,
                         full_output: benchmark.output,
                         julia_version: benchmark.julia_version,
                         os: benchmark.os,
@@ -93,7 +98,7 @@ function markdownItBenchmark(md) {
                     }
                   }
 
-                  // Find fastest CPU for inline display
+                  // Helper to parse time strings for comparison
                   const parseTime = (timeStr) => {
                     const match = timeStr.match(/([\d.]+)\s*([nμm]?s)/);
                     if (!match) return Infinity;
@@ -106,23 +111,51 @@ function markdownItBenchmark(md) {
                     return value;
                   };
 
-                  const fastestCpu = Object.keys(cpus).reduce((fastest, cpu) => {
-                    const currentTime = parseTime(cpus[cpu].median_time);
-                    const fastestTime = parseTime(cpus[fastest].median_time);
-                    return currentTime < fastestTime ? cpu : fastest;
+                  // Helper to parse memory strings for comparison
+                  const parseMemory = (memStr) => {
+                    const match = memStr.match(/([\d.]+)\s*(bytes|[KMG]iB|[KMG]B)/i);
+                    if (!match) return Infinity;
+                    const value = parseFloat(match[1]);
+                    const unit = match[2].toLowerCase();
+                    if (unit === "bytes") return value;
+                    if (unit === "kib" || unit === "kb") return value * 1024;
+                    if (unit === "mib" || unit === "mb") return value * 1024 * 1024;
+                    if (unit === "gib" || unit === "gb") return value * 1024 * 1024 * 1024;
+                    return value;
+                  };
+
+                  // Find best CPU based on display type
+                  const bestCpu = Object.keys(cpus).reduce((best, cpu) => {
+                    if (displayType === "memory") {
+                      const currentMem = parseMemory(cpus[cpu].memory_estimate);
+                      const bestMem = parseMemory(cpus[best].memory_estimate);
+                      return currentMem < bestMem ? cpu : best;
+                    } else {
+                      const currentTime = parseTime(cpus[cpu].median_time);
+                      const bestTime = parseTime(cpus[best].median_time);
+                      return currentTime < bestTime ? cpu : best;
+                    }
                   });
-                  const defaultMedian = cpus[fastestCpu]?.median_time || "Unknown";
+
+                  // Get display value based on type
+                  const displayValue =
+                    displayType === "memory"
+                      ? cpus[bestCpu]?.memory_estimate || "Unknown"
+                      : cpus[bestCpu]?.median_time || "Unknown";
+
+                  // CSS class modifier for styling
+                  const cssModifier = displayType === "memory" ? " benchmark-reference--memory" : "";
 
                   // Create benchmark data object with all CPUs
                   const benchmarkObj = {
                     cpus: cpus,
-                    default_cpu: fastestCpu,
-                    default_median: defaultMedian,
+                    default_cpu: bestCpu,
+                    default_value: displayValue,
                   };
 
                   // Replace with HTML for interactive benchmark display
                   const escapedData = JSON.stringify(benchmarkObj).replace(/'/g, "&#39;");
-                  const replacement = `<span class="benchmark-reference" data-benchmark='${escapedData}'>${defaultMedian}</span>`;
+                  const replacement = `<span class="benchmark-reference${cssModifier}" data-benchmark='${escapedData}'>${displayValue}</span>`;
                   content = content.replace(fullMatch, replacement);
                 } else {
                   console.warn(`Benchmark key "${key}" not found in ${filename}.yaml`);

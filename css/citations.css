@@ -59,12 +59,12 @@
   border-bottom: 6px solid #333;
 }
 
-[data-theme="dark"] .citation-tooltip {
+html[data-theme="dark"] .citation-tooltip {
   background: #1f2937;
   color: #f9fafb;
 }
 
-[data-theme="dark"] .citation-tooltip::before {
+html[data-theme="dark"] .citation-tooltip::before {
   border-bottom-color: #1f2937;
 }
 
@@ -131,7 +131,7 @@
 }
 
 /* Dark mode support */
-[data-theme="dark"] {
+html[data-theme="dark"] {
   .citation {
     color: #66b3ff;
     border-bottom-color: #66b3ff;

@@ -50,13 +50,13 @@
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
 }
 
-[data-theme="dark"] .blog-section h2 {
+html[data-theme="dark"] .blog-section h2 {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-post-content h1,
-[data-theme="dark"] .blog-post-content h2,
-[data-theme="dark"] .blog-post-content h3 {
+html[data-theme="dark"] .blog-post-content h1,
+html[data-theme="dark"] .blog-post-content h2,
+html[data-theme="dark"] .blog-post-content h3 {
   color: #e0e0e0;
 }
 
@@ -82,7 +82,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
-[data-theme="dark"] .blog-post-preview {
+html[data-theme="dark"] .blog-post-preview {
   background: #2d2d2d;
   border: 1px solid #555;
 }
@@ -124,11 +124,11 @@
   transition: color 0.3s ease;
 }
 
-[data-theme="dark"] .blog-post-title a {
+html[data-theme="dark"] .blog-post-title a {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-post-content a {
+html[data-theme="dark"] .blog-post-content a {
   color: #74b9ff;
 }
 
@@ -148,15 +148,15 @@
   text-decoration: underline;
 }
 
-[data-theme="dark"] .blog-post-content .header-anchor {
+html[data-theme="dark"] .blog-post-content .header-anchor {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-post-content .header-anchor:hover {
+html[data-theme="dark"] .blog-post-content .header-anchor:hover {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .blog-post-title a:hover {
+html[data-theme="dark"] .blog-post-title a:hover {
   color: #74b9ff;
 }
 
@@ -166,7 +166,7 @@
   font-style: italic;
 }
 
-[data-theme="dark"] .blog-post-date {
+html[data-theme="dark"] .blog-post-date {
   color: #b0b0b0;
 }
 
@@ -176,7 +176,7 @@
   margin: 1rem 0;
 }
 
-[data-theme="dark"] .blog-post-excerpt {
+html[data-theme="dark"] .blog-post-excerpt {
   color: #d0d0d0;
 }
 
@@ -212,11 +212,11 @@
   color: #2980b9;
 }
 
-[data-theme="dark"] .read-more {
+html[data-theme="dark"] .read-more {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .read-more:hover {
+html[data-theme="dark"] .read-more:hover {
   color: #0984e3;
 }
 
@@ -237,7 +237,7 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
-[data-theme="dark"] .blog-nav-bar {
+html[data-theme="dark"] .blog-nav-bar {
   border-bottom-color: #444;
 }
 
@@ -262,11 +262,11 @@
   color: #3498db;
 }
 
-[data-theme="dark"] .blog-nav-brand {
+html[data-theme="dark"] .blog-nav-brand {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-nav-brand:hover {
+html[data-theme="dark"] .blog-nav-brand:hover {
   color: #74b9ff;
 }
 
@@ -304,15 +304,15 @@
   width: 100%;
 }
 
-[data-theme="dark"] .blog-nav-link {
+html[data-theme="dark"] .blog-nav-link {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-nav-link:hover {
+html[data-theme="dark"] .blog-nav-link:hover {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .blog-nav-link::after {
+html[data-theme="dark"] .blog-nav-link::after {
   background: #74b9ff;
 }
 
@@ -347,7 +347,7 @@
   padding: 0;
 }
 
-[data-theme="dark"] .blog-post {
+html[data-theme="dark"] .blog-post {
   background: transparent;
   color: #e0e0e0;
 }
@@ -359,7 +359,7 @@
   border-bottom: 2px solid #eee;
 }
 
-[data-theme="dark"] .blog-post-full-header {
+html[data-theme="dark"] .blog-post-full-header {
   border-bottom-color: #555;
 }
 
@@ -388,15 +388,15 @@
   color: #999;
 }
 
-[data-theme="dark"] .blog-post-breadcrumb a {
+html[data-theme="dark"] .blog-post-breadcrumb a {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .blog-post-breadcrumb a:hover {
+html[data-theme="dark"] .blog-post-breadcrumb a:hover {
   color: #0984e3;
 }
 
-[data-theme="dark"] .breadcrumb-separator {
+html[data-theme="dark"] .breadcrumb-separator {
   color: #777;
 }
 
@@ -407,7 +407,7 @@
   font-weight: 700;
 }
 
-[data-theme="dark"] .blog-post-full-title {
+html[data-theme="dark"] .blog-post-full-title {
   color: #e0e0e0;
 }
 
@@ -419,7 +419,7 @@
   font-style: italic;
 }
 
-[data-theme="dark"] .blog-post-subtitle {
+html[data-theme="dark"] .blog-post-subtitle {
   color: #b0b0b0;
 }
 
@@ -438,7 +438,7 @@
   font-weight: 400;
 }
 
-[data-theme="dark"] .blog-post-full-date {
+html[data-theme="dark"] .blog-post-full-date {
   color: #777;
 }
 
@@ -454,7 +454,7 @@
   counter-reset: h2counter;
 }
 
-[data-theme="dark"] .blog-post-content {
+html[data-theme="dark"] .blog-post-content {
   color: #d0d0d0;
 }
 
@@ -480,7 +480,7 @@
   background: rgba(52, 152, 219, 0.1);
 }
 
-[data-theme="dark"] .blog-post-content blockquote {
+html[data-theme="dark"] .blog-post-content blockquote {
   background: rgba(116, 185, 255, 0.1);
 }
 
@@ -531,7 +531,7 @@
   white-space: inherit;
 }
 
-[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
+html[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
   background: #2d3748;
   color: #e2e8f0;
 }
@@ -593,7 +593,7 @@
 }
 
 /* Dark mode adjustments for toolbar */
-[data-theme="dark"] .blog-post-content .toolbar-item button {
+html[data-theme="dark"] .blog-post-content .toolbar-item button {
   background: rgba(255, 255, 255, 0.1);
 }
 
@@ -604,7 +604,7 @@
   text-align: center;
 }
 
-[data-theme="dark"] .blog-post-full-footer {
+html[data-theme="dark"] .blog-post-full-footer {
   border-top-color: #555;
 }
 
@@ -619,11 +619,11 @@
   color: #2980b9;
 }
 
-[data-theme="dark"] .return-home {
+html[data-theme="dark"] .return-home {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .return-home:hover {
+html[data-theme="dark"] .return-home:hover {
   color: #0984e3;
 }
 
@@ -675,7 +675,7 @@
   max-width: 100%;
 }
 
-[data-theme="dark"] .blog-post-content figcaption {
+html[data-theme="dark"] .blog-post-content figcaption {
   color: #b0b0b0;
 }
 
@@ -738,11 +738,11 @@
 }
 
 /* Dark mode support for TOC */
-[data-theme="dark"] .blog-post-content .table-of-contents a {
+html[data-theme="dark"] .blog-post-content .table-of-contents a {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-post-content .table-of-contents a:hover {
+html[data-theme="dark"] .blog-post-content .table-of-contents a:hover {
   color: #74b9ff;
 }
 
@@ -753,7 +753,7 @@
   border-top: 2px solid #eee;
 }
 
-[data-theme="dark"] .blog-post-content .footnotes-sep {
+html[data-theme="dark"] .blog-post-content .footnotes-sep {
   border-top-color: #444;
 }
 
@@ -779,7 +779,7 @@
   text-decoration: underline;
 }
 
-[data-theme="dark"] .blog-post-content .footnote-ref {
+html[data-theme="dark"] .blog-post-content .footnote-ref {
   color: #74b9ff;
 }
 
@@ -793,7 +793,7 @@
   text-decoration: underline;
 }
 
-[data-theme="dark"] .blog-post-content .footnote-backref {
+html[data-theme="dark"] .blog-post-content .footnote-backref {
   color: #74b9ff;
 }
 
@@ -814,11 +814,11 @@
   outline-offset: 2px;
 }
 
-[data-theme="dark"] .blog-post-content .collapsible-header:hover {
+html[data-theme="dark"] .blog-post-content .collapsible-header:hover {
   color: #74b9ff !important;
 }
 
-[data-theme="dark"] .blog-post-content .collapsible-header:focus-visible {
+html[data-theme="dark"] .blog-post-content .collapsible-header:focus-visible {
   outline-color: #74b9ff;
 }
 
@@ -841,11 +841,11 @@
   color: #666;
 }
 
-[data-theme="dark"] .blog-post-content h2.collapsible-header::after,
-[data-theme="dark"] .blog-post-content h3.collapsible-header::after,
-[data-theme="dark"] .blog-post-content h4.collapsible-header::after,
-[data-theme="dark"] .blog-post-content h5.collapsible-header::after,
-[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
+html[data-theme="dark"] .blog-post-content h2.collapsible-header::after,
+html[data-theme="dark"] .blog-post-content h3.collapsible-header::after,
+html[data-theme="dark"] .blog-post-content h4.collapsible-header::after,
+html[data-theme="dark"] .blog-post-content h5.collapsible-header::after,
+html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   color: #b0b0b0;
 }
 

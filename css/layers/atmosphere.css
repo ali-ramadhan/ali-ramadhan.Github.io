@@ -486,18 +486,18 @@
 }
 
 /* Dark theme adjustments for new clouds - use CSS variable for consistency */
-[data-theme="dark"] .cirrus-cloud,
-[data-theme="dark"] .altostratus-cloud,
-[data-theme="dark"] .cumulus-cloud {
+html[data-theme="dark"] .cirrus-cloud,
+html[data-theme="dark"] .altostratus-cloud,
+html[data-theme="dark"] .cumulus-cloud {
   background: var(--cloud-color);
 }
 
-[data-theme="dark"] .cirrus-cloud::before,
-[data-theme="dark"] .cirrus-cloud::after,
-[data-theme="dark"] .altostratus-cloud::before,
-[data-theme="dark"] .altostratus-cloud::after,
-[data-theme="dark"] .cumulus-cloud::before,
-[data-theme="dark"] .cumulus-cloud::after {
+html[data-theme="dark"] .cirrus-cloud::before,
+html[data-theme="dark"] .cirrus-cloud::after,
+html[data-theme="dark"] .altostratus-cloud::before,
+html[data-theme="dark"] .altostratus-cloud::after,
+html[data-theme="dark"] .cumulus-cloud::before,
+html[data-theme="dark"] .cumulus-cloud::after {
   background: var(--cloud-color);
 }
 
@@ -531,11 +531,11 @@
 }
 
 /* Dark mode support for simple blog list */
-[data-theme="dark"] .blog-post-item a {
+html[data-theme="dark"] .blog-post-item a {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .blog-post-item a:hover {
+html[data-theme="dark"] .blog-post-item a:hover {
   color: #74b9ff;
 }
 

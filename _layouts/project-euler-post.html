@@ -14,6 +14,9 @@
     {% else %}
     <title>Project Euler Problem {{ problem_number }}: {{ problem_name }} | Ali Ramadhan</title>
     {% endif %}
+
+    {% include "theme-init.html" %}
+
     {% if collapsible_headers %}
     <meta name="collapsible-headers" content="true" />
     {% endif %}

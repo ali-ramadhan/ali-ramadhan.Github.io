@@ -16,7 +16,7 @@
   font-family: Inter, sans-serif;
 }
 
-[data-theme="dark"] .floating-toc {
+html[data-theme="dark"] .floating-toc {
   background: #2d2d2d;
   border: 1px solid #555;
   box-shadow: 0 4px 12px rgb(0, 0, 0, 0.3);
@@ -34,7 +34,7 @@
   color: #333;
 }
 
-[data-theme="dark"] .floating-toc-header {
+html[data-theme="dark"] .floating-toc-header {
   background: #3a3a3a;
   border-bottom-color: #555;
   color: #e0e0e0;
@@ -63,11 +63,11 @@
   color: #333;
 }
 
-[data-theme="dark"] .floating-toc-close {
+html[data-theme="dark"] .floating-toc-close {
   color: #b0b0b0;
 }
 
-[data-theme="dark"] .floating-toc-close:hover {
+html[data-theme="dark"] .floating-toc-close:hover {
   background: rgb(255, 255, 255, 0.1);
   color: #e0e0e0;
 }
@@ -127,7 +127,7 @@
   color: #666;
 }
 
-[data-theme="dark"] .section-toggle {
+html[data-theme="dark"] .section-toggle {
   color: #b0b0b0;
 }
 
@@ -176,27 +176,27 @@
   font-weight: 600;
 }
 
-[data-theme="dark"] .floating-toc a {
+html[data-theme="dark"] .floating-toc a {
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .floating-toc-subsection a {
+html[data-theme="dark"] .floating-toc-subsection a {
   color: #b0b0b0;
 }
 
-[data-theme="dark"] .floating-toc a:hover {
+html[data-theme="dark"] .floating-toc a:hover {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .floating-toc-subsection a:hover {
+html[data-theme="dark"] .floating-toc-subsection a:hover {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .floating-toc a.active {
+html[data-theme="dark"] .floating-toc a.active {
   color: #74b9ff;
 }
 
-[data-theme="dark"] .floating-toc-subsection a.active {
+html[data-theme="dark"] .floating-toc-subsection a.active {
   color: #74b9ff;
 }
 
@@ -225,11 +225,11 @@
   background: #999;
 }
 
-[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb {
+html[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb {
   background: #555;
 }
 
-[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb:hover {
+html[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb:hover {
   background: #777;
 }
 

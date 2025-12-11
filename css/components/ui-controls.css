@@ -39,7 +39,7 @@
   transition: transform 0.3s ease;
 }
 
-[data-theme="dark"] .toggle-icon {
+html[data-theme="dark"] .toggle-icon {
   transform: rotate(180deg);
 }
 

@@ -20,7 +20,7 @@
 }
 
 /* Dark theme mountains */
-[data-theme="dark"] .mountain-range {
+html[data-theme="dark"] .mountain-range {
   /* Dark theme mountain colors */
   --mountain-color: #4a3820;
   --snow-color: #e0e0e0;
@@ -70,12 +70,12 @@
   transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-[data-theme="dark"] .land-river-svg.light-theme {
+html[data-theme="dark"] .land-river-svg.light-theme {
   opacity: 0;
   visibility: hidden;
 }
 
-[data-theme="dark"] .land-river-svg.dark-theme {
+html[data-theme="dark"] .land-river-svg.dark-theme {
   opacity: 1;
   visibility: visible;
 }
@@ -103,7 +103,7 @@
 }
 
 /* Dark theme tree styling - darker and slightly desaturated */
-[data-theme="dark"] .tree {
+html[data-theme="dark"] .tree {
   filter: brightness(0.4) saturate(0.7);
 }
 
@@ -130,7 +130,7 @@
 }
 
 /* Dark theme cactus styling - darker and slightly desaturated */
-[data-theme="dark"] .cactus {
+html[data-theme="dark"] .cactus {
   filter: brightness(0.4) saturate(0.7);
 }
 
@@ -151,7 +151,7 @@
   transition: opacity 0.5s ease;
 }
 
-[data-theme="dark"] #land::before {
+html[data-theme="dark"] #land::before {
   background: linear-gradient(
     to bottom,
     rgb(37, 48, 64, 0.3) 0%,

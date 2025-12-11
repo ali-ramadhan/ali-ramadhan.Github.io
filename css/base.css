@@ -1,5 +1,5 @@
 :root,
-[data-theme="light"] {
+html[data-theme="light"] {
   /* Light theme colors */
   --outer-space-bg: linear-gradient(180deg, #001 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
   --atmosphere-bg: linear-gradient(
@@ -50,7 +50,7 @@
   --z-tooltips: 1006;
 }
 
-[data-theme="dark"] {
+html[data-theme="dark"] {
   /* Dark theme colors */
   --outer-space-bg: linear-gradient(180deg, #000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
   --atmosphere-bg: linear-gradient(
@@ -296,13 +296,13 @@ body {
   transform: translateY(-1px);
 }
 
-[data-theme="dark"] #resources .publications-content a.publication-button {
+html[data-theme="dark"] #resources .publications-content a.publication-button {
   background: rgba(224, 224, 224, 0.15);
   color: var(--content-text);
   border: 1px solid rgba(224, 224, 224, 0.3);
 }
 
-[data-theme="dark"] #resources .publications-content a.publication-button:hover {
+html[data-theme="dark"] #resources .publications-content a.publication-button:hover {
   background: rgba(224, 224, 224, 0.25);
   border-color: rgba(224, 224, 224, 0.5);
 }

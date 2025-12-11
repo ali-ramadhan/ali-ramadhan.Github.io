@@ -31,13 +31,13 @@
 }
 
 /* Dark theme support */
-[data-theme="dark"] .benchmark-reference {
+html[data-theme="dark"] .benchmark-reference {
   background: #1e3a3f;
   border-color: #2d5a61;
   color: #7dd3fc;
 }
 
-[data-theme="dark"] .benchmark-reference:hover {
+html[data-theme="dark"] .benchmark-reference:hover {
   background: #2d5a61;
   border-color: #3d7a81;
   color: #87e5ff;
@@ -56,13 +56,13 @@
   color: #581c87;
 }
 
-[data-theme="dark"] .benchmark-reference--memory {
+html[data-theme="dark"] .benchmark-reference--memory {
   background: #3b1f5c;
   border-color: #6b21a8;
   color: #d8b4fe;
 }
 
-[data-theme="dark"] .benchmark-reference--memory:hover {
+html[data-theme="dark"] .benchmark-reference--memory:hover {
   background: #4c1d95;
   border-color: #7c3aed;
   color: #e9d5ff;
@@ -183,35 +183,35 @@
 }
 
 /* Dark theme ANSI colors - Google Dark theme */
-[data-theme="dark"] .ansi-red {
+html[data-theme="dark"] .ansi-red {
   color: #ea4335;
 }
 
-[data-theme="dark"] .ansi-green {
+html[data-theme="dark"] .ansi-green {
   color: #34a853;
 }
 
-[data-theme="dark"] .ansi-yellow {
+html[data-theme="dark"] .ansi-yellow {
   color: #fbbc05;
 }
 
-[data-theme="dark"] .ansi-blue {
+html[data-theme="dark"] .ansi-blue {
   color: #4285f4;
 }
 
-[data-theme="dark"] .ansi-magenta {
+html[data-theme="dark"] .ansi-magenta {
   color: #a142f4;
 }
 
-[data-theme="dark"] .ansi-cyan {
+html[data-theme="dark"] .ansi-cyan {
   color: #24c1e0;
 }
 
-[data-theme="dark"] .ansi-white {
+html[data-theme="dark"] .ansi-white {
   color: #fff;
 }
 
-[data-theme="dark"] .ansi-gray {
+html[data-theme="dark"] .ansi-gray {
   color: #5f6368;
 }
 
@@ -251,35 +251,35 @@
 
 
 /* Dark theme for tooltip */
-[data-theme="dark"] .benchmark-tooltip {
+html[data-theme="dark"] .benchmark-tooltip {
   background: #2d2d2d;
   border-color: #555;
   box-shadow: 0 8px 32px rgb(0, 0, 0, 0.3);
 }
 
-[data-theme="dark"] .benchmark-close {
+html[data-theme="dark"] .benchmark-close {
   color: #ccc;
 }
 
-[data-theme="dark"] .benchmark-close:hover {
+html[data-theme="dark"] .benchmark-close:hover {
   background: #555;
   color: #fff;
 }
 
-[data-theme="dark"] .benchmark-output {
+html[data-theme="dark"] .benchmark-output {
   background: #1e1e1e;
   border-color: #555;
   color: #e0e0e0;
 }
 
-[data-theme="dark"] .benchmark-cpu-dropdown {
+html[data-theme="dark"] .benchmark-cpu-dropdown {
   color: #e0e0e0;
   background-color: #1e1e1e;
   border-color: #555;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23ccc' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
 }
 
-[data-theme="dark"] .benchmark-cpu-dropdown:hover {
+html[data-theme="dark"] .benchmark-cpu-dropdown:hover {
   background-color: #333;
   border-color: #666;
 }

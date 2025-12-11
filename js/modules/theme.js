@@ -33,26 +33,26 @@ class ThemeManager {
   setTheme(theme) {
     // Explicitly set data-theme attribute for both themes
     // Safari needs explicit "light" instead of no attribute
-    document.body.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
     this.updateThemeIcon(theme);
   }
 
   toggleTheme() {
-    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const currentTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
     const newTheme = currentTheme === "light" ? "dark" : "light";
     this.setTheme(newTheme);
   }
 
   handleSunClick() {
-    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const currentTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
     if (currentTheme === "light") {
       this.setTheme("dark");
     }
   }
 
   handleMoonClick() {
-    const currentTheme = document.body.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const currentTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
     if (currentTheme === "dark") {
       this.setTheme("light");
     }

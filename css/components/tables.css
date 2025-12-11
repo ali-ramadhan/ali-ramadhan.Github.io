@@ -19,8 +19,8 @@
 }
 
 /* Dark theme */
-[data-theme="dark"] .blog-post-content th,
-[data-theme="dark"] .blog-post-content td {
+html[data-theme="dark"] .blog-post-content th,
+html[data-theme="dark"] .blog-post-content td {
   border-bottom-color: #4a5568;
 }
 

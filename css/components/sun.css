@@ -124,11 +124,11 @@
 }
 
 /* Sun visible in light mode, moon visible in dark mode */
-body[data-theme="light"] #outer-space .sun,
-body:not([data-theme]) #outer-space .sun {
+html[data-theme="light"] #outer-space .sun,
+html:not([data-theme]) #outer-space .sun {
   right: 100px;
 }
 
-body[data-theme="dark"] #outer-space .moon {
+html[data-theme="dark"] #outer-space .moon {
   right: 100px;
 }

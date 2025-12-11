@@ -42,3 +42,8 @@
 [data-theme="dark"] .toggle-icon {
   transform: rotate(180deg);
 }
+
+/* Move toggle down on blog posts to avoid navbar overlap */
+.blog-post-body .theme-toggle {
+  top: 80px;
+}

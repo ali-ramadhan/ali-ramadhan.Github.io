@@ -1,0 +1,9 @@
+solution:
+  "AMD Ryzen Threadripper 7960X":
+    julia_version: "Julia 1.12.2"
+    output: |-
+      BenchmarkTools.Trial: 1 sample with 1 evaluation per sample.
+       Single result which took [34m16.679 s[39m (0.00% GC) to evaluate,
+       with a memory estimate of [33m0 bytes[39m, over [33m0[39m allocations.
+    date: "2025-12-12T00:17:20.840"
+    os: "Linux"

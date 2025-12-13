@@ -2,7 +2,7 @@
 
 .floating-toc {
   position: fixed;
-  top: 100px;
+  top: 160px;
   right: 20px;
   width: 280px;
   max-height: 80vh;
@@ -236,7 +236,7 @@ html[data-theme="dark"] .floating-toc-content::-webkit-scrollbar-thumb:hover {
 /* Restore button when ToC is hidden - styled like theme toggle */
 .floating-toc-restore {
   position: fixed;
-  top: 100px;
+  top: 160px;
   right: 30px;
   z-index: var(--z-floating-toc-restore);
   background: var(--content-bg);

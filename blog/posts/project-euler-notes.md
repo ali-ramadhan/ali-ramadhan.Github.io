@@ -22,3 +22,4 @@ Project Euler strongly discourages the sharing or publishing of any solutions be
 - [-1](/blog/project-euler/bonus-minus1/)
 - [√13](/blog/project-euler/bonus-root13/)
 - [Heegner](/blog/project-euler/bonus-heegner/)
+- [18i](/blog/project-euler/bonus-18i/)

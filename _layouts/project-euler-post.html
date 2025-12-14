@@ -91,6 +91,19 @@
               target="_blank" rel="noopener"
               >Go to Project Euler</a
             >
+            <span class="breadcrumb-separator">|</span>
+            <a
+              href="https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/src/solutions/problem{{ problem_number | padStart(4) }}.jl"
+              target="_blank" rel="noopener"
+              >Go to GitHub</a
+            >
+            {% else %}
+            <span class="breadcrumb-separator">|</span>
+            <a
+              href="https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/src/bonus/{{ page.fileSlug | replace("-", "_") }}.jl"
+              target="_blank" rel="noopener"
+              >Go to GitHub</a
+            >
             {% endif %}
             {% if nextProblem %}
             <span class="breadcrumb-separator">|</span>

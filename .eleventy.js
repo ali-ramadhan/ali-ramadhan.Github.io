@@ -12,6 +12,12 @@ export default function (eleventyConfig) {
     return date.toISOString().split("T")[0]; // Returns YYYY-MM-DD format
   });
 
+  // Add padStart filter for zero-padding numbers
+  eleventyConfig.addFilter("padStart", function (num, length, char) {
+    char = char || "0";
+    return String(num).padStart(length, char);
+  });
+
   // Add Vite plugin
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {

@@ -5,7 +5,7 @@ description: "Benchmarking methods to load almost a trillion rows of weather dat
 date: 2024-03-31
 collapsible_headers: true
 floating_toc: true
-github_discussion: https://github.com/ali-ramadhan/ali-ramadhan.Github.io/discussions/2
+github_repo: https://github.com/ali-ramadhan/timescaledb-insert-benchmarks
 hacker_news: https://news.ycombinator.com/item?id=40051191
 ---
 

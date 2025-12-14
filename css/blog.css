@@ -1027,3 +1027,80 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
     max-width: 100%;
   }
 }
+
+/* External Links in Blog Post Header */
+.blog-post-external-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.external-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: transparent;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  color: #555;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.external-link:hover {
+  border-color: #3498db;
+  color: #3498db;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.external-link-icon {
+  height: 1rem;
+  width: auto;
+}
+
+/* Hacker News "Y" logo styling */
+.hn-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  background: #ff6600;
+  color: white;
+  font-weight: 700;
+  font-size: 0.7rem;
+  border-radius: 2px;
+}
+
+/* Dark mode */
+html[data-theme="dark"] .external-link {
+  border-color: #555;
+  color: #b0b0b0;
+}
+
+html[data-theme="dark"] .external-link:hover {
+  border-color: #74b9ff;
+  color: #74b9ff;
+}
+
+html[data-theme="dark"] .external-link-icon {
+  filter: invert(1);
+}
+
+/* Mobile adjustments for external links */
+@media (width <= 768px) {
+  .blog-post-external-links {
+    gap: 0.5rem;
+  }
+
+  .external-link {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.8rem;
+  }
+}

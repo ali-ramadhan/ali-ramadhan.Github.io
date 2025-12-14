@@ -66,7 +66,7 @@
           </div>
         </header>
 
-        <div class="blog-post-content">{{ content | safe }}</div>
+        <div class="blog-post-content{% if numberHeaders == false %} no-header-numbering{% endif %}">{{ content | safe }}</div>
       </article>
     </main>
 

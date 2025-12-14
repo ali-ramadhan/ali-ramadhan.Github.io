@@ -50,6 +50,13 @@
   content: counter(h2counter) "." counter(h3counter) "." counter(h4counter) ". ";
 }
 
+/* Disable header numbering when opted out via frontmatter */
+.blog-post-content.no-header-numbering h2::before,
+.blog-post-content.no-header-numbering h3::before,
+.blog-post-content.no-header-numbering h4::before {
+  content: none;
+}
+
 html[data-theme="dark"] .blog-section h2 {
   color: #e0e0e0;
 }

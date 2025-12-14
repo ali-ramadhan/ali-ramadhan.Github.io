@@ -1,6 +1,6 @@
 ---
 layout: "blog-post"
-title: "Project Euler Notes"
+title: "Project Euler Solutions"
 numberHeaders: false
 ---
 

@@ -1064,20 +1064,6 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   width: auto;
 }
 
-/* Hacker News "Y" logo styling */
-.hn-logo {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1rem;
-  height: 1rem;
-  background: #ff6600;
-  color: white;
-  font-weight: 700;
-  font-size: 0.7rem;
-  border-radius: 2px;
-}
-
 /* Dark mode */
 html[data-theme="dark"] .external-link {
   border-color: #555;
@@ -1089,7 +1075,7 @@ html[data-theme="dark"] .external-link:hover {
   color: #74b9ff;
 }
 
-html[data-theme="dark"] .external-link-icon {
+html[data-theme="dark"] .external-link-icon[src*="github"] {
   filter: invert(1);
 }
 

@@ -29,19 +29,21 @@ R(p) &= \left[ \prod_{k=0}^{p-1} (k - \alpha_1) (k - \alpha_2) (k - \alpha_3) \r
 \end{align}
 ```
 
-Now it's useful that $p$ is prime because we are working in $\mathbb{F}_p$. Then by [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) we know that $k^p \equiv k \pmod{p}$. Thus the roots of the polynomial $x^p - x$ are $0, 1, 2, \cdots, p-1$ and we can write
+Now it's useful that $p$ is prime because we are working in $\mathbb{F}_p$, the [finite field](https://en.wikipedia.org/wiki/Finite_field) with $p$ elements which is equivalent to the integers modulo $p$ with modular addition and multiplication. We have a field (rather than just a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics))) because $p$ being prime guarantees every non-zero element has a multiplicative inverse. This gives us a nice algebraic structure where polynomials behave predictably: a degree-$n$ polynomial has at most $n$ roots.
+
+By [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) we know that $k^p \equiv k \pmod{p}$, which means every element of $\mathbb{F}_p$ is a root of $x^p - x$. Since $x^p - x$ has degree $p$ and can have at most $p$ roots, these must be all the roots, giving us the factorization
 
 ```math
 x^p - x = \prod_{k=0}^{p-1} (x - k)
 ```
 
-which lets us rewrite the three product terms in $R(p)$ as
+Substituting $x = \alpha_i$ into this factorization gives $\alpha_i^p - \alpha_i = \prod_{k=0}^{p-1} (\alpha_i - k)$, which lets us rewrite the three product terms in $R(p)$ as
 
 ```math
 \prod_{k=0}^{p-1} (k - \alpha_i) = (-1)^p \prod_{k=0}^{p-1} (\alpha_i - k) = -(\alpha_i^p - \alpha_i)
 ```
 
-and
+where $(-1)^p = -1$ since $p$ is an odd prime. And so
 
 ```math
 \begin{align}
@@ -52,7 +54,7 @@ R(p) &= \left[ -(\alpha_1^p - \alpha_1) \right] \left[ -(\alpha_2^p - \alpha_2) 
 
 So this is a much easier way to compute $R(p)$ but we don't know $\alpha_i$ and they're not even going to be integers or in $\mathbb{F}_p$.
 
-Here's where we can use some linear algebra! The _companion matrix_ for the polynomial $x^3 - 3x + 4$ is
+Here's where we can use some linear algebra! The [companion matrix](https://en.wikipedia.org/wiki/Companion_matrix) for a monic polynomial $x^n + a_{n-1}x^{n-1} + \cdots + a_1 x + a_0$ is constructed by placing 1s on the subdiagonal and the negated coefficients $-a_0, -a_1, \ldots, -a_{n-1}$ in the last column. For $x^3 - 3x + 4$ we have $a_0 = 4$, $a_1 = -3$, $a_2 = 0$ so this gives
 
 ```math
 M =
@@ -63,9 +65,9 @@ M =
 \end{pmatrix}
 ```
 
-because its characteristic polynomial from $\det(M - \lambda I) = 0$ is $\lambda^3 - 3\lambda + 4 = 0$ so its eigenvalues are $\alpha_1$, $\alpha_2$, and $\alpha_3$.
+The key property is that its characteristic polynomial $\det(M - \lambda I) = \lambda^3 - 3\lambda + 4$ recovers the original polynomial, so its eigenvalues are exactly $\alpha_1$, $\alpha_2$, and $\alpha_3$.
 
-We can now invoke the spectral mapping theorem which states that if a matrix $M$ has eigenvalue $\lambda$ then the matrix polynomial $M^p - M$ has eigenvalue $\lambda^p - \lambda$. Let $Y = M^p - M$ then $\det(Y - \lambda^\prime I) = 0$ gives us that the eigenvalues of $Y$ are $\lambda_i^\prime = \alpha_i^p - \alpha_i$. Then we can write
+We can now invoke the [spectral mapping theorem](https://en.wikipedia.org/wiki/Spectral_mapping_theorem), which states that if a matrix $M$ has eigenvalue $\lambda$, then $f(M)$ has eigenvalue $f(\lambda)$ for any polynomial $f$. It's called "spectral" because the spectrum of a matrix is the set of its eigenvalues. Applying this with $f(x) = x^p - x$, we get that $Y = M^p - M$ has eigenvalues $\lambda_i^\prime = \alpha_i^p - \alpha_i$. Since the [determinant of a matrix equals the product of its eigenvalues](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors#Eigenvalues_and_the_characteristic_polynomial), we have
 
 ```math
 \det Y = \lambda_1^\prime \lambda_2^\prime \lambda_3^\prime = (\alpha_1^p - \alpha_1) (\alpha_2^p - \alpha_2) (\alpha_3^p - \alpha_3)
@@ -109,7 +111,7 @@ using StaticArrays
 end
 ```
 
-Now we can use `mat_mul_mod` to write a function that computes $M^p \pmod{p}$ efficiently using [binary exponentiation](https://en.wikipedia.org/wiki/Exponentiation_by_squaring)
+Now we can use `mat_mul_mod` to write a function that computes $M^p \pmod{p}$ efficiently using [binary exponentiation](https://en.wikipedia.org/wiki/Exponentiation_by_squaring). Computing $M^p$ naively would require $p - 1$ multiplications which is too slow when $p \approx 10^9$. Binary exponentiation reduces this to $O(\log p)$ multiplications by exploiting the binary representation of the exponent. For example, $M^{13} = M^{1101_2} = M^8 \cdot M^4 \cdot M^1$ since $13 = 8 + 4 + 1$. The algorithm loops through the bits of the exponent: it squares the base at each step (giving $M^1, M^2, M^4, M^8, \ldots$) and multiplies into the result whenever the current bit is 1.
 
 ```julia
 function mat_pow_mod(A::SMatrix{3,3,Int}, exp::Int, p::Int)
@@ -129,7 +131,7 @@ function mat_pow_mod(A::SMatrix{3,3,Int}, exp::Int, p::Int)
 end
 ```
 
-To compute the determinant of $Y = M^p - M$ we can just use the [Rule of Sarrus](https://en.wikipedia.org/wiki/Rule_of_Sarrus) for computing the determinant of a $3 \times 3$ matrix being careful to avoid integer overflow.
+To compute the determinant of $Y = M^p - M$ we use [cofactor expansion](https://en.wikipedia.org/wiki/Laplace_expansion) along the first row, being careful to avoid integer overflow.
 
 ```julia
 @inline function det3_mod(M::SMatrix{3,3,Int}, p::Int)
@@ -151,6 +153,9 @@ Now we're ready to compute $R(p) \pmod{p}$.
 
 ```julia
 function R_mod_p(p)
+    # For p = 2, the product includes k = 1 where k³ - 3k + 4 = 2 ≡ 0 (mod 2), so R(2) = 0.
+    # For p = 3, the product includes k = 2 where k³ - 3k + 4 = 6 ≡ 0 (mod 3), so R(3) = 0.
+    # These are the only primes where k³ - 3k + 4 has a root in F_p.
     if p <= 3
         return 0
     end

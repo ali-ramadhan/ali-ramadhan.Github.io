@@ -10,7 +10,9 @@ Project Euler strongly discourages the sharing or publishing of any solutions be
 
 ## Benchmarks
 
-I benchmark code using the [BenchmarkTools.jl](https://github.com/JuliaCI/BenchmarkTools.jl) package. Currently I benchmark on a range of modern AMD CPUs including the Threadripper 7960X, Ryzen 9 5900X, and a couple of dual server CPUs: the EPYC 7402 and EPYC 9374F. Also the Intel Core Ultra 5 238V from a Surface Pro, the Core i7-7700HQ from an older Dell XPS laptop, and the Core i7-4810MQ from an older Dell Precision laptop. I'm working on getting access to some older hardware (think Core 2 Duo or Core 2 Quad) for benchmarking purposes, and I'd like to also benchmark on at least one Mac.
+I benchmark code using the [BenchmarkTools.jl](https://github.com/JuliaCI/BenchmarkTools.jl) package. It produces beautiful and insightful unicode plots which I embed here. You can click on any timing to see more information about each benchmark and compare benchmarks across CPUs.
+
+Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we have the [Ryzen Threadripper 7960X](https://www.techpowerup.com/cpu-specs/ryzen-threadripper-7960x.c3359) workstation, the [Ryzen 9 5900X](https://www.techpowerup.com/cpu-specs/ryzen-9-5900x.c2363) desktop, a dual [EPYC 7402](https://www.techpowerup.com/cpu-specs/epyc-7402.c2252) server, and a dual [EPYC 9374F](https://www.techpowerup.com/cpu-specs/epyc-9374f.c2925) server. For Intel we have the [Intel Core Ultra 5 238V](https://www.techpowerup.com/cpu-specs/core-ultra-5-238v.c3797) from a Microsoft Surface Pro, the [Core i7-7700HQ](https://www.techpowerup.com/cpu-specs/core-i7-7700hq.c3098) from an older Dell XPS laptop, the [Core i7-4810MQ](https://www.techpowerup.com/cpu-specs/core-i7-4810mq.c1758) from an older Dell Precision laptop, and the ancient [Core 2 Duo E7400](https://www.techpowerup.com/cpu-specs/core-2-duo-e7400.c1532) desktop server.
 
 ## Problems
 

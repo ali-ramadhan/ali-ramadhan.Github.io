@@ -13,7 +13,7 @@ date: 2025-12-15
 >
 > Evaluate the sum of all the amicable numbers under $10000$.
 
-First let's define a function that lets us sum the divisors of an integer $n$. This is quite similar to `sum_divisors` from [Problem 12](/blog/project-euler/problem-0012/) and also does not allocate memory.
+First let's define a function that lets us sum the divisors of an integer $n$. This is quite similar to `num_divisors` from [Problem 12](/blog/project-euler/problem-0012/) and also does not allocate memory.
 
 ```julia
 function sum_divisors(n)

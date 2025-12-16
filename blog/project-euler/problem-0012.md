@@ -26,22 +26,24 @@ date: 2025-12-06
 >
 > What is the value of the first triangle number to have over five hundred divisors?
 
-First we need a decent method of counting the number of divisors an integer $n$ has. We can do this by testing if each integer from 1 to n is a divisor. But we don't have to test each integer. If $i$ is a divisor of $n$ then $n/i$ is also a divisor of $n$. So we can just search from 1 to $\operatorname{isqrt}(n)$.
+First we need a decent method of counting the number of divisors an integer $n$ has. We can do this by testing if each integer from 1 to n is a divisor. But we don't have to test each integer. If $i$ is a divisor of $n$ then $n/i$ is also a divisor of $n$. So we can just search from 1 to $\operatorname{isqrt}(n)$. Instead of storing all divisors in an array, we can just count them directly to avoid memory allocations.
 
 ```julia
-function get_divisors(n)
-    divisors = Int[]
+function num_divisors(n)
+    count = 0
+    sqrt_n = isqrt(n)
 
-    for i in 1:isqrt(n)
+    for i in 1:sqrt_n
         if n % i == 0
-            push!(divisors, i)
-            if i^2 != n  # Avoid duplicate for perfect squares
-                push!(divisors, n ÷ i)
-            end
+            count += 2
         end
     end
 
-    return sort(divisors)
+    if sqrt_n^2 == n
+        count -= 1
+    end
+
+    return count
 end
 ```
 
@@ -51,7 +53,7 @@ The $n^\text{th}$ triangle number can be computed as
 T_n = \frac{n(n+1)}{2}
 ```
 
-and we can call `get_divisors` on each triangle number until we find one with enough divisors, but $T_n$ grows quadratically so this can take a while.
+and we can call `num_divisors` on each triangle number until we find one with enough divisors, but $T_n$ grows quadratically so this can take a while.
 
 Instead we can rely on the fact that if two integers $a$ and $b$ are [coprime](https://en.wikipedia.org/wiki/Coprime_integers), that is $\operatorname{gcd}(a, b) = 1$, then the number of divisors of their product equals the product of their divisor counts: $d(ab) = d(a) \times d(b)$.
 
@@ -88,9 +90,9 @@ function find_first_triangle_with_divisors(min_divisors)
             b = (n + 1) ÷ 2
         end
 
-        num_divisors = length(get_divisors(a)) * length(get_divisors(b))
+        total_divisors = num_divisors(a) * num_divisors(b)
 
-        if num_divisors > min_divisors
+        if total_divisors > min_divisors
             return n, triangle_number(n)
         end
 

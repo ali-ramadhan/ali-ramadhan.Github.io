@@ -10,9 +10,9 @@ date: 2025-12-13
 >
 > Find the sum of $R(p)$ over all primes $p$ between $1\,000\,000\,000$ and $1\,100\,000\,000$.
 
-Ok so we need to compute the value of
-
 ## Deriving an efficient way to compute $R(p)$
+
+Ok so we need to compute the value of
 
 ```math
 R(p) = \left[ \prod_{k=0}^{p-1} (k^3 - 3k + 4) \right] \pmod{p}
@@ -190,6 +190,22 @@ function sum_R_mod_p(low, high)
 end
 ```
 
-Running `sum_R_mod_p(1_000_000_000, 1_100_000_000)` returns the answer in @benchmark[bonus-18i:solution] with no memory allocations!
+Running `sum_R_mod_p(1_000_000_000, 1_100_000_000)` returns the answer in @benchmark[bonus-18i:solution]!
 
-I should revisit this problem to explain the significance of $18i$. And maybe there's room to make the solution more efficient if we can compute the elements of $M^p - M$ directly instead of using matrix exponentiation?
+## $18i$
+
+The problem name comes from the [discriminant](https://en.wikipedia.org/wiki/Discriminant) of the polynomial. For a depressed cubic $x^3 + ax + b$, the discriminant is $\Delta = -4a^3 - 27b^2$. For $x^3 - 3x + 4$ we have $\Delta = -324$.
+
+The [resultant](https://en.wikipedia.org/wiki/Resultant) of two polynomials measures whether they share a common root. It turns out that evaluating a polynomial over all of $\mathbb{F}_p$ gives a resultant since the roots of $x^p - x$ are exactly $\mathbb{F}_p$ as discussed earlier. This leads to the identity
+
+```math
+R(p)^2 \equiv \Delta \pmod{p}.
+```
+
+When $f$ has no roots in $\mathbb{F}_p$ (so $R(p) \neq 0$), this tells us
+
+```math
+R(p) = \pm\sqrt{\Delta} = \pm\sqrt{-324} = \pm 18i
+```
+
+So for any prime $p$ where $R(p) \neq 0$, the answer is a modular square root of $-324$ in $\mathbb{F}_p$. The companion matrix approach we took actually automatically computes the correct sign via the determinant though.

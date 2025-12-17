@@ -22,9 +22,9 @@ date: 2025-12-17
 >
 > After $10^{12}$ steps, the secret word will be revealed by taking each pixel modulo $7$.
 
-This is a linear [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton) on a toroidal grid. At each step, every pixel is replaced by the sum of its four orthogonal neighbors (up, down, left, right). The "glued edges" make the grid a [torus](https://en.wikipedia.org/wiki/Torus) so that pixels on opposite edges are neighbors. You can also think of it as [2D perioidic or toroidal boundary conditions](https://en.wikipedia.org/wiki/Periodic_boundary_conditions).
+This is a linear [cellular automaton](https://en.wikipedia.org/wiki/Cellular_automaton) on a toroidal grid. At each step, every pixel is replaced by the sum of its four orthogonal neighbors (up, down, left, right). The "glued edges" make the grid a [torus](https://en.wikipedia.org/wiki/Torus) so that pixels on opposite edges are neighbors. You can also think of it as [2D periodic or toroidal boundary conditions](https://en.wikipedia.org/wiki/Periodic_boundary_conditions).
 
-Actually simulation $10^{12}$ steps is computationally infeasible. So we need a way to skip through most of the steps.
+Actually simulating $10^{12}$ steps is computationally infeasible. So we need a way to skip through most of the steps.
 
 ## Finding the convolution kernel
 
@@ -58,7 +58,7 @@ which is the sum of the four orthogonal neighbors. After $n$ steps, we've multip
 
 ## The Frobenius Endomorphism
 
-Now that we're working _modulo 7_ becomes useful because 7 is a prime number.
+Now, working _modulo 7_ becomes useful because 7 is a prime number.
 
 The [binomial theorem](https://en.wikipedia.org/wiki/Binomial_theorem) tells us that
 
@@ -90,7 +90,7 @@ Applied to our kernel $K = x + x^{-1} + y + y^{-1}$, we get:
 K^7 \equiv x^7 + x^{-7} + y^7 + y^{-7} \pmod{7}
 ```
 
-This means that applying the neighbor-sum operation 7 times is equivalent to summing neighbors at distance 7 instead of distance 1. And $7^k$ steps equals one "jump" to neighbors at distance $7^k$:
+This means that applying the neighbor-sum operation 7 times is equivalent to summing neighbors at distance 7 instead of distance 1. And $7^k$ steps equal one "jump" to neighbors at distance $7^k$:
 
 ```math
 K^{7^k} \equiv x^{7^k} + x^{-7^k} + y^{7^k} + y^{-7^k} \pmod{7}

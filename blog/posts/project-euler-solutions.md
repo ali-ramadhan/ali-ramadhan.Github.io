@@ -30,3 +30,4 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
 - [√13](/blog/project-euler/bonus-root13/)
 - [Heegner](/blog/project-euler/bonus-heegner/)
 - [18i](/blog/project-euler/bonus-18i/)
+- [Secret](/blog/project-euler/bonus-secret/)

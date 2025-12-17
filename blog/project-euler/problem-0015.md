@@ -8,7 +8,7 @@ date: 2025-12-07
 > Starting in the top left corner of a $2 \times 2$ grid, and only being able to move to the right and down, there are exactly $6$ routes to the bottom right corner.
 >
 > <figure class="centered">
->   <img src="/public/assets/blog/project-euler/0015.png">
+>   <img src="/assets/blog/project-euler/0015.png">
 > </figure>
 >
 > How many such routes are there through a $20 \times 20$ grid?

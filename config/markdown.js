@@ -60,7 +60,7 @@ function markdownItBenchmark(md) {
                   "_data",
                   "project-euler",
                   "benchmarks",
-                  `${filename}.yaml`
+                  `${filename}-benchmarks.yaml`
                 );
                 const benchmarkData = yaml.load(readFileSync(benchmarkPath, "utf8"));
                 const cpuBenchmarks = benchmarkData[key];
@@ -69,7 +69,7 @@ function markdownItBenchmark(md) {
                   const cpuNames = Object.keys(cpuBenchmarks);
 
                   if (cpuNames.length === 0) {
-                    console.warn(`No CPU benchmarks found for "${key}" in ${filename}.yaml`);
+                    console.warn(`No CPU benchmarks found for "${key}" in ${filename}-benchmarks.yaml`);
                     content = content.replace(fullMatch, `[No benchmarks for ${filename}:${key}]`);
                     continue;
                   }
@@ -158,12 +158,12 @@ function markdownItBenchmark(md) {
                   const replacement = `<span class="benchmark-reference${cssModifier}" data-benchmark='${escapedData}'>${displayValue}</span>`;
                   content = content.replace(fullMatch, replacement);
                 } else {
-                  console.warn(`Benchmark key "${key}" not found in ${filename}.yaml`);
+                  console.warn(`Benchmark key "${key}" not found in ${filename}-benchmarks.yaml`);
                   content = content.replace(fullMatch, `[Benchmark ${filename}:${key} not found]`);
                 }
               } catch (error) {
-                console.warn(`Error loading benchmark file ${filename}.yaml:`, error.message);
-                content = content.replace(fullMatch, `[Benchmark file ${filename}.yaml not found]`);
+                console.warn(`Error loading benchmark file ${filename}-benchmarks.yaml:`, error.message);
+                content = content.replace(fullMatch, `[Benchmark file ${filename}-benchmarks.yaml not found]`);
               }
             }
 

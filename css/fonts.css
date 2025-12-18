@@ -23,6 +23,6 @@
   font-display: swap;
   src: url("../assets/fonts/FiraCode-VF.woff2") format("woff2");
   font-feature-settings:
-    "liga" 0,
+    "liga" 1,
     "calt" 1;
 }

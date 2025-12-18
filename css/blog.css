@@ -503,9 +503,9 @@ html[data-theme="dark"] .blog-post-content blockquote {
   font-family: "Fira Code", monospace;
   font-size: 0.9em;
   font-feature-settings:
-    "liga" 0,
+    "liga" 1,
     "calt" 1;
-  font-variant-ligatures: no-common-ligatures;
+  font-variant-ligatures: contextual;
 }
 
 /* Prism code block container styling */
@@ -517,14 +517,14 @@ html[data-theme="dark"] .blog-post-content blockquote {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Ensure all code elements use Fira Code without ligatures */
+/* Ensure all code elements use Fira Code with ligatures */
 .blog-post-content pre[class*="language-"] code,
 .blog-post-content code[class*="language-"] {
   font-family: "Fira Code", monospace;
   font-feature-settings:
-    "liga" 0,
+    "liga" 1,
     "calt" 1;
-  font-variant-ligatures: no-common-ligatures;
+  font-variant-ligatures: contextual;
 }
 
 /* Line numbers styling */

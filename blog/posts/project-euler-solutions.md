@@ -2,6 +2,7 @@
 layout: "blog-post"
 title: "Project Euler Solutions"
 numberHeaders: false
+github_repo: https://github.com/ali-ramadhan/ProjectEulerSolutions.jl
 ---
 
 [Project Euler](https://projecteuler.net/) is a massive collection of cool problems that combine math and coding. They're pretty fun to solve and I enjoy writing up my solutions and benchmarking them, especially on much larger inputs. Sometimes I also like to tackle more general problems than the ones presented. I solve the problems using [Julia](https://julialang.org/). The code is available on GitHub in [ProjectEulerSolutions.jl](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl) along with tests and benchmarks.

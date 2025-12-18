@@ -99,4 +99,4 @@ function find_longest_cycle(limit)
 end
 ```
 
-The answer is computed in @benchmark[problem-0026:find_longest_cycle_1000]. Extending to $d < 10^5$ takes @benchmark[problem-0026:find_longest_cycle_100k] and finds that $1/99989$ has the longest cycle.
+The answer is computed in @benchmark[problem-0026:find_longest_cycle_1000]. Extending to $d \lt 10^5$ takes @benchmark[problem-0026:find_longest_cycle_100k] and finds that $1/99989$ has the longest cycle.

@@ -17,13 +17,22 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
 
 ## Problems
 
-<div class="euler-problems">
-{% for problem in collections.euler %}
-  <div class="euler-problem">
-    {{ problem.data.problem_number }}. <a href="{{ problem.url }}">{{ problem.data.problem_name }}</a>
-  </div>
-{% endfor %}
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Problem</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for problem in collections.euler %}
+    <tr>
+      <td>{{ problem.data.problem_number }}</td>
+      <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 
 ## Bonus problems
 

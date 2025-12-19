@@ -25,8 +25,6 @@ date: 2025-12-17
 >
 > Find the value of $d < 1000$ for which $1/d$ contains the longest recurring cycle in its decimal fraction part.
 
-Let's work through long division for $1/7$ to see where the repeating cycle comes from:
-
 To figure out how to compute the digits and the cycle length, let's compute $1/7$ using good old [long division](https://en.wikipedia.org/wiki/Long_division).
 
 ```math

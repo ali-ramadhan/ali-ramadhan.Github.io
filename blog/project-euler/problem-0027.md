@@ -46,7 +46,7 @@ function count_consecutive_primes(a, b)
 end
 ```
 
-We stop when the value is not a prime number or the values start to go negative. The searching is straightforward to through all potential $(a, b)$ pairs:
+We stop when the value is not a prime number or the values start to go negative. It's straightforward to loop through all potential $(a, b)$ pairs:
 
 ```julia
 function find_quadratic_with_most_primes(; a_max=1000, b_max=1000)

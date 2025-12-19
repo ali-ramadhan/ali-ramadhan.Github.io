@@ -56,7 +56,7 @@ But there's a closed-form solution using [Binet's formula](https://en.wikipedia.
 F_n = \frac{\varphi^n - \psi^n}{\sqrt{5}}
 ```
 
-where $\varphi = \frac{1 + \sqrt{5}}{2}$ is the golden ratio and $\psi = \frac{1 - \sqrt{5}}{2}$. Since $|\psi| < 1$, the $\psi^n$ terms becomes small and negligible very quickly. So
+where $\varphi = \frac{1 + \sqrt{5}}{2}$ is the golden ratio and $\psi = \frac{1 - \sqrt{5}}{2}$. Since $|\psi| < 1$, the $\psi^n$ term becomes small and negligible very quickly. So
 
 ```math
 F_n \approx \frac{\varphi^n}{\sqrt{5}}
@@ -83,6 +83,6 @@ function first_fibonacci_with_n_digits_formula(n)
 end
 ```
 
-Both approaches give the same answer, but the using the formula is going to take like a few CPU cycles while the iterative approach will keep creating larger and larger integers. The iterative approach takes @benchmark[problem-0025:iterative_1000] while the formula computes the answer in @benchmark[problem-0025:formula_1000].
+Both approaches give the same answer, but using the formula is going to take like a few CPU cycles while the iterative approach will keep creating larger and larger integers. The iterative approach takes @benchmark[problem-0025:iterative_1000] while the formula computes the answer in @benchmark[problem-0025:formula_1000].
 
 For finding the first Fibonacci number with 10,000 digits, it takes @benchmark[problem-0025:iterative_10000] for the iterative approach versus @benchmark[problem-0025:formula_10000] for the formula. Turns out it is $F_{47847}$.

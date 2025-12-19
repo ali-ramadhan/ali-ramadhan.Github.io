@@ -35,6 +35,8 @@ function is_prime(n)
 end
 ```
 
+This approach is known as [wheel factorization](https://en.wikipedia.org/wiki/Wheel_factorization) with a wheel of size 6.
+
 Then finding the $n^\text{th}$ prime can be done with
 
 ```julia

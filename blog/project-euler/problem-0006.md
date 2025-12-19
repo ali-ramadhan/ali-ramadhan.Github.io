@@ -32,23 +32,18 @@ and
 So we can compute the answer directly using
 
 ```math
-\operatorname{SSD}(n) = \left( \sum_{k=1}^n k \right)^2 - \sum_{k=1}^n k^2 = \left( \frac{n(n+1)}{2} \right)^2 - \frac{n(n+1)(2n+1)}{6}
+\begin{align}
+  \operatorname{SSD}(n) &= \left( \sum_{k=1}^n k \right)^2 - \sum_{k=1}^n k^2 \\
+                        &= \left( \frac{n(n+1)}{2} \right)^2 - \frac{n(n+1)(2n+1)}{6} \\
+                        &= \frac{n(n+1)(n-1)(3n+2)}{12}
+\end{align}
 ```
 
 With a simple implementation
 
 ```julia
-function square_of_sum(n)
-    sum = n * (n + 1) ÷ 2
-    return sum^2
-end
-
-function sum_of_squares(n)
-    return n * (n + 1) * (2n + 1) ÷ 6
-end
-
 function sum_square_difference(n)
-    return square_of_sum(n) - sum_of_squares(n)
+    return n * (n + 1) * (n - 1) * (3n + 2) ÷ 12
 end
 ```
 

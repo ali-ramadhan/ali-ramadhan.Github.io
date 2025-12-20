@@ -1,4 +1,4 @@
-problem:
+solution:
   "Intel Core Ultra 5 238V":
     julia_version: "Julia 1.12.2"
     output: |-

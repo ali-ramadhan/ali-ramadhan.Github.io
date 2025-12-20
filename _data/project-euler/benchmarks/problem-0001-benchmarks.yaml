@@ -134,7 +134,7 @@ three_generator:
        Memory estimate[90m: [39m[33m0 bytes[39m, allocs estimate[90m: [39m[33m0[39m.
     date: "2025-12-09T23:13:46.323"
     os: "Linux"
-two_ie:
+two_inclusion_exclusion:
   "AMD Ryzen 9 5900X":
     julia_version: "Julia 1.12.2"
     output: |-
@@ -270,7 +270,7 @@ two_ie:
        Memory estimate[90m: [39m[33m0 bytes[39m, allocs estimate[90m: [39m[33m0[39m.
     date: "2025-12-09T23:13:35.241"
     os: "Linux"
-three_ie:
+three_inclusion_exclusion:
   "AMD Ryzen 9 5900X":
     julia_version: "Julia 1.12.2"
     output: |-

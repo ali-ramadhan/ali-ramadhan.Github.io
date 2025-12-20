@@ -53,7 +53,7 @@ function largest_prime_factor(n)
 end
 ```
 
-Benchmarking `largest_prime_factor(600851475143)` to solve the problem we get @benchmark[problem-0003:problem] which is more than fast enough for this problem.
+Benchmarking `largest_prime_factor(600851475143)` to solve the problem we get @benchmark[problem-0003:solution] which is more than fast enough for this problem.
 
 If the number is made up of only small factors then `prime_factors` will take very little time. In the worst case, $n$ could be prime or semiprime and trial division will end up checking many factors. Finding the largest prime factor of a cool prime I found, $2^{55} - 55$ takes @benchmark[problem-0003:cool_prime]. And for the semiprime $268435399 \times 536870923$ it takes @benchmark[problem-0003:semiprime]. That's 100,000x longer in both cases compared to solving the original problem.
 

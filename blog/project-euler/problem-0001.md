@@ -5,7 +5,7 @@ problem_name: "Multiples of 3 or 5"
 date: 2025-09-09
 difficulty: 5
 benchmark_file: "problem-0001"
-benchmark_key: "two_ie"
+benchmark_key: "two_inclusion_exclusion"
 ---
 
 > If we list all the natural numbers below $10$ that are multiples of $3$ or $5$, we get $3, 5, 6$ and $9$. The sum of these multiples is $23$.
@@ -72,7 +72,7 @@ function sum_multiples_two(a, b, limit)
 end
 ```
 
-and benchmarking `sum_multiples_two(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_ie] which is roughly 2000x faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
+and benchmarking `sum_multiples_two(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is roughly 2000x faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
 
 ## Three factors
 
@@ -105,7 +105,7 @@ S([a, b, c], L) &= s(a, L) + s(b, L) + s(c, L) \\
 We can implement this as:
 
 ```julia
-function sum_multiples_three_ie(a, b, c, L)
+function sum_multiples_three_inclusion_exclusion(a, b, c, L)
     return sum_multiples(a, L) +
            sum_multiples(b, L) +
            sum_multiples(c, L) -
@@ -116,7 +116,7 @@ function sum_multiples_three_ie(a, b, c, L)
 end
 ```
 
-and if we benchmark `sum_multiples_three_ie(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_ie] which again is sub-nanosecond.
+and if we benchmark `sum_multiples_three_inclusion_exclusion(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_inclusion_exclusion] which again is sub-nanosecond.
 
 ## Complexity Analysis
 

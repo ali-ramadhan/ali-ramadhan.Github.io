@@ -38,11 +38,12 @@ function days_in_month(month, year)
 end
 ```
 
-Let's label Sunday as 0, Monday as 1, etc. Now we can start from January 1st, 1901 with `day_of_week = 1`. We'll go through every month between `start_year` and `end_year` and keep incrementing `day_of_week` with the number of days in each month. Each time `day_of_week == 0` that means the first of the month is a Sunday!
+Let's label Sunday as 0, Monday as 1, etc. Since January 1st, 1900 was a Monday, we initialize `day_of_week = 1`. We'll loop through every month starting from 1900, and for each month we first check if it's a Sunday before advancing `day_of_week`. This way, the check happens at the *start* of each month. We only count Sundays for years within our target range (`year >= start_year`). After the check, we advance `day_of_week` by the number of days in that month (mod 7) to get the day of the week for the first of the next month.
 
 ```julia
 function count_sundays_on_first(start_year, end_year)
     # 0 = Sunday, 1 = Monday, ..., 6 = Saturday
+    # January 1st, 1900 was a Monday so we start with day_of_week = 1
     day_of_week = 1
 
     sunday_count = 0

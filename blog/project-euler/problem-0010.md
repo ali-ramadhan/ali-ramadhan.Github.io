@@ -14,41 +14,60 @@ benchmark_key: "sum_of_primes_below_2M"
 
 This is a perfect problem to solve using the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes), and Wikipedia has a great animation showing how it works.
 
-Coding it up in Julia
+Usually the sieve stores a boolean for every integer up to the limit, but we can cut memory usage in half because 2 is the only even prime. Instead of storing all integers, we'll just store odd numbers. Then array index $i$ represents the odd number $2i + 1$, and an odd number $n$ maps to index $(n - 1) / 2$.
+
+The sieving logic also changes slightly. When we find a prime $p$ at index $i$, we mark its odd multiples as composite. Since $p^2$ is odd (odd times odd), we start there. The next odd multiple is $p^2 + 2p$, then $p^2 + 4p$, etc. In terms of array indices, consecutive odd multiples are spaced $p$ apart.
 
 ```julia
-function sieve_of_eratosthenes(limit)
-    is_prime_arr = fill(true, limit)
-    is_prime_arr[1] = false
+function _sieve_of_eratosthenes(limit)
+    limit < 3 && return (Bool[], limit)
 
-    for i in 2:isqrt(limit)
-        if is_prime_arr[i]
-            # Mark all multiples of i as non-prime
-            for j in (i ^ 2):i:limit
-                is_prime_arr[j] = false
+    # index i represents the odd number 2i + 1
+    max_index = (limit - 1) ÷ 2
+    is_prime = fill(true, max_index)
+
+    # For each prime p, mark odd multiples starting at p² which has index (p² - 1) ÷ 2.
+    # The step between consecutive odd multiples is p.
+    i = 1
+    while (2i + 1)^2 <= limit
+        if is_prime[i]
+            p = 2i + 1
+            for j in ((p^2 - 1) ÷ 2):p:max_index
+                is_prime[j] = false
             end
         end
+        i += 1
     end
 
-    primes = [i for i in 2:limit if is_prime_arr[i]]
-
-    return primes
-end
-
-function sum_of_primes_below(limit)
-    primes = sieve_of_eratosthenes(limit)
-    return sum(primes)
+    return is_prime, limit
 end
 ```
 
-we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using @benchmark[problem-0010:sum_of_primes_below_2M:memory].
+The internal `_sieve_of_eratosthenes` returns the boolean array directly, allowing us to build different functions on top of it. For this problem we only need the sum so we can avoid allocating a primes array by summing directly from the boolean array:
+
+```julia
+function sum_sieve_of_eratosthenes(limit)
+    limit < 2 && return 0
+    limit == 2 && return 2
+
+    is_prime, _ = _sieve_of_eratosthenes(limit)
+
+    total = 2
+    for i in eachindex(is_prime)
+        is_prime[i] && (total += 2i + 1)
+    end
+    return total
+end
+```
+
+With this we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using @benchmark[problem-0010:sum_of_primes_below_2M:memory].
 
 We can go a bit further and compute the sum of all primes below $10^8$ in @benchmark[problem-0010:sum_of_primes_below_100M] using @benchmark[problem-0010:sum_of_primes_below_100M:memory].
 
-The sieve uses $\mathcal{O}(n)$ space for the boolean array. For time complexity, consider how much work we do crossing off multiples. For each prime $p$, we cross off roughly $n/p$ multiples. The total work is
+The sieve uses $\mathcal{O}(n/2)$ space for the boolean array. For time complexity, consider how much work we do crossing off multiples. For each prime $p$, we cross off roughly $n/2p$ odd multiples. The total work is
 
 ```math
-\frac{n}{2} + \frac{n}{3} + \frac{n}{5} + \frac{n}{7} + \cdots = n \left( \frac{1}{2} + \frac{1}{3} + \frac{1}{5} + \cdots \right).
+\frac{n}{2 \cdot 3} + \frac{n}{2 \cdot 5} + \frac{n}{2 \cdot 7} + \cdots = \frac{n}{2} \left( \frac{1}{3} + \frac{1}{5} + \frac{1}{7} + \cdots \right).
 ```
 
 The [sum of reciprocals of primes](https://en.wikipedia.org/wiki/Divergence_of_the_sum_of_the_reciprocals_of_the_primes) up to $n$ grows like $\log \log n$, giving us $\mathcal{O}(n \log \log n)$ time complexity.

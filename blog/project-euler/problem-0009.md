@@ -12,6 +12,8 @@ date: 2025-11-30
 
 We'll solve the more general problem where $a + b + c = n$.
 
+## A fast approach using some algebra
+
 We're looking for three values but we have two constraints which we can use to avoid having to search for $b$ and $c$. When searching we can compute $c$ by solving $a + b + c = n$ for $c$ to get $c = n - a - b$.
 
 We can substitute the equation for $c$ into $a^2 + b^2 = c^2$ to get $a^2 + b^2 = (n - a - b)^2$. Solving it for $b$ we get
@@ -57,3 +59,71 @@ This code finds the special Pythagorean triplet for $n = 10^3$ in @benchmark[pro
 Taking it a bit further, we find two Pythagorean triplets for $n = 10^6$ in @benchmark[problem-0009:n_1000000]: $(200000, 375000, 425000)$ and $(218750, 360000, 421250)$.
 
 And even further, we find seven Pythagorean triplets for $n = 1234567890$ in @benchmark[problem-0009:n_1234567890]: $(63080361, 584045440, 587442089)$, $(63627480, 583741485, 587198925)$, $(123456789, 548696840, 562414261)$, $(149857215, 532003644, 552707031)$, $(180721521, 511427440, 542418929)$, $(205761315, 493827156, 534979419)$, and $(258784215, 453576204, 522207471)$.
+
+## A faster approach using Euclid's formula
+
+The $\mathcal{O}(n)$ approach works well but for very large $n$ we can do better using [Euclid's formula](https://en.wikipedia.org/wiki/Pythagorean_triple#Generating_a_triple) for generating Pythagorean triples. It states that all primitive Pythagorean triples (those where $\gcd(a, b, c) = 1$) can be written as
+
+```math
+a = m^2 - n^2, \quad b = 2mn, \quad c = m^2 + n^2
+```
+
+where $m > n > 0$, $\gcd(m, n) = 1$, and $m - n$ is odd. All non-primitive triples are just integer multiples $k$ of primitive ones.
+
+The perimeter $P$ of a triple generated this way is
+
+```math
+P = a + b + c = (m^2 - n^2) + 2mn + (m^2 + n^2) = 2m(m + n)
+```
+
+For a scaled triple with factor $k$, the perimeter becomes $P = 2km(m + n)$, which means $km(m + n) = P/2$.
+
+Since $k \ge 1$ and $n \ge 1$, we have $m(m + n) \le P/2$. And since $n \ge 1$, this means $m(m + 1) \le P/2$, which implies $m^2 < P/2$, so $m < \sqrt{P/2}$. This is a much tighter bound than iterating $a$ up to $P/3$.
+
+For each candidate $m$, if $m$ divides $P/2$ we can write
+
+```math
+\frac{P/2}{m} = k(m + n)
+```
+
+Call the left-hand side $R$. We then search for divisors of $R$ that could be $(m + n)$, which would make $k = R / (m + n)$. For each candidate, we compute $n = (m + n) - m$ and check the three constraints required by Euclid's formula: $n$ must be positive, $n < m$, $m$ and $n$ must be coprime, and $m + n$ must be odd.
+
+```julia
+function find_pythagorean_triplets_euclid(P)
+    triplets = Set{Tuple{Int,Int,Int}}()
+
+    isodd(P) && return triplets
+
+    half_P = P ÷ 2
+
+    for m in 2:isqrt(half_P)
+        half_P % m == 0 || continue
+        R = half_P ÷ m  # R = k(m + n)
+
+        for d in 1:isqrt(R)
+            R % d == 0 || continue
+
+            for m_plus_n in (d, R ÷ d)
+                n = m_plus_n - m
+
+                # Check Euclid's formula constraints
+                n < 1 && continue        # n must be positive
+                n >= m && continue       # n must be less than m
+                gcd(m, n) != 1 && continue  # m and n must be coprime
+                iseven(m + n) && continue   # m + n must be odd
+
+                k = R ÷ m_plus_n
+                a, b = minmax(k * (m^2 - n^2), 2k * m * n)
+                c = k * (m^2 + n^2)
+                push!(triplets, (a, b, c))
+            end
+        end
+    end
+
+    return sort!(collect(triplets))
+end
+```
+
+This finds the same seven triplets for $n = 1234567890$ in just @benchmark[problem-0009:n_1234567890_euclid]. It does $n = 10^3$ in @benchmark[problem-0009:n_1000_euclid] and $n = 10^6$ in @benchmark[problem-0009:n_1000000_euclid].
+
+The time complexity is roughly $\mathcal{O}(\sqrt{P} \cdot d(P))$ where $d(P)$ is related to the divisor structure of $P$.

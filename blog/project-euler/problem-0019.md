@@ -66,3 +66,5 @@ end
 Calling `count_sundays_on_first(1901, 2000)` compute the solution in @benchmark[problem-0019:years_1901_2000].
 
 Going further, calling `count_sundays_on_first(2000, 10000)` computes 13761 Sundays falling on the first of the month between the years 2000 and 10000 in @benchmark[problem-0019:years_2000_10000].
+
+An alternative approach is to use [Zeller's congruence](https://en.wikipedia.org/wiki/Zeller%27s_congruence), an algorithm that can be used to calculate the day of the week for any date. Rather than iterating through every month to track the day of the week, Zeller's formula directly computes it from the date components.

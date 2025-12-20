@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 22
 problem_name: "Names Scores"
 date: 2025-12-16
+difficulty: 5
+benchmark_file: "problem-0022"
+benchmark_key: "solution"
 ---
 
 > Using [names.txt](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/data/0022_names.txt), a 46K text file containing over five-thousand first names, begin by sorting it into alphabetical order. Then working out the alphabetical value for each name, multiply this value by its alphabetical position in the list to obtain a name score.

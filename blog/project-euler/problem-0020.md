@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 20
 problem_name: "Factorial Digit Sum"
 date: 2025-12-10
+difficulty: 5
+benchmark_file: "problem-0020"
+benchmark_key: "factorial_100"
 ---
 
 > $n!$ means $n \times (n - 1) \times \cdots \times 3 \times 2 \times 1$.

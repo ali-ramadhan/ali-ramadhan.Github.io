@@ -9,9 +9,7 @@ import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
 import markdownItPrism from "markdown-it-prism";
 import { markdownItCitations } from "./citations.js";
-import { readFileSync } from "fs";
-import path from "path";
-import yaml from "js-yaml";
+import { processBenchmark } from "./benchmark-utils.js";
 
 // Custom math blocks plugin for markdown-it
 function markdownItMathBlocks(md) {
@@ -52,119 +50,8 @@ function markdownItBenchmark(md) {
             while ((match = benchmarkRegex.exec(child.content)) !== null) {
               hasMatches = true;
               const [fullMatch, filename, key, displayType = "median_time"] = match;
-
-              try {
-                // Load benchmark data from YAML
-                const benchmarkPath = path.join(
-                  process.cwd(),
-                  "_data",
-                  "project-euler",
-                  "benchmarks",
-                  `${filename}-benchmarks.yaml`
-                );
-                const benchmarkData = yaml.load(readFileSync(benchmarkPath, "utf8"));
-                const cpuBenchmarks = benchmarkData[key];
-
-                if (cpuBenchmarks && typeof cpuBenchmarks === "object") {
-                  const cpuNames = Object.keys(cpuBenchmarks);
-
-                  if (cpuNames.length === 0) {
-                    console.warn(`No CPU benchmarks found for "${key}" in ${filename}-benchmarks.yaml`);
-                    content = content.replace(fullMatch, `[No benchmarks for ${filename}:${key}]`);
-                    continue;
-                  }
-
-                  // Build cpus object with all CPU data
-                  const cpus = {};
-                  for (const cpuName of cpuNames) {
-                    const benchmark = cpuBenchmarks[cpuName];
-                    if (benchmark && benchmark.output) {
-                      // Extract median time from the benchmark output (accounting for ANSI codes)
-                      const medianMatch = benchmark.output.match(/median[^:]*:.*?([\d.]+\s+[nμm]?s)/);
-                      const medianTime = medianMatch ? medianMatch[1] : "Unknown";
-
-                      // Extract memory estimate from the benchmark output
-                      const memoryMatch = benchmark.output.match(/Memory estimate[^:]*:.*?([\d.]+\s*(?:bytes|[KMG]iB|[KMG]B))/i);
-                      const memoryEstimate = memoryMatch ? memoryMatch[1] : "Unknown";
-
-                      cpus[cpuName] = {
-                        median_time: medianTime,
-                        memory_estimate: memoryEstimate,
-                        full_output: benchmark.output,
-                        julia_version: benchmark.julia_version,
-                        os: benchmark.os,
-                        date: benchmark.date,
-                      };
-                    }
-                  }
-
-                  // Helper to parse time strings for comparison
-                  const parseTime = (timeStr) => {
-                    const match = timeStr.match(/([\d.]+)\s*([nμm]?s)/);
-                    if (!match) return Infinity;
-                    const value = parseFloat(match[1]);
-                    const unit = match[2];
-                    if (unit === "ns") return value;
-                    if (unit === "μs") return value * 1000;
-                    if (unit === "ms") return value * 1000000;
-                    if (unit === "s") return value * 1000000000;
-                    return value;
-                  };
-
-                  // Helper to parse memory strings for comparison
-                  const parseMemory = (memStr) => {
-                    const match = memStr.match(/([\d.]+)\s*(bytes|[KMG]iB|[KMG]B)/i);
-                    if (!match) return Infinity;
-                    const value = parseFloat(match[1]);
-                    const unit = match[2].toLowerCase();
-                    if (unit === "bytes") return value;
-                    if (unit === "kib" || unit === "kb") return value * 1024;
-                    if (unit === "mib" || unit === "mb") return value * 1024 * 1024;
-                    if (unit === "gib" || unit === "gb") return value * 1024 * 1024 * 1024;
-                    return value;
-                  };
-
-                  // Find best CPU based on display type
-                  const bestCpu = Object.keys(cpus).reduce((best, cpu) => {
-                    if (displayType === "memory") {
-                      const currentMem = parseMemory(cpus[cpu].memory_estimate);
-                      const bestMem = parseMemory(cpus[best].memory_estimate);
-                      return currentMem < bestMem ? cpu : best;
-                    } else {
-                      const currentTime = parseTime(cpus[cpu].median_time);
-                      const bestTime = parseTime(cpus[best].median_time);
-                      return currentTime < bestTime ? cpu : best;
-                    }
-                  });
-
-                  // Get display value based on type
-                  const displayValue =
-                    displayType === "memory"
-                      ? cpus[bestCpu]?.memory_estimate || "Unknown"
-                      : cpus[bestCpu]?.median_time || "Unknown";
-
-                  // CSS class modifier for styling
-                  const cssModifier = displayType === "memory" ? " benchmark-reference--memory" : "";
-
-                  // Create benchmark data object with all CPUs
-                  const benchmarkObj = {
-                    cpus: cpus,
-                    default_cpu: bestCpu,
-                    default_value: displayValue,
-                  };
-
-                  // Replace with HTML for interactive benchmark display
-                  const escapedData = JSON.stringify(benchmarkObj).replace(/'/g, "&#39;");
-                  const replacement = `<span class="benchmark-reference${cssModifier}" data-benchmark='${escapedData}'>${displayValue}</span>`;
-                  content = content.replace(fullMatch, replacement);
-                } else {
-                  console.warn(`Benchmark key "${key}" not found in ${filename}-benchmarks.yaml`);
-                  content = content.replace(fullMatch, `[Benchmark ${filename}:${key} not found]`);
-                }
-              } catch (error) {
-                console.warn(`Error loading benchmark file ${filename}-benchmarks.yaml:`, error.message);
-                content = content.replace(fullMatch, `[Benchmark file ${filename}-benchmarks.yaml not found]`);
-              }
+              const replacement = processBenchmark(filename, key, displayType);
+              content = content.replace(fullMatch, replacement);
             }
 
             if (hasMatches) {

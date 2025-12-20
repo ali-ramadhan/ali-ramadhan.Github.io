@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 25
 problem_name: "1000-digit Fibonacci Number"
 date: 2025-12-17
+difficulty: 5
+benchmark_file: "problem-0025"
+benchmark_key: "iterative_1000"
 ---
 
 > The Fibonacci sequence is defined by the recurrence relation:

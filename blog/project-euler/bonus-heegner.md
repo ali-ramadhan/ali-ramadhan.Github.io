@@ -4,6 +4,8 @@ bonus_problem: true
 bonus_problem_number: 3
 problem_name: "Heegner"
 date: 2025-12-07
+benchmark_file: "bonus-heegner"
+benchmark_key: "n_1k"
 ---
 
 > Among all non-square integers $n$ with absolute value not exceeding $10^3$, find the value of $n$ such that $\cos(\pi \sqrt n)$ is closest to an integer.

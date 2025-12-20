@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 10
 problem_name: "Summation of Primes"
 date: 2025-12-05
+difficulty: 5
+benchmark_file: "problem-0010"
+benchmark_key: "sum_of_primes_below_2M"
 ---
 
 > The sum of the primes below $10$ is $2 + 3 + 5 + 7 = 17$.

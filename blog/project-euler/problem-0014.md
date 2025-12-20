@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 14
 problem_name: "Longest Collatz Sequence"
 date: 2025-12-07
+difficulty: 5
+benchmark_file: "problem-0014"
+benchmark_key: "longest_collatz_under_1M"
 ---
 
 > The following iterative sequence is defined for the set of positive integers:

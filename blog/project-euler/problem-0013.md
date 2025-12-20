@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 13
 problem_name: "Large Sum"
 date: 2025-12-06
+difficulty: 5
+benchmark_file: "problem-0013"
+benchmark_key: "first_ten_digits_of_sum"
 ---
 
 > Work out the first ten digits of the sum of the following one-hundred 50-digit numbers.

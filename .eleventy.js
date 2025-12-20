@@ -1,5 +1,6 @@
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import { configureMarkdown } from "./config/markdown.js";
+import { processBenchmark } from "./config/benchmark-utils.js";
 
 export default function (eleventyConfig) {
   // Configure custom markdown extensions and transforms
@@ -16,6 +17,11 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter("padStart", function (num, length, char) {
     char = char || "0";
     return String(num).padStart(length, char);
+  });
+
+  // Add benchmark shortcode for use in templates
+  eleventyConfig.addShortcode("benchmark", function (filename, key, displayType = "median_time") {
+    return processBenchmark(filename, key, displayType);
   });
 
   // Add Vite plugin

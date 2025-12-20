@@ -4,6 +4,8 @@ bonus_problem: true
 bonus_problem_number: 5
 problem_name: "Secret"
 date: 2025-12-17
+benchmark_file: "bonus-secret"
+benchmark_key: "solution"
 ---
 
 > <figure class="centered">

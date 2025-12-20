@@ -4,6 +4,8 @@ bonus_problem: true
 bonus_problem_number: 4
 problem_name: "18i"
 date: 2025-12-13
+benchmark_file: "bonus-18i"
+benchmark_key: "solution"
 ---
 
 > Let $R(p)$ be the remainder when the *product* $\prod_{x=0}^{p-1}(x^3-3x+4)$ is divided by $p$. For example, $R(11)=0$ and $R(29)=13$.

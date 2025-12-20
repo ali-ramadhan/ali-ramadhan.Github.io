@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 28
 problem_name: "Number Spiral Diagonals"
 date: 2025-12-18
+difficulty: 5
+benchmark_file: "problem-0028"
+benchmark_key: "diagonal_sum_1001"
 ---
 
 > Starting with the number $1$ and moving to the right in a clockwise direction a $5$ by $5$ spiral is formed as follows:

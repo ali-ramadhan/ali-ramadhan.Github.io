@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 21
 problem_name: "Amicable Numbers"
 date: 2025-12-15
+difficulty: 5
+benchmark_file: "problem-0021"
+benchmark_key: "limit_10k"
 ---
 
 > Let $d(n)$ be defined as the sum of proper divisors of $n$ (numbers less than $n$ which divide evenly into $n$).

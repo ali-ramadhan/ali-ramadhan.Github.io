@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 17
 problem_name: "Number Letter Counts"
 date: 2025-12-10
+difficulty: 5
+benchmark_file: "problem-0017"
+benchmark_key: "range_1_1000"
 ---
 
 > If the numbers $1$ to $5$ are written out in words: one, two, three, four, five, then there are $3 + 3 + 5 + 4 + 4 = 19$ letters used in total.

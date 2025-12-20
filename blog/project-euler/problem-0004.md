@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 4
 problem_name: "Largest Palindrome Product"
 date: 2025-10-07
+difficulty: 5
+benchmark_file: "problem-0004"
+benchmark_key: "3_digits"
 ---
 
 > A palindromic number reads the same both ways. The largest palindrome made from the product of two $2$-digit numbers is $9009 = 91 \times 99$.

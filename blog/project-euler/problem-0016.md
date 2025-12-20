@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 16
 problem_name: "Power Digit Sum"
 date: 2025-12-07
+difficulty: 5
+benchmark_file: "problem-0016"
+benchmark_key: "power_digit_sum_2_1000"
 ---
 
 > $2^{15} = 32768$ and the sum of its digits is $3 + 2 + 7 + 6 + 8 = 26$.

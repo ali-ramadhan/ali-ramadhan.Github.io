@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 6
 problem_name: "Sum Square Difference"
 date: 2025-10-07
+difficulty: 5
+benchmark_file: "problem-0006"
+benchmark_key: "n_100"
 ---
 
 > The sum of the squares of the first ten natural numbers is,

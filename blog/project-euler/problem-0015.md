@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 15
 problem_name: "Lattice Paths"
 date: 2025-12-07
+difficulty: 5
+benchmark_file: "problem-0015"
+benchmark_key: "count_lattice_paths_20x20"
 ---
 
 > Starting in the top left corner of a $2 \times 2$ grid, and only being able to move to the right and down, there are exactly $6$ routes to the bottom right corner.

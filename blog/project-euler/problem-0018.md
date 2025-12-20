@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 18
 problem_name: "Maximum Path Sum I"
 date: 2025-12-10
+difficulty: 5
+benchmark_file: "problem-0018"
+benchmark_key: "solution"
 ---
 
 > By starting at the top of the triangle below and moving to adjacent numbers on the row below, the maximum total from top to bottom is $23$.

@@ -3,6 +3,9 @@ layout: "project-euler-post"
 problem_number: 3
 problem_name: "Largest Prime Factor"
 date: 2025-09-14
+difficulty: 5
+benchmark_file: "problem-0003"
+benchmark_key: "problem"
 ---
 
 > The prime factors of $13195$ are $5, 7, 13$ and $29$.

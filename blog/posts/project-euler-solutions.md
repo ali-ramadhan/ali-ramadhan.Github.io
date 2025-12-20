@@ -22,6 +22,8 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
     <tr>
       <th>#</th>
       <th>Problem</th>
+      <th>Difficulty</th>
+      <th>Time</th>
     </tr>
   </thead>
   <tbody>
@@ -29,6 +31,8 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
     <tr>
       <td>{{ problem.data.problem_number }}</td>
       <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
+      <td>{%- if problem.data.difficulty %}{% set hue = 120 - (problem.data.difficulty - 5) * 1.26 %}<div class="difficulty-bar" data-tooltip="Difficulty: {{ problem.data.difficulty }}%"><div class="difficulty-bar-fill{% if problem.data.difficulty == 100 %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
+      <td>{%- if problem.data.benchmark_file and problem.data.benchmark_key %}{% benchmark problem.data.benchmark_file, problem.data.benchmark_key %}{% else %}—{% endif -%}</td>
     </tr>
     {% endfor %}
   </tbody>
@@ -36,8 +40,21 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
 
 ## Bonus problems
 
-- [-1](/blog/project-euler/bonus-minus1/)
-- [√13](/blog/project-euler/bonus-root13/)
-- [Heegner](/blog/project-euler/bonus-heegner/)
-- [18i](/blog/project-euler/bonus-18i/)
-- [Secret](/blog/project-euler/bonus-secret/)
+<table>
+  <thead>
+    <tr>
+      <th>Problem</th>
+      <th>Difficulty</th>
+      <th>Time</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for problem in collections.allEuler %}{% if problem.data.bonus_problem %}
+    <tr>
+      <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
+      <td>{%- if problem.data.difficulty %}{% set hue = 120 - (problem.data.difficulty - 5) * 1.26 %}<div class="difficulty-bar" data-tooltip="Difficulty: {{ problem.data.difficulty }}%"><div class="difficulty-bar-fill{% if problem.data.difficulty == 100 %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
+      <td>{%- if problem.data.benchmark_file and problem.data.benchmark_key %}{% benchmark problem.data.benchmark_file, problem.data.benchmark_key %}{% else %}—{% endif -%}</td>
+    </tr>
+    {% endif %}{% endfor %}
+  </tbody>
+</table>

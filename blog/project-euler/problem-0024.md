@@ -24,6 +24,10 @@ For the second digit, we take the remainder $999,999 \mod 362,880 = 274,239$ and
 
 This process continues for all 10 positions, each time dividing by the appropriate factorial, selecting the element at that index, and using the remainder for the next iteration.
 
+This technique is formally known as _unranking_ in a [combinatorial number system](https://en.wikipedia.org/wiki/Combinatorial_number_system): given a rank $n$, we compute the corresponding permutation directly without generating the preceding ones.
+
+The sequence of indices we compute $[2, 6, 6, 2, 5, 1, 2, 1, 1, 0]$ is also known as the [Lehmer code](https://en.wikipedia.org/wiki/Lehmer_code) for the permutation. Each element represents how many remaining available elements are smaller than the chosen one at that position, encoding the permutation in factorial base.
+
 ```julia
 function find_nth_permutation(elements, n)
     elements = deepcopy(collect(elements))

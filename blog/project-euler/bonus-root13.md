@@ -4,6 +4,7 @@ bonus_problem: true
 bonus_problem_number: 2
 problem_name: "√13"
 date: 2025-12-05
+difficulty: 15
 benchmark_file: "bonus-root13"
 benchmark_key: "S_13_1000"
 ---

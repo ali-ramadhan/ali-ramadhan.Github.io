@@ -4,6 +4,7 @@ bonus_problem: true
 bonus_problem_number: 3
 problem_name: "Heegner"
 date: 2025-12-07
+difficulty: 10
 benchmark_file: "bonus-heegner"
 benchmark_key: "n_1k"
 ---

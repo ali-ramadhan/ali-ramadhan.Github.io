@@ -4,6 +4,7 @@ bonus_problem: true
 bonus_problem_number: 4
 problem_name: "18i"
 date: 2025-12-13
+difficulty: 75
 benchmark_file: "bonus-18i"
 benchmark_key: "solution"
 ---

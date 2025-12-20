@@ -27,6 +27,12 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
     </tr>
   </thead>
   <tbody>
+    <!--
+      Difficulty bar color: hue = 120 - (difficulty - 5) * 1.26
+        - HSL hue 120 = green, hue 0 = red
+        - Difficulty ranges from 5% to 100%, so (difficulty - 5) gives 0 to 95
+        - Multiplier 1.26 ≈ 120/95 maps this range to hue 120 (green) down to 0 (red)
+    -->
     {% for problem in collections.euler %}
     <tr>
       <td>{{ problem.data.problem_number }}</td>

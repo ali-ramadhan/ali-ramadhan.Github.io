@@ -27,7 +27,11 @@ benchmark_key: "find_quadratic_with_most_primes_1000"
 >
 > Find the product of the coefficients, $a$ and $b$, for the quadratic expression that produces the maximum number of primes for consecutive values of $n$, starting with $n = 0$.
 
-To find the best quadratic in the search space, we could test all $(a, b)$ pairs with $|a| < 1000$ and $|b| \le 1000$, giving us about $1999 \times 2001 \approx 4 \times 10^6$ combinations. But we can cut down the search space a little bit. When $n = 0$ the expression $n^2 + an + b = b$ so for our sequence to even start with a prime, $b$ itself must be prime. This reduces the search to only prime values of $b$, cutting our combinations down to $1999 \times 168 \approx 3.36 \times 10^5$.
+To find the best quadratic in the search space, we could test all $(a, b)$ pairs with $|a| < 1000$ and $|b| \le 1000$, giving us about $1999 \times 2001 \approx 4 \times 10^6$ combinations. But we can cut down the search space significantly using a few observations.
+
+First, $b$ must be prime because when $n = 0$, the expression $n^2 + an + b = b$, so $b$ itself must be prime. Second, $b$ must be odd because if $b = 2$, then for $n = 1$ we get $1 + a + 2 = 3 + a$. For this to be prime and the sequence to continue, we'd need $3 + a$ to be odd, meaning $a$ must be even. But then for $n = 2$ we get $4 + 2a + 2 = 6 + 2a$, which is always even. So $b = 2$ can produce at most 2 consecutive primes, which is not enough.
+
+Third, $a$ must also be odd since $b$ is an odd prime, if $a$ were even then $n^2 + an + b$ would alternate between odd and even as $n$ increases, making long prime runs impossible. And fourth, $1 + a + b$ must be prime because when $n = 1$, the expression gives $1 + a + b$, which must be prime. This means instead of iterating over all odd values of $a$, we can iterate over primes $p = 1 + a + b$ and compute $a = p - b - 1$.
 
 For each $(a, b)$ pair, we count how many consecutive primes the quadratic produces starting from $n = 0$:
 
@@ -49,27 +53,41 @@ function count_consecutive_primes(a, b)
 end
 ```
 
-We stop when the value is not a prime number or the values start to go negative. It's straightforward to loop through all potential $(a, b)$ pairs:
+We stop when the value is not a prime number or the values start to go negative.
+
+Using our constraints, we iterate over odd primes $b$ and primes $p$ (where $a = p - b - 1$):
 
 ```julia
 function find_quadratic_with_most_primes(; a_max=1000, b_max=1000)
-    max_count = 0
-    best_a, best_b = 0, 0
+    max_prime_count = 0
+    best_a = 0
+    best_b = 0
 
-    primes_list = [p for p in 2:b_max if is_prime(p)]
+    b_primes = [p for p in 3:b_max if is_prime(p)]
 
-    for a in -(a_max-1):(a_max-1)
-        for b in primes_list
+    for b in b_primes
+        for p in 3:(a_max + b)
+            if !is_prime(p)
+                continue
+            end
+
+            a = p - b - 1
+
+            if a >= a_max
+                break
+            end
+
             count = count_consecutive_primes(a, b)
 
-            if count > max_count
-                max_count = count
-                best_a, best_b = a, b
+            if count > max_prime_count
+                max_prime_count = count
+                best_a = a
+                best_b = b
             end
         end
     end
 
-    return best_a, best_b, max_count
+    return best_a, best_b, max_prime_count
 end
 ```
 

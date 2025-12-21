@@ -16,27 +16,14 @@ benchmark_key: "solution"
 >
 > Find the sum of all the positive integers which cannot be written as the sum of two abundant numbers.
 
-Building on [Problem 21](/blog/project-euler/problem-0021/) we can reuse `sum_divisors` to check if a number is abundant:
+Building on [Problem 21](/blog/project-euler/problem-0021/) we can reuse `sum_proper_divisors_sieve` to find all abundant numbers. A number is abundant if the sum of its proper divisors exceeds the number itself.
 
-```julia
-function is_abundant(n)
-    return sum_divisors(n) - n > n
-end
-```
-
-First, we need to find all abundant numbers up to our limit of 28123.
+While the problem states that all integers greater than 28123 can be written as the sum of two abundant numbers, [Wolfram MathWorld](https://mathworld.wolfram.com/AbundantNumber.html) gives us a tighter bound of 20161.
 
 ```julia
 function find_abundant_numbers(limit)
-    abundant_nums = Int[]
-
-    for n in 1:limit
-        if is_abundant(n)
-            push!(abundant_nums, n)
-        end
-    end
-
-    return abundant_nums
+    sod = sum_proper_divisors_sieve(limit)
+    return [n for n in 1:limit if sod[n] > n]
 end
 ```
 
@@ -72,4 +59,4 @@ end
 
 Note that we iterate `j` from `i` rather than from 1 because addition is commutative and if we've already marked $a + b$, we don't need to check $b + a$. We also break early when the sum exceeds the limit since the abundant numbers are in ascending order.
 
-`sum_non_abundant_sums(28123)` returns the answer in @benchmark[problem-0023:solution].
+`sum_non_abundant_sums(20161)` returns the answer in @benchmark[problem-0023:solution].

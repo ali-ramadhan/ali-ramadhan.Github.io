@@ -16,43 +16,32 @@ benchmark_key: "limit_10k"
 >
 > Evaluate the sum of all the amicable numbers under $10000$.
 
-First let's define a function that lets us sum the divisors of an integer $n$. This is quite similar to `num_divisors` from [Problem 12](/blog/project-euler/problem-0012/) and also does not allocate memory.
+Rather than computing the sum of proper divisors for each number individually, we can use a sieve to precompute them all at once. This runs in $O(n \log n)$ time rather than $O(n\sqrt{n})$ for the naive approach.
 
 ```julia
-function sum_divisors(n)
-    total = 0
-    sqrt_n = isqrt(n)
-
-    for i in 1:sqrt_n
-        if n % i == 0
-            total += i + n ÷ i
+function sum_proper_divisors_sieve(limit)
+    sums = ones(Int, limit)  # Start with 1 as a proper divisor for n ≥ 2
+    sums[1] = 0              # 1 has no proper divisors
+    for i in 2:(limit ÷ 2)
+        for j in (2 * i):i:limit
+            sums[j] += i
         end
     end
-
-    if sqrt_n^2 == n
-        total -= sqrt_n
-    end
-
-    return total
+    return sums
 end
 ```
 
-We can now easily define a function to tell us whether an integer is amicable or not.
+The sieve works by iterating through each potential divisor $i$ and adding it to all of its multiples. This is similar to the Sieve of Eratosthenes we used in [Problem 10](/blog/project-euler/problem-0010/) but instead of marking composites, we accumulate divisor sums.
 
-```julia
-function is_amicable(a)
-    b = sum_divisors(a) - a
-    return a != b && sum_divisors(b) - b == a
-end
-```
-
-Then we just need to go through every integer $a$ below the limit and sum up all the amicable numbers we find.
+With the base sieve implemented, we can check for amicable pairs using simple array lookups:
 
 ```julia
 function sum_of_amicable_numbers(limit)
+    divisor_sums = sum_proper_divisors_sieve(limit)
     total = 0
     for a in 2:(limit - 1)
-        if is_amicable(a)
+        b = divisor_sums[a]
+        if b != a && b >= 1 && b <= limit && divisor_sums[b] == a
             total += a
         end
     end
@@ -60,4 +49,11 @@ function sum_of_amicable_numbers(limit)
 end
 ```
 
-`sum_of_amicable_numbers(10000)` returns the answer in @benchmark[problem-0021:limit_10k]. We can also compute `sum_of_amicable_numbers(1_000_000)` which returns in @benchmark[problem-0021:limit_1M].
+Using this we compute the answer for limits up to $10^8$, tabulated below.
+
+| Limit   | Sum         | Time |
+|---------|-------------|------|
+| $10^4$  |             | @benchmark[problem-0021:limit_10k]  |
+| $10^5$  | 852,810     | @benchmark[problem-0021:limit_100k] |
+| $10^6$  | 25,275,024  | @benchmark[problem-0021:limit_1M]   |
+| $10^7$  | 575,875,320 | @benchmark[problem-0021:limit_10M]  |

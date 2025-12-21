@@ -212,13 +212,24 @@ export class BenchmarkManager {
         return timeA - timeB;
       });
 
-      for (const cpuName of cpuNames) {
+      const fastestTime = parseTime(benchmarkData.cpus[cpuNames[0]].median_time);
+
+      cpuNames.forEach((cpuName, index) => {
         const cpuData = benchmarkData.cpus[cpuName];
+        const rank = index + 1;
         const option = document.createElement("option");
         option.value = cpuName;
-        option.textContent = `${cpuName} | ${cpuData.julia_version} | ${cpuData.os}`;
+
+        let text = `${rank}. ${cpuName} | ${cpuData.julia_version} | ${cpuData.os}`;
+        if (rank > 1) {
+          const cpuTime = parseTime(cpuData.median_time);
+          const slowdown = (cpuTime / fastestTime).toFixed(2);
+          text += ` | ${slowdown}x slower`;
+        }
+
+        option.textContent = text;
         dropdown.appendChild(option);
-      }
+      });
 
       // Select the fastest CPU (first in sorted list)
       dropdown.value = cpuNames[0];

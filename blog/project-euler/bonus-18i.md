@@ -177,19 +177,44 @@ function R_mod_p(p)
 end
 ```
 
-Now we just need to sum over all $p$
+Now we just need to sum over all $p$. Since each prime can be processed independently, this is an embarassingly parallel problem and we can parallelize this computation across multiple threads. The range is divided into chunks, with each thread processing its own chunk and computing a local sum.
 
 ```julia
 function sum_R_mod_p(low, high)
-    total_sum = 0
+    primality_test = MillerRabin(high)
+    return _sum_R_mod_p_inner(low, high, primality_test)
+end
 
-    for n in low:high
-        if is_prime(n, MillerRabin())
-            total_sum += R_mod_p(n)
+function _sum_R_mod_p_inner(low, high, primality_test::MillerRabin{W}) where W
+    num_chunks = Threads.nthreads()
+
+    if num_chunks == 1
+        total_sum = 0
+        for n in low:high
+            if is_prime(n, primality_test)
+                total_sum += R_mod_p(n)
+            end
+        end
+        return total_sum
+    end
+
+    chunk_size = cld(high - low + 1, num_chunks)
+
+    tasks = map(1:num_chunks) do i
+        chunk_start = low + (i - 1) * chunk_size
+        chunk_end = min(chunk_start + chunk_size - 1, high)
+        Threads.@spawn begin
+            local_sum = 0
+            for n in chunk_start:chunk_end
+                if is_prime(n, primality_test)
+                    local_sum += R_mod_p(n)
+                end
+            end
+            return local_sum
         end
     end
 
-    return total_sum
+    return sum(fetch, tasks)
 end
 ```
 

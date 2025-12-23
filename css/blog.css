@@ -1133,3 +1133,11 @@ html[data-theme="dark"] .difficulty-bar {
 html[data-theme="dark"] .difficulty-bar[data-tooltip]:hover::after {
   background: #555;
 }
+
+/* Mobile adjustments for difficulty bar */
+@media (width <= 768px) {
+  .difficulty-bar {
+    width: 60px;
+    height: 12px;
+  }
+}

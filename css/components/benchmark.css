@@ -249,6 +249,13 @@ html[data-theme="dark"] .ansi-gray {
   outline-offset: 2px;
 }
 
+/* Metadata line (Julia version, OS) */
+.benchmark-meta {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #666;
+  padding: 0.25rem 0 0.5rem;
+}
 
 /* Dark theme for tooltip */
 html[data-theme="dark"] .benchmark-tooltip {
@@ -284,6 +291,10 @@ html[data-theme="dark"] .benchmark-cpu-dropdown:hover {
   border-color: #666;
 }
 
+html[data-theme="dark"] .benchmark-meta {
+  color: #999;
+}
+
 /* Responsive design */
 @media (width <= 768px) {
   .benchmark-tooltip {
@@ -299,6 +310,12 @@ html[data-theme="dark"] .benchmark-cpu-dropdown:hover {
   .benchmark-output {
     font-size: 0.8rem;
     min-width: unset;
+  }
+
+  /* Smaller benchmark references in tables */
+  .benchmark-reference {
+    padding: 1px 4px;
+    font-size: 0.8em;
   }
 }
 

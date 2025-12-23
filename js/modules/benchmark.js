@@ -85,6 +85,7 @@ export class BenchmarkManager {
         <div class="benchmark-cpu-selector">
           <select class="benchmark-cpu-dropdown" aria-label="Select CPU"></select>
         </div>
+        <div class="benchmark-meta"></div>
         <pre class="benchmark-output"></pre>
         <button class="benchmark-close" aria-label="Close benchmark details">&times;</button>
       </div>
@@ -220,11 +221,18 @@ export class BenchmarkManager {
         const option = document.createElement("option");
         option.value = cpuName;
 
-        let text = `${rank}. ${cpuName} | ${cpuData.julia_version} | ${cpuData.os}`;
+        let text = `${rank}. ${cpuName}`;
+
+        // Show thread count if available (multi-threaded benchmark)
+        if (cpuData.thread_count) {
+          text += ` | ${cpuData.thread_count} threads`;
+        }
+
+        // Show slowdown for non-fastest CPUs
         if (rank > 1) {
           const cpuTime = parseTime(cpuData.median_time);
           const slowdown = (cpuTime / fastestTime).toFixed(2);
-          text += ` | ${slowdown}x slower`;
+          text += ` | ${slowdown}× slower`;
         }
 
         option.textContent = text;
@@ -254,6 +262,10 @@ export class BenchmarkManager {
     }
 
     const cpuData = this.currentBenchmarkData.cpus[cpuName];
+
+    // Update metadata line (Julia version and OS)
+    const meta = this.tooltip.querySelector(".benchmark-meta");
+    meta.textContent = `${cpuData.julia_version} · ${cpuData.os}`;
 
     // Update tooltip content with colored ANSI output
     const output = this.tooltip.querySelector(".benchmark-output");

@@ -28,3 +28,19 @@ html[data-theme="dark"] .blog-post-content td {
 .blog-post-content .table-wrapper {
   overflow-x: auto;
 }
+
+/* Mobile table adjustments */
+@media (width <= 768px) {
+  .blog-post-content th,
+  .blog-post-content td {
+    padding: 0.5rem 0.4rem;
+    font-size: 0.9rem;
+  }
+
+  /* Make tables horizontally scrollable when needed */
+  .blog-post-content table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}

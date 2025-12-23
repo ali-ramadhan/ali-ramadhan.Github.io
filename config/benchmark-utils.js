@@ -73,6 +73,7 @@ export function loadBenchmarkData(filename, key) {
           julia_version: benchmark.julia_version,
           os: benchmark.os,
           date: benchmark.date,
+          thread_count: benchmark.thread_count,
         };
       }
     }

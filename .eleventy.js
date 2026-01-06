@@ -49,6 +49,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("favicon-96x96.png");
   eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
   eleventyConfig.addPassthroughCopy("site.webmanifest");
+  eleventyConfig.addPassthroughCopy("web-app-manifest-192x192.png");
+  eleventyConfig.addPassthroughCopy("web-app-manifest-512x512.png");
 
   // Create a collection for blog posts
   eleventyConfig.addCollection("posts", function (collectionApi) {

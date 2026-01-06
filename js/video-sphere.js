@@ -309,7 +309,8 @@ function setupVideoSphere(sphereInit) {
         video.load(); // Reload video to pick new sources
 
         // Handle play promise properly
-        video.play()
+        video
+          .play()
           .then(() => {
             isLoadingVideo = false;
           })
@@ -325,34 +326,33 @@ function setupVideoSphere(sphereInit) {
         }
 
         tooltipMeshGroup.clear();
+
+        for (const [name, tooltip] of Object.entries(videos[n]["tooltips"] || {})) {
+          let tooltipLatitude = tooltip["latitude"];
+          let tooltipLongitude = tooltip["longitude"];
+
+          let [tooltipX, tooltipY, tooltipZ] = latlon2xyz(tooltipLatitude, tooltipLongitude);
+
+          let tooltipGeometry = new THREE.CircleGeometry(0.05, 25);
+          let tooltipMaterial = new THREE.MeshBasicMaterial({
+            color: tooltip["color"],
+            transparent: true,
+            opacity: 0.5,
+          });
+          let tooltipMesh = new THREE.Mesh(tooltipGeometry, tooltipMaterial);
+
+          tooltipMesh.name = name;
+          tooltipMesh.position.set(tooltipX, tooltipY, tooltipZ);
+          tooltipMesh.lookAt(1.1 * tooltipX, 1.1 * tooltipY, 1.1 * tooltipZ); // Make the circle flat on the sphere.
+
+          tooltipMeshGroup.add(tooltipMesh);
+        }
+
+        scene.add(tooltipMeshGroup);
       } catch (error) {
         console.error("Error selecting video:", error);
         isLoadingVideo = false;
-        // Only show error UI for fatal errors, not temporary play issues
       }
-
-      for (const [name, tooltip] of Object.entries(videos[n]["tooltips"])) {
-        let tooltipLatitude = tooltip["latitude"];
-        let tooltipLongitude = tooltip["longitude"];
-
-        let [tooltipX, tooltipY, tooltipZ] = latlon2xyz(tooltipLatitude, tooltipLongitude);
-
-        let tooltipGeometry = new THREE.CircleGeometry(0.05, 25);
-        let tooltipMaterial = new THREE.MeshBasicMaterial({
-          color: tooltip["color"],
-          transparent: true,
-          opacity: 0.5,
-        });
-        let tooltipMesh = new THREE.Mesh(tooltipGeometry, tooltipMaterial);
-
-        tooltipMesh.name = name;
-        tooltipMesh.position.set(tooltipX, tooltipY, tooltipZ);
-        tooltipMesh.lookAt(1.1 * tooltipX, 1.1 * tooltipY, 1.1 * tooltipZ); // Make the circle flat on the sphere.
-
-        tooltipMeshGroup.add(tooltipMesh);
-      }
-
-      scene.add(tooltipMeshGroup);
     }
 
     let currentVideo = 0;

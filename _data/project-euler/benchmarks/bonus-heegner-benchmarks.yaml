@@ -128,20 +128,21 @@ n_1M:
        Memory estimate[90m: [39m[33m30.50 GiB[39m, allocs estimate[90m: [39m[33m93728157[39m.
     thread_count: 8
   "Intel Core i7-7700HQ":
-    julia_version: "Julia 1.12.2"
+    date: "2026-01-19T01:56:56.350"
+    julia_version: "Julia 1.12.4"
+    os: "Windows"
     output: |-
-      BenchmarkTools.Trial: 3 samples with 1 evaluation per sample.
-       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m335.732 s[22m[39m … [35m337.670 s[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m3.62% … 3.75%
-       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m335.844 s              [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m3.77%
-       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m336.415 s[22m[39m ± [32m  1.088 s[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m3.75% ± 0.13%
+      BenchmarkTools.Trial: 2 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m303.960 s[22m[39m … [35m305.409 s[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m3.75% … 3.99%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m304.685 s              [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m3.87%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m304.685 s[22m[39m ± [32m  1.025 s[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m3.87% ± 0.17%
       
-        [34m█[39m[39m [39m [39m█[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [32m [39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m█[39m [39m
-        [34m█[39m[39m▁[39m▁[39m█[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[32m▁[39m[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m█[39m [39m▁
-        336 s[90m           Histogram: frequency by time[39m          338 s [0m[1m<[22m
+        [34m█[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [32m [39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m█[39m [39m 
+        [34m█[39m[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[32m▁[39m[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m█[39m [39m▁
+        304 s[90m           Histogram: frequency by time[39m          305 s [0m[1m<[22m
       
        Memory estimate[90m: [39m[33m30.47 GiB[39m, allocs estimate[90m: [39m[33m93727883[39m.
-    date: "2025-12-11T08:54:26.535"
-    os: "Windows"
+    thread_count: 1
 n_1k:
   "2 × AMD EPYC 7402":
     date: "2025-12-24T15:41:10.697"
@@ -272,17 +273,18 @@ n_1k:
        Memory estimate[90m: [39m[33m1.99 MiB[39m, allocs estimate[90m: [39m[33m46857[39m.
     thread_count: 8
   "Intel Core i7-7700HQ":
-    julia_version: "Julia 1.12.2"
+    date: "2026-01-19T01:36:36.731"
+    julia_version: "Julia 1.12.4"
+    os: "Windows"
     output: |-
-      BenchmarkTools.Trial: 340 samples with 1 evaluation per sample.
-       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m12.185 ms[22m[39m … [35m21.667 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 24.80%
-       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m14.575 ms              [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
-       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m14.680 ms[22m[39m ± [32m 1.256 ms[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m1.33% ±  3.46%
+      BenchmarkTools.Trial: 339 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m12.992 ms[22m[39m … [35m26.498 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 33.78%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m14.513 ms              [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m14.761 ms[22m[39m ± [32m 1.216 ms[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m1.19% ±  3.91%
       
-        [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m▂[39m▁[39m█[34m▄[39m[32m▄[39m[39m▁[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m
-        [39m▃[39m▄[39m▅[39m▃[39m▃[39m▂[39m▃[39m▃[39m▁[39m▁[39m▃[39m▃[39m▃[39m▂[39m▅[39m█[39m█[39m█[39m█[34m█[39m[32m█[39m[39m█[39m▇[39m▃[39m▃[39m▃[39m▃[39m▂[39m▂[39m▁[39m▂[39m▃[39m▃[39m▃[39m▃[39m▃[39m▂[39m▃[39m▃[39m▃[39m▃[39m▂[39m▁[39m▁[39m▁[39m▂[39m▁[39m▂[39m▁[39m▁[39m▂[39m▁[39m▁[39m▁[39m▂[39m▁[39m▁[39m▂[39m▂[39m [39m▃
-        12.2 ms[90m         Histogram: frequency by time[39m        19.6 ms [0m[1m<[22m
+        [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m▁[39m▅[39m█[34m▇[39m[39m▆[32m▄[39m[39m▁[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+        [39m▆[39m▇[39m▄[39m▄[39m▄[39m▁[39m▁[39m▄[39m▇[39m█[39m█[39m█[34m█[39m[39m█[32m█[39m[39m█[39m▇[39m▇[39m▇[39m▄[39m▄[39m▄[39m▄[39m▅[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▄[39m▆[39m▁[39m▄[39m▁[39m▆[39m▄[39m▄[39m▄[39m▄[39m▁[39m▁[39m▁[39m▁[39m▄[39m▁[39m▁[39m▄[39m▁[39m▁[39m▁[39m▄[39m [39m▆
+        13 ms[90m        [39m[90mHistogram: [39m[90m[1mlog([22m[39m[90mfrequency[39m[90m[1m)[22m[39m[90m by time[39m      20.3 ms [0m[1m<[22m
       
        Memory estimate[90m: [39m[33m1.93 MiB[39m, allocs estimate[90m: [39m[33m46713[39m.
-    date: "2025-12-11T08:26:51.300"
-    os: "Windows"
+    thread_count: 1

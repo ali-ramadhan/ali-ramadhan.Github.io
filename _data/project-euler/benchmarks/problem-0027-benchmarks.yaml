@@ -119,6 +119,21 @@ find_quadratic_with_most_primes_1000:
         6.81 ms[90m         Histogram: frequency by time[39m        7.43 ms [0m[1m<[22m
       
        Memory estimate[90m: [39m[33m5.87 KiB[39m, allocs estimate[90m: [39m[33m8[39m.
+  "Intel Core i7-7700HQ":
+    date: "2026-01-19T01:21:24.622"
+    julia_version: "Julia 1.12.4"
+    os: "Windows"
+    output: |-
+      BenchmarkTools.Trial: 841 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m5.771 ms[22m[39m … [35m  6.767 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 0.00%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m5.919 ms               [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m5.946 ms[22m[39m ± [32m117.020 μs[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m0.00% ± 0.00%
+      
+        [39m [39m [39m [39m [39m [39m [39m▁[39m▄[39m▂[39m▅[39m▆[39m█[39m▇[39m▆[34m▂[39m[39m▄[32m▃[39m[39m [39m▃[39m▁[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+        [39m▃[39m▃[39m▅[39m▅[39m▅[39m▅[39m█[39m█[39m█[39m█[39m█[39m█[39m█[39m█[34m█[39m[39m█[32m█[39m[39m█[39m█[39m█[39m▅[39m▆[39m▅[39m▅[39m▄[39m▅[39m▄[39m▃[39m▃[39m▄[39m▃[39m▃[39m▄[39m▂[39m▂[39m▃[39m▃[39m▂[39m▂[39m▂[39m▃[39m▃[39m▂[39m▃[39m▃[39m▂[39m▁[39m▁[39m▂[39m▁[39m▃[39m▁[39m▂[39m▁[39m▂[39m▂[39m▁[39m▁[39m▂[39m [39m▄
+        5.77 ms[90m         Histogram: frequency by time[39m        6.42 ms [0m[1m<[22m
+      
+       Memory estimate[90m: [39m[33m5.87 KiB[39m, allocs estimate[90m: [39m[33m8[39m.
 find_quadratic_with_most_primes_10k:
   "2 × AMD EPYC 7402":
     date: "2025-12-24T15:38:10.346"
@@ -238,5 +253,20 @@ find_quadratic_with_most_primes_10k:
         [39m [39m [39m▅[39m [39m [39m [39m [39m [39m█[39m [39m [39m [39m [39m▂[39m [39m [39m [39m [39m [39m [39m▂[39m▂[39m [39m [39m [39m [39m [39m [39m [39m [34m [39m[39m▂[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m█[39m [39m [39m▅[39m [39m [39m▂[39m [39m [39m [39m [39m [39m [39m [39m [39m▂[39m [39m [39m [39m 
         [39m▅[39m▅[39m█[39m█[39m█[39m█[39m█[39m█[39m█[39m▁[39m▅[39m▁[39m▁[39m█[39m▅[39m█[39m█[39m▅[39m▅[39m█[39m█[39m█[39m▁[39m█[39m▅[39m█[39m█[39m▅[39m▅[39m▁[34m▅[39m[39m█[39m▅[39m▅[39m▅[39m▁[39m█[39m▅[39m▅[39m▅[39m█[39m▁[39m█[39m█[39m▅[39m█[39m█[39m█[39m█[39m█[39m█[39m▁[39m█[39m█[39m▅[39m▅[39m▅[39m▅[39m█[39m▁[39m█[39m [39m▅
         932 ms[90m           Histogram: frequency by time[39m          956 ms [0m[1m<[22m
+      
+       Memory estimate[90m: [39m[33m16.59 KiB[39m, allocs estimate[90m: [39m[33m10[39m.
+  "Intel Core i7-7700HQ":
+    date: "2026-01-19T01:22:44.054"
+    julia_version: "Julia 1.12.4"
+    os: "Windows"
+    output: |-
+      BenchmarkTools.Trial: 100 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m760.566 ms[22m[39m … [35m863.528 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 0.00%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m776.309 ms               [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m773.961 ms[22m[39m ± [32m 11.910 ms[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m0.00% ± 0.00%
+      
+        [39m [39m [39m▃[39m [39m▃[39m [39m [39m [39m [39m [39m▂[39m [39m [39m [39m [39m [39m [39m [39m [39m [32m [39m[39m [39m [39m▃[34m [39m[39m▅[39m█[39m▆[39m▃[39m▂[39m▂[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+        [39m▅[39m█[39m█[39m▄[39m█[39m▄[39m▄[39m█[39m▇[39m▇[39m█[39m▅[39m▄[39m▅[39m▁[39m▄[39m▄[39m▄[39m▁[39m▁[32m▁[39m[39m▁[39m▅[39m█[34m▅[39m[39m█[39m█[39m█[39m█[39m█[39m█[39m▄[39m▄[39m▄[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▄[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▄[39m [39m▄
+        761 ms[90m           Histogram: frequency by time[39m          801 ms [0m[1m<[22m
       
        Memory estimate[90m: [39m[33m16.59 KiB[39m, allocs estimate[90m: [39m[33m10[39m.

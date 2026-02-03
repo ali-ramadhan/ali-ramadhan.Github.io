@@ -119,3 +119,18 @@ solution:
         10.7 ms[90m         Histogram: frequency by time[39m         11.7 ms [0m[1m<[22m
       
        Memory estimate[90m: [39m[33m252.06 KiB[39m, allocs estimate[90m: [39m[33m21[39m.
+  "Intel Core i7-7700HQ":
+    date: "2026-01-19T01:11:50.600"
+    julia_version: "Julia 1.12.4"
+    os: "Windows"
+    output: |-
+      BenchmarkTools.Trial: 513 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m9.483 ms[22m[39m … [35m 13.546 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 27.31%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m9.689 ms               [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m9.744 ms[22m[39m ± [32m266.361 μs[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m0.10% ±  1.31%
+      
+        [39m [39m [39m [39m [39m▅[39m▃[39m█[39m▅[39m▄[39m█[34m▇[39m[39m▄[39m▆[32m [39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+        [39m▄[39m▄[39m▅[39m█[39m█[39m█[39m█[39m█[39m█[39m█[34m█[39m[39m█[39m█[32m█[39m[39m▇[39m█[39m▇[39m▆[39m▆[39m▅[39m▅[39m▄[39m▃[39m▄[39m▅[39m▃[39m▃[39m▂[39m▃[39m▃[39m▃[39m▃[39m▂[39m▃[39m▃[39m▃[39m▁[39m▁[39m▃[39m▂[39m▃[39m▁[39m▂[39m▁[39m▁[39m▁[39m▁[39m▂[39m▂[39m▁[39m▁[39m▁[39m▂[39m▁[39m▁[39m▁[39m▁[39m▁[39m▂[39m [39m▄
+        9.48 ms[90m         Histogram: frequency by time[39m        10.6 ms [0m[1m<[22m
+      
+       Memory estimate[90m: [39m[33m252.07 KiB[39m, allocs estimate[90m: [39m[33m21[39m.

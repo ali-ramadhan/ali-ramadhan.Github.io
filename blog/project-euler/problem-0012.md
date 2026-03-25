@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 12
 problem_name: "Highly Divisible Triangular Number"
 date: 2025-12-06
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0012"
 benchmark_key: "divisors_500"
 ---

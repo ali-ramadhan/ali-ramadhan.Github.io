@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 4
 problem_name: "Largest Palindrome Product"
 date: 2025-10-07
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0004"
 benchmark_key: "3_digits"
 ---

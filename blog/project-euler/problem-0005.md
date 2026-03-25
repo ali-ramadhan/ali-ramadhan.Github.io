@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 5
 problem_name: "Smallest Multiple"
 date: 2025-10-07
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0005"
 benchmark_key: "n_20"
 ---

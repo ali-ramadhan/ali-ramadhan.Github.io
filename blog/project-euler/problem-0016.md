@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 16
 problem_name: "Power Digit Sum"
 date: 2025-12-07
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0016"
 benchmark_key: "power_digit_sum_2_1000"
 ---

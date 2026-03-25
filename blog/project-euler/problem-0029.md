@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 29
 problem_name: "Distinct Powers"
 date: 2025-12-21
-difficulty: 5
+difficulty: 1
 benchmark_file: "problem-0029"
 benchmark_key: "count_distinct_powers_100"
 ---

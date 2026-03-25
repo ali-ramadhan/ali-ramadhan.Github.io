@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 9
 problem_name: "Special Pythagorean Triplet"
 date: 2025-11-30
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0009"
 benchmark_key: "n_1000"
 ---

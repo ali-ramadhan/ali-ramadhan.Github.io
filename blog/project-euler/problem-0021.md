@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 21
 problem_name: "Amicable Numbers"
 date: 2025-12-15
-difficulty: 5
+difficulty: 1
 benchmark_file: "problem-0021"
 benchmark_key: "limit_10k"
 ---

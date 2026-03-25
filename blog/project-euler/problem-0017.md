@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 17
 problem_name: "Number Letter Counts"
 date: 2025-12-10
-difficulty: 5
+difficulty: 2
 benchmark_file: "problem-0017"
 benchmark_key: "range_1_1000"
 ---

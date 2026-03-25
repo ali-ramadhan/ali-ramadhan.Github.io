@@ -1,8 +1,14 @@
+import { readFile } from "fs/promises";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import { configureMarkdown } from "./config/markdown.js";
 import { processBenchmark } from "./config/benchmark-utils.js";
 
 export default function (eleventyConfig) {
+  // Expose Project Euler difficulty data as a global template variable
+  eleventyConfig.addGlobalData("pe_difficulty", async () => {
+    return JSON.parse(await readFile("./_data/project-euler/difficulty.json", "utf8"));
+  });
+
   // Configure custom markdown extensions and transforms
   configureMarkdown(eleventyConfig);
 

@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 13
 problem_name: "Large Sum"
 date: 2025-12-06
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0013"
 benchmark_key: "first_ten_digits_of_sum"
 ---

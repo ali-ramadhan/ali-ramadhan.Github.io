@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 22
 problem_name: "Names Scores"
 date: 2025-12-16
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0022"
 benchmark_key: "solution"
 ---

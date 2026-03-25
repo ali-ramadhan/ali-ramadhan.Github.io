@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 11
 problem_name: "Largest Product in a Grid"
 date: 2025-12-06
-difficulty: 5
+difficulty: 1
 benchmark_file: "problem-0011"
 benchmark_key: "len4"
 ---

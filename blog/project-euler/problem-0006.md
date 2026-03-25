@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 6
 problem_name: "Sum Square Difference"
 date: 2025-10-07
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0006"
 benchmark_key: "n_100"
 ---

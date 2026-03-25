@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 23
 problem_name: "Non-Abundant Sums"
 date: 2025-12-16
-difficulty: 5
+difficulty: 2
 benchmark_file: "problem-0023"
 benchmark_key: "solution"
 ---

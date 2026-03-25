@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 15
 problem_name: "Lattice Paths"
 date: 2025-12-07
-difficulty: 5
+difficulty: 1
 benchmark_file: "problem-0015"
 benchmark_key: "count_lattice_paths_20x20"
 ---

@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 31
 problem_name: "Coin Sums"
 date: 2026-01-05
-difficulty: 5
+difficulty: 2
 benchmark_file: "problem-0031"
 benchmark_key: "uk_200p"
 ---

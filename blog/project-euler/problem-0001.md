@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 1
 problem_name: "Multiples of 3 or 5"
 date: 2025-09-09
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0001"
 benchmark_key: "two_inclusion_exclusion"
 ---

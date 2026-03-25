@@ -28,16 +28,16 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
   </thead>
   <tbody>
     <!--
-      Difficulty bar color: hue = 120 - (difficulty - 5) * 1.26
+      Difficulty bar color: hue = 120 - difficulty * (120 / pe_difficulty.max_difficulty_level)
         - HSL hue 120 = green, hue 0 = red
-        - Difficulty ranges from 5% to 100%, so (difficulty - 5) gives 0 to 95
-        - Multiplier 1.26 ≈ 120/95 maps this range to hue 120 (green) down to 0 (red)
+        - Difficulty level ranges from 0 to pe_difficulty.max_difficulty_level
+        - Maps level 0 to hue 120 (green) and max level to hue 0 (red)
     -->
     {% for problem in collections.euler %}
     <tr>
       <td>{{ problem.data.problem_number }}</td>
       <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
-      <td>{%- if problem.data.difficulty %}{% set hue = 120 - (problem.data.difficulty - 5) * 1.26 %}<div class="difficulty-bar" data-tooltip="Difficulty: {{ problem.data.difficulty }}%"><div class="difficulty-bar-fill{% if problem.data.difficulty == 100 %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
+      <td>{%- if problem.data.difficulty != null %}{% set hue = 120 - problem.data.difficulty * (120 / pe_difficulty.max_difficulty_level) %}<div class="difficulty-bar" data-tooltip="Difficulty level: {{ problem.data.difficulty }}/{{ pe_difficulty.max_difficulty_level }}"><div class="difficulty-bar-fill{% if problem.data.difficulty == pe_difficulty.max_difficulty_level %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty / pe_difficulty.max_difficulty_level * 100 }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
       <td>{%- if problem.data.benchmark_file and problem.data.benchmark_key %}{% benchmark problem.data.benchmark_file, problem.data.benchmark_key %}{% else %}—{% endif -%}</td>
     </tr>
     {% endfor %}
@@ -58,7 +58,7 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
     {% for problem in collections.allEuler %}{% if problem.data.bonus_problem %}
     <tr>
       <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
-      <td>{%- if problem.data.difficulty %}{% set hue = 120 - (problem.data.difficulty - 5) * 1.26 %}<div class="difficulty-bar" data-tooltip="Difficulty: {{ problem.data.difficulty }}%"><div class="difficulty-bar-fill{% if problem.data.difficulty == 100 %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
+      <td>{%- if problem.data.difficulty != null %}{% set hue = 120 - problem.data.difficulty * (120 / pe_difficulty.max_difficulty_level) %}<div class="difficulty-bar" data-tooltip="Difficulty level: {{ problem.data.difficulty }}/{{ pe_difficulty.max_difficulty_level }}"><div class="difficulty-bar-fill{% if problem.data.difficulty == pe_difficulty.max_difficulty_level %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty / pe_difficulty.max_difficulty_level * 100 }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
       <td>{%- if problem.data.benchmark_file and problem.data.benchmark_key %}{% benchmark problem.data.benchmark_file, problem.data.benchmark_key %}{% else %}—{% endif -%}</td>
     </tr>
     {% endif %}{% endfor %}

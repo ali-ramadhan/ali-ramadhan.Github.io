@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 7
 problem_name: "10 001st Prime"
 date: 2025-10-09
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0007"
 benchmark_key: "n_10001"
 ---

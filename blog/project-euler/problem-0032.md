@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 32
 problem_name: "Pandigital Products"
 date: 2026-01-12
-difficulty: 5
+difficulty: 2
 benchmark_file: "problem-0032"
 benchmark_key: "pandigital_9"
 ---

@@ -3,7 +3,7 @@ layout: "project-euler-post"
 problem_number: 20
 problem_name: "Factorial Digit Sum"
 date: 2025-12-10
-difficulty: 5
+difficulty: 0
 benchmark_file: "problem-0020"
 benchmark_key: "factorial_100"
 ---

@@ -4,7 +4,7 @@ title: "Touring a mini-zoo of time series and forecasting methods"
 date: 2025-09-15
 collapsible_headers: true
 floating_toc: true
-hidden: true
+hidden: false
 ---
 
 [[toc]]
@@ -88,22 +88,6 @@ This is the global price of wheat for each month since 1990. The underlying gene
 ![Wheat time series](/assets/blog/time-series-zoo/time_series_wheat.png)
 :::
 
-### USD-JPY exchange rate
-
-Daily exchange rate since 2005. Same comments as above.
-
-::: figure centered width-80
-![Exchange rate time series](/assets/blog/time-series-zoo/time_series_exchange.png)
-:::
-
-### LW stock price
-
-This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during March 2024 trading hours at a resolution of a few minutes. The above comments on unpredictibility still hold, but what might be interesting here is whether we are able to make forecasts on what the stock price does in the second half of the trading day given we know what it did in the first.
-
-::: figure centered width-80
-![Lamb-Weston time series](/assets/blog/time-series-zoo/time_series_lamb_weston.png)
-:::
-
 ### ERCOT electrical load
 
 This is the hourly electrical load in Texas for each control area served by ERCOT (Electric Reliability Council of Texas) between 2004-2023. There are multiple scales of seasonality and variability again with a long-term increasing trend.
@@ -114,28 +98,12 @@ This is the hourly electrical load in Texas for each control area served by ERCO
 
 https://en.wikipedia.org/wiki/January_31_%E2%80%93_February_2,_2023_North_American_ice_storm
 
-### Transformer oil temperature
-
-Electrical load and oil temperature at 15-minute and 1-hour intervals from two electricity transformers in China.
-
-::: figure centered width-80
-![Transformer time series](/assets/blog/time-series-zoo/time_series_transformer.png)
-:::
-
 ### Cheese sales
 
 Store-level scanner data of cheese sales at Dominick's Finer Foods, a now-defunct grocery store chain in the Chicago area, from 1989-1994. We will be looking at and forecasting chain-wide weekly cheese sales.
 
 ::: figure centered width-80
 ![Cheese time series](/assets/blog/time-series-zoo/time_series_cheese.png)
-:::
-
-### Uber pickups
-
-Uber pickups from January to June 2015 in New York City. We'll be looking at and forecasting hourly pickups.
-
-::: figure centered width-80
-![Uber time series](/assets/blog/time-series-zoo/time_series_uber.png)
 :::
 
 ## Time series decomposition

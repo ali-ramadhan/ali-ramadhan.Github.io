@@ -500,6 +500,14 @@ Comparison of different exponential smoothing configurations for sunspot predict
 
 <!-- No point trying on MEI or any of the financial time series? -->
 
+#### A note on model selection
+
+Throughout this section we picked the "best" exponential smoothing model by minimizing the error on a single validation window. That's the simplest thing to do and it's easy to visualize, but it's also a noisy signal: the validation window is one draw from the distribution of possible futures, and a model that happens to win on that window may not generalize. Two better options are worth knowing about, even if we don't use them here:
+
+1. **AICc as a tiebreaker.** Because AICc penalizes complexity while using all the training data, it's often more stable than a one-shot validation error—especially on short series. [@hyndman2021] specifically recommend it for ETS model selection. When val-MAE and AICc disagree on the best model, that disagreement is itself informative: the val-MAE winner may be fitting noise in the validation window. We discuss AICc in more detail in the [information criteria section](#aicc-corrected-aic).
+
+2. **Rolling-origin backtesting.** Instead of one train/val split, fit the model on an expanding (or sliding) training window, forecast the next $h$ steps, slide the origin forward, and repeat. Averaging the forecast errors across many origins gives a far less noisy ranking of candidate models, and it matches how you'd actually use the model in production—you're always retraining on whatever history you have and forecasting the near future. Darts exposes this via [`historical_forecasts`](https://unit8co.github.io/darts/generated_api/darts.models.forecasting.forecasting_model.html#darts.models.forecasting.forecasting_model.ForecastingModel.historical_forecasts). The cost is roughly linear in the number of origins, and for long series (Keeling, ERCOT, sunspots) this is the gold standard. We stick with a single validation window here to keep the plots and animations legible, but for serious model selection on these series, rolling-origin would be the right tool.
+
 ### Autoregressive
 
 Autoregressive models represent one of the most fundamental approaches to time series modeling. The basic idea is remarkably intuitive: predict the current value based on past values of the series. Formally, an autoregressive model of order $p$, denoted as AR($p$), expresses the current observation as a linear combination of $p$ previous observations plus a random error term:

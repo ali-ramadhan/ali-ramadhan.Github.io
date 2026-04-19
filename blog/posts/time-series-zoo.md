@@ -98,14 +98,6 @@ This is the hourly electrical load in Texas for each control area served by ERCO
 
 https://en.wikipedia.org/wiki/January_31_%E2%80%93_February_2,_2023_North_American_ice_storm
 
-### Cheese sales
-
-Store-level scanner data of cheese sales at Dominick's Finer Foods, a now-defunct grocery store chain in the Chicago area, from 1989-1994. We will be looking at and forecasting chain-wide weekly cheese sales.
-
-::: figure centered width-80
-![Cheese time series](/assets/blog/time-series-zoo/time_series_cheese.png)
-:::
-
 ## Time series decomposition
 
 <!--

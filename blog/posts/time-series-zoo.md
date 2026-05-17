@@ -268,9 +268,9 @@ Although useful, the Dickey-Fuller test has some major limitations. It's based o
 
 The testing procedure is the same as for the Dickey–Fuller test but we instead use a more flexible autoregressive process of order $p$, denoted $\operatorname{AR}(p)$, again with constant and linear trend terms
 
-$y*t = \alpha + \beta t + \rho_1 y*{t-1} + \rho*2 y*{t-2} + \cdots + \rho*p y*{t-p} + \varepsilon_t $
+$y_t = \alpha + \beta t + \rho_1 y_{t-1} + \rho_2 y_{t-2} + \cdots + \rho_p y_{t-p} + \varepsilon_t$
 
-where we now have $p$ autoregressive coefficients $\rho_1, $\rho_2, \dots, \rho_p$. Now the first difference is
+where we now have $p$ autoregressive coefficients $\rho_1, \rho_2, \dots, \rho_p$. Now the first difference is
 
 $\Delta y_t = \alpha + \beta t + (\rho_1 - 1) y_{t-1} + \rho_2 y_{t-2} + \cdots + \rho_p y_{t-p} + \varepsilon_t$
 
@@ -362,14 +362,14 @@ There are two main variations of Holt-Winters' method, depending on how seasonal
 
 The additive method is generally used when the seasonal variations are roughly constant throughout the series, for example if sales consistently increase by 100 units in December whether sales are high or low. Let $y_t$ be the time series observation at time $t$ and $\hat{y}_{t+h\|t}$ be the forecast at time $t+h$ given the observation up to time $t$. The method involves three smoothing equations for the level $\ell_t$, trend $b_t$, and seasonal components $s_t$, plus the forecast equation:
 
-$$
+```math
 \begin{aligned}
   \hat{y}_{t+h|t} &= \ell_t + h b_t + s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
   \ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
   b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
   s_t &= \gamma(y_t - \ell_{t-1} - b_{t-1}) + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
 \end{aligned}
-$$
+```
 
 Here $m$ is the number of periods in a season (e.g. 12 for monthly data and 4 for quarterly data). The model maintains $m$ distinct seasonal components $s_1, s_2, \ldots, s_m$, where each $s_i$ represents the seasonal effect for the $i$-th period within the seasonal cycle. The parameter $k = \lfloor (h - 1) / m \rfloor$ ensures that when forecasting $h$ steps ahead, we cycle through the seasonal components correctly. $\lfloor x \rfloor$ is the floor function. $\alpha$, $\beta$, and $\gamma$ (all between 0 and 1) are smoothing parameters for the level, trend, and seasonal components respectively that control how quickly the model adapts to new data.
 
@@ -383,14 +383,14 @@ So to produce a forecast, you take the level $\ell_t$, linearly extrapolate the 
 
 The multiplicative method is better when the seasonal variations are proportional to the level of the series. For example, if sales in December are consistently 20% higher than the average, whether overall sales are high or low.
 
-$$
+```math
 \begin{aligned}
   \hat{y}_{t+h|t} &= (\ell_t + h b_t) s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
   \ell_t &= \alpha \frac{y_t}{s_{t-m}} + (1-\alpha)(\ell_{t-1} + b_{t-1}) \quad& (\mathrm{level}) \\
   b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)b_{t-1} \quad& (\mathrm{trend}) \\
   s_t &= \gamma \frac{y_t}{(\ell_{t-1} + b_{t-1})} + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
 \end{aligned}
-$$
+```
 
 We can interpret the weighing similarly to how we did with the additive case except now we multiply or divide by the seasonal component instead of add or subtract.
 
@@ -398,14 +398,14 @@ We can interpret the weighing similarly to how we did with the additive case exc
 
 Sometimes, a simple linear trend $b_t$ can extrapolate a bit too enthusiastically into the future, leading to forecasts that shoot off. To tame this, we can introduce a _damping parameter_ $\phi$ (usually between 0 and 1, often close to 1). Damping causes the trend to flatten out over longer forecast horizons. Damping can be applied to both additive and multiplicative Holt-Winters' methods. For example, adding a damped trend to the additive method we get:
 
-$$
+```math
 \begin{aligned}
   \hat{y}_{t+h|t} &= \ell_t + (\phi + \phi^2 + \dots + \phi^h)b_t + s_{t+h-m(k+1)} \quad& (\mathrm{forecast}) \\
   \ell_t &= \alpha(y_t - s_{t-m}) + (1-\alpha)(\ell_{t-1} + \phi b_{t-1}) \quad& (\mathrm{level}) \\
   b_t &= \beta(\ell_t - \ell_{t-1}) + (1-\beta)\phi b_{t-1} \quad& (\mathrm{trend}) \\
   s_t &= \gamma (y_t - (\ell_{t-1} + \phi b_{t-1})) + (1-\gamma)s_{t-m} \quad& (\mathrm{seasonal})
 \end{aligned}
-$$
+```
 
 The trend's contribution to the forecast is now damped: instead of multiplying by $h$ we multiply by $\phi + \phi^2 + \dots + \phi^h$ which is less than $h$ if $0 \le \phi \le 1$ preventing the forecast from shooting off, especially for large $h$. Otherwise, when the trend $b_t$ is used it is now multiplied by $\phi$.
 
@@ -458,11 +458,11 @@ Fitting exponential smoothing models to the monthly sunspot number time series r
 [^box-cox]:
     The Box-Cox transformation is a family of power transformations used to stabilize variance and make data more approximately normal. We can also use it to The forward transformation is
 
-    $$y^{(\lambda)} = \begin{cases} \frac{y^\lambda - 1}{\lambda} & \text{if } \lambda \neq 0 \\ \ln(y) & \text{if } \lambda = 0 \end{cases}$$
+    $$y^{(\lambda)} = \begin{cases} \frac{y^\lambda - 1}{\lambda} & \text{if } \lambda \neq 0 \\\\ \ln(y) & \text{if } \lambda = 0 \end{cases}$$
 
     where $\lambda$ is estimated from the data (in our case $\lambda = 0.30$). The inverse transformation to get back to the original scale is
 
-    $$y = \begin{cases} (\lambda y^{(\lambda)} + 1)^{1/\lambda} & \text{if } \lambda \neq 0 \\ \exp(y^{(\lambda)}) & \text{if } \lambda = 0 \end{cases}$$
+    $$y = \begin{cases} (\lambda y^{(\lambda)} + 1)^{1/\lambda} & \text{if } \lambda \neq 0 \\\\ \exp(y^{(\lambda)}) & \text{if } \lambda = 0 \end{cases}$$
 
     Values of $\lambda = 1$ leave data unchanged, $\lambda = 0.5$ corresponds to a square root transformation, and $\lambda = 0$ gives a log transformation.
 

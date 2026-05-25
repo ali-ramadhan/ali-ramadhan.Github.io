@@ -96,7 +96,7 @@ function find_first_triangle_with_divisors(min_divisors)
         total_divisors = num_divisors(a) * num_divisors(b)
 
         if total_divisors > min_divisors
-            return n, triangle_number(n)
+            return n, n * (n + 1) ÷ 2
         end
 
         n += 1

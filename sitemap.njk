@@ -7,7 +7,7 @@ eleventyExcludeFromCollections: true
   {# Homepage #}
   <url>
     <loc>https://aliramadhan.me/</loc>
-    <lastmod>2025-11-16</lastmod>
+    <lastmod>{{ buildDate | dateDisplay }}</lastmod>
   </url>
 
   {# Blog posts collection #}
@@ -18,8 +18,8 @@ eleventyExcludeFromCollections: true
   </url>
   {%- endfor %}
 
-  {# Project Euler collection #}
-  {%- for problem in collections.euler %}
+  {# Project Euler collection (regular + bonus problems) #}
+  {%- for problem in collections.allEuler %}
   <url>
     <loc>https://aliramadhan.me{{ problem.url }}</loc>
     <lastmod>{{ problem.date | dateDisplay }}</lastmod>

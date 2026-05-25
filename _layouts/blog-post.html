@@ -67,14 +67,14 @@
           {% if github_repo or hacker_news %}
           <div class="blog-post-external-links">
             {% if github_repo %}
-            <a href="{{ github_repo }}" target="_blank" rel="noopener" class="external-link">
-              <img src="/assets/images/icons/github-logo.svg" alt="" class="external-link-icon" />
+            <a href="{{ github_repo }}" target="_blank" rel="noopener" class="external-link" aria-label="View source code on GitHub">
+              <img src="/assets/images/icons/github-logo.svg" alt="" aria-hidden="true" class="external-link-icon" />
               <span>Source Code</span>
             </a>
             {% endif %}
             {% if hacker_news %}
-            <a href="{{ hacker_news }}" target="_blank" rel="noopener" class="external-link">
-              <img src="/assets/images/icons/ycombinator.svg" alt="" class="external-link-icon" />
+            <a href="{{ hacker_news }}" target="_blank" rel="noopener" class="external-link" aria-label="Discussion on Hacker News">
+              <img src="/assets/images/icons/ycombinator.svg" alt="" aria-hidden="true" class="external-link-icon" />
               <span>Hacker News</span>
             </a>
             {% endif %}

@@ -302,7 +302,7 @@ So what can we conclude?
 1. At least on my hardware it seems there's a ceiling of ~140k sustained inserts/sec with overhead when using a single worker with protections on. pg_bulkload wins here by quite a bit.
 2. You can use multiple workers to increase the sustained insert rate up to ~250k inserts/sec with psycopg3's copy cursor while still being protected.
 3. The insertion process is not very parallelizable so the sweet spot is 4-16 workers. The benchmarks used 32 workers to maximize insert rates.
-4. If you're okay living a bit dangerously you can turn off fsync and sustain an insert rate of ~462k inserts/sec with psycopg3! You'll also squeeze out a bit more performance out of timescaledb-parallell-copy.
+4. If you're okay living a bit dangerously you can turn off fsync and sustain an insert rate of ~462k inserts/sec with psycopg3! You'll also squeeze out a bit more performance out of timescaledb-parallel-copy.
 5. Be careful when using pg_bulkload as it disables `fsync` by default.
 6. These conclusions assume you need to do extra work to convert data to CSV files which is why psycopg3 was the clear winner, although it does seem pretty fast. If you're starting with CSV files timescaledb-parallel-copy is probably faster (and quicker to set up).
 

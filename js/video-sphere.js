@@ -199,7 +199,11 @@ function setupVideoSphere(sphereInit) {
               startCaptionUpdates();
             }
           } else if (!isVisible && wasVisible) {
-            // Became hidden - stop caption updates
+            // Became hidden - cancel pending frame and stop caption updates
+            if (animationFrameId) {
+              cancelAnimationFrame(animationFrameId);
+              animationFrameId = null;
+            }
             if (stopCaptionUpdates) {
               stopCaptionUpdates();
             }
@@ -282,6 +286,14 @@ function setupVideoSphere(sphereInit) {
 
     let tooltipMeshGroup = new THREE.Group();
 
+    function disposeTooltipMeshes() {
+      tooltipMeshGroup.children.forEach((mesh) => {
+        if (mesh.geometry) mesh.geometry.dispose();
+        if (mesh.material) mesh.material.dispose();
+      });
+      tooltipMeshGroup.clear();
+    }
+
     function selectVideo(n) {
       // Prevent simultaneous video switches
       if (isLoadingVideo) {
@@ -325,7 +337,7 @@ function setupVideoSphere(sphereInit) {
           colorbar.src = videos[n]["colorbar"];
         }
 
-        tooltipMeshGroup.clear();
+        disposeTooltipMeshes();
 
         for (const [name, tooltip] of Object.entries(videos[n]["tooltips"] || {})) {
           let tooltipLatitude = tooltip["latitude"];
@@ -362,15 +374,19 @@ function setupVideoSphere(sphereInit) {
     let leftArrow = document.getElementById("left-arrow");
     let rightArrow = document.getElementById("right-arrow");
 
-    leftArrow.addEventListener("click", () => {
-      currentVideo = mod(currentVideo - 1, videos.length);
-      selectVideo(currentVideo);
-    });
+    if (leftArrow) {
+      leftArrow.addEventListener("click", () => {
+        currentVideo = mod(currentVideo - 1, videos.length);
+        selectVideo(currentVideo);
+      });
+    }
 
-    rightArrow.addEventListener("click", () => {
-      currentVideo = mod(currentVideo + 1, videos.length);
-      selectVideo(currentVideo);
-    });
+    if (rightArrow) {
+      rightArrow.addEventListener("click", () => {
+        currentVideo = mod(currentVideo + 1, videos.length);
+        selectVideo(currentVideo);
+      });
+    }
 
     function updateVideoCaption() {
       let dateStart = videos[currentVideo]["dateStart"];
@@ -413,10 +429,14 @@ function setupVideoSphere(sphereInit) {
 
     // Cache DOM references and state outside the event handler
     const tooltip = document.getElementById("video-tooltip");
-    const tooltipTitleEl = tooltip.querySelector(".tooltip-title");
-    const tooltipTextEl = tooltip.querySelector(".tooltip-text");
+    const tooltipTitleEl = tooltip ? tooltip.querySelector(".tooltip-title") : null;
+    const tooltipTextEl = tooltip ? tooltip.querySelector(".tooltip-text") : null;
     const canvas = document.getElementById("canvas-video-sphere");
     let currentTooltipName = null;
+
+    if (!canvas || !tooltip || !tooltipTitleEl || !tooltipTextEl) {
+      return;
+    }
 
     // Scope mousemove to canvas only (not window) to avoid firing on every mouse movement
     canvas.addEventListener("mousemove", function (e) {
@@ -457,6 +477,24 @@ function setupVideoSphere(sphereInit) {
     canvas.addEventListener("mouseleave", function () {
       tooltip.style.display = "none";
       currentTooltipName = null;
+    });
+
+    // Dispose three.js resources on page navigation/unload
+    window.addEventListener("pagehide", () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+        animationFrameId = null;
+      }
+      if (captionIntervalId) {
+        clearInterval(captionIntervalId);
+        captionIntervalId = null;
+      }
+      disposeTooltipMeshes();
+      sphere.dispose();
+      sphereMeshMaterial.dispose();
+      if (videoTex) videoTex.dispose();
+      controls.dispose();
+      renderer.dispose();
     });
   } // End of video element check
 } // End of setupVideoSphere function

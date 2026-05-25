@@ -10,8 +10,12 @@ export class FloatingTocManager {
     this.headings = [];
     this.tocLinks = [];
     this.isScrolling = false;
+    this.scrollHandler = null;
+    this.linkClickHandlers = [];
 
     this.init();
+
+    window.addEventListener("pagehide", () => this.cleanup(), { once: true });
   }
 
   init() {
@@ -161,7 +165,7 @@ export class FloatingTocManager {
   setupScrollListener() {
     let ticking = false;
 
-    const handleScroll = () => {
+    this.scrollHandler = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           this.highlightCurrentSection();
@@ -171,12 +175,12 @@ export class FloatingTocManager {
       }
     };
 
-    document.addEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", this.scrollHandler);
   }
 
   setupTocNavigation() {
     this.tocLinks.forEach((link) => {
-      link.addEventListener("click", (e) => {
+      const handler = (e) => {
         e.preventDefault();
         const targetId = link.getAttribute("href").slice(1);
         const targetElement = document.getElementById(targetId);
@@ -194,8 +198,22 @@ export class FloatingTocManager {
             this.highlightCurrentSection();
           }, 1000);
         }
-      });
+      };
+
+      this.linkClickHandlers.push({ link, handler });
+      link.addEventListener("click", handler);
     });
+  }
+
+  cleanup() {
+    if (this.scrollHandler) {
+      document.removeEventListener("scroll", this.scrollHandler);
+      this.scrollHandler = null;
+    }
+    this.linkClickHandlers.forEach(({ link, handler }) => {
+      link.removeEventListener("click", handler);
+    });
+    this.linkClickHandlers = [];
   }
 
   highlightCurrentSection() {

@@ -9,6 +9,9 @@ export default function (eleventyConfig) {
     return JSON.parse(await readFile("./_data/project-euler/difficulty.json", "utf8"));
   });
 
+  // Build-time date for sitemap and similar use cases
+  eleventyConfig.addGlobalData("buildDate", () => new Date());
+
   // Configure custom markdown extensions and transforms
   configureMarkdown(eleventyConfig);
 

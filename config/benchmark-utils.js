@@ -19,7 +19,7 @@ export function parseTime(timeStr) {
   if (unit === "μs") return value * 1000;
   if (unit === "ms") return value * 1000000;
   if (unit === "s") return value * 1000000000;
-  return value;
+  return Infinity;
 }
 
 /**
@@ -34,7 +34,7 @@ export function parseMemory(memStr) {
   if (unit === "kib" || unit === "kb") return value * 1024;
   if (unit === "mib" || unit === "mb") return value * 1024 * 1024;
   if (unit === "gib" || unit === "gb") return value * 1024 * 1024 * 1024;
-  return value;
+  return Infinity;
 }
 
 /**

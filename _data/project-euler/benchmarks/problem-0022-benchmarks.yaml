@@ -29,6 +29,21 @@ solution:
         1.24 ms[90m      [39m[90mHistogram: [39m[90m[1mlog([22m[39m[90mfrequency[39m[90m[1m)[22m[39m[90m by time[39m      2.12 ms [0m[1m<[22m
       
        Memory estimate[90m: [39m[33m1.38 MiB[39m, allocs estimate[90m: [39m[33m25856[39m.
+  "Intel Core i9-13900K":
+    date: "2026-05-18T10:37:38.072"
+    julia_version: "Julia 1.12.6"
+    os: "Linux"
+    output: |-
+      BenchmarkTools.Trial: 4939 samples with 1 evaluation per sample.
+       Range [90m([39m[36m[1mmin[22m[39m … [35mmax[39m[90m):  [39m[36m[1m940.577 μs[22m[39m … [35m  4.747 ms[39m  [90m┊[39m GC [90m([39mmin … max[90m): [39m0.00% … 77.30%
+       Time  [90m([39m[34m[1mmedian[22m[39m[90m):     [39m[34m[1m963.274 μs               [22m[39m[90m┊[39m GC [90m([39mmedian[90m):    [39m0.00%
+       Time  [90m([39m[32m[1mmean[22m[39m ± [32mσ[39m[90m):   [39m[32m[1m  1.012 ms[22m[39m ± [32m398.097 μs[39m  [90m┊[39m GC [90m([39mmean ± σ[90m):  [39m4.47% ±  8.80%
+      
+        [34m█[39m[32m▃[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m 
+        [34m█[39m[32m█[39m[39m▅[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▃[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▁[39m▃[39m▇[39m [39m█
+        941 μs[90m        [39m[90mHistogram: [39m[90m[1mlog([22m[39m[90mfrequency[39m[90m[1m)[22m[39m[90m by time[39m        4.4 ms [0m[1m<[22m
+      
+       Memory estimate[90m: [39m[33m1.38 MiB[39m, allocs estimate[90m: [39m[33m25856[39m.
   "AMD Phenom II X4 970":
     date: "2025-12-24T00:58:32.830"
     julia_version: "Julia 1.12.3"

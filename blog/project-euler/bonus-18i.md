@@ -177,7 +177,7 @@ function R_mod_p(p)
 end
 ```
 
-Now we just need to sum over all $p$. Since each prime can be processed independently, this is an embarassingly parallel problem and we can parallelize this computation across multiple threads. The range is divided into chunks, with each thread processing its own chunk and computing a local sum.
+Now we just need to sum over all $p$. Since each prime can be processed independently, this is an embarrassingly parallel problem and we can parallelize this computation across multiple threads. The range is divided into chunks, with each thread processing its own chunk and computing a local sum.
 
 ```julia
 function sum_R_mod_p(low, high)

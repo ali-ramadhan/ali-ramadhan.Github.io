@@ -49,7 +49,7 @@ function sum_of_amicable_numbers(limit)
 end
 ```
 
-Using this we compute the answer for limits up to $10^8$, tabulated below.
+Using this we compute the answer for limits up to $10^7$, tabulated below.
 
 | Limit   | Sum         | Time |
 |---------|-------------|------|

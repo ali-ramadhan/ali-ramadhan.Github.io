@@ -29,7 +29,7 @@ So now we can just iterate through possible values for $a$ and compute $b$ and $
 
 We can use the constraints $a < b < c$ and $a + b + c = n$ to place an upper limit on $a$: it cannot be larger than $a_\text{max} = \lfloor n/3 \rfloor$ otherwise $a + b + c$ would exceed $n$.
 
-So we just need to iterate through values of $a$ until $a_\text{max}$. For each value of $a$ we can directly compute values for $b$ and $c$ and see if they satisfy all the contraints. If they do, we have found a Pythagorean triplet!
+So we just need to iterate through values of $a$ until $a_\text{max}$. For each value of $a$ we can directly compute values for $b$ and $c$ and see if they satisfy all the constraints. If they do, we have found a Pythagorean triplet!
 
 ```julia
 function find_pythagorean_triplets(n)

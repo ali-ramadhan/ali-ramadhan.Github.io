@@ -72,7 +72,7 @@ function find_curious_fractions(N, K)
 
             members = get!(Vector{Int}, groups, (cancelled, n // rem))
 
-            # Don't hit the same butcket again (e.g. 11 with K=1).
+            # Don't hit the same bucket again (e.g. 11 with K=1).
             n in members && continue
 
             for m in members

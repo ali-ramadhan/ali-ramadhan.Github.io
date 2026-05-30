@@ -168,7 +168,7 @@ So our matrices $M(a)$ are exactly "translate by $a$, then invert". A sequence $
 M(a_0) M(a_1) \cdots M(a_{n-1}) = T^{a_0} S T^{a_1} S \cdots T^{a_{n-1}} S
 ```
 
-which we can call the word for our sequence $a$ with $n$ occurences of $S$.
+which we can call the word for our sequence $a$ with $n$ occurrences of $S$.
 
 This group also has two important relations. First, $S$ squares to $-I$
 

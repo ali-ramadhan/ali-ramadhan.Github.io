@@ -27,7 +27,7 @@ function find_abundant_numbers(limit)
 end
 ```
 
-Now rather than checking each number to see if it can be expressed as a sum of two abundant numbers, we generate all possible sums of two abundant numbers use a boolean array to mark which numbers we arrive at.
+Now rather than checking each number to see if it can be expressed as a sum of two abundant numbers, we generate all possible sums of two abundant numbers using a boolean array to mark which numbers we arrive at.
 
 ```julia
 function sum_non_abundant_sums(limit)

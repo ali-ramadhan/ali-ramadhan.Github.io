@@ -11,7 +11,7 @@ benchmark_key: "S_13_1000"
 
 > The decimal expansion of the square root of two is $1.\underline{4142135623}730...$
 >
-> If we define $S(n, d)$ to be the the sum of the first $d$ digits in the fractional part of the decimal expansion of $\sqrt{n}$, it can be seen that $S(2, 10) = 4 + 1 + 4 + ... + 3 = 31$.
+> If we define $S(n, d)$ to be the sum of the first $d$ digits in the fractional part of the decimal expansion of $\sqrt{n}$, it can be seen that $S(2, 10) = 4 + 1 + 4 + ... + 3 = 31$.
 >
 > It can be confirmed that $S(2, 100) = 481$.
 >
@@ -38,7 +38,7 @@ Using this we can compute $S(13, 10^3)$ in @benchmark[bonus-root13:S_not_creativ
 
 ## Going digit-by-digit
 
-So the problem doesn't want us to use arbitrary precision floats, but we can use arbitrary precision integer arithmetric to compute each digit of the square root's fractional part one-by-one by using a [method that is similar to long division](https://en.wikipedia.org/wiki/Square_root_algorithms#Digit-by-digit_calculation).
+So the problem doesn't want us to use arbitrary precision floats, but we can use arbitrary precision integer arithmetic to compute each digit of the square root's fractional part one-by-one by using a [method that is similar to long division](https://en.wikipedia.org/wiki/Square_root_algorithms#Digit-by-digit_calculation).
 
 We can compute the [integer square root](https://en.wikipedia.org/wiki/Integer_square_root) of $n$ using Julia's `isqrt` function. Doing this for $n = 13$ we then know that $\sqrt{13} = 3.\text{something}$.
 

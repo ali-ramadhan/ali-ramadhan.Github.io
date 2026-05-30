@@ -23,7 +23,7 @@ function parse_names(content)
 end
 ```
 
-Now we need a function to compute the alphabetical value of a name. Each letter contributes its position in the alphabe (A = 1, B = 2, ..., Z = 26) which we can compute by relying on the fact that the integer value of a character is its [ASCII](https://en.wikipedia.org/wiki/ASCII) value.
+Now we need a function to compute the alphabetical value of a name. Each letter contributes its position in the alphabet (A = 1, B = 2, ..., Z = 26) which we can compute by relying on the fact that the integer value of a character is its [ASCII](https://en.wikipedia.org/wiki/ASCII) value.
 
 ```julia
 function name_value(name)

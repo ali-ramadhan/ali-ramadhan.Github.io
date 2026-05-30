@@ -177,7 +177,7 @@ In pandas it sounds like you can do this by passing the `method="multi"` keyword
 This time each benchmark inserted 100k rows and was repeated 10 times.
 :::
 
-Now there's a clear winner with psycopg3 at 25~30k inserts/sec. I'm not sure why psycopg3 is faster but it looks like pandas is [using dictionaries to insert](https://github.com/pandas-dev/pandas/blob/a671b5a8bf5dd13fb19f0e88edc679bc9e15c673/pandas/io/sql.py#L938-L968) which can be slower than just plain tuples. SQLAlchemy might be extra slow slow here because of additional overhead like with single-row inserts and I also passed it dictionaries.
+Now there's a clear winner with psycopg3 at 25~30k inserts/sec. I'm not sure why psycopg3 is faster but it looks like pandas is [using dictionaries to insert](https://github.com/pandas-dev/pandas/blob/a671b5a8bf5dd13fb19f0e88edc679bc9e15c673/pandas/io/sql.py#L938-L968) which can be slower than just plain tuples. SQLAlchemy might be extra slow here because of additional overhead like with single-row inserts and I also passed it dictionaries.
 
 With multi-row inserts there's an order-of-magnitude improvement but at ~30k inserts per second, we're still gonna have to wait ~0.8 years or almost 10 months for all the data to load 🐢
 
@@ -195,7 +195,7 @@ Once you have a CSV file it's as simple as
 copy weather from some_big.csv delimiter ',' csv header;
 ```
 
-We have the option of saving data from NetCDF files as CSV files then using `copy`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space that it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and streaming it straight into Postgres using psycopg3's `cusor.copy()` function.
+We have the option of saving data from NetCDF files as CSV files then using `copy`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space than it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and streaming it straight into Postgres using psycopg3's `cursor.copy()` function.
 
 When benchmarking `copy` vs. `psycopg3.cursor.copy()` we are starting with a pandas dataframe so we must account for the time it takes to save all the data to CSV files on disk in the case of `copy csv`. In the case of `cursor.copy()` if we stream a list of tuples then the only overhead is creating the cursor and tuple generator.
 
@@ -213,7 +213,7 @@ At ~100k inserts/second we're still talking about ~3 months to load all the data
 
 When inserting _many_ rows, Postgres may encounter bottlenecks[^write-bottlenecks] so it's important that the insert rate can be sustained. To look at this, we can insert hundreds of millions of rows and watch for fluctuations in the insert rate.
 
-[^write-bottlenecks]: Bottlenecks include the disk being overloaded with writes, usually made worse when the WAL and row insertion are competing for disk I/O. Autovacuuming, which removes dead rows, can also compete for I/O although when populating a database we can ensure that there won't be any duplicates so this could potentially be turned off. Postgres also periodically performs checkpoints to flush all outstanding WAL data to disk. Heavy writes can lead to more checkpoints and more competitinon for I/O.
+[^write-bottlenecks]: Bottlenecks include the disk being overloaded with writes, usually made worse when the WAL and row insertion are competing for disk I/O. Autovacuuming, which removes dead rows, can also compete for I/O although when populating a database we can ensure that there won't be any duplicates so this could potentially be turned off. Postgres also periodically performs checkpoints to flush all outstanding WAL data to disk. Heavy writes can lead to more checkpoints and more competition for I/O.
 
 ::: figure centered width-80
 ![copy at scale benchmarks](/assets/blog/trillion-rows/benchmarks_copy_at_scale.png)
@@ -295,7 +295,7 @@ Now that we've concluded we want to be inserting data into a hypertable, let's t
 Sustained hypertable insert rates including overhead (writing CSV files) for different insertion methods. Here "tpc" is short for timescaledb-parallel-copy and "pgb" is short for pg_bulkload. "32W" means 32 workers were used for that benchmark.
 :::
 
-For pg_bulkload with a single worker the the `writer=buffered` option was used. For multiple workers, the `writer=buffered` and `multi_process=yes` options were used. Then for multiple workers with fsync off, the `writer=parallel` option was used.
+For pg_bulkload with a single worker the `writer=buffered` option was used. For multiple workers, the `writer=buffered` and `multi_process=yes` options were used. Then for multiple workers with fsync off, the `writer=parallel` option was used.
 
 So what can we conclude?
 

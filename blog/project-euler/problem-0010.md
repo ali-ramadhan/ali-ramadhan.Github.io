@@ -62,7 +62,7 @@ end
 
 With this we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using @benchmark[problem-0010:sum_of_primes_below_2M:memory].
 
-We can go a bit further and compute the sum of all primes below $10^8$ in @benchmark[problem-0010:sum_of_primes_below_100M] using @benchmark[problem-0010:sum_of_primes_below_100M:memory].
+We can go a bit further and compute the sum of all primes below $2 \times 10^8$ in @benchmark[problem-0010:sum_of_primes_below_200M] using @benchmark[problem-0010:sum_of_primes_below_200M:memory].
 
 The sieve uses $\mathcal{O}(n/2)$ space for the boolean array. For time complexity, consider how much work we do crossing off multiples. For each prime $p$, we cross off roughly $n/2p$ odd multiples. The total work is
 

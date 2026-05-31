@@ -1,3 +1,14 @@
 <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
   <span class="toggle-icon">☀️</span>
 </button>
+<script>
+  // Set the toggle icon to match the already-applied theme before first paint
+  // to avoid a brief flash of the wrong icon on dark-theme loads.
+  (function () {
+    var theme = document.documentElement.getAttribute("data-theme") || "light";
+    var icon = document.querySelector(".toggle-icon");
+    if (icon) {
+      icon.textContent = theme === "dark" ? "🌙" : "☀️";
+    }
+  })();
+</script>

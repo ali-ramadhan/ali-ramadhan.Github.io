@@ -4,11 +4,9 @@
  */
 
 function parseAnsiToHtml(text) {
-  // ANSI color codes to HTML class mapping
-  const ansiMap = {
-    0: "reset",
-    1: "bold",
-    22: "normal",
+  // SGR foreground color codes to CSS class names. Codes 0 (reset), 1 (bold),
+  // 22 (normal weight), and 39 (default foreground) are handled separately.
+  const fgClasses = {
     30: "black",
     31: "red",
     32: "green",
@@ -17,41 +15,62 @@ function parseAnsiToHtml(text) {
     35: "magenta",
     36: "cyan",
     37: "white",
-    39: "default",
     90: "gray",
   };
 
-  // Stack to keep track of open spans
-  let openSpans = [];
+  let fg = null; // active foreground color class, or null for the default
+  let bold = false; // whether bold is currently active
+  let openSpans = 0; // number of <span> tags currently open
 
-  // Replace ANSI escape codes with HTML spans
+  const closeAll = () => {
+    const closing = "</span>".repeat(openSpans);
+    openSpans = 0;
+    return closing;
+  };
+
+  const openActive = () => {
+    let opening = "";
+    if (bold) {
+      opening += '<span class="ansi-bold">';
+      openSpans++;
+    }
+    if (fg) {
+      opening += `<span class="ansi-${fg}">`;
+      openSpans++;
+    }
+    return opening;
+  };
+
+  // Replace ANSI escape codes with HTML spans. On each code we close the open
+  // spans, update the state, then reopen spans for whatever attributes are
+  // still active, which guarantees the emitted spans are always well nested.
   return (
-    text.replace(/\[(\d+)m/g, (match, code) => {
-      const colorClass = ansiMap[code];
+    text.replace(/\[(\d+)m/g, (match, codeStr) => {
+      const code = parseInt(codeStr, 10);
 
-      if (code === "0" || code === "39") {
-        // Reset - close all open spans
-        const closing = openSpans.map(() => "</span>").join("");
-        openSpans = [];
-        return closing;
-      } else if (code === "22") {
-        // Normal weight - just close bold if it's open
-        const boldIndex = openSpans.findIndex((span) => span.includes("ansi-bold"));
-        if (boldIndex !== -1) {
-          openSpans.splice(boldIndex, 1);
-          return "</span>";
-        }
-        return "";
-      } else if (colorClass) {
-        const className = `ansi-${colorClass}`;
-        openSpans.push(className);
-        return `<span class="${className}">`;
+      // Leave codes we don't understand untouched (and don't disturb spans).
+      if (code !== 0 && code !== 1 && code !== 22 && code !== 39 && !fgClasses[code]) {
+        return match;
       }
 
-      return match; // Unknown code, leave as is
-    }) +
-    // Close any remaining open spans at the end
-    openSpans.map(() => "</span>").join("")
+      const closing = closeAll();
+      if (code === 0) {
+        // Full reset - clear all attributes.
+        fg = null;
+        bold = false;
+      } else if (code === 1) {
+        bold = true;
+      } else if (code === 22) {
+        // Normal weight - turn off bold only.
+        bold = false;
+      } else if (code === 39) {
+        // Default foreground - clear the color only, leave bold alone.
+        fg = null;
+      } else {
+        fg = fgClasses[code];
+      }
+      return closing + openActive();
+    }) + closeAll()
   );
 }
 

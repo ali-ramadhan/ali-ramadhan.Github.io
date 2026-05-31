@@ -5,7 +5,7 @@
   padding: 0;
   margin: -1px;
   overflow: hidden;
-  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
   white-space: nowrap;
   border: 0;
 }
@@ -16,7 +16,7 @@ html[data-theme="light"] {
   --outer-space-bg: linear-gradient(180deg, #001 0%, #1a1a2e 60%, #2a3a5e 85%, #4a5f7a 100%);
   --atmosphere-bg: linear-gradient(
     180deg,
-    rgba(74, 95, 122, 0) 0%,
+    rgb(74, 95, 122, 0) 0%,
     #4a5f7a 10%,
     #87ceeb 40%,
     #b8d4f0 80%,
@@ -26,10 +26,10 @@ html[data-theme="light"] {
   --ocean-bg: linear-gradient(180deg, var(--ocean-top-color) 0%, #191970 100%);
   --crust-top-color: #8b4513; /* Saddle brown - matches bathymetry SVG */
   --crust-bg: linear-gradient(180deg, var(--crust-top-color) 0%, #704214 50%, #5c4033 100%);
-  --content-bg: rgba(255, 255, 255, 0.9);
+  --content-bg: rgb(255, 255, 255, 0.9);
   --content-text: #333;
   --content-subtext: #666;
-  --nav-dot: rgba(255, 255, 255, 0.5);
+  --nav-dot: rgb(255, 255, 255, 0.5);
   --nav-dot-active: white;
   --cloud-color: white;
   --star-color-1: #eee;
@@ -67,7 +67,7 @@ html[data-theme="dark"] {
   --outer-space-bg: linear-gradient(180deg, #000 0%, #0a0a0a 60%, #1a1a2e 85%, #16213e 100%);
   --atmosphere-bg: linear-gradient(
     180deg,
-    rgba(22, 33, 62, 0) 0%,
+    rgb(22, 33, 62, 0) 0%,
     #16213e 10%,
     #1a1a2e 40%,
     #1f2a3e 80%,
@@ -77,10 +77,10 @@ html[data-theme="dark"] {
   --ocean-bg: linear-gradient(180deg, var(--ocean-top-color) 0%, #0c1426 100%);
   --crust-top-color: #3d2817; /* Dark brown - matches bathymetry SVG */
   --crust-bg: linear-gradient(180deg, var(--crust-top-color) 0%, #5a2c0a 50%, #4a2c2a 100%);
-  --content-bg: rgba(26, 26, 46, 0.9);
+  --content-bg: rgb(26, 26, 46, 0.9);
   --content-text: #e0e0e0;
   --content-subtext: #b0b0b0;
-  --nav-dot: rgba(224, 224, 224, 0.5);
+  --nav-dot: rgb(224, 224, 224, 0.5);
   --nav-dot-active: #e0e0e0;
   --cloud-color: #4a4a6a;
   --star-color-1: #fff;
@@ -99,6 +99,7 @@ html[data-theme="dark"] {
 
 html {
   overflow-x: hidden; /* Prevent horizontal scrolling, especially on mobile */
+
   /* Responsive root font size: scales from 16px on mobile to 18px on large screens */
   font-size: clamp(16px, 0.8vw + 14px, 18px);
 }
@@ -121,8 +122,9 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Let individual layers control their height and overflow */
-  /* Removed: min-height and overflow declarations - layers should specify their own needs */
+
+  /* Let individual layers control their height and overflow.
+     Removed min-height/overflow declarations - layers should specify their own needs. */
 }
 
 .content {
@@ -132,8 +134,10 @@ body {
   background: var(--content-bg);
   padding: 2rem;
   border-radius: 10px;
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari <18 needs -webkit- for backdrop blur */
   -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
+
   /* Fluid max-width: grows from 600px on small screens to 1200px on large screens */
   max-width: clamp(600px, 85vw, 1200px);
   margin: 0 2rem;
@@ -176,11 +180,6 @@ body {
   text-decoration: underline;
 }
 
-/* Left-align text for the resources section content */
-#resources .content {
-  text-align: left;
-}
-
 /* Make ocean content wider to accommodate research layout */
 #ocean .content {
   /* Fluid max-width: grows from 1000px to 1600px on very large screens */
@@ -188,9 +187,9 @@ body {
   text-align: left;
 }
 
-/* Make resources content wider for publications and resources sections */
+/* Left-align resources content; widen for publications/resources (fluid 900px–1400px) */
 #resources .content {
-  /* Fluid max-width: grows from 900px to 1400px on very large screens */
+  text-align: left;
   max-width: clamp(900px, 85vw, 1400px);
 }
 
@@ -295,7 +294,7 @@ body {
   padding: 0.1rem 0.4rem;
   margin: 0.2rem 0.3rem 0.2rem 0;
   border-radius: 4px;
-  border: 1px solid rgba(0, 0, 0, 0.15);
+  border: 1px solid rgb(0, 0, 0, 0.15);
   text-decoration: none;
   font-size: 0.85rem;
   font-weight: bold;
@@ -309,12 +308,12 @@ body {
 }
 
 html[data-theme="dark"] #resources .publications-content a.publication-button {
-  background: rgba(224, 224, 224, 0.15);
+  background: rgb(224, 224, 224, 0.15);
   color: var(--content-text);
-  border: 1px solid rgba(224, 224, 224, 0.3);
+  border: 1px solid rgb(224, 224, 224, 0.3);
 }
 
 html[data-theme="dark"] #resources .publications-content a.publication-button:hover {
-  background: rgba(224, 224, 224, 0.25);
-  border-color: rgba(224, 224, 224, 0.5);
+  background: rgb(224, 224, 224, 0.25);
+  border-color: rgb(224, 224, 224, 0.5);
 }

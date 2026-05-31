@@ -120,6 +120,7 @@
 @media (width >= 1920px) {
   .content {
     max-width: clamp(900px, 55vw, 1200px);
+    padding: 2.5rem;
   }
 
   #ocean .content {
@@ -137,11 +138,6 @@
 
   .content p {
     font-size: 1.05rem;
-  }
-
-  /* Scale up padding for better proportions */
-  .content {
-    padding: 2.5rem;
   }
 }
 

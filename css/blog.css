@@ -77,7 +77,7 @@ html[data-theme="dark"] .blog-post-content h3 {
   background: #fff;
   border-radius: 12px;
   padding: 2rem;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 10px rgb(0, 0, 0, 0.05);
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease;
@@ -86,7 +86,7 @@ html[data-theme="dark"] .blog-post-content h3 {
 
 .blog-post-preview:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.1);
 }
 
 html[data-theme="dark"] .blog-post-preview {
@@ -484,11 +484,11 @@ html[data-theme="dark"] .blog-post-content {
   border-radius: 8px;
   margin: 1.5rem 0;
   padding: 1rem 1.5rem;
-  background: rgba(52, 152, 219, 0.1);
+  background: rgb(52, 152, 219, 0.1);
 }
 
 html[data-theme="dark"] .blog-post-content blockquote {
-  background: rgba(116, 185, 255, 0.1);
+  background: rgb(116, 185, 255, 0.1);
 }
 
 .blog-post-content blockquote > *:last-child {
@@ -514,7 +514,7 @@ html[data-theme="dark"] .blog-post-content blockquote {
   border-radius: 8px;
   overflow-x: auto;
   font-size: 0.9em;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.1);
 }
 
 /* Ensure all code elements use Fira Code with ligatures */
@@ -583,7 +583,7 @@ html[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
 }
 
 .blog-post-content .toolbar-item button {
-  background: rgba(224, 224, 224, 0.2);
+  background: rgb(224, 224, 224, 0.2);
   border: none;
   border-radius: 4px;
   cursor: pointer;
@@ -601,7 +601,7 @@ html[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
 
 /* Dark mode adjustments for toolbar */
 html[data-theme="dark"] .blog-post-content .toolbar-item button {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgb(255, 255, 255, 0.1);
 }
 
 .blog-post-full-footer {
@@ -885,8 +885,7 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
 
 /* Collapsible content styling */
 .blog-post-content .collapsible-content {
-  overflow-x: visible;
-  overflow-y: clip;
+  overflow: visible clip;
   max-height: none;
   opacity: 1;
   transition:
@@ -1056,7 +1055,7 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   border-color: #3498db;
   color: #3498db;
   transform: translateY(-2px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgb(0, 0, 0, 0.1);
 }
 
 .external-link-icon {

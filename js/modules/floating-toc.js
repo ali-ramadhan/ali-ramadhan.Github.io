@@ -42,8 +42,10 @@ export class FloatingTocManager {
       return;
     }
 
-    // Find all headings, generate IDs if they don't exist
-    this.headings = Array.from(postContent.querySelectorAll("h2, h3, h4, h5, h6"));
+    // Find all headings, generate IDs if they don't exist. Only h2/h3 are
+    // tracked: the ToC renders nothing deeper, and tracking unrendered levels
+    // would clear the active highlight whenever one scrolls under an h4+.
+    this.headings = Array.from(postContent.querySelectorAll("h2, h3"));
 
     this.headings.forEach((heading, index) => {
       if (!heading.id) {
@@ -113,11 +115,25 @@ export class FloatingTocManager {
         const sectionHeading = document.createElement("div");
         sectionHeading.className = hasSubsections ? "section-heading" : "section-heading no-toggle";
 
+        // The collapse toggle is a sibling of the link, not a child: clicking
+        // the toggle should only collapse/expand, and clicking the link should
+        // only navigate
+        if (hasSubsections) {
+          const toggle = document.createElement("span");
+          toggle.className = "section-toggle";
+          toggle.textContent = "▼";
+          toggle.setAttribute("role", "button");
+          toggle.setAttribute("aria-label", "Toggle section");
+          toggle.addEventListener("click", (e) => {
+            e.stopPropagation();
+            section.classList.toggle("collapsed");
+          });
+          sectionHeading.appendChild(toggle);
+        }
+
         const link = document.createElement("a");
         link.href = `#${heading.id}`;
-        link.innerHTML = hasSubsections
-          ? `<span class="section-toggle">▼</span> ${sectionCount}. ${heading.textContent}`
-          : `${sectionCount}. ${heading.textContent}`;
+        link.textContent = `${sectionCount}. ${heading.textContent}`;
 
         sectionHeading.appendChild(link);
 
@@ -129,13 +145,6 @@ export class FloatingTocManager {
         mainList.appendChild(section);
 
         currentSection = subsectionList;
-
-        if (hasSubsections) {
-          sectionHeading.addEventListener("click", (e) => {
-            e.preventDefault();
-            section.classList.toggle("collapsed");
-          });
-        }
       } else if (currentSection && level === 3) {
         subsectionCount++;
         const item = document.createElement("div");
@@ -186,6 +195,23 @@ export class FloatingTocManager {
         const targetElement = document.getElementById(targetId);
 
         if (targetElement) {
+          // If the target heading is hidden inside collapsed sections
+          // (collapsible-headers feature), expand them before measuring
+          // offsetTop, otherwise we scroll to a clipped, invisible spot
+          for (let i = 0; i < 10; i++) {
+            const collapsedWrapper = targetElement.closest(".collapsible-content.collapsed");
+            if (!collapsedWrapper) break;
+
+            const controllingHeader = collapsedWrapper.previousElementSibling;
+            if (controllingHeader && controllingHeader.classList.contains("collapsible-header")) {
+              // Go through the header's own click handler to keep the
+              // collapsible-headers module's internal state in sync
+              controllingHeader.click();
+            } else {
+              collapsedWrapper.classList.remove("collapsed");
+            }
+          }
+
           this.isScrolling = true;
 
           window.scrollTo({
@@ -223,6 +249,10 @@ export class FloatingTocManager {
     const scrollPosition = window.scrollY;
 
     this.headings.forEach((heading) => {
+      // Headings inside collapsed sections are clipped to the wrapper's
+      // position; their offsetTop would produce bogus highlights
+      if (heading.closest(".collapsible-content.collapsed")) return;
+
       const sectionTop = heading.offsetTop - 100;
       if (scrollPosition >= sectionTop) {
         currentSection = heading.id;

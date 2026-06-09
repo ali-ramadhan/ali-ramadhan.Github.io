@@ -1,5 +1,5 @@
 <!--
-  Mountain Range SVG (light theme) - Transition between atmosphere and land layers
+  Mountain Range SVG (dark theme) - Transition between atmosphere and land layers
 
   Features:
   - 5 mountains of varying heights
@@ -7,8 +7,8 @@
   - Seamless tiling pattern (400px width)
 
   Colors are baked in: as an external document loaded via CSS background-image,
-  this SVG cannot see page CSS custom properties. The dark theme uses
-  mountains-dark.svg (kept in sync manually).
+  this SVG cannot see page CSS custom properties. The light theme uses
+  mountains.svg (kept in sync manually).
 
   Usage: background-image with repeat-x
 -->
@@ -19,10 +19,10 @@
 
   <style>
     .mountain {
-      fill: #8b4513;
+      fill: #4a3820;
     }
     .snow-cap {
-      fill: #fff;
+      fill: #e0e0e0;
     }
   </style>
   

@@ -157,7 +157,9 @@ export class BenchmarkManager {
   }
 
   handleMouseEnter(e) {
-    if (e.target.classList.contains("benchmark-reference")) {
+    // Capture-phase delegation on document: when the pointer enters the page
+    // itself, e.target is the document node, which has no classList.
+    if (e.target instanceof Element && e.target.classList.contains("benchmark-reference")) {
       // Add slight delay before showing tooltip
       this.hoverTimeout = setTimeout(() => {
         this.showTooltip(e.target, e);
@@ -166,7 +168,7 @@ export class BenchmarkManager {
   }
 
   handleMouseLeave(e) {
-    if (e.target.classList.contains("benchmark-reference")) {
+    if (e.target instanceof Element && e.target.classList.contains("benchmark-reference")) {
       // Clear any pending hover timeout
       if (this.hoverTimeout) {
         clearTimeout(this.hoverTimeout);
@@ -183,7 +185,7 @@ export class BenchmarkManager {
   }
 
   handleClick(e) {
-    if (e.target.classList.contains("benchmark-reference")) {
+    if (e.target instanceof Element && e.target.classList.contains("benchmark-reference")) {
       e.preventDefault();
       // Clear any pending hover timeout to prevent race condition
       if (this.hoverTimeout) {

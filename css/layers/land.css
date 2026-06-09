@@ -7,23 +7,38 @@
   height: 120px;
   z-index: var(--z-mountains);
   overflow: hidden;
+}
 
-  /* Light theme mountain colors */
-  --mountain-color: #8b4513;
-  --snow-color: #fff;
-
-  background-image: url("/assets/images/backgrounds/mountains.svg");
+/* The mountains SVG is an external document loaded via background-image, so it
+   can't see page custom properties — theming uses two pre-colored SVGs
+   cross-faded via stacked pseudo-elements (same idea as .land-river-svg). */
+.mountain-range::before,
+.mountain-range::after {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-repeat: repeat-x;
   background-position: bottom;
   background-size: 400px 120px;
-  transition: background-image 0.5s ease;
+  transition: opacity 0.5s ease;
 }
 
-/* Dark theme mountains */
-html[data-theme="dark"] .mountain-range {
-  /* Dark theme mountain colors */
-  --mountain-color: #4a3820;
-  --snow-color: #e0e0e0;
+.mountain-range::before {
+  background-image: url("/assets/images/backgrounds/mountains.svg");
+  opacity: 1;
+}
+
+.mountain-range::after {
+  background-image: url("/assets/images/backgrounds/mountains-dark.svg");
+  opacity: 0;
+}
+
+html[data-theme="dark"] .mountain-range::before {
+  opacity: 0;
+}
+
+html[data-theme="dark"] .mountain-range::after {
+  opacity: 1;
 }
 
 /* Land */
@@ -61,13 +76,17 @@ html[data-theme="dark"] .mountain-range {
 .land-river-svg.dark-theme {
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 .land-river-svg.light-theme {
   opacity: 1;
   visibility: visible;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 html[data-theme="dark"] .land-river-svg.light-theme {

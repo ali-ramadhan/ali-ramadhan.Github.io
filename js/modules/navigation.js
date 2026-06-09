@@ -37,22 +37,42 @@ class NavigationManager {
     // Check if there's a hash in the URL
     const hash = window.location.hash.slice(1); // Remove the # prefix
 
-    let targetSection;
-    let targetId;
-
-    if (hash && (targetSection = this.getSectionById(hash))) {
-      // If there's a valid hash, scroll to that section
-      targetId = hash;
-    } else {
-      // Otherwise, default to the land section
-      targetSection = this.getSectionById("land");
-      targetId = "land";
-    }
-
-    if (targetSection) {
+    if (hash && this.getSectionById(hash)) {
+      // Hash names a layer: scroll to that section
+      const targetSection = this.getSectionById(hash);
       targetSection.scrollIntoView({ behavior: "instant" });
-      this.currentSection = this.getSectionIndex(targetId);
+      this.currentSection = this.getSectionIndex(hash);
+    } else if (hash && document.getElementById(hash)) {
+      // Hash names a non-layer anchor (e.g. a publication id): leave the
+      // browser's native anchor scroll alone, just sync the section index
+      this.currentSection = this.getCurrentSectionFromScroll();
+    } else {
+      // No hash (or a dangling one): default to the land section
+      const targetSection = this.getSectionById("land");
+      if (targetSection) {
+        targetSection.scrollIntoView({ behavior: "instant" });
+        this.currentSection = this.getSectionIndex("land");
+      }
     }
+  }
+
+  // Determine which section currently occupies the viewport center. Needed
+  // because the user can move through the page by scrolling, which would
+  // otherwise leave this.currentSection stale.
+  getCurrentSectionFromScroll() {
+    let closest = this.currentSection;
+    let minDistance = Infinity;
+
+    this.sectionData.forEach(({ element, index }) => {
+      const rect = element.getBoundingClientRect();
+      const distance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
+      if (distance < minDistance) {
+        minDistance = distance;
+        closest = index;
+      }
+    });
+
+    return closest;
   }
 
   getSectionIndex(layerId) {
@@ -85,6 +105,10 @@ class NavigationManager {
 
   handleKeyboardNavigation(e) {
     if (this.isScrolling) return;
+
+    // Re-derive the current section from the scroll position: manual
+    // scrolling (wheel, touch, scrollbar) isn't tracked anywhere
+    this.currentSection = this.getCurrentSectionFromScroll();
 
     if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
       e.preventDefault();

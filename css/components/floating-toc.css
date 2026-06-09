@@ -113,18 +113,25 @@ html[data-theme="dark"] .floating-toc-close:hover {
   cursor: default;
 }
 
+/* Toggle and link sit side by side (links are display: block) */
 .section-heading:not(.no-toggle) {
-  cursor: pointer;
-  user-select: none;
+  display: flex;
+  align-items: baseline;
+}
+
+.section-heading:not(.no-toggle) > a {
+  flex: 1;
 }
 
 /* Section toggle arrow */
 .section-toggle {
   display: inline-block;
   font-size: 10px;
-  margin-right: 6px;
+  padding: 4px 6px 4px 0;
   transition: transform 0.2s ease;
   color: #666;
+  cursor: pointer;
+  user-select: none;
 }
 
 html[data-theme="dark"] .section-toggle {

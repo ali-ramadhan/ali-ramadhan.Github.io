@@ -856,21 +856,17 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   color: #b0b0b0;
 }
 
-/* Make collapsible headers position relative for absolute positioning of arrow */
+/* Make collapsible headers position relative for absolute positioning of arrow.
+   The padding clearing space for the arrow lives on the heading itself, not on
+   the numbering ::before — that pseudo-element generates no box when numbering
+   is disabled (.no-header-numbering) and never exists on h5/h6, which would
+   leave the arrow overlapping the heading text. */
 .blog-post-content h2.collapsible-header,
 .blog-post-content h3.collapsible-header,
 .blog-post-content h4.collapsible-header,
 .blog-post-content h5.collapsible-header,
 .blog-post-content h6.collapsible-header {
   position: relative;
-}
-
-/* Add padding to accommodate the arrow */
-.blog-post-content h2.collapsible-header::before,
-.blog-post-content h3.collapsible-header::before,
-.blog-post-content h4.collapsible-header::before,
-.blog-post-content h5.collapsible-header::before,
-.blog-post-content h6.collapsible-header::before {
   padding-left: 1.2em;
 }
 
@@ -1024,6 +1020,14 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   .blog-post-content figure.width-80,
   .blog-post-content figure.width-120 {
     max-width: 100%;
+  }
+
+  /* width-120 also needs its desktop bleed margins cleared, otherwise the
+     100%-wide figure still starts 10% off the left edge of the viewport */
+  .blog-post-content figure.width-120 {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 

@@ -20,10 +20,13 @@ async function loadVideoData() {
     }
     const data = await response.json();
 
-    // Parse date strings back to Date objects
+    // Parse date strings back to Date objects. Timestamps in videos.json are
+    // UTC but carry no timezone suffix; without the "Z" they'd be parsed as
+    // local time and the captions (formatted via toISOString) would shift by
+    // the viewer's UTC offset.
     videos = data.videos.map((video) => ({
       ...video,
-      dateStart: new Date(video.dateStart),
+      dateStart: new Date(video.dateStart.endsWith("Z") ? video.dateStart : `${video.dateStart}Z`),
     }));
 
     videoFramerate = data.videoFramerate;
@@ -302,6 +305,11 @@ function setupVideoSphere(sphereInit) {
 
       try {
         isLoadingVideo = true;
+
+        // Commit the index here, only once a switch is actually happening, so
+        // callers can't desync currentVideo from the displayed video (captions
+        // and tooltips read videos[currentVideo])
+        currentVideo = n;
         video.pause();
 
         let videoTitle = document.getElementById("video-title");
@@ -376,15 +384,13 @@ function setupVideoSphere(sphereInit) {
 
     if (leftArrow) {
       leftArrow.addEventListener("click", () => {
-        currentVideo = mod(currentVideo - 1, videos.length);
-        selectVideo(currentVideo);
+        selectVideo(mod(currentVideo - 1, videos.length));
       });
     }
 
     if (rightArrow) {
       rightArrow.addEventListener("click", () => {
-        currentVideo = mod(currentVideo + 1, videos.length);
-        selectVideo(currentVideo);
+        selectVideo(mod(currentVideo + 1, videos.length));
       });
     }
 
@@ -450,16 +456,20 @@ function setupVideoSphere(sphereInit) {
       raycaster.setFromCamera(mousePosition, camera);
       let intersects = raycaster.intersectObject(tooltipMeshGroup);
 
-      if (intersects.length > 0) {
+      // Look the mesh name up defensively: tooltip names differ per video, so
+      // a stale mesh from a previous video must not blow up the handler
+      const tooltipData =
+        intersects.length > 0
+          ? (videos[currentVideo]["tooltips"] || {})[intersects[0].object.name]
+          : null;
+
+      if (tooltipData) {
         let tooltipName = intersects[0].object.name;
 
         // Only update content if tooltip changed
         if (tooltipName !== currentTooltipName) {
-          let tooltipTitle = videos[currentVideo]["tooltips"][tooltipName]["title"];
-          let tooltipText = videos[currentVideo]["tooltips"][tooltipName]["text"];
-
-          tooltipTitleEl.textContent = tooltipTitle;
-          tooltipTextEl.textContent = tooltipText;
+          tooltipTitleEl.textContent = tooltipData["title"];
+          tooltipTextEl.textContent = tooltipData["text"];
           currentTooltipName = tooltipName;
         }
 

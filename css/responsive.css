@@ -44,8 +44,8 @@
   }
 
   #canvas-video-sphere {
-    width: min(75vh, 55vw, 800px);
-    height: min(56.25vh, 41.25vw, 675px);
+    width: min(75vh, 55vw, 800px) !important;
+    height: min(56.25vh, 41.25vw, 675px) !important;
   }
 
   #video {
@@ -196,6 +196,36 @@
     height: 2px;
   }
 
+  .cirrus4 {
+    width: 190px;
+    height: 5px;
+  }
+
+  .cirrus4::before {
+    width: 110px;
+    height: 3px;
+  }
+
+  .cirrus5 {
+    width: 160px;
+    height: 4px;
+  }
+
+  .cirrus5::before {
+    width: 90px;
+    height: 2px;
+  }
+
+  .cirrus6 {
+    width: 180px;
+    height: 5px;
+  }
+
+  .cirrus6::before {
+    width: 100px;
+    height: 2px;
+  }
+
   .alto1 {
     width: 90%;
     height: 30px;
@@ -214,10 +244,31 @@
     height: 15px;
   }
 
+  .alto3 {
+    width: 85%;
+    height: 28px;
+  }
+
+  .alto3::before {
+    height: 18px;
+  }
+
+  .alto4 {
+    width: 75%;
+    height: 26px;
+  }
+
+  .alto4::before {
+    height: 16px;
+  }
+
   .cumulus1,
   .cumulus2,
   .cumulus3,
-  .cumulus4 {
+  .cumulus4,
+  .cumulus5,
+  .cumulus6,
+  .cumulus7 {
     width: 80px;
     height: 35px;
   }
@@ -225,7 +276,10 @@
   .cumulus1::before,
   .cumulus2::before,
   .cumulus3::before,
-  .cumulus4::before {
+  .cumulus4::before,
+  .cumulus5::before,
+  .cumulus6::before,
+  .cumulus7::before {
     width: 45px;
     height: 45px;
     top: -18px;
@@ -234,7 +288,10 @@
   .cumulus1::after,
   .cumulus2::after,
   .cumulus3::after,
-  .cumulus4::after {
+  .cumulus4::after,
+  .cumulus5::after,
+  .cumulus6::after,
+  .cumulus7::after {
     width: 35px;
     height: 25px;
     top: -10px;
@@ -243,6 +300,10 @@
   /* Mountain range responsive adjustments */
   .mountain-range {
     height: 80px;
+  }
+
+  .mountain-range::before,
+  .mountain-range::after {
     background-size: 300px 80px;
   }
 
@@ -268,8 +329,8 @@
     top: 15%;
   }
 
-  body[data-theme="light"] #outer-space .sun,
-  body:not([data-theme]) #outer-space .sun {
+  html[data-theme="light"] #outer-space .sun,
+  html:not([data-theme]) #outer-space .sun {
     right: 80px;
   }
 

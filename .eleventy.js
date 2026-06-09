@@ -1,5 +1,6 @@
 import { readFile } from "fs/promises";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
+import legacy from "@vitejs/plugin-legacy";
 import { configureMarkdown } from "./config/markdown.js";
 import { processBenchmark } from "./config/benchmark-utils.js";
 
@@ -33,14 +34,25 @@ export default function (eleventyConfig) {
     return processBenchmark(filename, key, displayType);
   });
 
-  // Add Vite plugin
+  // Add Vite plugin. Note: a root-level vite.config.js is NOT loaded (Vite's
+  // root is the plugin's temp build folder), so all Vite options must live here.
+  // The plugin also passthrough-copies `publicDir`, whose contents Vite then
+  // copies verbatim to the site root — root-level static files (robots.txt,
+  // favicons, CNAME, manifest icons) belong in public/, not in passthroughs,
+  // which the Vite build step would otherwise discard.
   eleventyConfig.addPlugin(EleventyVitePlugin, {
     viteOptions: {
       clearScreen: false,
       appType: "mpa",
+      publicDir: "public",
       server: {
         middlewareMode: true,
       },
+      plugins: [
+        legacy({
+          targets: ["defaults", "not IE 11"],
+        }),
+      ],
     },
   });
 
@@ -48,18 +60,8 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("js");
   eleventyConfig.addPassthroughCopy("css");
 
-  // Pass through root-level files needed for GitHub Pages and SEO
-  eleventyConfig.addPassthroughCopy("CNAME");
-  eleventyConfig.addPassthroughCopy("robots.txt");
-
-  // Pass through favicon files
-  eleventyConfig.addPassthroughCopy("favicon.svg");
-  eleventyConfig.addPassthroughCopy("favicon.ico");
-  eleventyConfig.addPassthroughCopy("favicon-96x96.png");
-  eleventyConfig.addPassthroughCopy("apple-touch-icon.png");
-  eleventyConfig.addPassthroughCopy("site.webmanifest");
-  eleventyConfig.addPassthroughCopy("web-app-manifest-192x192.png");
-  eleventyConfig.addPassthroughCopy("web-app-manifest-512x512.png");
+  // Keep the repo README out of the built site
+  eleventyConfig.ignores.add("README.md");
 
   // Create a collection for blog posts
   eleventyConfig.addCollection("posts", function (collectionApi) {

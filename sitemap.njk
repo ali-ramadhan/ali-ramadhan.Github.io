@@ -1,5 +1,8 @@
 ---
-permalink: /sitemap.xml
+# Emitted into public/ because the Vite build step discards non-HTML Eleventy
+# output; Vite copies public/ contents verbatim to the site root, so this file
+# is ultimately served at /sitemap.xml.
+permalink: /public/sitemap.xml
 eleventyExcludeFromCollections: true
 ---
 <?xml version="1.0" encoding="UTF-8"?>

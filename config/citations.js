@@ -57,6 +57,7 @@ function formatReference(ref, key) {
     if (ref.issue) formatted += `(${ref.issue})`;
     if (ref.pages) formatted += `, ${ref.pages}`;
   } else if (ref.type === "book") {
+    if (ref.edition) formatted += `. ${ref.edition}`;
     if (ref.publisher) formatted += `. ${ref.publisher}`;
     if (ref.pages) formatted += `. ${ref.pages}`;
   } else if (ref.type === "chapter") {
@@ -64,6 +65,12 @@ function formatReference(ref, key) {
     if (ref.editors) formatted += `, ed. ${ref.editors}`;
     if (ref.pages) formatted += `, ${ref.pages}`;
     if (ref.publisher) formatted += `. ${ref.publisher}`;
+  } else if (ref.type === "report") {
+    if (ref.series) formatted += `. ${ref.series}`;
+    if (ref.institution) formatted += `, ${ref.institution}`;
+  } else if (ref.type === "preprint") {
+    if (ref.arxiv) formatted += `. ${ref.arxiv}`;
+    else if (ref.journal) formatted += `. <i>${ref.journal}</i>`;
   }
 
   formatted += ".";

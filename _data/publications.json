@@ -151,7 +151,7 @@
       "R. Ferrari"
     ],
     "status": "arxiv",
-    "arxiv": "arXiv:2309.06662 [physics.ao-ph]",
+    "arxiv": "2309.06662 [physics.ao-ph]",
     "year": 2023,
     "links": [
       {
@@ -297,7 +297,7 @@
       },
       {
         "type": "pdf",
-        "url": "/assets/documents/papers/Arnscheidt%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20%20On%20the%20Settling%20Depth%20of%20Meltwater%20Escaping%20from%20beneath%20Antarctic%20Ice%20Shelves.pdf"
+        "url": "/assets/documents/papers/Arnscheidt%20et%20al,%202021,%20Journal%20of%20Physical%20Oceanography,%20On%20the%20Settling%20Depth%20of%20Meltwater%20Escaping%20from%20beneath%20Antarctic%20Ice%20Shelves.pdf"
       }
     ]
   },
@@ -588,7 +588,7 @@
     "links": [
       {
         "type": "doi",
-        "url": "https://dx.doi.org/10.1109/NANO.2014.6968136"
+        "url": "https://doi.org/10.1109/NANO.2014.6968136"
       },
       {
         "type": "pdf",
@@ -606,7 +606,8 @@
       "S. Beaulieu",
       "A. Ramadhan",
       "M. Giguère",
-      "Z. Long, W. Liu",
+      "Z. Long",
+      "W. Liu",
       "J. Kieffer",
       "F. Légaré",
       "J. Sanderson"
@@ -619,7 +620,7 @@
     "links": [
       {
         "type": "doi",
-        "url": "https://dx.doi.org/10.1016/j.elspec.2014.05.003"
+        "url": "https://doi.org/10.1016/j.elspec.2014.05.003"
       },
       {
         "type": "pdf",

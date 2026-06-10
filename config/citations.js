@@ -266,7 +266,7 @@ export function markdownItCitations(md, options = {}) {
   });
 
   // Store references in state for later use in bibliography generation
-  md.renderer.rules.citations = function (tokens, idx, options, env) {
+  md.renderer.rules.citations = function () {
     return "";
   };
 }
@@ -347,8 +347,11 @@ export function generateBibliographyFromContent(htmlContent, referenceFile = "re
 }
 
 /**
- * Clear page citations (useful for development)
+ * Clear all module-level citation caches. Wired to Eleventy's
+ * `eleventy.before` event so watch-mode rebuilds pick up reference-file
+ * edits and drop citations removed from posts.
  */
-export function clearPageCitations() {
+export function clearCitationCaches() {
   pageCitations.clear();
+  referenceCache.clear();
 }

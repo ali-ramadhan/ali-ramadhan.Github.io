@@ -90,6 +90,8 @@
   background: rgb(255, 255, 255, 0.1);
   border: 1px solid rgb(255, 255, 255, 0.3);
   color: rgb(255, 255, 255, 0.6);
+  /* stylelint-disable-next-line property-no-vendor-prefix -- Safari <18 needs -webkit- for backdrop blur */
+  -webkit-backdrop-filter: blur(4px);
   backdrop-filter: blur(4px);
 }
 

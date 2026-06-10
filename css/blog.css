@@ -73,43 +73,6 @@ html[data-theme="dark"] .blog-post-content h3 {
   gap: 2rem;
 }
 
-.blog-post-preview {
-  background: #fff;
-  border-radius: 12px;
-  padding: 2rem;
-  box-shadow: 0 2px 10px rgb(0, 0, 0, 0.05);
-  transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
-  border: 1px solid #e0e0e0;
-}
-
-.blog-post-preview:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 20px rgb(0, 0, 0, 0.1);
-}
-
-html[data-theme="dark"] .blog-post-preview {
-  background: #2d2d2d;
-  border: 1px solid #555;
-}
-
-.blog-post-header {
-  margin-bottom: 1rem;
-}
-
-.blog-post-title {
-  margin: 0 0 0.5rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-.blog-post-title a {
-  color: #2c3e50;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
 .blog-post-content a {
   color: #3498db;
   text-decoration: none;
@@ -119,20 +82,12 @@ html[data-theme="dark"] .blog-post-preview {
   text-decoration: underline;
 }
 
-.blog-post-title a:hover {
-  color: #3498db;
-}
-
 .blog-post-content .table-of-contents a {
   color: #2c3e50;
   text-decoration: none;
   font-weight: 500;
   display: inline;
   transition: color 0.3s ease;
-}
-
-html[data-theme="dark"] .blog-post-title a {
-  color: #e0e0e0;
 }
 
 html[data-theme="dark"] .blog-post-content a {
@@ -161,70 +116,6 @@ html[data-theme="dark"] .blog-post-content .header-anchor {
 
 html[data-theme="dark"] .blog-post-content .header-anchor:hover {
   color: #74b9ff;
-}
-
-html[data-theme="dark"] .blog-post-title a:hover {
-  color: #74b9ff;
-}
-
-.blog-post-date {
-  color: #666;
-  font-size: 0.9rem;
-  font-style: italic;
-}
-
-html[data-theme="dark"] .blog-post-date {
-  color: #b0b0b0;
-}
-
-.blog-post-excerpt {
-  color: #555;
-  line-height: 1.6;
-  margin: 1rem 0;
-}
-
-html[data-theme="dark"] .blog-post-excerpt {
-  color: #d0d0d0;
-}
-
-.blog-post-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-
-.blog-tag {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 500;
-}
-
-.blog-post-footer {
-  text-align: right;
-  margin-top: 1.5rem;
-}
-
-.read-more {
-  color: #3498db;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.read-more:hover {
-  color: #2980b9;
-}
-
-html[data-theme="dark"] .read-more {
-  color: #74b9ff;
-}
-
-html[data-theme="dark"] .read-more:hover {
-  color: #0984e3;
 }
 
 /* Individual Blog Post Styles */
@@ -449,12 +340,6 @@ html[data-theme="dark"] .blog-post-full-date {
   color: #777;
 }
 
-.blog-post-full-tags {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
 .blog-post-content {
   line-height: 1.8;
   color: #444;
@@ -602,36 +487,6 @@ html[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
 /* Dark mode adjustments for toolbar */
 html[data-theme="dark"] .blog-post-content .toolbar-item button {
   background: rgb(255, 255, 255, 0.1);
-}
-
-.blog-post-full-footer {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 2px solid #eee;
-  text-align: center;
-}
-
-html[data-theme="dark"] .blog-post-full-footer {
-  border-top-color: #555;
-}
-
-.return-home {
-  color: #3498db;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-.return-home:hover {
-  color: #2980b9;
-}
-
-html[data-theme="dark"] .return-home {
-  color: #74b9ff;
-}
-
-html[data-theme="dark"] .return-home:hover {
-  color: #0984e3;
 }
 
 /* Figure and Image Styles for Blog Posts */
@@ -913,20 +768,6 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   }
 }
 
-/* Project Euler Problems List Styling */
-.euler-problems {
-  margin: 2rem 0;
-}
-
-.euler-problem {
-  margin-bottom: 0.5rem;
-}
-
-.euler-problem h2 {
-  font-size: 1.25rem;
-  margin: 0;
-}
-
 /* Responsive Design */
 
 /* Large screens - scale up typography */
@@ -951,10 +792,6 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   .blog-post-content h2,
   .blog-post-content h3 {
     font-size: 1.1em; /* Relative to parent font-size */
-  }
-
-  .blog-post-title {
-    font-size: 1.65rem;
   }
 }
 
@@ -983,19 +820,11 @@ html[data-theme="dark"] .blog-post-content h6.collapsible-header::after {
   .blog-post-content {
     font-size: 1rem;
   }
-
-  .blog-post-title {
-    font-size: 1.4rem;
-  }
 }
 
 @media (width <= 768px) {
   .blog-section {
     padding: 1rem;
-  }
-
-  .blog-post-preview {
-    padding: 1.5rem;
   }
 
   .blog-post-main {

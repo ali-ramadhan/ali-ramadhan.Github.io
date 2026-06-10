@@ -17,8 +17,9 @@ class EarthLayersApp {
     document.addEventListener("DOMContentLoaded", () => {
       this.initializeManagers();
 
-      // Graceful shutdown on page unload
-      window.addEventListener("beforeunload", () => {
+      // Graceful shutdown on navigation; pagehide (not beforeunload) keeps
+      // the page eligible for the back/forward cache
+      window.addEventListener("pagehide", () => {
         this.cleanup();
       });
     });

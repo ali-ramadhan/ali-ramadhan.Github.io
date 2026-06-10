@@ -78,7 +78,7 @@
 }
 
 /* Desktop breakpoint (1025px - 1439px) */
-@media (width >= 1025px) and (width <= 1439px) {
+@media (width > 1024px) and (width < 1440px) {
   .content {
     max-width: clamp(800px, 75vw, 1100px);
   }
@@ -93,7 +93,7 @@
 }
 
 /* Large desktop breakpoint (1440px - 1919px) */
-@media (width >= 1440px) and (width <= 1919px) {
+@media (width >= 1440px) and (width < 1920px) {
   .content {
     max-width: clamp(900px, 70vw, 1200px);
   }
@@ -154,10 +154,6 @@
 
   .content p {
     font-size: 1rem;
-  }
-
-  .layer-nav {
-    right: 15px;
   }
 
   /* Responsive cloud adjustments for mobile */
@@ -305,11 +301,6 @@
   .mountain-range::before,
   .mountain-range::after {
     background-size: 300px 80px;
-  }
-
-  /* River responsive adjustments */
-  .river {
-    width: 80px;
   }
 
   .theme-toggle {

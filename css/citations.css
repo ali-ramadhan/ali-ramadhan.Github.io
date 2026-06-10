@@ -68,11 +68,6 @@ html[data-theme="dark"] .citation-tooltip::before {
   border-bottom-color: #1f2937;
 }
 
-.citation:hover .citation-tooltip {
-  opacity: 1;
-  visibility: visible;
-}
-
 /* References Section */
 .references {
   color: #333 !important;

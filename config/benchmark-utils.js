@@ -83,7 +83,7 @@ export function loadBenchmarkData(filename, key) {
     }
 
     return cpus;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

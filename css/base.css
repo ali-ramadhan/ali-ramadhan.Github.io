@@ -29,7 +29,6 @@ html[data-theme="light"] {
   --content-bg: rgb(255, 255, 255, 0.9);
   --content-text: #333;
   --content-subtext: #666;
-  --nav-dot: rgb(255, 255, 255, 0.5);
   --nav-dot-active: white;
   --cloud-color: white;
   --star-color-1: #eee;
@@ -44,10 +43,8 @@ html[data-theme="light"] {
   /* Z-index system for layer stacking */
   --z-comets: 0;
   --z-meteors: 0;
-  --z-stars: 10;
   --z-celestial: 10;
   --z-video-sphere: 15;
-  --z-video-controls: 16;
   --z-cirrus-clouds: 21;
   --z-alto-clouds: 22;
   --z-cumulus-clouds: 23;
@@ -55,7 +52,6 @@ html[data-theme="light"] {
   --z-mountains: 31;
   --z-bathymetry: 32;
   --z-content: 40;
-  --z-nav: 100;
   --z-theme-toggle: 1000;
   --z-floating-toc: 1002;
   --z-floating-toc-restore: 1003;
@@ -80,7 +76,6 @@ html[data-theme="dark"] {
   --content-bg: rgb(26, 26, 46, 0.9);
   --content-text: #e0e0e0;
   --content-subtext: #b0b0b0;
-  --nav-dot: rgb(224, 224, 224, 0.5);
   --nav-dot-active: #e0e0e0;
   --cloud-color: #4a4a6a;
   --star-color-1: #fff;

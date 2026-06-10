@@ -24,11 +24,6 @@ html[data-theme="dark"] .blog-post-content td {
   border-bottom-color: #4a5568;
 }
 
-/* Responsive: horizontal scroll on small screens */
-.blog-post-content .table-wrapper {
-  overflow-x: auto;
-}
-
 /* Mobile table adjustments */
 @media (width <= 768px) {
   .blog-post-content th,

@@ -8,7 +8,7 @@ import markdownItFootnote from "markdown-it-footnote";
 import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
 import markdownItPrism from "markdown-it-prism";
-import { markdownItCitations } from "./citations.js";
+import { markdownItCitations, clearCitationCaches } from "./citations.js";
 import { processBenchmark } from "./benchmark-utils.js";
 
 // Custom math blocks plugin for markdown-it
@@ -22,7 +22,15 @@ function markdownItMathBlocks(md) {
   md.renderer.rules.fence = function (tokens, idx, options, env, renderer) {
     const token = tokens[idx];
     if (token.info === "math") {
-      return '<div class="math-display">$$' + token.content.trim() + "$$</div>\n";
+      // HTML-escape the math: the browser decodes the entities back to the
+      // original characters before MathJax reads the text, but a raw "<"
+      // glued to a letter would otherwise open a stray HTML tag
+      const escaped = token.content
+        .trim()
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+      return '<div class="math-display">$$' + escaped + "$$</div>\n";
     }
     return defaultFence(tokens, idx, options, env, renderer);
   };
@@ -76,6 +84,11 @@ function markdownItBenchmark(md) {
 }
 
 export function configureMarkdown(eleventyConfig) {
+  // The citation plugin keeps module-level caches; clear them before every
+  // build so --serve rebuilds pick up reference YAML edits and drop
+  // citations that were removed from posts
+  eleventyConfig.on("eleventy.before", clearCitationCaches);
+
   // Configure markdown-it with custom extensions
   eleventyConfig.amendLibrary("md", (mdLib) => {
     // Custom math blocks plugin - must come before Prism plugin

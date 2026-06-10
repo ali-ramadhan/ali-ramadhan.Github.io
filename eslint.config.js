@@ -18,4 +18,13 @@ export default [
       "no-console": "off",
     },
   },
+  {
+    // Build-time files run under Node, not the browser
+    files: [".eleventy.js", "config/**/*.js", "eslint.config.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
 ];

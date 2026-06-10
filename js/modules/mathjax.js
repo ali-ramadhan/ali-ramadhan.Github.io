@@ -11,6 +11,14 @@ export class MathJaxManager {
 
   async init() {
     try {
+      // If a live MathJax instance already exists, reuse it: overwriting
+      // window.MathJax with a plain config object would clobber it, and we
+      // must check before assigning the config below
+      if (window.MathJax && window.MathJax.typesetPromise) {
+        this.initialized = true;
+        return;
+      }
+
       // Configure MathJax before loading
       window.MathJax = {
         tex: {
@@ -45,9 +53,8 @@ export class MathJaxManager {
 
   loadMathJaxScript() {
     return new Promise((resolve, reject) => {
-      // Check if MathJax is already loaded
-      if (window.MathJax && window.MathJax.typesetPromise) {
-        this.initialized = true;
+      // Don't inject a second script tag if one is already pending
+      if (document.getElementById("MathJax-script")) {
         resolve();
         return;
       }

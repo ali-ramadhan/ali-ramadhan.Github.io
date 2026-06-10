@@ -23,7 +23,11 @@
   height: 200px;
   margin: -100px 0 0 -100px;
   z-index: -1;
-  background:
+
+  /* background-image longhand (not the background shorthand): the 8-layer
+     shorthand makes csstree's grammar matcher bail out with a
+     "[csstree-match] BREAK" warning during stylelint runs */
+  background-image:
     linear-gradient(0deg, transparent 48%, rgb(255, 235, 59, 0.3) 50%, transparent 52%),
     linear-gradient(45deg, transparent 48%, rgb(255, 235, 59, 0.25) 50%, transparent 52%),
     linear-gradient(90deg, transparent 48%, rgb(255, 235, 59, 0.3) 50%, transparent 52%),
@@ -58,7 +62,7 @@
 
 .sun:hover::before,
 .sun:hover::after {
-  transform: scale(1.05) rotate(var(--rotation, 0deg));
+  transform: scale(1.05);
 }
 
 @keyframes rays {

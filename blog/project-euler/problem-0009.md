@@ -89,7 +89,7 @@ For each candidate $m$, if $m$ divides $P/2$ we can write
 \frac{P/2}{m} = k(m + n)
 ```
 
-Call the left-hand side $R$. We then search for divisors of $R$ that could be $(m + n)$, which would make $k = R / (m + n)$. For each candidate, we compute $n = (m + n) - m$ and check the three constraints required by Euclid's formula: $n$ must be positive, $n < m$, $m$ and $n$ must be coprime, and $m + n$ must be odd.
+Call the left-hand side $R$. We then search for divisors of $R$ that could be $(m + n)$, which would make $k = R / (m + n)$. For each candidate, we compute $n = (m + n) - m$ and check the constraints required by Euclid's formula: $n$ must be positive, $n < m$, $m$ and $n$ must be coprime, and $m + n$ must be odd.
 
 ```julia
 function find_pythagorean_triplets_euclid(P)
@@ -127,6 +127,6 @@ function find_pythagorean_triplets_euclid(P)
 end
 ```
 
-This finds the same seven triplets for $n = 1234567890$ in just @benchmark[problem-0009:n_1234567890_euclid]. It does $n = 10^3$ in @benchmark[problem-0009:n_1000_euclid] and $n = 10^6$ in @benchmark[problem-0009:n_1000000_euclid].
+This finds the same seven triplets for $P = 1234567890$ in just @benchmark[problem-0009:n_1234567890_euclid]. It does $P = 10^3$ in @benchmark[problem-0009:n_1000_euclid] and $P = 10^6$ in @benchmark[problem-0009:n_1000000_euclid].
 
 The time complexity is roughly $\mathcal{O}(\sqrt{P} \cdot d(P))$ where $d(P)$ is related to the divisor structure of $P$.

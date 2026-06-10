@@ -54,7 +54,7 @@ function find_curious_fractions(N, K)
     for n in lo:hi
         ds = digits(n; pad=N)
 
-        # We want most significant bit first. Otherwise `rem` (built below) ends up digit-reversed.
+        # We want most significant digit first. Otherwise `rem` (built below) ends up digit-reversed.
         reverse!(ds)
 
         for pos in combinations(1:N, K)
@@ -111,4 +111,4 @@ We can extend the search to larger $N$ and $K$:
 
 Curious fractions are an example of [anomalous cancellation](https://mathworld.wolfram.com/AnomalousCancellation.html)!
 
-One small note: MathWorld counts anomalously cancelling proper fractions with $n$ digits in both numerator and denominator as $0, 4, 161, 1851, \ldots$ for $n = 1, 2, 3, 4, \ldots$. Our $(2, 1) = 4$ matches, but the larger cases don't. For $(3, 1)$ we get 241, not 161. This is probably because MathWorld's definition of "non-trivial" is stricter than the one used by [HackerRank's Project Euler+ problem 33](https://www.hackerrank.com/contests/projecteuler/challenges/euler033/problem), which is the definition we're using. HackerRank only requires that the cancellation step itself doesn't involve a zero, while MathWorld likely restricts to fractions where neither side contains a zero digit anywhere like $165/660 = 15/60 = 1/4$.
+One small note: MathWorld counts anomalously cancelling proper fractions with $n$ digits in both numerator and denominator as $0, 4, 161, 1851, \ldots$ for $n = 1, 2, 3, 4, \ldots$. Our $(2, 1) = 4$ matches, but the larger cases don't. For $(3, 1)$ we get 241, not 161. This is probably because MathWorld's definition of "non-trivial" is stricter than the one used by [HackerRank's Project Euler+ problem 33](https://www.hackerrank.com/contests/projecteuler/challenges/euler033/problem), which is the definition we're using. HackerRank only requires that the cancellation step itself doesn't involve a zero, while MathWorld likely restricts to fractions where neither side contains a zero digit anywhere, excluding cases like $165/660 = 15/60 = 1/4$.

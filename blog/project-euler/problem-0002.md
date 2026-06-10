@@ -43,7 +43,7 @@ and using this we can obtain a recurrence relation for $F_{n+6}$
 F_{n+6} &= 2F_{n+4} + F_{n+3} \\
         &= 2(2F_{n+2} + F_{n+1}) + (2F_{n+1} + F_n) \\
         &= 4(F_{n+2} + F_{n+1}) + F_n \\
-        &= 4F_{n+3} + F_n \\
+        &= 4F_{n+3} + F_n
 \end{align}
 ```
 

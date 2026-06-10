@@ -53,7 +53,7 @@ function largest_palindrome_product(lower_limit, upper_limit; max_product=nothin
             break
         end
 
-        # Start from j=i to avoid duplicate combinations as i*j == j*i
+        # Stop at j = i to avoid duplicate combinations as i*j == j*i
         for j in upper_limit:-1:i
             product = i * j
 

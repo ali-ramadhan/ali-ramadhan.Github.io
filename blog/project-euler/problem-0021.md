@@ -51,9 +51,9 @@ end
 
 Using this we compute the answer for limits up to $10^7$, tabulated below.
 
-| Limit   | Sum         | Time |
-|---------|-------------|------|
-| $10^4$  |             | @benchmark[problem-0021:limit_10k]  |
-| $10^5$  | 852,810     | @benchmark[problem-0021:limit_100k] |
-| $10^6$  | 25,275,024  | @benchmark[problem-0021:limit_1M]   |
-| $10^7$  | 575,875,320 | @benchmark[problem-0021:limit_10M]  |
+| Limit   | Sum (pairs within limit) | Time                                |
+|---------|--------------------------|-------------------------------------|
+| $10^4$  |                          | @benchmark[problem-0021:limit_10k]  |
+| $10^5$  | 852,810                  | @benchmark[problem-0021:limit_100k] |
+| $10^6$  | 25,275,024               | @benchmark[problem-0021:limit_1M]   |
+| $10^7$  | 575,875,320              | @benchmark[problem-0021:limit_10M]  |

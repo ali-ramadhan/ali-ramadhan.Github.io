@@ -40,7 +40,7 @@ end
 
 We actually don't need to check every number. Numbers like $4150$, $4105$, and $5140$ all give the same digit power sum since they contain the same digits. So we can just check unique combinations of digits (multisets).
 
-For 6 digits chosen from 0-9 with replacement, there are $\binom{10 + 6 - 1}{6} = \binom{15}{6} = 5{,}005$ combinations. This is about 70x fewer candidates than brute force.
+For 6 digits chosen from 0-9 with replacement, there are $\binom{10 + 6 - 1}{6} = \binom{15}{6} = 5{,}005$ combinations. This is about 200x fewer candidates than brute force.
 
 For each combination like $[0, 0, 1, 4, 5, 5]$, we compute the sum $s$ of digit powers. If $s$ equals some rearrangement of those digits, it's a solution. But instead of sorting the digits of $s$ and comparing, we just check if `digit_power_sum(s) == s`. If the digits of $s$ give back $s$ when we sum their powers, then $s$ is valid.
 

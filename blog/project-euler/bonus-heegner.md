@@ -13,7 +13,7 @@ benchmark_key: "n_1k"
 
 ## Searching for the solution
 
-This seems easy enough. We just compute $\cos(\pi \sqrt n)$ for all non-square integers $|n| <= 1000$ and keep track of which ones are closest to an integer.
+This seems easy enough. We just compute $\cos(\pi \sqrt n)$ for all non-square integers $|n| \le 1000$ and keep track of which ones are closest to an integer.
 
 First thing to notice is that when $n > 0$ then $\cos(\pi \sqrt n)$ just oscillates between $-1$ and $1$ but maybe it'll get close to an integer. When $n < 0$ we actually have
 
@@ -27,7 +27,7 @@ First thing to notice is that when $n > 0$ then $\cos(\pi \sqrt n)$ just oscilla
 
 which grows exponentially.
 
-Seeing that $e^{\pi \sqrt{1000}} \approx 7 \times 10^{42}$ we will need at least 43 digits of precision and maybe a nice 32 digit buffer for the fractional part. 75 digits worth of precision requires $75 \log_2(10) \approx 249$ bits of precision which we'll round up to $250$. So `Float64` will not be enough and neither will 128-bit floats (which are provided by [QuadMath.jl](https://github.com/JuliaMath/Quadmath.jl) in Julia). We'll use `BigFloat` and calculate the precision required based on the limit we want to search up to.
+Seeing that $\cosh \left( \pi \sqrt{1000} \right) \approx 7 \times 10^{42}$ we will need at least 43 digits of precision and maybe a nice 32 digit buffer for the fractional part. 75 digits worth of precision requires $75 \log_2(10) \approx 249$ bits of precision which we'll round up to $250$. So `Float64` will not be enough and neither will 128-bit floats (which are provided by [Quadmath.jl](https://github.com/JuliaMath/Quadmath.jl) in Julia). We'll use `BigFloat` and calculate the precision required based on the limit we want to search up to.
 
 ```julia
 function required_precision_bits(limit; fractional_digits=32)

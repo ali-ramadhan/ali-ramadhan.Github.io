@@ -104,12 +104,12 @@ K^{7^k} \equiv x^{7^k} + x^{-7^k} + y^{7^k} + y^{-7^k} \pmod{7}
 To reach $10^{12}$ steps, we decompose the number in base 7:
 
 ```math
-10^{12} = \sum_{k=0}^{15} c_k \cdot 7^k
+10^{12} = \sum_{k=0}^{14} c_k \cdot 7^k
 ```
 
-where each $c_k \in \lbrace 0, 1, \ldots, 6 \rbrace$. Since $7^{15} > 10^{12}$, we need at most 16 digits.
+where each $c_k \in \lbrace 0, 1, \ldots, 6 \rbrace$. Since $7^{15} > 10^{12}$, we need at most 15 digits.
 
-For each digit $c_k$, we apply $c_k$ sparse operations where neighbors are collected at distance $7^k$ (with toroidal boundary conditions). Instead of $10^{12}$ iterations taking one step each, we only need 16 iterations with each iteration $k$ taking $7^k$ steps at once.
+For each digit $c_k$, we apply $c_k$ sparse operations where neighbors are collected at distance $7^k$ (with toroidal boundary conditions). Instead of $10^{12}$ iterations taking one step each, we only need 15 iterations with each iteration $k$ taking $7^k$ steps at once.
 
 ## Implementation
 

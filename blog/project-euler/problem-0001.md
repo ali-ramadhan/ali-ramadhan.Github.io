@@ -40,13 +40,13 @@ We can use this to derive a formula for the sum of all multiples of $m$ below $L
 s(m, L) = m + 2m + \cdots + \ell m = m \sum_{k=1}^\ell k = m \frac{\ell (\ell + 1)}{2}
 ```
 
-Using this, $s(a, L) + s(b, L)$ would be the sum of all multiple of $a$ or $b$ below $L$, but this double counts shared multiples, whose sum would be $s(\operatorname{lcm}(a, b), L)$. So the actual sum of all multiples of $a$ or $b$ below $L$, which we'll denote $S([a, b], L)$ should be
+Using this, $s(a, L) + s(b, L)$ would be the sum of all multiples of $a$ or $b$ below $L$, but this double counts shared multiples, whose sum would be $s(\operatorname{lcm}(a, b), L)$. So the actual sum of all multiples of $a$ or $b$ below $L$, which we'll denote $S([a, b], L)$ should be
 
 ```math
 S([a, b], L) = s(a, L) + s(b, L) - s(\operatorname{lcm}(a, b), L)
 ```
 
-This is an application of the [inclusion-exclusion principle](https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle) for the case two finite sets, which says that
+This is an application of the [inclusion-exclusion principle](https://en.wikipedia.org/wiki/Inclusion%E2%80%93exclusion_principle) for the case of two finite sets, which says that
 
 ```math
 |A \cup B | = |A| + |B| - |A \cap B|

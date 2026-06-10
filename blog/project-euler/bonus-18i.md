@@ -68,7 +68,7 @@ M =
 \end{pmatrix}
 ```
 
-The key property is that its characteristic polynomial $\det(M - \lambda I) = \lambda^3 - 3\lambda + 4$ recovers the original polynomial, so its eigenvalues are exactly $\alpha_1$, $\alpha_2$, and $\alpha_3$.
+The key property is that its characteristic polynomial $\det(\lambda I - M) = \lambda^3 - 3\lambda + 4$ recovers the original polynomial, so its eigenvalues are exactly $\alpha_1$, $\alpha_2$, and $\alpha_3$.
 
 We can now invoke the [spectral mapping theorem](https://en.wikipedia.org/wiki/Spectral_mapping_theorem), which states that if a matrix $M$ has eigenvalue $\lambda$, then $f(M)$ has eigenvalue $f(\lambda)$ for any polynomial $f$. It's called "spectral" because the spectrum of a matrix is the set of its eigenvalues. Applying this with $f(x) = x^p - x$, we get that $Y = M^p - M$ has eigenvalues $\lambda_i^\prime = \alpha_i^p - \alpha_i$. Since the [determinant of a matrix equals the product of its eigenvalues](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors#Eigenvalues_and_the_characteristic_polynomial), we have
 
@@ -91,7 +91,7 @@ Since the matrices are $3 \times 3$ and small, we will be using static arrays th
 First we will want a function to do matrix multiplication modulo $p$, $C = A \times B \pmod{p}$. We can compute $C$ element-wise
 
 ```math
-C_{i,j} ​= \left( \sum_{k=1}^3 A_{i,k} B_{k,j} \right) \pmod{p}
+C_{i,j} = \left( \sum_{k=1}^3 A_{i,k} B_{k,j} \right) \pmod{p}
 ```
 
 which we can do by creating a mutable static array `MMatrix` then filling it before converting it to an `SMatrix`.
@@ -224,13 +224,13 @@ Running `sum_R_mod_p(1_000_000_000, 1_100_000_000)` returns the answer in @bench
 
 The problem name comes from the [discriminant](https://en.wikipedia.org/wiki/Discriminant) of the polynomial. For a depressed cubic $x^3 + ax + b$, the discriminant is $\Delta = -4a^3 - 27b^2$. For $x^3 - 3x + 4$ we have $\Delta = -324$.
 
-The [resultant](https://en.wikipedia.org/wiki/Resultant) of two polynomials measures whether they share a common root. It turns out that evaluating a polynomial over all of $\mathbb{F}_p$ gives a resultant since the roots of $x^p - x$ are exactly $\mathbb{F}_p$ as discussed earlier. This leads to the identity
+The [resultant](https://en.wikipedia.org/wiki/Resultant) of two polynomials measures whether they share a common root. It turns out that evaluating a polynomial over all of $\mathbb{F}_p$ gives a resultant since the roots of $x^p - x$ are exactly $\mathbb{F}_p$ as discussed earlier. This leads to the identity, valid for primes where $f$ has no root in $\mathbb{F}_p$ (when $f$ has a root, $R(p)$ just vanishes):
 
 ```math
 R(p)^2 \equiv \Delta \pmod{p}.
 ```
 
-When $f$ has no roots in $\mathbb{F}_p$ (so $R(p) \neq 0$), this tells us
+For such primes $R(p) \neq 0$, and this tells us
 
 ```math
 R(p) = \pm\sqrt{\Delta} = \pm\sqrt{-324} = \pm 18i

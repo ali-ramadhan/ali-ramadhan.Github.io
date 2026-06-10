@@ -57,7 +57,7 @@ then their composition is given by the matrix product
 
 ```math
 M_{f_2} M_{f_1}
-= \begin{pmatrix} a_1 & b_1 \\ c_1 & d_1 \end{pmatrix} \begin{pmatrix} a_2 & b_2 \\ c_2 & d_2 \end{pmatrix}
+= \begin{pmatrix} a_2 & b_2 \\ c_2 & d_2 \end{pmatrix} \begin{pmatrix} a_1 & b_1 \\ c_1 & d_1 \end{pmatrix}
 = \begin{pmatrix} a_1 a_2 + b_2 c_1 & a_2 b_1 + b_2 d_1 \\ a_1 c_2 + c_1 d_2 & b_1 c_2 + d_1 d_2 \end{pmatrix}
 ```
 
@@ -107,7 +107,7 @@ we can solve $f(z) = z$ for $z$ to find the fixed point. Doing so gives
 z = \frac{pz + q}{rz + s} \implies rz^2 + (s - p) z - q = 0
 ```
 
-Now since we're interested in complex solutions, we note that $z \in \mathbb{C}$ iff the
+Now since we're interested in nonreal complex solutions, we note that $z \in \mathbb{C} \setminus \mathbb{R}$ iff the
 [discriminant of this quadratic](https://en.wikipedia.org/wiki/Discriminant#Degree_2) is negative:
 
 ```math
@@ -117,7 +117,7 @@ Now since we're interested in complex solutions, we note that $z \in \mathbb{C}$
 Now we notice that $\det M(a) = a \cdot 0 - (-1) \cdot 1 = 1$, so the product matrix has determinant
 
 ```math
-\det M_\text{total} = \det M(a_0) \cdot \det M(a_1) \cdot \cdots \cdot \det M(a_n) = (1)^n = 1
+\det M_\text{total} = \det M(a_0) \cdot \det M(a_1) \cdot \cdots \cdot \det M(a_{n-1}) = (1)^n = 1
 ```
 
 Now setting $\det M_\text{total} = ps - qr = 1$ we can rewrite the discriminant as
@@ -134,7 +134,7 @@ and noticing that the [trace](https://en.wikipedia.org/wiki/Trace_(linear_algebr
 
 So $N(a)$ is complex if and only if $\operatorname{tr}(M_\text{total})^2 < 4$. The matrix entries are integers, so the trace is an integer, and the only integers with square less than $4$ are $-1$, $0$, and $1$. So $\operatorname{tr}(M) \in \{-1, 0, 1\}$.
 
-So given a periodic sequence $a = (a_0, a_1, \dots, a_n)$, we can check if $N(a)$ is complex by computing $\operatorname{tr}M_\text{total}$ and checking if it's either $-1$, $0$, or $1$.
+So given a periodic sequence $a = (a_0, a_1, \dots, a_{n-1})$, we can check if $N(a)$ is complex by computing $\operatorname{tr}M_\text{total}$ and checking if it's either $-1$, $0$, or $1$.
 
 ## The naive brute force approach
 
@@ -233,17 +233,17 @@ M(u) M(0) M(c-u)
 
 The product picks up a sign, but in $\text{PSL}_2(\mathbb{Z})$ negative matrices are the same as positive ones, so the trace condition is unaffected. $\operatorname{tr}(-M)^2 = \operatorname{tr}(M)^2$ either way. Replacing any single term $c$ with the triple $(u, 0, c - u)$ leaves the trace alone but bumps the sequence length up by two.
 
-So we now have two ways to grow a valid sequence into a longer valid sequence. To enumerate all valid sequences up to some length $n$, all we need is a base set to grow from. After working through the small cases by hand, we end up with seven seed cycles
+So we now have two ways to grow a valid sequence into a longer valid sequence. To enumerate all valid sequences up to some length $n$, all we need is a base set to grow from. After working through the small cases by hand, we end up with seven seed sequences (five distinct cycles, since $\overline{1, 2} \cong \overline{2, 1}$ and $\overline{1, 3} \cong \overline{3, 1}$)
 
 ```math
 \overline{0}, \quad \overline{1}, \quad \overline{1, 1}, \quad \overline{1, 2}, \quad \overline{2, 1}, \quad \overline{1, 3}, \quad \overline{3, 1}
 ```
 
-each of which satisfies the trace condition and cannot be obtained by forward-applying either rule to a shorter cycle. Starting from these seven seeds and repeatedly applying both expansion rules generates *exactly* the valid sequences up to whatever length we want, with no wasted work on sequences that fail the trace condition.
+each of which satisfies the trace condition and cannot be obtained by forward-applying either rule to a shorter cycle. Starting from these seeds and repeatedly applying both expansion rules generates *exactly* the valid sequences up to whatever length we want, with no wasted work on sequences that fail the trace condition.
 
 ## Canonicalization
 
-The expansion rules treat sequences as cycles rather than ordered tuples. Rotating a sequence doesn't change the matrix product trace (since the trace is invariant under cyclic rotations of the product). So we canonicalize each generated cycle to its lexicographically smallest rotation and store it as the canonical key. To make set operations fast, we pack the canonical form into an unsigned integer with the layout `[length : 4 bits][digit_1 : 5 bits][digit_2 : 5 bits]...`. For $n \le 12$ this fits in a `UInt64` since $4 + 5 \cdot 12 = 64$ bits exactly. For $13 \le n \le 24$ we widen to `UInt128`. The packing is worth the complexity because a `Set{UInt64}` keeps keys stack-allocated and O(1)-hashed, while a `Set{Vector{Int}}` is around 6× slower when I benchmarked $Q(12)$.
+The expansion rules treat sequences as cycles rather than ordered tuples. Rotating a sequence doesn't change the matrix product trace (since the trace is invariant under cyclic rotations of the product). So we canonicalize each generated cycle to its lexicographically smallest rotation and store it as the canonical key. To make set operations fast, we pack the canonical form into an unsigned integer with the layout `[length : 4 bits][digit_1 : 5 bits][digit_2 : 5 bits]...`. For $n \le 12$ this fits in a `UInt64` since $4 + 5 \cdot 12 = 64$ bits exactly. For $13 \le n \le 15$ we widen to `UInt128`. Note that the 4-bit length field caps the encodable cycle length at $2^4 - 1 = 15$. The packing is worth the complexity because a `Set{UInt64}` keeps keys stack-allocated and O(1)-hashed, while a `Set{Vector{Int}}` is around 6× slower when I benchmarked $Q(12)$.
 
 ```julia
 const LEN_BITS = 4
@@ -413,10 +413,10 @@ The main solver dispatches on `max_n` to pick the right key type, then seeds the
 function compute_Q(max_n::Int=12)
     if max_n <= 12
         return _compute_Q(max_n, UInt64)
-    elseif max_n <= 24
+    elseif max_n <= 15
         return _compute_Q(max_n, UInt128)
     else
-        error("max_n > 24 not supported (bit-packing limit)")
+        error("max_n > 15 not supported (the 4-bit length field caps cycle length at 15)")
     end
 end
 

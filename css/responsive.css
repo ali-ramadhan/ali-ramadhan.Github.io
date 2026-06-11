@@ -38,18 +38,21 @@
     gap: 2.5rem;
   }
 
+  /* Every height term must stay 0.75x its width term so the canvas keeps the
+     4:3 aspect ratio of the three.js camera (a mismatched cap squishes the
+     sphere into an egg) */
   #video-sphere-player {
-    width: min(75vh, 55vw, 800px);
+    width: min(75vh, 55vw, 900px);
     height: min(56.25vh, 41.25vw, 675px);
   }
 
   #canvas-video-sphere {
-    width: min(75vh, 55vw, 800px) !important;
+    width: min(75vh, 55vw, 900px) !important;
     height: min(56.25vh, 41.25vw, 675px) !important;
   }
 
   #video {
-    width: min(75vh, 55vw, 800px);
+    width: min(75vh, 55vw, 900px);
     height: min(56.25vh, 41.25vw, 675px);
   }
 

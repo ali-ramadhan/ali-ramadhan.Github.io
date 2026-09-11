@@ -202,7 +202,7 @@ When benchmarking `copy` vs. `psycopg3.cursor.copy()` we are starting with a pan
 ::: figure centered width-80
 ![copy benchmarks](/assets/blog/trillion-rows/benchmarks_copy.png)
 
-Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 day of ERA5 data) and was repeated 10 times.
+Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 hour of ERA5 data) and was repeated 10 times.
 :::
 
 We see that `copy` can actually insert close to 400k rows per second, but that is if you already have the CSV file ready to go. Including overhead, both `copy` and psycopg3 can manage around 100k inserts/second with psycopg3 being a bit faster. For some reason there seems to be no difference between regular table and hypertable performance for psycopg3.
@@ -246,7 +246,7 @@ Beyond the `copy` statement, there are external tools for loading large amounts 
 ::: figure centered width-80
 ![tools benchmarks](/assets/blog/trillion-rows/benchmarks_tools.png)
 
-Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 day of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.
+Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 hour of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.
 :::
 
 At first it would seem that pg_bulkload is much faster, however, this is because by default it bypasses the shared buffers and skips WAL logging so data recovery following a crash may not be possible while timescaledb-parallel-copy does not and does things more safely. On a level playing field with `fsync` off (see next section for an explanation) timescaledb-parallel-copy with multiple workers beats out pg_bulkload.

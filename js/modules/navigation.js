@@ -62,11 +62,15 @@ class NavigationManager {
   getCurrentSectionFromScroll() {
     let closest = this.currentSection;
     let minDistance = Infinity;
+    const viewportCenter = window.innerHeight / 2;
 
     this.sectionData.forEach(({ element, index }) => {
       const rect = element.getBoundingClientRect();
-      const distance = Math.abs(rect.top + rect.height / 2 - window.innerHeight / 2);
-      if (distance < minDistance) {
+      // Measure distance to the section's bounds, not its center. Any section
+      // containing the viewport center wins over a nearby shorter section.
+      const distance = Math.max(rect.top - viewportCenter, viewportCenter - rect.bottom, 0);
+      // Layers overlap at transitions; the later layer takes precedence there.
+      if (distance <= minDistance) {
         minDistance = distance;
         closest = index;
       }

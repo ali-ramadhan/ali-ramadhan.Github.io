@@ -98,7 +98,7 @@ Daily exchange rate since 2005. Same comments as above.
 
 ### LW stock price
 
-This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during March 2024 trading hours at a resolution of a few minutes. The above comments on unpredictibility still hold, but what might be interesting here is whether we are able to make forecasts on what the stock price does in the second half of the trading day given we know what it did in the first.
+This is the stock price of Lamb Weston Holdings, Inc. (ticker symbol: LW) during March 2024 trading hours at a resolution of a few minutes. The above comments on unpredictability still hold, but what might be interesting here is whether we are able to make forecasts on what the stock price does in the second half of the trading day given we know what it did in the first.
 
 ::: figure centered width-80
 ![Lamb-Weston time series](/assets/blog/time-series-zoo/time_series_lamb_weston.png)

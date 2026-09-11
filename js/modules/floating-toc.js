@@ -3,6 +3,8 @@
  * Creates a floating table of contents for blog posts when enabled in front matter
  */
 
+import { expandCollapsedSections } from "./collapsible-headers.js";
+
 export class FloatingTocManager {
   constructor() {
     this.isVisible = true;
@@ -197,27 +199,12 @@ export class FloatingTocManager {
         const targetElement = document.getElementById(targetId);
 
         if (targetElement) {
-          // If the target heading is hidden inside collapsed sections
-          // (collapsible-headers feature), expand them before measuring
-          // offsetTop, otherwise we scroll to a clipped, invisible spot
-          for (let i = 0; i < 10; i++) {
-            const collapsedWrapper = targetElement.closest(".collapsible-content.collapsed");
-            if (!collapsedWrapper) break;
-
-            const controllingHeader = collapsedWrapper.previousElementSibling;
-            if (controllingHeader && controllingHeader.classList.contains("collapsible-header")) {
-              // Go through the header's own click handler to keep the
-              // collapsible-headers module's internal state in sync
-              controllingHeader.click();
-            } else {
-              collapsedWrapper.classList.remove("collapsed");
-            }
-          }
+          expandCollapsedSections(targetElement);
 
           this.isScrolling = true;
 
           window.scrollTo({
-            top: targetElement.offsetTop - 80,
+            top: targetElement.getBoundingClientRect().top + window.scrollY - 80,
             behavior: "smooth",
           });
 

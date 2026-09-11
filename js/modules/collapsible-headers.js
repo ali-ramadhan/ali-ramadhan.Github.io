@@ -3,6 +3,27 @@
  * Makes blog post headers collapsible when enabled in front matter
  */
 
+export function expandCollapsedSections(target) {
+  let expanded = false;
+  let wrapper = target.closest(".collapsible-content.collapsed");
+
+  while (wrapper) {
+    const header = wrapper.previousElementSibling;
+    if (!header?.classList.contains("collapsible-header")) break;
+    header.click();
+    expanded = true;
+    wrapper = target.closest(".collapsible-content.collapsed");
+  }
+
+  // Selecting a collapsed heading should reveal its own content as well.
+  if (target.classList.contains("collapsible-header") && target.classList.contains("collapsed")) {
+    target.click();
+    expanded = true;
+  }
+
+  return expanded;
+}
+
 export class CollapsibleHeadersManager {
   constructor() {
     this.init();
@@ -45,6 +66,32 @@ export class CollapsibleHeadersManager {
     headers.forEach((header) => {
       this.makeHeaderCollapsible(header);
     });
+
+    const getTarget = (hash) => {
+      const id = hash.slice(1);
+      const target = document.getElementById(id);
+      if (target) return target;
+      try {
+        return document.getElementById(decodeURIComponent(id));
+      } catch {
+        return null;
+      }
+    };
+
+    postContent.querySelectorAll('.table-of-contents a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        const target = getTarget(link.hash);
+        if (target) expandCollapsedSections(target);
+        // Leave native fragment navigation intact, including URL/history updates.
+      });
+    });
+
+    const revealHashTarget = () => {
+      const target = getTarget(window.location.hash);
+      if (target && expandCollapsedSections(target)) target.scrollIntoView();
+    };
+    window.addEventListener("hashchange", revealHashTarget);
+    revealHashTarget();
   }
 
   makeHeaderCollapsible(header) {

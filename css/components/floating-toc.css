@@ -126,12 +126,21 @@ html[data-theme="dark"] .floating-toc-close:hover {
 /* Section toggle arrow */
 .section-toggle {
   display: inline-block;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  line-height: inherit;
   font-size: 10px;
   padding: 4px 6px 4px 0;
   transition: transform 0.2s ease;
   color: #666;
   cursor: pointer;
   user-select: none;
+}
+
+.section-toggle:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 2px;
 }
 
 html[data-theme="dark"] .section-toggle {

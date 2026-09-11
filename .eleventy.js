@@ -63,6 +63,11 @@ export default function (eleventyConfig) {
   // Keep the repo README out of the built site
   eleventyConfig.ignores.add("README.md");
 
+  // Hidden drafts must not be rendered or published at their direct URLs.
+  eleventyConfig.addPreprocessor("hidden-drafts", "md", (data, content) => {
+    return data.hidden ? false : content;
+  });
+
   // Create a collection for blog posts
   eleventyConfig.addCollection("posts", function (collectionApi) {
     return collectionApi.getFilteredByGlob("blog/posts/*.md")

@@ -26,7 +26,7 @@ For the scope of this post, I'll stick to single/univariate time series and fitt
 - Also we want to make some $h$-horizon forecast and act on it.
 - Explain that some can be used to make longer-term forecasts (e.g. AR) while some are only good for short-term.
 
-I wanted to learn more about forecasting real-world time series and I thought this kind of material would be easy to find, but I actually found it difficult to find good examples online. Most exampels I found were either focused on time series modeling or the forecasting problem was too simple (simple time series or very short horizon). So I decided to try and pick a bunch of time series and a bunch of modeling methods and to write about my own experience learning to do time series forecasting.
+I wanted to learn more about forecasting real-world time series and I thought this kind of material would be easy to find, but I actually found it difficult to find good examples online. Most examples I found were either focused on time series modeling or the forecasting problem was too simple (simple time series or very short horizon). So I decided to try and pick a bunch of time series and a bunch of modeling methods and to write about my own experience learning to do time series forecasting.
 
 [All models are wrong](https://en.wikipedia.org/wiki/All_models_are_wrong), but some are useful. We'll look at a bunch of time series model and see which are most useful for forecasting and in which cases they are useful.
 

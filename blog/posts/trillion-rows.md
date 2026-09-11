@@ -308,7 +308,7 @@ So what can we conclude?
 
 Some closing thoughts:
 
-1. Want even faster inserts? You should probably upgrade your hardware. A nice enterprise-grade NvME SSD and lots of high-speed DDR5 RAM will help a lot. I used hardware that is roughly 5 years old so newer hardware should be able to easily beat these benchmarks.
+1. Want even faster inserts? You should probably upgrade your hardware. A nice enterprise-grade NVMe SSD and lots of high-speed DDR5 RAM will help a lot. I used hardware that is roughly 5 years old so newer hardware should be able to easily beat these benchmarks.
 2. I know the general wisdom is to just dump this data into Snowflake or BigQuery and get fast analytics for relatively cheap. But I like working with my own hardware and learning this way. Plus I have no real budget for this project.
 3. I'd be curious how ClickHouse performs on these benchmarks. My impression is that it would probably be faster out of the box. But I want to learn PostgreSQL and like the fact that TimescaleDB is just a Postgres extension so I went with TimescaleDB.
 
@@ -322,13 +322,13 @@ The code used to download the ERA5 data, create the tables, insert/copy data, ru
 
 ### Benchmarking methodology
 
-To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. No storage was persisted between Docker containers. Data including NetCDF and CSV files were read from a HDD and the database was stored on an NvME SSD.
+To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. No storage was persisted between Docker containers. Data including NetCDF and CSV files were read from a HDD and the database was stored on an NVMe SSD.
 
 Hardware:
 
 - CPU: 2x 12-core Intel Xeon Silver 4214
 - RAM: 16x 16 GiB Samsung M393A2K40CB2-CTD ECC DDR4 2666 MT/s
-- SSD: Intel SSDPEKNW020T8 2 TB NvME
+- SSD: Intel SSDPEKNW020T8 2 TB NVMe
 - HDD: Seagate Exos X16 14TB 7200 RPM 256MB Cache
 
 Software:

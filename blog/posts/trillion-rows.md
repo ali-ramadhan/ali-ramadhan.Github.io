@@ -192,7 +192,7 @@ For loading in larger amounts of data, Postgres has the `copy` statement allowin
 Once you have a CSV file it's as simple as
 
 ```sql
-copy weather from some_big.csv delimiter ',' csv header;
+copy weather from 'some_big.csv' delimiter ',' csv header;
 ```
 
 We have the option of saving data from NetCDF files as CSV files then using `copy`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space than it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and streaming it straight into Postgres using psycopg3's `cursor.copy()` function.

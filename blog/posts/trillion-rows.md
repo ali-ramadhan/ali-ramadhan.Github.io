@@ -112,7 +112,7 @@ and so you can just loop over all the data doing this row-by-row. Unfortunately 
 
 So there's a lot of overhead associated with inserting single rows, especially if each `insert` gets its own transaction.
 
-[^mvcc-explanation]: Postgres may need to perform a full table lock for some operations that modify the entire table. But for row-level operations no locking is necessary as Postgres uses [multiversion concurrency control](https://en.wikipedia.org/wiki/Multiversion_concurrency_control) (MVCC) to allow multiple transactions to operate on the database concurrently. Each transaction sees a version of the database as it was when the transaction began.
+[^mvcc-explanation]: Postgres uses [multiversion concurrency control](https://en.wikipedia.org/wiki/Multiversion_concurrency_control) (MVCC) to let readers and writers work concurrently, but writes still acquire locks. `INSERT` acquires a `ROW EXCLUSIVE` table lock; `UPDATE` and `DELETE` also acquire row locks, so conflicting writes may wait for one another. At the default `READ COMMITTED` isolation level, each statement sees a snapshot from when that statement began. `REPEATABLE READ` and `SERIALIZABLE` use a transaction-level snapshot.
 
 [^wal-explanation]: [Write-ahead logging](https://en.wikipedia.org/wiki/Write-ahead_logging) is how Postgres ensures data integrity and database recovery after crashes. All committed transactions are recorded in a WAL file before being applied to the database. In the event of a crash or power failure, the database can recover all committed transactions from the WAL file so the database can always be brought back to a consistent, uncorrupted state.
 

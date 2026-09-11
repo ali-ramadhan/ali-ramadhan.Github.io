@@ -17,10 +17,10 @@ class EarthLayersApp {
     document.addEventListener("DOMContentLoaded", () => {
       this.initializeManagers();
 
-      // Graceful shutdown on navigation; pagehide (not beforeunload) keeps
-      // the page eligible for the back/forward cache
-      window.addEventListener("pagehide", () => {
-        this.cleanup();
+      // Cached pages resume with their existing handlers and timers. Only
+      // tear down managers when the document is actually being discarded.
+      window.addEventListener("pagehide", (event) => {
+        if (!event.persisted) this.cleanup();
       });
     });
   }

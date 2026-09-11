@@ -15,7 +15,9 @@ export class FloatingTocManager {
 
     this.init();
 
-    window.addEventListener("pagehide", () => this.cleanup(), { once: true });
+    window.addEventListener("pagehide", (event) => {
+      if (!event.persisted) this.cleanup();
+    });
   }
 
   init() {

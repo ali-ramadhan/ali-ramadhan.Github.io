@@ -10,7 +10,9 @@ export class CitationManager {
 
     this.initializeCitations();
 
-    window.addEventListener("pagehide", () => this.cleanup(), { once: true });
+    window.addEventListener("pagehide", (event) => {
+      if (!event.persisted) this.cleanup();
+    });
   }
 
   initializeCitations() {

@@ -5,3 +5,11 @@ node_modules/
 _site/
 public/
 dist/
+
+# Benchmark data and other YAML are hand-maintained; keep Prettier from rewriting them.
+*.yaml
+*.yml
+
+# HTML files are Eleventy (Liquid/Nunjucks) templates; Prettier does not understand
+# template tags and mangles them.
+*.html

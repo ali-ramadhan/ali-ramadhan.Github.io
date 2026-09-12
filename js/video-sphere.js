@@ -489,8 +489,11 @@ function setupVideoSphere(sphereInit) {
       currentTooltipName = null;
     });
 
-    // Dispose three.js resources on page navigation/unload
-    window.addEventListener("pagehide", () => {
+    // Preserve the renderer and controls when the page enters the back/forward
+    // cache; the browser suspends and resumes its animation frames and timers.
+    window.addEventListener("pagehide", (event) => {
+      if (event.persisted) return;
+
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;

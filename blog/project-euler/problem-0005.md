@@ -36,6 +36,6 @@ Computing `smallest_multiple(20)` is then done very quickly in just @benchmark[p
 
 The result grows very quickly with `smallest_multiple(42)` being the largest that does not overflow `Int64`, returning 219060189739591200 in @benchmark[problem-0005:n_42].
 
-`smallest_multiple(88)` is the largest that does not overflow `Int128`, returning 8076030954443701744994070304101969600 in @benchmark[problem-0005:n_88_i128].
+`smallest_multiple(Int128(88))` is the largest that does not overflow `Int128`, returning 8076030954443701744994070304101969600 in @benchmark[problem-0005:n_88_i128].
 
 We can keep going past 88 using `BigInt`. Going all the way to `smallest_multiple(BigInt(100000))` returns a 43452-digit number in @benchmark[problem-0005:n_100k_bigint].

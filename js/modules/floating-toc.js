@@ -3,6 +3,8 @@
  * Creates a floating table of contents for blog posts when enabled in front matter
  */
 
+import { expandCollapsedSections } from "./collapsible-headers.js";
+
 export class FloatingTocManager {
   constructor() {
     this.isVisible = true;
@@ -15,7 +17,9 @@ export class FloatingTocManager {
 
     this.init();
 
-    window.addEventListener("pagehide", () => this.cleanup(), { once: true });
+    window.addEventListener("pagehide", (event) => {
+      if (!event.persisted) this.cleanup();
+    });
   }
 
   init() {
@@ -119,14 +123,16 @@ export class FloatingTocManager {
         // the toggle should only collapse/expand, and clicking the link should
         // only navigate
         if (hasSubsections) {
-          const toggle = document.createElement("span");
+          const toggle = document.createElement("button");
+          toggle.type = "button";
           toggle.className = "section-toggle";
           toggle.textContent = "▼";
-          toggle.setAttribute("role", "button");
-          toggle.setAttribute("aria-label", "Toggle section");
+          toggle.setAttribute("aria-label", `Toggle ${heading.textContent.trim()} subsections`);
+          toggle.setAttribute("aria-expanded", "false");
+          toggle.setAttribute("aria-controls", `toc-subsections-${sectionCount}`);
           toggle.addEventListener("click", (e) => {
             e.stopPropagation();
-            section.classList.toggle("collapsed");
+            this.setSectionCollapsed(section, !section.classList.contains("collapsed"));
           });
           sectionHeading.appendChild(toggle);
         }
@@ -138,6 +144,7 @@ export class FloatingTocManager {
         sectionHeading.appendChild(link);
 
         const subsectionList = document.createElement("div");
+        subsectionList.id = `toc-subsections-${sectionCount}`;
         subsectionList.className = "floating-toc-subsection";
 
         section.appendChild(sectionHeading);
@@ -171,6 +178,12 @@ export class FloatingTocManager {
     return this.headings.slice(currentIndex + 1, endIndex).some((h) => h.tagName === "H3");
   }
 
+  setSectionCollapsed(section, collapsed) {
+    section.classList.toggle("collapsed", collapsed);
+    const toggle = section.querySelector(".section-toggle");
+    if (toggle) toggle.setAttribute("aria-expanded", String(!collapsed));
+  }
+
   setupScrollListener() {
     let ticking = false;
 
@@ -195,27 +208,12 @@ export class FloatingTocManager {
         const targetElement = document.getElementById(targetId);
 
         if (targetElement) {
-          // If the target heading is hidden inside collapsed sections
-          // (collapsible-headers feature), expand them before measuring
-          // offsetTop, otherwise we scroll to a clipped, invisible spot
-          for (let i = 0; i < 10; i++) {
-            const collapsedWrapper = targetElement.closest(".collapsible-content.collapsed");
-            if (!collapsedWrapper) break;
-
-            const controllingHeader = collapsedWrapper.previousElementSibling;
-            if (controllingHeader && controllingHeader.classList.contains("collapsible-header")) {
-              // Go through the header's own click handler to keep the
-              // collapsible-headers module's internal state in sync
-              controllingHeader.click();
-            } else {
-              collapsedWrapper.classList.remove("collapsed");
-            }
-          }
+          expandCollapsedSections(targetElement);
 
           this.isScrolling = true;
 
           window.scrollTo({
-            top: targetElement.offsetTop - 80,
+            top: targetElement.getBoundingClientRect().top + window.scrollY - 80,
             behavior: "smooth",
           });
 
@@ -261,9 +259,9 @@ export class FloatingTocManager {
           document.querySelectorAll(".floating-toc-section").forEach((section) => {
             const sectionLink = section.querySelector("a");
             if (sectionLink && sectionLink.getAttribute("href") === "#" + currentSection) {
-              section.classList.remove("collapsed");
+              this.setSectionCollapsed(section, false);
             } else {
-              section.classList.add("collapsed");
+              this.setSectionCollapsed(section, true);
             }
           });
         }
@@ -277,7 +275,7 @@ export class FloatingTocManager {
 
         const parentSection = link.closest(".floating-toc-section");
         if (parentSection) {
-          parentSection.classList.remove("collapsed");
+          this.setSectionCollapsed(parentSection, false);
         }
       }
     });

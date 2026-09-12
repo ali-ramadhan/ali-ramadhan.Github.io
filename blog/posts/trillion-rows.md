@@ -112,7 +112,7 @@ and so you can just loop over all the data doing this row-by-row. Unfortunately 
 
 So there's a lot of overhead associated with inserting single rows, especially if each `insert` gets its own transaction.
 
-[^mvcc-explanation]: Postgres may need to perform a full table lock for some operations that modify the entire table. But for row-level operations no locking is necessary as Postgres uses [multiversion concurrency control](https://en.wikipedia.org/wiki/Multiversion_concurrency_control) (MVCC) to allow multiple transactions to operate on the database concurrently. Each transaction sees a version of the database as it was when the transaction began.
+[^mvcc-explanation]: Postgres uses [multiversion concurrency control](https://en.wikipedia.org/wiki/Multiversion_concurrency_control) (MVCC) to let readers and writers work concurrently, but writes still acquire locks. `INSERT` acquires a `ROW EXCLUSIVE` table lock; `UPDATE` and `DELETE` also acquire row locks, so conflicting writes may wait for one another. At the default `READ COMMITTED` isolation level, each statement sees a snapshot from when that statement began. `REPEATABLE READ` and `SERIALIZABLE` use a transaction-level snapshot.
 
 [^wal-explanation]: [Write-ahead logging](https://en.wikipedia.org/wiki/Write-ahead_logging) is how Postgres ensures data integrity and database recovery after crashes. All committed transactions are recorded in a WAL file before being applied to the database. In the event of a crash or power failure, the database can recover all committed transactions from the WAL file so the database can always be brought back to a consistent, uncorrupted state.
 
@@ -124,7 +124,7 @@ How many rows can we actually insert per second using single-row inserts? After 
 2. **psycopg3**: You can use [parameterized queries](https://www.psycopg.org/psycopg3/docs/basic/params.html) to protect against [SQL injection](https://en.wikipedia.org/wiki/SQL_injection), not that it's a risk here (yet) but it's good to practice safety I guess. All inserts are part of one transaction that is committed at the end.
 3. **SQLAlchemy**: You can similarly use named parameters in a parameterized query to prevent SQL injection attacks.
 
-[^orm-explanation]: I wanted to try a fourth method using SQLAlchemy's [Object Relational Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) (ORM) which maps rows in a database to Python objects. But, the ORM requires a primary key and Timescale hypertables do not support primary keys. This is because the underlying data must be partitioned to several physical PostgreSQL tables and partitioned lookups cannot support a primary key. ORM was probably going to be the slowest at inserting due to extra overhead anyways.
+[^orm-explanation]: I wanted to try a fourth method using SQLAlchemy's [Object Relational Mapper](https://en.wikipedia.org/wiki/Object%E2%80%93relational_mapping) (ORM) which maps rows in a database to Python objects. The ORM requires a primary key, and the schema above doesn't define one. TimescaleDB hypertables do support primary keys, provided they include all partitioning columns: for example, `(time, location_id)` for this table partitioned by time. Adding a primary key would also introduce uniqueness checks and index maintenance, changing the benchmark setup. I didn't include the ORM in these benchmarks.
 
 ::: figure centered width-80
 ![single-row insert benchmarks](/assets/blog/trillion-rows/benchmarks_insert.png)
@@ -192,7 +192,7 @@ For loading in larger amounts of data, Postgres has the `copy` statement allowin
 Once you have a CSV file it's as simple as
 
 ```sql
-copy weather from some_big.csv delimiter ',' csv header;
+copy weather from 'some_big.csv' delimiter ',' csv header;
 ```
 
 We have the option of saving data from NetCDF files as CSV files then using `copy`. This honestly feels inefficient as saving timestamps and floating-point numbers as plaintext to disk takes up more space than it should then reading it from disk seems like it would be slow, but Postgres seems to have optimized this operation. We also have the option of not saving the data into CSV files and streaming it straight into Postgres using psycopg3's `cursor.copy()` function.
@@ -202,7 +202,7 @@ When benchmarking `copy` vs. `psycopg3.cursor.copy()` we are starting with a pan
 ::: figure centered width-80
 ![copy benchmarks](/assets/blog/trillion-rows/benchmarks_copy.png)
 
-Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 day of ERA5 data) and was repeated 10 times.
+Here the full rate includes overhead (writing CSV files or constructing tuples) while the copy rate does not. This time each benchmark inserted 1,038,240 rows (1 hour of ERA5 data) and was repeated 10 times.
 :::
 
 We see that `copy` can actually insert close to 400k rows per second, but that is if you already have the CSV file ready to go. Including overhead, both `copy` and psycopg3 can manage around 100k inserts/second with psycopg3 being a bit faster. For some reason there seems to be no difference between regular table and hypertable performance for psycopg3.
@@ -246,7 +246,7 @@ Beyond the `copy` statement, there are external tools for loading large amounts 
 ::: figure centered width-80
 ![tools benchmarks](/assets/blog/trillion-rows/benchmarks_tools.png)
 
-Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 day of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.
+Blue and orange bars show results from benchmarks that inserted 1,038,240 rows (1 hour of ERA5 data) and were repeated 10 times. The sustained insert rates are from benchmarks that inserted 256 hours of ERA5 data (~266 million rows) into a hypertable. In these benchmarks the CSV files were already written to disk so the insert rate corresponds to the "copy rate" from the copy benchmarks. The insert rate including overhead accounts for the time it takes to write the CSV files to disk.
 :::
 
 At first it would seem that pg_bulkload is much faster, however, this is because by default it bypasses the shared buffers and skips WAL logging so data recovery following a crash may not be possible while timescaledb-parallel-copy does not and does things more safely. On a level playing field with `fsync` off (see next section for an explanation) timescaledb-parallel-copy with multiple workers beats out pg_bulkload.
@@ -308,7 +308,7 @@ So what can we conclude?
 
 Some closing thoughts:
 
-1. Want even faster inserts? You should probably upgrade your hardware. A nice enterprise-grade NvME SSD and lots of high-speed DDR5 RAM will help a lot. I used hardware that is roughly 5 years old so newer hardware should be able to easily beat these benchmarks.
+1. Want even faster inserts? You should probably upgrade your hardware. A nice enterprise-grade NVMe SSD and lots of high-speed DDR5 RAM will help a lot. I used hardware that is roughly 5 years old so newer hardware should be able to easily beat these benchmarks.
 2. I know the general wisdom is to just dump this data into Snowflake or BigQuery and get fast analytics for relatively cheap. But I like working with my own hardware and learning this way. Plus I have no real budget for this project.
 3. I'd be curious how ClickHouse performs on these benchmarks. My impression is that it would probably be faster out of the box. But I want to learn PostgreSQL and like the fact that TimescaleDB is just a Postgres extension so I went with TimescaleDB.
 
@@ -322,13 +322,13 @@ The code used to download the ERA5 data, create the tables, insert/copy data, ru
 
 ### Benchmarking methodology
 
-To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. No storage was persisted between Docker containers. Data including NetCDF and CSV files were read from a HDD and the database was stored on an NvME SSD.
+To ensure a consistent environment for benchmarking, a new Docker container was spun up for each individual benchmark. No storage was persisted between Docker containers. Data including NetCDF and CSV files were read from a HDD and the database was stored on an NVMe SSD.
 
 Hardware:
 
 - CPU: 2x 12-core Intel Xeon Silver 4214
 - RAM: 16x 16 GiB Samsung M393A2K40CB2-CTD ECC DDR4 2666 MT/s
-- SSD: Intel SSDPEKNW020T8 2 TB NvME
+- SSD: Intel SSDPEKNW020T8 2 TB NVMe
 - HDD: Seagate Exos X16 14TB 7200 RPM 256MB Cache
 
 Software:

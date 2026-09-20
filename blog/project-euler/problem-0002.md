@@ -57,22 +57,7 @@ to generate all the even Fibonacci numbers directly, skipping over all the odd o
 
 We can implement this in Julia:
 
-```julia
-function sum_even_fibonacci(limit)
-    limit < 2 && return 0
-    limit < 8 && return 2
-
-    a, b = 2, 8
-    result = a + b
-
-    while (c = 4b + a) ≤ limit
-        result += c
-        a, b = b, c
-    end
-
-    return result
-end
-```
+@code[problem-0002:sum_even_fibonacci]
 
 Benchmarking `sum_even_fibonacci(4 * 10^6)` we get @benchmark[problem-0002:limit_4M] which is pretty fast. Since the Fibonacci numbers grow exponentially, we can increase the limit to a much larger number and still compute the sum quickly. For example, benchmarking `sum_even_fibonacci(4 * 10^15)` only takes @benchmark[problem-0002:limit_4e15].
 

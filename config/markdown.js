@@ -9,7 +9,8 @@ import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
 import markdownItPrism from "markdown-it-prism";
 import { markdownItCitations, clearCitationCaches } from "./citations.js";
-import { processBenchmark } from "./benchmark-utils.js";
+import { processBenchmark, clearBenchmarkCache } from "./benchmark-utils.js";
+import { processCode } from "./code-utils.js";
 
 // Custom math blocks plugin for markdown-it
 function markdownItMathBlocks(md) {
@@ -58,7 +59,12 @@ function markdownItBenchmark(md) {
             while ((match = benchmarkRegex.exec(child.content)) !== null) {
               hasMatches = true;
               const [fullMatch, filename, key, displayType = "median_time"] = match;
-              const replacement = processBenchmark(filename, key, displayType);
+              let replacement;
+              try {
+                replacement = processBenchmark(filename, key, displayType);
+              } catch (error) {
+                throw new Error(`${fullMatch}: ${error.message}`, { cause: error });
+              }
               content = content.replace(fullMatch, replacement);
             }
 
@@ -83,11 +89,56 @@ function markdownItBenchmark(md) {
   });
 }
 
+// Custom code embedding plugin for markdown-it: a line of the form
+// @code[problem-0012:find_first_triangle_with_divisors] becomes a fenced code
+// block holding that definition from the pinned ProjectEulerSolutions.jl commit
+function markdownItCode(md) {
+  const codeRegex = /^@code\[([^\]]+)\]\s*$/;
+
+  md.block.ruler.before(
+    "fence",
+    "code_embed",
+    function (state, startLine, endLine, silent) {
+      const start = state.bMarks[startLine] + state.tShift[startLine];
+      const match = codeRegex.exec(state.src.slice(start, state.eMarks[startLine]));
+      if (!match) return false;
+      if (silent) return true;
+
+      const {
+        code,
+        language,
+        sourcePath,
+        startLine: from,
+        endLine: to,
+        url,
+      } = processCode(match[1]);
+
+      // Emit a regular fence token so Prism highlighting and its toolbar
+      // plugins treat embedded code exactly like a hand-written block
+      const token = state.push("fence", "code", 0);
+      token.info = language;
+      token.content = code + "\n";
+      token.markup = "```";
+      token.map = [startLine, startLine + 1];
+      token.block = true;
+      token.attrSet("data-source-path", from ? `${sourcePath}:${from}-${to}` : sourcePath);
+      token.attrSet("data-source-url", url);
+
+      state.line = startLine + 1;
+      return true;
+    },
+    { alt: ["paragraph", "reference", "blockquote", "list"] }
+  );
+}
+
 export function configureMarkdown(eleventyConfig) {
-  // The citation plugin keeps module-level caches; clear them before every
-  // build so --serve rebuilds pick up reference YAML edits and drop
-  // citations that were removed from posts
-  eleventyConfig.on("eleventy.before", clearCitationCaches);
+  // The citation and benchmark plugins keep module-level caches; clear them
+  // before every build so --serve rebuilds pick up reference YAML edits, drop
+  // citations that were removed from posts, and re-read a re-pinned snapshot
+  eleventyConfig.on("eleventy.before", () => {
+    clearCitationCaches();
+    clearBenchmarkCache();
+  });
 
   // Configure markdown-it with custom extensions
   eleventyConfig.amendLibrary("md", (mdLib) => {
@@ -96,6 +147,10 @@ export function configureMarkdown(eleventyConfig) {
 
     // Custom benchmark plugin - must come before other plugins
     mdLib.use(markdownItBenchmark);
+
+    // Custom code embedding plugin - must come before the Prism plugin, which
+    // renders the fence tokens it emits
+    mdLib.use(markdownItCode);
 
     // Citations plugin - must come before other plugins that might process links
     mdLib.use(markdownItCitations, {

@@ -59,7 +59,7 @@ const LINE_RANGE = /^(\d+)-(\d+)$/;
  * Returns `{ kind, names, start, end }` records with 1-based inclusive line numbers.
  */
 export function parseTopLevel(source) {
-  const lines = source.replace(/\r\n/g, "\n").split("\n");
+  const lines = splitLines(source);
   const statements = [];
   let i = 0;
 
@@ -84,6 +84,11 @@ export function parseTopLevel(source) {
   }
 
   return statements;
+}
+
+// Lines of the file, without the empty entry a trailing newline would produce
+function splitLines(source) {
+  return source.replace(/\r\n/g, "\n").replace(/\n$/, "").split("\n");
 }
 
 function isBlockOpener(line) {
@@ -178,7 +183,7 @@ function classify(line) {
  * Returns `{ code, startLine, endLine }` where the lines span everything selected.
  */
 export function extractDefinitions(source, selectors) {
-  const lines = source.replace(/\r\n/g, "\n").split("\n");
+  const lines = splitLines(source);
   const statements = parseTopLevel(source);
   const ranges = [];
 
@@ -204,10 +209,23 @@ export function extractDefinitions(source, selectors) {
     ranges.push(...matches.map(({ start, end }) => ({ start, end })));
   }
 
-  const chunks = ranges.map(({ start, end }) => lines.slice(start - 1, end).join("\n"));
+  // Keep the file's own spacing between selections that only have blank lines
+  // between them; separate everything else with one blank line
+  let code = "";
+  ranges.forEach((range, index) => {
+    const chunk = lines.slice(range.start - 1, range.end).join("\n");
+    if (index === 0) {
+      code = chunk;
+      return;
+    }
+    const previous = ranges[index - 1];
+    const gap = range.start > previous.end ? lines.slice(previous.end, range.start - 1) : null;
+    const onlyBlank = gap !== null && gap.every((line) => line.trim() === "");
+    code += (onlyBlank ? "\n".repeat(gap.length + 1) : "\n\n") + chunk;
+  });
 
   return {
-    code: dedent(chunks.join("\n\n")),
+    code: dedent(code),
     startLine: Math.min(...ranges.map((range) => range.start)),
     endLine: Math.max(...ranges.map((range) => range.end)),
   };

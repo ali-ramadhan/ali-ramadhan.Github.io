@@ -115,67 +115,11 @@ For each digit $c_k$, we apply $c_k$ sparse operations where neighbors are colle
 
 Here's the Julia implementation using `circshift` to handle the toroidal boundary conditions:
 
-```julia
-function simulate_cellular_automaton(grid, total_steps, modulo)
-    # Work strictly in Z_modulo
-    grid = grid .% modulo
-
-    current_steps = total_steps
-    power = 0
-
-    while current_steps > 0
-        digit = current_steps % modulo
-        current_steps = div(current_steps, modulo)
-
-        shift = modulo^power
-
-        # Apply operator 'digit' times at this scale
-        for _ in 1:digit
-            up = circshift(grid, (shift, 0))
-            down = circshift(grid, (-shift, 0))
-            left = circshift(grid, (0, shift))
-            right = circshift(grid, (0, -shift))
-
-            grid = (up .+ down .+ left .+ right) .% modulo
-        end
-
-        power += 1
-    end
-
-    return grid
-end
-```
+@code[bonus-secret:simulate_cellular_automaton]
 
 Now we just need to load the PNG image and convert it to a 2D grid of integers so that we can call `simulate_cellular_automaton` on it. Once the simulation is done, we convert the grid to a grayscale PNG and save it.
 
-```julia
-using PNGFiles
-using ColorTypes: Gray
-
-function solve()
-    # Load the problem image
-    image_filepath = "bonus_secret_statement.png"
-    img = PNGFiles.load(image_filepath)
-
-    # Convert to grayscale and extract pixel values as integers (0-255)
-    gray_img = Gray.(img)
-    grid = Int.(round.(Float64.(gray_img) .* 255))
-
-    # Simulate!
-    total_steps = 10^12
-    modulo = 7
-    result = simulate_cellular_automaton(grid, total_steps, modulo)
-
-    # Scale to [0, 1]
-    scaled_result = Gray.(result ./ modulo)
-
-    # Save the result
-    output_path = "bonus_secret_result.png"
-    PNGFiles.save(output_path, scaled_result)
-
-    return nothing
-end
-```
+@code[bonus-secret:using PNGFiles,using ColorTypes,solve]
 
 This runs in @benchmark[bonus-secret:solution]. Modulo 7 gives us enough contrast to easily read the resulting image.
 

@@ -245,72 +245,15 @@ each of which satisfies the trace condition and cannot be obtained by forward-ap
 
 The expansion rules treat sequences as cycles rather than ordered tuples. Rotating a sequence doesn't change the matrix product trace (since the trace is invariant under cyclic rotations of the product). So we canonicalize each generated cycle to its lexicographically smallest rotation and store it as the canonical key. To make set operations fast, we pack the canonical form into an unsigned integer with the layout `[length : 4 bits][digit_1 : 5 bits][digit_2 : 5 bits]...`. For $n \le 12$ this fits in a `UInt64` since $4 + 5 \cdot 12 = 64$ bits exactly. For $13 \le n \le 15$ we widen to `UInt128`. Note that the 4-bit length field caps the encodable cycle length at $2^4 - 1 = 15$. The packing is worth the complexity because a `Set{UInt64}` keeps keys stack-allocated and O(1)-hashed, while a `Set{Vector{Int}}` is around 6× slower when I benchmarked $Q(12)$.
 
-```julia
-const LEN_BITS = 4
-const DIGIT_BITS = 5
-
-function encode_rotated(seq, ::Type{T}=UInt64)::T where {T<:Unsigned}
-    n = length(seq)
-    best_s = 1
-    for s in 2:n
-        for k in 0:(n-1)
-            a = seq[mod1(s + k, n)]
-            b = seq[mod1(best_s + k, n)]
-            if a < b
-                best_s = s
-                break
-            elseif a > b
-                break
-            end
-        end
-    end
-
-    key = T(n)
-    for i in 0:(n-1)
-        v = seq[mod1(best_s + i, n)]
-        key |= (T(v) << (LEN_BITS + DIGIT_BITS * i))
-    end
-    return key
-end
-```
+@code[bonus-contfrac:LEN_BITS,DIGIT_BITS,encode_rotated]
 
 The decode is the inverse:
 
-```julia
-function decode_cycle(key::T) where {T<:Unsigned}
-    len_mask = (T(1) << LEN_BITS) - T(1)
-    digit_mask = (T(1) << DIGIT_BITS) - T(1)
-    n = Int(key & len_mask)
-    seq = Vector{Int}(undef, n)
-    for i in 0:(n-1)
-        seq[i+1] = Int((key >> (LEN_BITS + DIGIT_BITS * i)) & digit_mask)
-    end
-    return seq
-end
-```
+@code[bonus-contfrac:decode_cycle]
 
 The other consideration is the minimal period: a cycle like $(1, 2, 1, 2)$ has length 4 but minimal period 2, so it's already counted under length 2 as $(1, 2)$ repeated. We filter these out and only keep primitive cycles:
 
-```julia
-function is_primitive(seq)
-    n = length(seq)
-    for d in 1:(n-1)
-        if n % d == 0
-            periodic = true
-            for i in 1:n
-                if seq[i] != seq[mod1(i + d, n)]
-                    periodic = false
-                    break
-                end
-            end
-            if periodic
-                return false
-            end
-        end
-    end
-    return true
-end
-```
+@code[bonus-contfrac:is_primitive]
 
 Each primitive cyclic class of length $m$ corresponds to $m$ distinct sequences (one per rotation), so the final answer is
 
@@ -324,132 +267,17 @@ where $C_m$ is the number of primitive cyclic classes of length $m$.
 
 To check if a sequence is valid we walk the matrix product and look at the trace. Since the modular group acts as [Möbius transformations](https://en.wikipedia.org/wiki/M%C3%B6bius_transformation#Classification), we can borrow that taxonomy: a non-identity matrix with $|\operatorname{tr}| < 2$ is called _elliptic_, $|\operatorname{tr}| = 2$ is _parabolic_, and $|\operatorname{tr}| > 2$ is _hyperbolic_. Our valid sequences are exactly those whose matrix product is elliptic, so we name the function accordingly. We use `Int128` for headroom:
 
-```julia
-function is_elliptic(seq)
-    A, B = Int128(1), Int128(0)
-    C, D = Int128(0), Int128(1)
-
-    for a in seq
-        nA = A * a + B
-        nB = -A
-        nC = C * a + D
-        nD = -C
-        A, B, C, D = nA, nB, nC, nD
-    end
-
-    tr = A + D
-    return -1 <= tr <= 1
-end
-```
+@code[bonus-contfrac:is_elliptic]
 
 The two expansion rules each insert their pattern at every cyclic position. `splice_ts3!` implements Rule 1 (splice in $(TS)^3$), and `splice_s2!` implements Rule 2 (splice in $S^2$, with $u$ ranging from $0$ to $c$):
 
-```julia
-# Rule 1: (a, b) -> (a+1, 1, b+1)
-function splice_ts3!(seq::Vector{Int}, out_set::Set{T}, max_n::Int) where {T<:Unsigned}
-    n = length(seq)
-    if n < 2 || n + 1 > max_n
-        return
-    end
-
-    new_seq = Vector{Int}(undef, n + 1)
-    for i in 1:n
-        j = mod1(i + 1, n)
-
-        new_seq[1] = seq[i] + 1
-        new_seq[2] = 1
-        new_seq[3] = seq[j] + 1
-
-        idx = 4
-        k = mod1(j + 1, n)
-        while k != i
-            new_seq[idx] = seq[k]
-            idx += 1
-            k = mod1(k + 1, n)
-        end
-
-        if is_elliptic(new_seq)
-            push!(out_set, encode_rotated(new_seq, T))
-        end
-    end
-end
-
-# Rule 2: (c) -> (u, 0, c-u)
-function splice_s2!(seq::Vector{Int}, out_set::Set{T}, max_n::Int) where {T<:Unsigned}
-    n = length(seq)
-    if n + 2 > max_n
-        return
-    end
-
-    new_seq = Vector{Int}(undef, n + 2)
-    for i in 1:n
-        c = seq[i]
-        for u in 0:c
-            new_seq[1] = u
-            new_seq[2] = 0
-            new_seq[3] = c - u
-
-            idx = 4
-            k = mod1(i + 1, n)
-            while k != i
-                new_seq[idx] = seq[k]
-                idx += 1
-                k = mod1(k + 1, n)
-            end
-
-            if is_elliptic(new_seq)
-                push!(out_set, encode_rotated(new_seq, T))
-            end
-        end
-    end
-end
-```
+@code[bonus-contfrac:splice_ts3!,splice_s2!]
 
 The elliptic check inside each splice is technically redundant (the rules preserve the trace by construction) but it's cheap and makes the code self-validating.
 
 The main solver dispatches on `max_n` to pick the right key type, then seeds the base cycles, expands, and counts:
 
-```julia
-function compute_Q(max_n::Int=12)
-    if max_n <= 12
-        return _compute_Q(max_n, UInt64)
-    elseif max_n <= 15
-        return _compute_Q(max_n, UInt128)
-    else
-        error("max_n > 15 not supported (the 4-bit length field caps cycle length at 15)")
-    end
-end
-
-function _compute_Q(max_n::Int, ::Type{T}) where {T<:Unsigned}
-    classes = [Set{T}() for _ in 1:max_n]
-
-    seeds = [[0], [1], [1, 1], [1, 2], [2, 1], [1, 3], [3, 1]]
-    for s in seeds
-        if length(s) <= max_n && is_elliptic(s)
-            push!(classes[length(s)], encode_rotated(s, T))
-        end
-    end
-
-    for n in 1:max_n
-        for key in classes[n]
-            seq = decode_cycle(key)
-            if n + 1 <= max_n
-                splice_ts3!(seq, classes[n+1], max_n)
-            end
-            if n + 2 <= max_n
-                splice_s2!(seq, classes[n+2], max_n)
-            end
-        end
-    end
-
-    q_total = 0
-    for n in 1:max_n
-        class_cnt = count(k -> is_primitive(decode_cycle(k)), classes[n])
-        q_total += class_cnt * n
-    end
-    return q_total
-end
-```
+@code[bonus-contfrac:compute_Q,_compute_Q]
 
 ## Benchmarks
 

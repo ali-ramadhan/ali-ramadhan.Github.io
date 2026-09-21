@@ -96,127 +96,23 @@ C_{i,j} = \left( \sum_{k=1}^3 A_{i,k} B_{k,j} \right) \pmod{p}
 
 which we can do by creating a mutable static array `MMatrix` then filling it before converting it to an `SMatrix`.
 
-```julia
-using StaticArrays
-
-@inline function mat_mul_mod(A::SMatrix{3,3,Int}, B::SMatrix{3,3,Int}, p::Int)
-    C = MMatrix{3,3,Int}(undef)
-    @inbounds for j in 1:3
-        for i in 1:3
-            s = 0
-            for k in 1:3
-                s += A[i,k] * B[k,j]
-            end
-            C[i,j] = s % p
-        end
-    end
-    return SMatrix(C)
-end
-```
+@code[bonus-18i:using StaticArrays,mat_mul_mod]
 
 Now we can use `mat_mul_mod` to write a function that computes $M^p \pmod{p}$ efficiently using [binary exponentiation](https://en.wikipedia.org/wiki/Exponentiation_by_squaring). Computing $M^p$ naively would require $p - 1$ multiplications which is too slow when $p \approx 10^9$. Binary exponentiation reduces this to $O(\log p)$ multiplications by exploiting the binary representation of the exponent. For example, $M^{13} = M^{1101_2} = M^8 \cdot M^4 \cdot M^1$ since $13 = 8 + 4 + 1$. The algorithm loops through the bits of the exponent: it squares the base at each step (giving $M^1, M^2, M^4, M^8, \ldots$) and multiplies into the result whenever the current bit is 1.
 
-```julia
-function mat_pow_mod(A::SMatrix{3,3,Int}, exp::Int, p::Int)
-    result = @SMatrix [1 0 0; 0 1 0; 0 0 1] # Identity matrix
-    base = A
-
-    while exp > 0
-        if (exp & 1) == 1
-            result = mat_mul_mod(result, base, p)
-        end
-        exp >>= 1
-        if exp > 0
-            base = mat_mul_mod(base, base, p)
-        end
-    end
-    return result
-end
-```
+@code[bonus-18i:mat_pow_mod]
 
 To compute the determinant of $Y = M^p - M$ we use [cofactor expansion](https://en.wikipedia.org/wiki/Laplace_expansion) along the first row, being careful to avoid integer overflow.
 
-```julia
-@inline function det3_mod(M::SMatrix{3,3,Int}, p::Int)
-    @inbounds begin
-        a, b, c = M[1,1], M[1,2], M[1,3]
-        d, e, f = M[2,1], M[2,2], M[2,3]
-        g, h, i = M[3,1], M[3,2], M[3,3]
-    end
+@code[bonus-18i:det3_mod]
 
-    term1 = (a * (mod(e*i - f*h, p))) % p
-    term2 = (b * (mod(d*i - f*g, p))) % p
-    term3 = (c * (mod(d*h - e*g, p))) % p
+Now we're ready to compute $R(p) \pmod{p}$. The polynomial has a root in $\mathbb{F}_2$ ($k = 1$) and in $\mathbb{F}_3$ ($k = 2$) so $R(2) = R(3) = 0$, and the derivation above needed $p$ to be odd anyway, so we return early for $p \le 3$.
 
-    return mod(term1 - term2 + term3, p)
-end
-```
+@code[bonus-18i:R_mod_p]
 
-Now we're ready to compute $R(p) \pmod{p}$.
+Now we just need to sum over all $p$. Since each prime can be processed independently, this is an embarrassingly parallel problem and we can parallelize this computation across multiple threads. The range is divided into chunks, with each thread processing its own chunk and computing a local sum. `MillerRabin(high)` is the deterministic Miller-Rabin test from the package's prime utilities, constructed once with the largest value we'll test so that the witness set is precomputed rather than looked up for every $n$.
 
-```julia
-function R_mod_p(p)
-    # For p = 2, the product includes k = 1 where k³ - 3k + 4 = 2 ≡ 0 (mod 2), so R(2) = 0.
-    # For p = 3, the product includes k = 2 where k³ - 3k + 4 = 6 ≡ 0 (mod 3), so R(3) = 0.
-    # These are the only primes where k³ - 3k + 4 has a root in F_p.
-    if p <= 3
-        return 0
-    end
-
-    M = @SMatrix [0  0 -4;
-                  1  0  3;
-                  0  1  0]
-
-    Mp = mat_pow_mod(M, p, p)
-
-    # Compute Y = M^p - M by applying mod(a - b, p) to every pair of elements.
-    Y = map((a, b) -> mod(a - b, p), Mp, M)
-
-    D = det3_mod(Y, p)
-    return mod(-D, p)
-end
-```
-
-Now we just need to sum over all $p$. Since each prime can be processed independently, this is an embarrassingly parallel problem and we can parallelize this computation across multiple threads. The range is divided into chunks, with each thread processing its own chunk and computing a local sum.
-
-```julia
-function sum_R_mod_p(low, high)
-    primality_test = MillerRabin(high)
-    return _sum_R_mod_p_inner(low, high, primality_test)
-end
-
-function _sum_R_mod_p_inner(low, high, primality_test::MillerRabin{W}) where W
-    num_chunks = Threads.nthreads()
-
-    if num_chunks == 1
-        total_sum = 0
-        for n in low:high
-            if is_prime(n, primality_test)
-                total_sum += R_mod_p(n)
-            end
-        end
-        return total_sum
-    end
-
-    chunk_size = cld(high - low + 1, num_chunks)
-
-    tasks = map(1:num_chunks) do i
-        chunk_start = low + (i - 1) * chunk_size
-        chunk_end = min(chunk_start + chunk_size - 1, high)
-        Threads.@spawn begin
-            local_sum = 0
-            for n in chunk_start:chunk_end
-                if is_prime(n, primality_test)
-                    local_sum += R_mod_p(n)
-                end
-            end
-            return local_sum
-        end
-    end
-
-    return sum(fetch, tasks)
-end
-```
+@code[bonus-18i:using ProjectEulerSolutions.Utils.Primes,sum_R_mod_p,_sum_R_mod_p_inner]
 
 Running `sum_R_mod_p(1_000_000_000, 1_100_000_000)` returns the answer in @benchmark[bonus-18i:solution]!
 

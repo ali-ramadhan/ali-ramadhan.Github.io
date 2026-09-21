@@ -29,62 +29,17 @@ which grows exponentially.
 
 Seeing that $\cosh \left( \pi \sqrt{1000} \right) \approx 7 \times 10^{42}$ we will need at least 43 digits of precision and maybe a nice 32 digit buffer for the fractional part. 75 digits worth of precision requires $75 \log_2(10) \approx 249$ bits of precision which we'll round up to $250$. So `Float64` will not be enough and neither will 128-bit floats (which are provided by [Quadmath.jl](https://github.com/JuliaMath/Quadmath.jl) in Julia). We'll use `BigFloat` and calculate the precision required based on the limit we want to search up to.
 
-```julia
-function required_precision_bits(limit; fractional_digits=32)
-    val = cosh(big(π) * sqrt(big(limit)))
-    integer_digits = ceil(Int, log10(val))
-    total_digits = integer_digits + fractional_digits
-    return ceil(Int, total_digits * log2(10))
-end
-```
+@code[bonus-heegner:required_precision_bits]
 
-We can then code up the search:
+We can then code up the search. Each value of $n$ is independent so this is embarrassingly parallel: the range from $-\text{limit}$ to $\text{limit}$ is divided into one chunk per thread, each thread computes $\cos(\pi \sqrt n)$ and its distance to the nearest integer for its own chunk, and the results are concatenated and sorted by distance (with a plain loop as the fallback when Julia is started with a single thread):
 
-```julia
-using Printf
+@code[bonus-heegner:distance_to_nearest_integer,process_chunk,find_closest_cos_to_integer]
 
-function distance_to_nearest_integer(x)
-    return abs(x - round(x))
-end
+The top 10 are logged so we can see how close the runners-up get:
 
-function find_closest_cos_to_integer(limit)
-    precision_bits = required_precision_bits(limit)
-    @info "Using $precision_bits bits of precision for limit=$limit"
+@code[bonus-heegner:using Printf,log_top_results]
 
-    setprecision(BigFloat, precision_bits) do
-        results = Vector{Tuple{Int,BigFloat,BigFloat}}()  # (n, value, distance)
-
-        for n in -limit:limit
-            n == 0 && continue
-            isqrt(abs(n))^2 == abs(n) && continue
-
-            if n > 0
-                val = cos(big(π) * sqrt(big(n)))
-            else
-                val = cosh(big(π) * sqrt(big(-n)))
-            end
-
-            dist = distance_to_nearest_integer(val)
-
-            push!(results, (n, val, dist))
-        end
-
-        # Sort by distance
-        sort!(results, by=x -> x[3])
-
-        # Log the top 10
-        @info "Top 10 values of n where cos(π√n) is closest to an integer:"
-        for i in 1:min(10, length(results))
-            n, val, dist = results[i]
-            @info @sprintf("%d: n = %d, value ≈ %.10e, distance ≈ %.10e", i, n, val, dist)
-        end
-
-        return results[1][1]
-    end
-end
-```
-
-Going up to $n = 10^3$ requires 250 bits of precision and produces the correct answer in @benchmark[bonus-heegner:n_1k].
+Going up to $n = 10^3$ requires 250 bits of precision and produces the correct answer in @benchmark[bonus-heegner:n_1k] using all the threads on the machine.
 
 Going up to $n = 10^6$ requires 4641 bits of precision and actually does not find a closer value after searching for @benchmark[bonus-heegner:n_1M]!
 

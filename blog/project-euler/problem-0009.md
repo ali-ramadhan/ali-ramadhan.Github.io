@@ -12,6 +12,10 @@ benchmark_key: "n_1000"
 > There exists exactly one Pythagorean triplet for which $a + b + c = 1000$.
 > Find the product $abc$.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler009/problem) asks for the largest $abc$ over all triplets with $a + b + c = N$ for any $N \leqslant 3000$ (or $-1$ if there are none), with up to $3000$ queries per run.
+:::
+
 We'll solve the more general problem where $a + b + c = n$.
 
 ## A fast approach using some algebra
@@ -30,31 +34,7 @@ We can use the constraints $a < b < c$ and $a + b + c = n$ to place an upper lim
 
 So we just need to iterate through values of $a$ until $a_\text{max}$. For each value of $a$ we can directly compute values for $b$ and $c$ and see if they satisfy all the constraints. If they do, we have found a Pythagorean triplet!
 
-```julia
-function find_pythagorean_triplets(n)
-    triplets = Tuple{Int,Int,Int}[]
-
-    for a in 1:(n÷3)
-        numerator = n * (n - 2a)
-        denominator = 2 * (n - a)
-
-        # Check if b is an integer
-        if numerator % denominator == 0
-            b = numerator ÷ denominator
-
-            if b > 0 && b > a
-                c = n - a - b
-
-                if a < b < c && a^2 + b^2 == c^2
-                    push!(triplets, (a, b, c))
-                end
-            end
-        end
-    end
-
-    return triplets
-end
-```
+@code[problem-0009:find_pythagorean_triplets]
 
 This code finds the special Pythagorean triplet for $n = 10^3$ in @benchmark[problem-0009:n_1000] after which we can easily compute $abc$ to solve the problem.
 
@@ -90,41 +70,7 @@ For each candidate $m$, if $m$ divides $P/2$ we can write
 
 Call the left-hand side $R$. We then search for divisors of $R$ that could be $(m + n)$, which would make $k = R / (m + n)$. For each candidate, we compute $n = (m + n) - m$ and check the constraints required by Euclid's formula: $n$ must be positive, $n < m$, $m$ and $n$ must be coprime, and $m + n$ must be odd.
 
-```julia
-function find_pythagorean_triplets_euclid(P)
-    triplets = Set{Tuple{Int,Int,Int}}()
-
-    isodd(P) && return triplets
-
-    half_P = P ÷ 2
-
-    for m in 2:isqrt(half_P)
-        half_P % m == 0 || continue
-        R = half_P ÷ m  # R = k(m + n)
-
-        for d in 1:isqrt(R)
-            R % d == 0 || continue
-
-            for m_plus_n in (d, R ÷ d)
-                n = m_plus_n - m
-
-                # Check Euclid's formula constraints
-                n < 1 && continue        # n must be positive
-                n >= m && continue       # n must be less than m
-                gcd(m, n) != 1 && continue  # m and n must be coprime
-                iseven(m + n) && continue   # m + n must be odd
-
-                k = R ÷ m_plus_n
-                a, b = minmax(k * (m^2 - n^2), 2k * m * n)
-                c = k * (m^2 + n^2)
-                push!(triplets, (a, b, c))
-            end
-        end
-    end
-
-    return sort!(collect(triplets))
-end
-```
+@code[problem-0009:find_pythagorean_triplets_euclid]
 
 This finds the same seven triplets for $P = 1234567890$ in just @benchmark[problem-0009:n_1234567890_euclid]. It does $P = 10^3$ in @benchmark[problem-0009:n_1000_euclid] and $P = 10^6$ in @benchmark[problem-0009:n_1000000_euclid].
 

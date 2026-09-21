@@ -19,6 +19,10 @@ benchmark_key: "n_100"
 >
 > Find the difference between the sum of the squares of the first one hundred natural numbers and the square of the sum.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler006/problem) raises the limit from $100$ to $N \leqslant 10^4$, with up to $10^4$ queries per run.
+:::
+
 Not sure if there's much to say on this problem besides that using two special cases of [Faulhaber's formula](https://en.wikipedia.org/wiki/Faulhaber%27s_formula) for powers of 1 and 2 we can write
 
 ```math
@@ -43,10 +47,6 @@ So we can compute the answer directly using
 
 With a simple implementation
 
-```julia
-function sum_square_difference(n)
-    return n * (n + 1) * (n - 1) * (3n + 2) ÷ 12
-end
-```
+@code[problem-0006:sum_square_difference]
 
 we call `sum_square_difference(100)` to compute the solution which runs in @benchmark[problem-0006:n_100].

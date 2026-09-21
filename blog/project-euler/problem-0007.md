@@ -11,51 +11,23 @@ benchmark_key: "n_10001"
 >
 > What is the $10\,001$st prime number?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler007/problem) replaces $10\,001$ with any $N \leqslant 10^4$, with up to $10^3$ queries per run.
+:::
+
 If we knew the upper bound on which numbers to check up to and we didn't mind allocating a bunch of memory we could use the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes). But we don't know the upper bound and want to solve this using no memory allocations.
 
 So we'll just go through the natural numbers until we've counted enough prime numbers. The hard part is defining a fast `is_prime` function then. A simple yet decently fast method of checking whether a number $n$ is prime or not is to make sure it's not a multiple of 2 or 3, then we just need to check numbers of the form $6k \pm 1$ for all $k \ge 1$ up until $\sqrt{n}$:
 
-```julia
-function is_prime(n)
-    n <= 1 && return false
-    n <= 3 && return true
+@code[src/utils/Primes/trial_division.jl:is_prime]
 
-    if n % 2 == 0 || n % 3 == 0
-        return false
-    end
+This approach is known as [wheel factorization](https://en.wikipedia.org/wiki/Wheel_factorization) with a wheel of size 6. The `is_prime` function dispatches on a primality test type so that other tests (like [Miller–Rabin](https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)) can be swapped in, with trial division being the default:
 
-    # Check divisibility by numbers of form 6k±1 up to √n
-    i = 5
-    while i^2 <= n
-        if n % i == 0 || n % (i + 2) == 0
-            return false
-        end
-        i += 6
-    end
-
-    return true
-end
-```
-
-This approach is known as [wheel factorization](https://en.wikipedia.org/wiki/Wheel_factorization) with a wheel of size 6.
+@code[src/utils/Primes/Primes.jl:DEFAULT_PRIMALITY_TEST,is_prime]
 
 Then finding the $n^\text{th}$ prime can be done with
 
-```julia
-function find_nth_prime(n)
-    count = 0
-    num = 1
-
-    while count < n
-        num += 1
-        if is_prime(num)
-            count += 1
-        end
-    end
-
-    return num
-end
-```
+@code[problem-0007:find_nth_prime]
 
 Calling `find_nth_prime(10_001)` returns the solution in @benchmark[problem-0007:n_10001].
 

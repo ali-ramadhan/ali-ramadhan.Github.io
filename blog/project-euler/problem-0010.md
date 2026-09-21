@@ -11,53 +11,21 @@ benchmark_key: "sum_of_primes_below_2M"
 >
 > Find the sum of all the primes below two million.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler010/problem) asks for the sum of the primes up to any $N \leqslant 10^6$, with up to $10^4$ queries per run.
+:::
+
 This is a perfect problem to solve using the [Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes), and Wikipedia has a great animation showing how it works.
 
 Usually the sieve stores a boolean for every integer up to the limit, but we can cut memory usage in half because 2 is the only even prime. Instead of storing all integers, we'll just store odd numbers. Then array index $i$ represents the odd number $2i + 1$, and an odd number $n$ maps to index $(n - 1) / 2$.
 
 The sieving logic also changes slightly. When we find a prime $p$ at index $i$, we mark its odd multiples as composite. Since $p^2$ is odd (odd times odd), we start there. The next odd multiple is $p^2 + 2p$, then $p^2 + 4p$, etc. In terms of array indices, consecutive odd multiples are spaced $p$ apart.
 
-```julia
-function _sieve_of_eratosthenes(limit)
-    limit < 3 && return (Bool[], limit)
-
-    # index i represents the odd number 2i + 1
-    max_index = (limit - 1) ÷ 2
-    is_prime = fill(true, max_index)
-
-    # For each prime p, mark odd multiples starting at p² which has index (p² - 1) ÷ 2.
-    # The step between consecutive odd multiples is p.
-    i = 1
-    while (2i + 1)^2 <= limit
-        if is_prime[i]
-            p = 2i + 1
-            for j in ((p^2 - 1) ÷ 2):p:max_index
-                is_prime[j] = false
-            end
-        end
-        i += 1
-    end
-
-    return is_prime, limit
-end
-```
+@code[src/utils/Primes/sieve.jl:_sieve_of_eratosthenes]
 
 The internal `_sieve_of_eratosthenes` returns the boolean array directly, allowing us to build different functions on top of it. For this problem we only need the sum so we can avoid allocating a primes array by summing directly from the boolean array:
 
-```julia
-function sum_sieve_of_eratosthenes(limit)
-    limit < 2 && return 0
-    limit == 2 && return 2
-
-    is_prime, _ = _sieve_of_eratosthenes(limit)
-
-    total = 2
-    for i in eachindex(is_prime)
-        is_prime[i] && (total += 2i + 1)
-    end
-    return total
-end
-```
+@code[src/utils/Primes/sieve.jl:sum_sieve_of_eratosthenes]
 
 With this we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using @benchmark[problem-0010:sum_of_primes_below_2M:memory].
 

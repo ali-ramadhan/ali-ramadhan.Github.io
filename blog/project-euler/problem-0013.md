@@ -20,27 +20,15 @@ benchmark_key: "first_ten_digits_of_sum"
 > </pre>
 >
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler013/problem) reads the numbers from input, with up to $N \leqslant 10^3$ of them instead of one hundred.
+:::
+
 The numbers in this problem are 50 digits long. A signed 64-bit integer can only hold values up to $2^{63} - 1 \approx 9.2 \times 10^{18}$, which is only 19 digits. So we need arbitrary precision arithmetic.
 
-We parse each 50-digit string as a `BigInt`, sum them all, and extract the first 10 digits from the result.
+We store the numbers as strings in a `NUMBERS` array, parse each one as a `BigInt`, sum them all, and extract the first 10 digits from the result.
 
-```julia
-const NUMBERS = [
-    "37107287533902102798797998220837590246510135740250",
-    "46376937677490009712648124896970078050417018260538",
-    "74324986199524741059474233309513058123726617309629",
-    "91942213363574161572522430563301811072406154908250",
-    "23067588207539346171171980310421047513778063246676",
-    ...
-    "53503534226472524250874054075591789781264330331690",
-]
-
-function first_ten_digits_of_sum()
-    total_sum = sum(parse(BigInt, num) for num in NUMBERS)
-    sum_str = string(total_sum)
-    return sum_str[1:10]
-end
-```
+@code[problem-0013:first_ten_digits_of_sum]
 
 This computes the answer in @benchmark[problem-0013:first_ten_digits_of_sum].
 

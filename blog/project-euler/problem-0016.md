@@ -11,22 +11,13 @@ benchmark_key: "power_digit_sum_2_1000"
 >
 > What is the sum of the digits of the number $2^{1000}$?
 
-This is pretty easy. Just compute $2^{1000}$ using `BigInt`, convert the result to a string, and sum each digit.
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler016/problem) raises the exponent from $1000$ to any $N \leqslant 10^4$, with up to $100$ queries per run.
+:::
 
-```julia
-function sum_of_digits(n)
-    sum = 0
-    for digit in string(n)
-        sum += parse(Int, digit)
-    end
-    return sum
-end
+This is pretty easy. Just compute $2^{1000}$ using `BigInt` and sum its digits.
 
-function power_digit_sum(base, exponent)
-    big_num = big(base)^big(exponent)
-    return sum_of_digits(big_num)
-end
-```
+@code[problem-0016:sum_of_digits,power_digit_sum]
 
 It computes the solution in @benchmark[problem-0016:power_digit_sum_2_1000].
 

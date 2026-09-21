@@ -28,26 +28,13 @@ benchmark_key: "divisors_500"
 >
 > What is the value of the first triangle number to have over five hundred divisors?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler012/problem) raises the divisor count from $500$ to any $N \leqslant 10^3$, with up to $10$ queries per run.
+:::
+
 First we need a decent method of counting the number of divisors an integer $n$ has. We can do this by testing if each integer from 1 to n is a divisor. But we don't have to test each integer. If $i$ is a divisor of $n$ then $n/i$ is also a divisor of $n$. So we can just search from 1 to $\operatorname{isqrt}(n)$. Instead of storing all divisors in an array, we can just count them directly to avoid memory allocations.
 
-```julia
-function num_divisors(n)
-    count = 0
-    sqrt_n = isqrt(n)
-
-    for i in 1:sqrt_n
-        if n % i == 0
-            count += 2
-        end
-    end
-
-    if sqrt_n^2 == n
-        count -= 1
-    end
-
-    return count
-end
-```
+@code[src/utils/Divisors.jl:num_divisors]
 
 The $n^\text{th}$ triangle number can be computed as
 
@@ -77,31 +64,7 @@ T_n =
 
 and implement a solution as
 
-```julia
-function find_first_triangle_with_divisors(min_divisors)
-    n = 1
-
-    while true
-        if n % 2 == 0
-            # T(n) = (n/2)*(n+1) if n is even
-            a = n ÷ 2
-            b = n + 1
-        else
-            # T(n) = n*(n+1)/2 if n is odd
-            a = n
-            b = (n + 1) ÷ 2
-        end
-
-        total_divisors = num_divisors(a) * num_divisors(b)
-
-        if total_divisors > min_divisors
-            return n, n * (n + 1) ÷ 2
-        end
-
-        n += 1
-    end
-end
-```
+@code[problem-0012:find_first_triangle_with_divisors]
 
 This lets us compute the first triangle number to have over 500 divisors in @benchmark[problem-0012:divisors_500].
 

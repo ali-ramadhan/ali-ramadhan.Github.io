@@ -36,35 +36,14 @@ benchmark_key: "len4"
 >
 > What is the greatest product of four adjacent numbers in the same direction (up, down, left, right, or diagonally) in the $20 \times 20$ grid?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler011/problem) reads the $20 \times 20$ grid from input, with each entry between $0$ and $100$.
+:::
+
 We'll take a brute force approach here and just go through each grid location and compute the product in each direction as long as we don't hit the edge of the grid.
 
 The fun part is coding it up compactly and allowing for the number of adjacent numbers `len` to vary.
 
-```julia
-const DIRECTIONS = [
-    (0, 1),   # horizontal (right)
-    (1, 0),   # vertical (down)
-    (1, 1),   # diagonal down-right
-    (1, -1),  # diagonal down-left
-]
-
-function find_greatest_product(grid, len = 4)
-    rows, cols = size(grid)
-    max_product = 0
-
-    for (dr, dc) in DIRECTIONS
-        for r in 1:rows, c in 1:cols
-            end_r = r + (len - 1) * dr
-            end_c = c + (len - 1) * dc
-            if 1 <= end_r <= rows && 1 <= end_c <= cols
-                product = prod(grid[r + i * dr, c + i * dc] for i in 0:(len - 1))
-                max_product = max(max_product, product)
-            end
-        end
-    end
-
-    return max_product
-end
-```
+@code[problem-0011:DIRECTIONS,find_greatest_product]
 
 This computes the solution in @benchmark[problem-0011:len4].

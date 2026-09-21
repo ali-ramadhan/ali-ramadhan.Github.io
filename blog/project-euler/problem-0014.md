@@ -24,47 +24,15 @@ benchmark_key: "longest_collatz_under_1M"
 >
 > **NOTE:** Once the chain starts the terms are allowed to go above one million.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler014/problem) asks for the longest chain starting at or below any $N \leqslant 5 \times 10^6$ (taking the largest starting number on ties), with up to $10^4$ queries per run.
+:::
+
 It's not hard to code up a function that computes the length of the Collatz sequence for a specific integer, but computing the chain lengths of millions of numbers can take a while and involve lots of repetitive computation.
 
 To speed things up we can use [memoization](https://en.wikipedia.org/wiki/Memoization). We use a cache (just a dictionary) and store the chain length of any integer once we compute it. Then when we encounter that integer again, we just pull out the known chain length. This way we never repeat a chain length computation.
 
-```julia
-function collatz_length(n, cache)
-    if n == 1
-        return 1
-    end
-
-    if haskey(cache, n)
-        return cache[n]
-    end
-
-    if n % 2 == 0
-        length = 1 + collatz_length(n ÷ 2, cache)
-    else
-        length = 1 + collatz_length(3n + 1, cache)
-    end
-
-    cache[n] = length
-    return length
-end
-
-function longest_collatz_under(limit)
-    cache = Dict(1 => 1)
-
-    max_length = 0
-    max_start = 0
-
-    for start in 1:(limit - 1)
-        length = collatz_length(start, cache)
-        if length > max_length
-            max_length = length
-            max_start = start
-        end
-    end
-
-    return max_start, max_length
-end
-```
+@code[problem-0014:collatz_length,longest_collatz_under]
 
 We find the solution in @benchmark[problem-0014:longest_collatz_under_1M].
 

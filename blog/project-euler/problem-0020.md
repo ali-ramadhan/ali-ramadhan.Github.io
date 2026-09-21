@@ -14,15 +14,13 @@ benchmark_key: "factorial_100"
 >
 > Find the sum of the digits in the number $100!$.
 
-This is pretty similar to [Problem 16](/blog/project-euler/problem-0016/). We'll just use `BigInt` to compute large factorials, convert them to strings, and sum up the digits.
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler020/problem) raises $100!$ to $N!$ for any $N \leqslant 1000$, with up to $100$ queries per run.
+:::
 
-```julia
-function sum_of_factorial_digits(n)
-    fact = factorial(big(n))
-    digits_sum = sum(parse(Int, c) for c in string(fact))
-    return digits_sum
-end
-```
+This is pretty similar to [Problem 16](/blog/project-euler/problem-0016/). We'll just use `BigInt` to compute large factorials and sum up their digits.
+
+@code[problem-0020:sum_of_factorial_digits]
 
 `sum_of_factorial_digits(100)` computes the sum of the digits of $100!$ in @benchmark[problem-0020:factorial_100].
 

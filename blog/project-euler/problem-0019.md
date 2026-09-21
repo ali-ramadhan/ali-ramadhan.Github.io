@@ -15,52 +15,21 @@ benchmark_key: "years_1901_2000"
 >
 > How many Sundays fell on the first of the month during the twentieth century (1 Jan 1901 to 31 Dec 2000)?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler019/problem) counts the Sundays on the first between any two dates, with years as large as $10^{16}$ and ranges up to $1000$ years long, for up to $100$ queries per run. Counting month by month from 1900 won't reach year $10^{16}$, so this post doesn't cover it, but the [submission](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/hacker_rank/projecteuler+_problem0019.jl), which uses the fact that the Gregorian calendar repeats every $400$ years, is in the repo.
+:::
+
 First we'll need to code up a function that tells us whether a year is a leap year based on the logic from the problem description:
 
-```julia
-function is_leap_year(year)
-    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)
-end
-```
+@code[problem-0019:is_leap_year]
 
 Then we need a function to give us the number of days in a certain month (which will depend on the year!):
 
-```julia
-function days_in_month(month, year)
-    if month == 2  # February
-        return is_leap_year(year) ? 29 : 28
-    elseif month in [4, 6, 9, 11]  # April, June, September, November
-        return 30
-    else
-        return 31
-    end
-end
-```
+@code[problem-0019:days_in_month]
 
 Let's label Sunday as 0, Monday as 1, etc. Since January 1st, 1900 was a Monday, we initialize `day_of_week = 1`. We'll loop through every month starting from 1900, and for each month we first check if it's a Sunday before advancing `day_of_week`. This way, the check happens at the *start* of each month. We only count Sundays for years within our target range (`year >= start_year`). After the check, we advance `day_of_week` by the number of days in that month (mod 7) to get the day of the week for the first of the next month.
 
-```julia
-function count_sundays_on_first(start_year, end_year)
-    # 0 = Sunday, 1 = Monday, ..., 6 = Saturday
-    # January 1st, 1900 was a Monday so we start with day_of_week = 1
-    day_of_week = 1
-
-    sunday_count = 0
-
-    for year in 1900:end_year
-        for month in 1:12
-            if day_of_week == 0 && year >= start_year
-                sunday_count += 1
-            end
-
-            days = days_in_month(month, year)
-            day_of_week = (day_of_week + days) % 7
-        end
-    end
-
-    return sunday_count
-end
-```
+@code[problem-0019:count_sundays_on_first]
 
 Calling `count_sundays_on_first(1901, 2000)` computes the solution in @benchmark[problem-0019:years_1901_2000].
 

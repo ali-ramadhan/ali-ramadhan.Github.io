@@ -12,6 +12,10 @@ benchmark_key: "range_1_1000"
 >
 > *NOTE:* Do not count spaces or hyphens. For example, $342$ (three hundred and forty-two) contains $23$ letters and $115$ (one hundred and fifteen) contains $20$ letters. The use of "and" when writing out numbers is in compliance with British usage.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler017/problem) flips the task: instead of counting letters it asks you to write out any $N \leqslant 10^{12}$ in words (without the British "and"), with up to $10$ queries per run. That's a different enough problem that this post doesn't cover it, but the [submission](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/hacker_rank/projecteuler+_problem0017.jl) is in the repo.
+:::
+
 The main thing to do here will be to write some code to convert a number to a string when it is written out. Up to 20 we have unique names which we can store in a dictionary `NUMBER_WORDS` and just pull them out as needed.
 
 Between 20 and 100 we can start generating the strings by concatenating the tens and the ones. For example, 74 is just "seventy" and "four". By adding all the tens to `NUMBER_WORDS` we can generate all numbers up to 100 this way.
@@ -20,74 +24,10 @@ Between 100 and 1000 it gets a bit more complicated in that we need to figure ou
 
 We can code this logic up:
 
-```julia
-const NUMBER_WORDS = Dict(
-    1 => "one",
-    2 => "two",
-    3 => "three",
-    4 => "four",
-    5 => "five",
-    6 => "six",
-    7 => "seven",
-    8 => "eight",
-    9 => "nine",
-    10 => "ten",
-    11 => "eleven",
-    12 => "twelve",
-    13 => "thirteen",
-    14 => "fourteen",
-    15 => "fifteen",
-    16 => "sixteen",
-    17 => "seventeen",
-    18 => "eighteen",
-    19 => "nineteen",
-    20 => "twenty",
-    30 => "thirty",
-    40 => "forty",
-    50 => "fifty",
-    60 => "sixty",
-    70 => "seventy",
-    80 => "eighty",
-    90 => "ninety",
-)
-
-function number_to_words(n)
-    if n == 1000
-        return "one thousand"
-    elseif n >= 100
-        hundreds_digit = n ÷ 100
-        remainder = n % 100
-
-        if remainder == 0
-            return "$(NUMBER_WORDS[hundreds_digit]) hundred"
-        else
-            return "$(NUMBER_WORDS[hundreds_digit]) hundred and $(number_to_words(remainder))"
-        end
-    elseif n > 20
-        tens = (n ÷ 10) * 10
-        ones = n % 10
-
-        if ones == 0
-            return NUMBER_WORDS[tens]
-        else
-            return "$(NUMBER_WORDS[tens])-$(NUMBER_WORDS[ones])"
-        end
-    else
-        return NUMBER_WORDS[n]
-    end
-end
-```
+@code[problem-0017:NUMBER_WORDS,number_to_words]
 
 Now that we can convert any number from 1 to 1000 into words we just need to sum over all the letters taking care to not count spaces and hyphens.
 
-```julia
-function count_letters(str)
-    return length(filter(c -> !isspace(c) && c != '-', str))
-end
-
-function count_letters_in_range(start, stop)
-    return sum(count_letters(number_to_words(n)) for n in start:stop)
-end
-```
+@code[problem-0017:count_letters,count_letters_in_range]
 
 Using this we can compute the answer in @benchmark[problem-0017:range_1_1000].

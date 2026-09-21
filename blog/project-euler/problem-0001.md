@@ -11,6 +11,10 @@ benchmark_key: "two_inclusion_exclusion"
 >
 > Find the sum of all the multiples of $3$ or $5$ below $1000$.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler001/problem) raises the limit from $1000$ to $N \leqslant 10^9$, with up to $10^5$ queries per run.
+:::
+
 Let's consider the problem of summing all multiples of $a$ or $b$ below $L$.
 
 ## Generator expression

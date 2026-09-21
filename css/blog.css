@@ -380,6 +380,29 @@ html[data-theme="dark"] .blog-post-content blockquote {
   margin-bottom: 0;
 }
 
+/* HackerRank ProjectEuler+ note (::: hackerrank in markdown): the problem
+   statement blockquote's styling in HackerRank green */
+.blog-post-content .hackerrank-note {
+  border: 2px solid #1ba94c;
+  border-radius: 8px;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  background: rgb(27, 169, 76, 0.1);
+}
+
+html[data-theme="dark"] .blog-post-content .hackerrank-note {
+  background: rgb(27, 169, 76, 0.15);
+}
+
+/* Pull the note up against the statement it annotates */
+.blog-post-content blockquote + .hackerrank-note {
+  margin-top: -0.75rem;
+}
+
+.blog-post-content .hackerrank-note > *:last-child {
+  margin-bottom: 0;
+}
+
 /* Inline code styling (not highlighted by Prism) */
 .blog-post-content code:not([class*="language-"]) {
   background: #f8f9fa;

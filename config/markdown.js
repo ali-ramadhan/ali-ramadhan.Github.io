@@ -204,6 +204,14 @@ export function configureMarkdown(eleventyConfig) {
         }
       },
     });
+
+    // HackerRank ProjectEuler+ note, placed under the quoted problem statement:
+    // ::: hackerrank ... :::
+    mdLib.use(markdownItContainer, "hackerrank", {
+      render: function (tokens, idx) {
+        return tokens[idx].nesting === 1 ? '<aside class="hackerrank-note">\n' : "</aside>\n";
+      },
+    });
   });
 
   // Post-process HTML transforms

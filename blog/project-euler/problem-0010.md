@@ -27,6 +27,10 @@ The internal `_sieve_of_eratosthenes` returns the boolean array directly, allowi
 
 @code[src/utils/Primes/sieve.jl:sum_sieve_of_eratosthenes]
 
+`sum_sieve_of_eratosthenes` includes the limit itself, so a small wrapper takes care of the "below" part of the problem statement:
+
+@code[problem-0010:sum_of_primes_below]
+
 With this we can compute the sum of all primes below $2 \times 10^6$ in @benchmark[problem-0010:sum_of_primes_below_2M] using @benchmark[problem-0010:sum_of_primes_below_2M:memory].
 
 We can go a bit further and compute the sum of all primes below $2 \times 10^8$ in @benchmark[problem-0010:sum_of_primes_below_200M] using @benchmark[problem-0010:sum_of_primes_below_200M:memory].

@@ -3,8 +3,20 @@ import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import legacy from "@vitejs/plugin-legacy";
 import { configureMarkdown } from "./config/markdown.js";
 import { processBenchmark } from "./config/benchmark-utils.js";
+import { prepareSolutions } from "./config/pe-solutions.js";
 
 export default function (eleventyConfig) {
+  // Project Euler posts embed code and benchmark data straight from the commit
+  // of ProjectEulerSolutions.jl pinned in pe-solutions.json. Fetch that commit
+  // into .cache/ before anything renders; re-pinning triggers a rebuild in
+  // --serve mode
+  eleventyConfig.on("eleventy.before", () => {
+    prepareSolutions();
+  });
+  eleventyConfig.addWatchTarget("./pe-solutions.json");
+  eleventyConfig.ignores.add(".cache/**");
+  eleventyConfig.watchIgnores.add(".cache/**");
+
   // Expose Project Euler difficulty data as a global template variable
   eleventyConfig.addGlobalData("pe_difficulty", async () => {
     return JSON.parse(await readFile("./_data/project-euler/difficulty.json", "utf8"));

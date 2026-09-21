@@ -467,7 +467,9 @@ html[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
   display: inline-block;
 }
 
-.blog-post-content .toolbar-item button {
+/* Buttons (copy to clipboard) and links (view on GitHub) share one look */
+.blog-post-content .toolbar-item button,
+.blog-post-content .toolbar-item a {
   background: rgb(224, 224, 224, 0.2);
   border: none;
   border-radius: 4px;
@@ -480,12 +482,19 @@ html[data-theme="dark"] .blog-post-content code:not([class*="language-"]) {
   transition: opacity 0.2s;
 }
 
-.blog-post-content .toolbar-item button:hover {
+.blog-post-content .toolbar-item a {
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.blog-post-content .toolbar-item button:hover,
+.blog-post-content .toolbar-item a:hover {
   opacity: 1;
 }
 
 /* Dark mode adjustments for toolbar */
-html[data-theme="dark"] .blog-post-content .toolbar-item button {
+html[data-theme="dark"] .blog-post-content .toolbar-item button,
+html[data-theme="dark"] .blog-post-content .toolbar-item a {
   background: rgb(255, 255, 255, 0.1);
 }
 

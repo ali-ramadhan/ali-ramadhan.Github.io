@@ -18,15 +18,16 @@
     "dev": "eleventy --serve",
     "build": "eleventy",
     "preview": "npx serve _site",
-    "lint:js": "eslint js config .eleventy.js eslint.config.js",
+    "lint:js": "eslint js config scripts test .eleventy.js eslint.config.js",
     "lint:css": "stylelint \"css/**/*.css\"",
     "lint": "npm-run-all lint:*",
-    "fix:js": "eslint --fix js config .eleventy.js eslint.config.js",
+    "fix:js": "eslint --fix js config scripts test .eleventy.js eslint.config.js",
     "fix:css": "stylelint --fix \"css/**/*.css\"",
     "fix": "npm-run-all fix:*",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "test": "npm run lint"
+    "pe:bump": "node scripts/pe-bump.js",
+    "test": "npm run lint && node --test \"test/**/*.test.js\""
   },
   "devDependencies": {
     "@11ty/eleventy": "^3.1.2",

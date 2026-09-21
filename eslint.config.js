@@ -20,7 +20,7 @@ export default [
   },
   {
     // Build-time files run under Node, not the browser
-    files: [".eleventy.js", "config/**/*.js", "eslint.config.js"],
+    files: [".eleventy.js", "config/**/*.js", "scripts/**/*.js", "test/**/*.js", "eslint.config.js"],
     languageOptions: {
       globals: {
         ...globals.node,

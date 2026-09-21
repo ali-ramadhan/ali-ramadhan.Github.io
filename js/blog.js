@@ -9,6 +9,7 @@ import { BenchmarkManager } from "./modules/benchmark.js";
 import { CollapsibleHeadersManager } from "./modules/collapsible-headers.js";
 import { FloatingTocManager } from "./modules/floating-toc.js";
 import { CitationManager } from "./modules/citations.js";
+import { registerCodeSourceButton } from "./modules/code-source.js";
 
 // Import Prism.js core and components
 import Prism from "prismjs";
@@ -39,6 +40,7 @@ new BenchmarkManager();
 new CollapsibleHeadersManager();
 new FloatingTocManager();
 new CitationManager();
+registerCodeSourceButton();
 
 // Initialize Prism manually to ensure plugins work
 document.addEventListener("DOMContentLoaded", () => {

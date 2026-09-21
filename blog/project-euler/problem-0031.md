@@ -17,26 +17,17 @@ benchmark_key: "uk_200p"
 >
 > How many different ways can £2 be made using any number of coins?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler031/problem) asks for any amount $N \leqslant 10^5$ pence with the answer modulo $10^9 + 7$, for up to $10^4$ queries per run.
+:::
+
 We could implement a naive recursive approach but it would be super slow without memoization. But the main problem is that it would count permutations as distinct: using 1p then 2p would be counted separately from 2p then 1p.
 
 We can take a dynamic programming approach where we build up a 1D array `ways` where `ways[amount + 1]` stores the number of ways to make `amount` (since Julia starts counting from 1). The base case is `ways[1] = 1` since there's exactly one way to make 0: use no coins.
 
 Then for each coin (from smallest to largest), we consider all the ways it can contribute to each amount. By never going back to a smaller coin, we ensure each combination is counted exactly once.
 
-```julia
-function count_coin_combinations(target, coins)
-    ways = zeros(Int, target + 1)
-    ways[1] = 1  # ways[1] represents amount 0
-
-    for coin in coins
-        for amount in coin:target
-            ways[amount + 1] += ways[amount + 1 - coin]
-        end
-    end
-
-    return ways[target + 1]
-end
-```
+@code[problem-0031:count_coin_combinations]
 
 The outer loop iterates through coins and the inner loop updates all amounts that can use this coin. When we process the 2p coin, for example, `ways[amount + 1]` already contains all the ways to make `amount` using only 1p coins. We then add on the ways to make `amount + 1 - 2` (which represents using one 2p coin plus all the ways to make up the remaining amount).
 

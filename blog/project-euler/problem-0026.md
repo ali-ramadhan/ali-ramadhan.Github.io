@@ -27,6 +27,10 @@ benchmark_key: "find_longest_cycle_1000"
 >
 > Find the value of $d < 1000$ for which $1/d$ contains the longest recurring cycle in its decimal fraction part.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler026/problem) raises the limit from $1000$ to any $N \leqslant 10^4$ (asking for the smallest $d$ on ties), with up to $1000$ queries per run.
+:::
+
 To figure out how to compute the digits and the cycle length, let's compute $1/7$ using good old [long division](https://en.wikipedia.org/wiki/Long_division).
 
 ```math
@@ -53,50 +57,12 @@ After six steps we're left with remainder 1, which is exactly what we started wi
 
 To find the cycle length, we don't need to compute the actual digits. We just simulate the long division, tracking only the remainder: multiply by 10, take modulo $d$, and count steps until the remainder returns to 1.
 
-```julia
-function cycle_length(d)
-    # Remove factors of 2 and 5 (they only affect termination, not cycle length)
-    while d % 2 == 0
-        d ÷= 2
-    end
-
-    while d % 5 == 0
-        d ÷= 5
-    end
-
-    # No recurring cycle if only factors were 2 and 5
-    d == 1 && return 0
-
-    # Find smallest k where 10^k ≡ 1 (mod d)
-    remainder = 10 % d
-    k = 1
-    while remainder != 1
-        remainder = (remainder * 10) % d
-        k += 1
-    end
-    return k
-end
-```
+@code[problem-0026:cycle_length]
 
 Why strip out factors of 2 and 5? Looking at the table from the problem, the fractions that terminate ($1/2$, $1/4$, $1/5$, $1/8$, $1/10$) are exactly those whose denominators only have factors of 2 and 5. These terminate because we can always convert them to a power of 10 in the denominator: $1/4 = 25/100 = 0.25$, $1/5 = 2/10 = 0.2$. Since $10 = 2 \times 5$, factors of 2 and 5 never cause repeating digits in base 10.
 
 Finding the longest cycle is now a simple search:
 
-```julia
-function find_longest_cycle(limit)
-    max_length = 0
-    max_d = 0
-
-    for d in 2:(limit - 1)
-        length = cycle_length(d)
-        if length > max_length
-            max_length = length
-            max_d = d
-        end
-    end
-
-    return max_d
-end
-```
+@code[problem-0026:find_longest_cycle]
 
 The answer is computed in @benchmark[problem-0026:find_longest_cycle_1000]. Extending to $d \lt 10^5$ takes @benchmark[problem-0026:find_longest_cycle_100k] and finds that $1/99989$ has the longest cycle.

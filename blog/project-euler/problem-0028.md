@@ -21,6 +21,10 @@ benchmark_key: "diagonal_sum_1001"
 >
 > What is the sum of the numbers on the diagonals in a $1001$ by $1001$ spiral formed in the same way?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler028/problem) asks for any odd $N < 10^{18}$, with the answer modulo $10^9 + 7$, for up to $10^5$ queries per run.
+:::
+
 Looking at the spiral, the diagonal numbers are just 1 in the center plus the four corners of each ring. The $5 \times 5$ spiral has two rings around the center: an inner ring with corners 3, 5, 7, 9 and an outer ring with corners 13, 17, 21, 25. Looking at the top-right diagonal the pattern is 1, 9, 25 which is $1^2$, $3^2$, $5^2$.
 
 For an $n \times n$ spiral where $n = 2k + 1$, ring $k$ seems to end at the top-right corner with a value of $(2k+1)^2$. After completing ring $k$, we've filled a $(2k+1) \times (2k+1)$ square containing $(2k+1)^2$ cells. We fill each cell sequentially starting from 1, so then it makes sense that after filling $(2k+1)^2$ cells, the top-right diagonal will have that value.
@@ -45,20 +49,7 @@ Using [Faulhaber's formula](https://en.wikipedia.org/wiki/Faulhaber%27s_formula)
 \sum_{k=1}^{m} k = \frac{m(m+1)}{2} \quad \text{and} \quad \sum_{k=1}^{m} k^2 = \frac{m(m+1)(2m+1)}{6}
 ```
 
-```julia
-function diagonal_sum(n)
-    if n % 2 == 0
-        error("Spiral size must be odd")
-    end
-
-    m = (n - 1) ÷ 2
-
-    sum_k = m * (m + 1) ÷ 2
-    sum_k² = m * (m + 1) * (2 * m + 1) ÷ 6
-
-    return 1 + 16 * sum_k² + 4 * sum_k + 4 * m
-end
-```
+@code[problem-0028:diagonal_sum]
 
 The answer is computed in @benchmark[problem-0028:diagonal_sum_1001]. A $10^6 + 1$ by $10^6 + 1$ spiral has a diagonal sum of 666669166671000001 and is computed in @benchmark[problem-0028:diagonal_sum_1m].
 

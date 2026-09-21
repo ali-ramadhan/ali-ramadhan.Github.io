@@ -13,41 +13,20 @@ benchmark_key: "solution"
 >
 > What is the total of all the name scores in the file?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler022/problem) reads a list of up to $N \leqslant 5200$ names from input and then asks for the scores of up to $Q \leqslant 100$ individual names rather than the total.
+:::
+
 The names file is a comma-separated list of quoted names like `"MARY","PATRICIA","LINDA",...`. We need to parse the names by removing the quotes, splitting on commas, and sorting alphabetically.
 
-```julia
-function parse_names(content)
-    names = [replace(name, "\"" => "") for name in split(content, ",")]
-    return sort(names)
-end
-```
+@code[problem-0022:parse_names]
 
 Now we need a function to compute the alphabetical value of a name. Each letter contributes its position in the alphabet (A = 1, B = 2, ..., Z = 26) which we can compute by relying on the fact that the integer value of a character is its [ASCII](https://en.wikipedia.org/wiki/ASCII) value.
 
-```julia
-function name_value(name)
-    return sum(ch - 'A' + 1 for ch in name)
-end
-```
+@code[problem-0022:name_value]
 
 Finally, we iterate through the sorted names and compute each name's score by multiplying its alphabetical value by its position in the list.
 
-```julia
-function compute_name_scores(names)
-    total_score = 0
-    for (i, name) in enumerate(names)
-        name_score = i * name_value(name)
-        total_score += name_score
-    end
-    return total_score
-end
-
-function solve()
-    data_filepath = "0022_names.txt"
-    content = read(data_filepath, String)
-    names = parse_names(content)
-    return compute_name_scores(names)
-end
-```
+@code[problem-0022:compute_name_scores,solve]
 
 Putting it all together, we read the file, parse the names, and compute the total score in @benchmark[problem-0022:solution].

@@ -23,19 +23,15 @@ benchmark_key: "digits5"
 >
 > Find the sum of all the numbers that can be written as the sum of fifth powers of their digits.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler030/problem) asks for any power $3 \leqslant N \leqslant 6$ rather than just fifth powers.
+:::
+
 We'll solve the more general problem of finding all numbers that equal the sum of their digits raised to the $p^\text{th}$ power.
 
 First, we need an upper bound. An $n$-digit number is at least $10^{n-1}$, but the maximum sum of $n$ digit powers is $n \times 9^p$. For solutions to exist, we need $n \times 9^p \geq 10^{n-1}$. For $p = 5$ that means we only need to check up to 6-digit numbers or 999,999.
 
-```julia
-function calculate_max_digits(power)
-    n = 1
-    while n * 9^power >= 10^(n - 1)
-        n += 1
-    end
-    return n - 1
-end
-```
+@code[problem-0030:calculate_max_digits]
 
 We actually don't need to check every number. Numbers like $4150$, $4105$, and $5140$ all give the same digit power sum since they contain the same digits. So we can just check unique combinations of digits (multisets).
 
@@ -43,34 +39,7 @@ For 6 digits chosen from 0-9 with replacement, there are $\binom{10 + 6 - 1}{6} 
 
 For each combination like $[0, 0, 1, 4, 5, 5]$, we compute the sum $s$ of digit powers. If $s$ equals some rearrangement of those digits, it's a solution. But instead of sorting the digits of $s$ and comparing, we just check if `digit_power_sum(s) == s`. If the digits of $s$ give back $s$ when we sum their powers, then $s$ is valid.
 
-```julia
-using Combinatorics: with_replacement_combinations
-
-function digit_power_sum(n, power)
-    s = 0
-    while n > 0
-        n, d = divrem(n, 10)
-        s += d^power
-    end
-    return s
-end
-
-function find_digit_power_numbers(power)
-    max_digits = calculate_max_digits(power)
-    results = Set{Int}()
-
-    for combo in with_replacement_combinations(0:9, max_digits)
-        s = sum(d^power for d in combo)
-        s < 2 && continue
-
-        if digit_power_sum(s, power) == s
-            push!(results, s)
-        end
-    end
-
-    return collect(results)
-end
-```
+@code[problem-0030:using Combinatorics,digit_power_sum,find_digit_power_numbers]
 
 We run this for $4 \le p \le 7$ and tabulate the timings below.
 

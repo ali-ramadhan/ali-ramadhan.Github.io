@@ -15,6 +15,10 @@ benchmark_key: "multiply_curious_fractions_N2_K1"
 >
 > If the product of these four fractions is given in its lowest common terms, find the value of the denominator.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler033/problem) is where the $(N, K)$ generalization comes from: given $2 \leqslant N \leqslant 4$ and $1 \leqslant K < N$ it asks for the sum of the numerators and the sum of the denominators of all such fractions.
+:::
+
 We'll solve the more general problem of finding all curious fractions where the numerator and denominator each have $N$ digits, and cancelling exactly $K$ matching non-zero digits preserves the fraction's value. The original problem corresponds to $N = 2$ and $K = 1$.
 
 For the original problem, we can show that only one of four possible cancellation patterns can give non-trivial solutions. With single digits $1 \le a < b \le 9$ and cancelled digit $1 \le c \le 9$ we see that
@@ -38,64 +42,13 @@ Unfortunately this case-by-case analysis doesn't generalize cleanly to arbitrary
 
 For example, $16$ cancelling its $6$ leaves $r_n = 1$ and gives key $(6, 16)$, while $64$ cancelling its $6$ leaves $r_m = 4$ and gives key $(6, 64/4) = (6, 16)$. Same bucket, so $16/64 = 1/4$.
 
-```julia
-using Combinatorics: combinations
-
-function find_curious_fractions(N, K)
-    lo = 10^(N - 1)
-    hi = 10^N - 1
-
-    # Group numbers by (cancelled_digits, ratio) where ratio = n // leftover,
-    # emitting pairs as each group grows.
-    groups = Dict{Tuple{Vector{Int},Rational{Int}},Vector{Int}}()
-    result = Set{Tuple{Int,Int}}()
-
-    for n in lo:hi
-        ds = digits(n; pad=N)
-
-        # We want most significant digit first. Otherwise `rem` (built below) ends up digit-reversed.
-        reverse!(ds)
-
-        for pos in combinations(1:N, K)
-            cancelled = sort!([ds[p] for p in pos])
-
-            # Skip trivial cases like 30/50 or 410/790
-            0 in cancelled && continue
-
-            rem = 0
-            for i in 1:N
-                i in pos && continue
-                rem = 10rem + ds[i]
-            end
-            rem == 0 && continue
-
-            members = get!(Vector{Int}, groups, (cancelled, n // rem))
-
-            # Don't hit the same bucket again (e.g. 11 with K=1).
-            n in members && continue
-
-            for m in members
-                push!(result, (m, n))
-            end
-            push!(members, n)
-        end
-    end
-
-    return sort!(collect(result))
-end
-```
+@code[problem-0033:using Combinatorics,find_curious_fractions]
 
 For each $N$-digit number we iterate through all $\binom{N}{K}$ ways to pick cancellation positions. The cancelled digits are sorted (since their order doesn't matter for matching) and the leftover $r_n$ is built from the kept digits. We skip cases where any cancelled digit is zero (the trivial cases like $30/50$ or $410/790$) or where the leftover is zero (no valid fraction). We then construct the bucket key which combines the sorted cancelled multiset with $n / r_n$.
 
 We had to make a decision on the "no zeros" filter. If the cancelled digits include a zero we skip it. This is because for $N \ge 3$ there's a broader family of interior-zero cancellations like $102/204 = 12/24$. I feel like we want to be searching for algebraic coincidences like $16/64$, so we group them with the trivial cases and exclude them.
 
-```julia
-function multiply_curious_fractions(N, K)
-    fractions = find_curious_fractions(N, K)
-    p = prod(BigInt(n) // BigInt(d) for (n, d) in fractions)
-    return length(fractions), p
-end
-```
+@code[problem-0033:multiply_curious_fractions]
 
 For the original problem ($N = 2, K = 1$) the answer is computed in @benchmark[problem-0033:multiply_curious_fractions_N2_K1].
 

@@ -34,21 +34,13 @@ benchmark_key: "iterative_1000"
 >
 > What is the index of the first term in the Fibonacci sequence to contain 1000 digits?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler025/problem) asks for the first term with any $N \leqslant 5000$ digits instead of $1000$, with up to $5000$ queries per run.
+:::
+
 This is another Fibonacci problem, building on [Problem 2](/blog/project-euler/problem-0002/). The straightforward approach is to generate Fibonacci numbers until we find one with 1000 digits:
 
-```julia
-function first_fibonacci_with_n_digits(n)
-    a, b = BigInt(1), BigInt(1)
-    i = 2
-
-    while ndigits(b) < n
-        a, b = b, a + b
-        i += 1
-    end
-
-    return i
-end
-```
+@code[problem-0025:first_fibonacci_with_n_digits]
 
 We use `BigInt` since Fibonacci numbers grow exponentially and will overflow standard integers long before reaching 1000 digits.
 
@@ -78,12 +70,7 @@ n \geq \frac{(d-1) \log 10 + \frac{1}{2} \log 5}{\log\varphi}
 
 This gives us a direct formula:
 
-```julia
-function first_fibonacci_with_n_digits_formula(n)
-    φ = (1 + √5) / 2
-    return ceil(Int, ((n - 1) * log(10) + 0.5 * log(5)) / log(φ))
-end
-```
+@code[problem-0025:first_fibonacci_with_n_digits_formula]
 
 Both approaches give the same answer, but using the formula is going to take like a few CPU cycles while the iterative approach will keep creating larger and larger integers. The iterative approach takes @benchmark[problem-0025:iterative_1000] while the formula computes the answer in @benchmark[problem-0025:formula_1000].
 

@@ -13,6 +13,10 @@ benchmark_key: "solution"
 >
 > What is the millionth lexicographic permutation of the digits 0, 1, 2, 3, 4, 5, 6, 7, 8 and 9?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler024/problem) asks for the $N$th permutation of the $13$ letters $\text{abcdefghijklm}$ for any $N \leqslant 13!$, with up to $1000$ queries per run.
+:::
+
 The naive approach would be to generate all $10! = 3,628,800$ permutations, sort them, and pick the millionth one. But we can do much better by using the [factorial number system](https://en.wikipedia.org/wiki/Factorial_number_system) to directly compute the $n$th permutation.
 
 Permutations in lexicographic order have a predictable structure. For $n$ elements, the permutations are grouped into $n$ sets of $(n-1)!$ permutations each. The first $(n-1)!$ permutations all start with the smallest element (0 in our case), the next $(n-1)!$ start with the second smallest (1 in our case), and so on.
@@ -27,38 +31,10 @@ This technique is formally known as _unranking_ in a [combinatorial number syste
 
 The sequence of indices we compute $[2, 6, 6, 2, 5, 1, 2, 1, 1, 0]$ is also known as the [Lehmer code](https://en.wikipedia.org/wiki/Lehmer_code) for the permutation. Each element represents how many remaining available elements are smaller than the chosen one at that position, encoding the permutation in factorial base.
 
-```julia
-function find_nth_permutation(elements, n)
-    elements = deepcopy(collect(elements))
-
-    # Convert to 0-based indexing
-    n = n - 1
-
-    result = similar(elements, 0)
-
-    for i in length(elements):-1:1
-        fact = factorial(i-1)
-
-        idx = n ÷ fact + 1
-        push!(result, elements[idx])
-
-        deleteat!(elements, idx)
-
-        n = n % fact
-    end
-
-    return result
-end
-```
+@code[problem-0024:find_nth_permutation]
 
 The algorithm iterates through each position. At each step, it divides by $(i-1)!$ to determine which of the remaining elements goes in the current position, appends that element to the result, removes it from the available elements, and takes the remainder for the next iteration.
 
-```julia
-function solve()
-    digits = 0:9
-    perm = find_nth_permutation(digits, 1_000_000)
-    return join(string.(perm))
-end
-```
+@code[problem-0024:solve]
 
 The answer is computed in @benchmark[problem-0024:solution].

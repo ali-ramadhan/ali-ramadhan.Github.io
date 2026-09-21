@@ -26,6 +26,10 @@ benchmark_key: "find_quadratic_with_most_primes_1000"
 >
 > Find the product of the coefficients, $a$ and $b$, for the quadratic expression that produces the maximum number of primes for consecutive values of $n$, starting with $n = 0$.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler027/problem) searches $|a| \leqslant N$ and $|b| \leqslant N$ for any $42 \leqslant N \leqslant 2000$ and asks for the coefficients themselves rather than their product.
+:::
+
 To find the best quadratic in the search space, we could test all $(a, b)$ pairs with $|a| < 1000$ and $|b| \le 1000$, giving us about $1999 \times 2001 \approx 4 \times 10^6$ combinations. But we can cut down the search space significantly using a few observations.
 
 First, $b$ must be prime because when $n = 0$, the expression $n^2 + an + b = b$, so $b$ itself must be prime. Second, $b$ must be odd because if $b = 2$, then for $n = 1$ we get $1 + a + 2 = 3 + a$. For this to be prime and the sequence to continue, we'd need $3 + a$ to be odd, meaning $a$ must be even. But then for $n = 2$ we get $4 + 2a + 2 = 6 + 2a$, which is always even. So $b = 2$ can produce at most 2 consecutive primes, which is not enough.
@@ -34,61 +38,13 @@ Third, $a$ must also be odd since $b$ is an odd prime, if $a$ were even then $n^
 
 For each $(a, b)$ pair, we count how many consecutive primes the quadratic produces starting from $n = 0$:
 
-```julia
-function count_consecutive_primes(a, b)
-    n = 0
-
-    while true
-        value = n^2 + a*n + b
-
-        if value < 0 || !is_prime(value)
-            break
-        end
-
-        n += 1
-    end
-
-    return n
-end
-```
+@code[problem-0027:count_consecutive_primes]
 
 We stop when the value is not a prime number or the values start to go negative.
 
-Using our constraints, we iterate over odd primes $b$ and primes $p$ (where $a = p - b - 1$):
+Using our constraints, we iterate over primes $b$ (including $2$, even though we showed it can't win) and over primes $p$ in the range that keeps $|a| < a_\text{max}$ (where $a = p - b - 1$):
 
-```julia
-function find_quadratic_with_most_primes(; a_max=1000, b_max=1000)
-    max_prime_count = 0
-    best_a = 0
-    best_b = 0
-
-    b_primes = [p for p in 3:b_max if is_prime(p)]
-
-    for b in b_primes
-        for p in 3:(a_max + b)
-            if !is_prime(p)
-                continue
-            end
-
-            a = p - b - 1
-
-            if a >= a_max
-                break
-            end
-
-            count = count_consecutive_primes(a, b)
-
-            if count > max_prime_count
-                max_prime_count = count
-                best_a = a
-                best_b = b
-            end
-        end
-    end
-
-    return best_a, best_b, max_prime_count
-end
-```
+@code[problem-0027:find_quadratic_with_most_primes]
 
 The winning quadratic is $n^2 - 61n + 971$, which produces 71 consecutive primes. The answer is computed in @benchmark[problem-0027:find_quadratic_with_most_primes_1000].
 

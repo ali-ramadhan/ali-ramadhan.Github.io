@@ -13,15 +13,7 @@ benchmark_key: "n_20"
 
 We want to basically find the [lowest common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) (LCM) of 1, 2, ..., 20. Since $\operatorname{lcm}(a, b) = \operatorname{lcm}(b, a)$ and $\operatorname{lcm}(a, b, c) = \operatorname{lcm}(a, \operatorname{lcm}(b, c))$ we can iteratively compute the LCM using
 
-```julia
-function smallest_multiple(n)
-    result = 1
-    for i in 2:n
-        result = lcm(result, i)
-    end
-    return result
-end
-```
+@code[problem-0005:smallest_multiple]
 
 where the Julia [`lcm` function](https://docs.julialang.org/en/v1/base/math/#Base.lcm) computes the LCM using
 

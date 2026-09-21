@@ -24,56 +24,11 @@ but this allocates memory for two strings. So when checking lots of large number
 
 We can instead take a numerical approach where we reverse the number by extracting digits from right to left and rebuilding the number:
 
-```julia
-function is_palindrome(n)
-    n = abs(n)
-    original = n
-    reversed = zero(typeof(n))
-
-    while n > 0
-        reversed = reversed * 10 + (n % 10)
-        n ÷= 10
-    end
-
-    return reversed == original
-end
-```
+@code[src/utils/Digits.jl:is_palindrome]
 
 We can then use this function to search for the largest palindrome made from the product of two numbers that do not exceed `upper_limit` each:
 
-```julia
-function largest_palindrome_product(lower_limit, upper_limit; max_product=nothing)
-    T = typeof(upper_limit)
-    max_palindrome = zero(T)
-    best_i, best_j = zero(T), zero(T)
-
-    for i in upper_limit:-1:lower_limit
-        if i * upper_limit < max_palindrome
-            break
-        end
-
-        # Stop at j = i to avoid duplicate combinations as i*j == j*i
-        for j in upper_limit:-1:i
-            product = i * j
-
-            if !isnothing(max_product) && product >= max_product
-                continue
-            end
-
-            if product < max_palindrome
-                break
-            end
-
-            if is_palindrome(product) && product > max_palindrome
-                max_palindrome = product
-                best_i, best_j = i, j
-            end
-        end
-    end
-
-    return (palindrome=max_palindrome, factors=(best_i, best_j))
-end
-```
+@code[problem-0004:largest_palindrome_product]
 
 So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're searching for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We added the option to specify a `max_product` to solve the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) of this problem.
 

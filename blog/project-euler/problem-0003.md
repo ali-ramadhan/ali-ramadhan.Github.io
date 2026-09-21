@@ -19,38 +19,11 @@ We just keep dividing by 2, then by 3, 5, 7, and so on. And each time we're able
 
 We can implement trial division in Julia:
 
-```julia
-function prime_factors(n)
-    factors = Int[]
+@code[src/utils/Primes/prime_factors.jl:prime_factors]
 
-    # Divide by 2 as much as possible.
-    while n % 2 == 0
-        push!(factors, 2)
-        n ÷= 2
-    end
+The largest prime factor is then just the maximum of the list:
 
-    # Handle odd factors.
-    factor = 3
-    while factor^2 <= n
-        while n % factor == 0
-            push!(factors, factor)
-            n ÷= factor
-        end
-        factor += 2
-    end
-
-    # If we're out of divisors, then n itself is a prime factor.
-    if n > 1
-        push!(factors, n)
-    end
-
-    return factors
-end
-
-function largest_prime_factor(n)
-    return maximum(prime_factors(n))
-end
-```
+@code[problem-0003:largest_prime_factor]
 
 Benchmarking `largest_prime_factor(600851475143)` to solve the problem we get @benchmark[problem-0003:solution] which is more than fast enough for this problem.
 

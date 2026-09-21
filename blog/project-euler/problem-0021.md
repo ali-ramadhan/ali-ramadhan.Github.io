@@ -31,9 +31,9 @@ With the base sieve implemented, we can check for amicable pairs using simple ar
 
 Using this we compute the answer for limits up to $10^7$, tabulated below.
 
-| Limit   | Sum         | Time                                |
-|---------|-------------|-------------------------------------|
-| $10^4$  |             | @benchmark[problem-0021:limit_10k]  |
-| $10^5$  | 852,810     | @benchmark[problem-0021:limit_100k] |
-| $10^6$  | 27,220,963  | @benchmark[problem-0021:limit_1M]   |
-| $10^7$  | 649,734,295 | @benchmark[problem-0021:limit_10M]  |
+| Limit  | Sum         | Time                                |
+| ------ | ----------- | ----------------------------------- |
+| $10^4$ |             | @benchmark[problem-0021:limit_10k]  |
+| $10^5$ | 852,810     | @benchmark[problem-0021:limit_100k] |
+| $10^6$ | 27,220,963  | @benchmark[problem-0021:limit_1M]   |
+| $10^7$ | 649,734,295 | @benchmark[problem-0021:limit_10M]  |

@@ -43,12 +43,12 @@ For each combination like $[0, 0, 1, 4, 5, 5]$, we compute the sum $s$ of digit 
 
 We run this for $4 \le p \le 7$ and tabulate the timings below.
 
-| $p  $ | Time                             |
-|-------|----------------------------------|
-| 4     | @benchmark[problem-0030:digits4] |
-| 5     | @benchmark[problem-0030:digits5] |
-| 6     | @benchmark[problem-0030:digits6] |
-| 7     | @benchmark[problem-0030:digits7] |
+| $p$ | Time                             |
+| --- | -------------------------------- |
+| 4   | @benchmark[problem-0030:digits4] |
+| 5   | @benchmark[problem-0030:digits5] |
+| 6   | @benchmark[problem-0030:digits6] |
+| 7   | @benchmark[problem-0030:digits7] |
 
 For $p = 6$ we only find one:
 
@@ -57,6 +57,7 @@ For $p = 6$ we only find one:
 ```
 
 but for $p = 7$ we find five:
+
 ```math
 \begin{align}
   1741725 &= 1^7 + 7^7 + 4^7 + 1^7 + 7^7 + 2^7 + 5^7 \\

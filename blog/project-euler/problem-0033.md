@@ -54,12 +54,12 @@ For the original problem ($N = 2, K = 1$) the answer is computed in @benchmark[p
 
 We can extend the search to larger $N$ and $K$:
 
-| $N$ | $K$ | Curious fractions | Product                                                | Time                                                  |
-|-----|-----|-------------------|--------------------------------------------------------|-------------------------------------------------------|
-| 2   | 1   | 4                 | $1/-$                                                  | @benchmark[problem-0033:multiply_curious_fractions_N2_K1] |
-| 3   | 2   | 26                | $8/49{,}029{,}632{,}505$                               | @benchmark[problem-0033:multiply_curious_fractions_N3_K2] |
-| 4   | 1   | 4,123             | $1/(1.170\ldots \times 10^{1516})$                     | @benchmark[problem-0033:multiply_curious_fractions_N4_K1] |
-| 4   | 3   | 69                | $52{,}301{,}766{,}015 / (1.524\ldots \times 10^{30})$  | @benchmark[problem-0033:multiply_curious_fractions_N4_K3] |
+| $N$ | $K$ | Curious fractions | Product                                               | Time                                                      |
+| --- | --- | ----------------- | ----------------------------------------------------- | --------------------------------------------------------- |
+| 2   | 1   | 4                 | $1/-$                                                 | @benchmark[problem-0033:multiply_curious_fractions_N2_K1] |
+| 3   | 2   | 26                | $8/49{,}029{,}632{,}505$                              | @benchmark[problem-0033:multiply_curious_fractions_N3_K2] |
+| 4   | 1   | 4,123             | $1/(1.170\ldots \times 10^{1516})$                    | @benchmark[problem-0033:multiply_curious_fractions_N4_K1] |
+| 4   | 3   | 69                | $52{,}301{,}766{,}015 / (1.524\ldots \times 10^{30})$ | @benchmark[problem-0033:multiply_curious_fractions_N4_K3] |
 
 Curious fractions are an example of [anomalous cancellation](https://mathworld.wolfram.com/AnomalousCancellation.html)!
 

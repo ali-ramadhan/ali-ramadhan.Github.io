@@ -9,7 +9,7 @@ benchmark_file: "bonus-18i"
 benchmark_key: "solution"
 ---
 
-> Let $R(p)$ be the remainder when the *product* $\prod_{x=0}^{p-1}(x^3-3x+4)$ is divided by $p$. For example, $R(11)=0$ and $R(29)=13$.
+> Let $R(p)$ be the remainder when the _product_ $\prod_{x=0}^{p-1}(x^3-3x+4)$ is divided by $p$. For example, $R(11)=0$ and $R(29)=13$.
 >
 > Find the sum of $R(p)$ over all primes $p$ between $1\,000\,000\,000$ and $1\,100\,000\,000$.
 
@@ -32,7 +32,7 @@ R(p) &= \left[ \prod_{k=0}^{p-1} (k - \alpha_1) (k - \alpha_2) (k - \alpha_3) \r
 \end{align}
 ```
 
-Now it's useful that $p$ is prime because we are working in $\mathbb{F}_p$, the [finite field](https://en.wikipedia.org/wiki/Finite_field) with $p$ elements which is equivalent to the integers modulo $p$ with modular addition and multiplication. We have a field (rather than just a [ring](https://en.wikipedia.org/wiki/Ring_(mathematics))) because $p$ being prime guarantees every non-zero element has a multiplicative inverse. This gives us a nice algebraic structure where polynomials behave predictably: a degree-$n$ polynomial has at most $n$ roots.
+Now it's useful that $p$ is prime because we are working in $\mathbb{F}_p$, the [finite field](https://en.wikipedia.org/wiki/Finite_field) with $p$ elements which is equivalent to the integers modulo $p$ with modular addition and multiplication. We have a field (rather than just a [ring](<https://en.wikipedia.org/wiki/Ring_(mathematics)>)) because $p$ being prime guarantees every non-zero element has a multiplicative inverse. This gives us a nice algebraic structure where polynomials behave predictably: a degree-$n$ polynomial has at most $n$ roots.
 
 By [Fermat's Little Theorem](https://en.wikipedia.org/wiki/Fermat%27s_little_theorem) we know that $k^p \equiv k \pmod{p}$, which means every element of $\mathbb{F}_p$ is a root of $x^p - x$. Since $x^p - x$ has degree $p$ and can have at most $p$ roots, these must be all the roots, giving us the factorization
 

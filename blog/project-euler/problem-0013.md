@@ -18,7 +18,6 @@ benchmark_key: "first_ten_digits_of_sum"
 > ...
 > 53503534226472524250874054075591789781264330331690
 > </pre>
->
 
 ::: hackerrank
 The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler013/problem) reads the numbers from input, with up to $N \leqslant 10^3$ of them instead of one hundred.

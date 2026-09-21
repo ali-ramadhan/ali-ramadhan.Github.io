@@ -63,11 +63,11 @@ So for $N = 100$ since we have 6 numbers that all share the primitive root 2, we
 @code[problem-0029:count_distinct_powers]
 This runs pretty fast even up to $N = 10^5$ as tabulated below.
 
-| $N$     | Distinct powers | Time                                                |
-|---------|-----------------|-----------------------------------------------------|
-| $10^2$  |                 | @benchmark[problem-0029:count_distinct_powers_100]  |
-| $10^3$  | 977,358         | @benchmark[problem-0029:count_distinct_powers_1k]   |
-| $10^4$  | 99,347,607      | @benchmark[problem-0029:count_distinct_powers_10k]  |
-| $10^5$  | 9,981,236,306   | @benchmark[problem-0029:count_distinct_powers_100k] |
+| $N$    | Distinct powers | Time                                                |
+| ------ | --------------- | --------------------------------------------------- |
+| $10^2$ |                 | @benchmark[problem-0029:count_distinct_powers_100]  |
+| $10^3$ | 977,358         | @benchmark[problem-0029:count_distinct_powers_1k]   |
+| $10^4$ | 99,347,607      | @benchmark[problem-0029:count_distinct_powers_10k]  |
+| $10^5$ | 9,981,236,306   | @benchmark[problem-0029:count_distinct_powers_100k] |
 
 Since $S_m = S_{m-1} \cup \lbrace mb : 2 \le b \le N \rbrace$, the precomputation grows a single set as $m$ goes from 1 to $\log_2 N$, inserting $N - 1$ elements at each step for $\mathcal{O}(N \log N)$ set insertions in total. Since the main loop is $\mathcal{O}(N)$, the whole thing runs in $\mathcal{O}(N \log N)$.

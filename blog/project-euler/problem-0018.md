@@ -38,7 +38,7 @@ benchmark_key: "solution"
 > 04 62 98 27 23 09 70 98 73 93 38 53 60 04 23
 > </pre>
 >
-> *NOTE:* As there are only $16384$ routes, it is possible to solve this problem by trying every route. However, [Problem 67](https://projecteuler.net/problem=67), is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
+> _NOTE:_ As there are only $16384$ routes, it is possible to solve this problem by trying every route. However, [Problem 67](https://projecteuler.net/problem=67), is the same challenge with a triangle containing one-hundred rows; it cannot be solved by brute force, and requires a clever method! ;o)
 
 ::: hackerrank
 The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler018/problem) reads the triangle from input, with up to $N \leqslant 15$ rows and entries below $100$, for up to $10$ queries per run.

@@ -34,7 +34,7 @@ The outer loop iterates through coins and the inner loop updates all amounts tha
 This runs in @benchmark[problem-0031:uk_200p]. We can test larger targets to see how the algorithm scales.
 
 | Target | Combinations | Time                              |
-|--------|--------------|-----------------------------------|
+| ------ | ------------ | --------------------------------- |
 | £2     |              | @benchmark[problem-0031:uk_200p]  |
 | £10    | 321,335,886  | @benchmark[problem-0031:uk_1000p] |
 | $2     | 2,728        | @benchmark[problem-0031:us_200c]  |
@@ -46,4 +46,4 @@ The algorithm runs in $\mathcal{O}(nT)$ time where $n$ is the number of coins an
 
 This problem feels related to the classic [change-making problem](https://en.wikipedia.org/wiki/Change-making_problem) but we want to count all combinations rather than just find the minimum number of coins.
 
-The American [half dollar coin](https://en.wikipedia.org/wiki/Half_dollar_(United_States_coin)) (50¢) exists but seems to go in and out of circulation. The [dollar coin](https://en.wikipedia.org/wiki/Dollar_coin_(United_States)) also exists but people really prefer the [dollar bill](https://en.wikipedia.org/wiki/United_States_one-dollar_bill). The UK actually has a [£5 coin](https://en.wikipedia.org/wiki/Five_pounds_(British_coin)) but it seems mainly commemorative so I guess it didn't make it into this problem.
+The American [half dollar coin](<https://en.wikipedia.org/wiki/Half_dollar_(United_States_coin)>) (50¢) exists but seems to go in and out of circulation. The [dollar coin](<https://en.wikipedia.org/wiki/Dollar_coin_(United_States)>) also exists but people really prefer the [dollar bill](https://en.wikipedia.org/wiki/United_States_one-dollar_bill). The UK actually has a [£5 coin](<https://en.wikipedia.org/wiki/Five_pounds_(British_coin)>) but it seems mainly commemorative so I guess it didn't make it into this problem.

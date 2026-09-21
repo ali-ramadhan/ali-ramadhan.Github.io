@@ -99,7 +99,6 @@ R_k = 100 R_{k-1} - d_k(20 p_{k-1} + d_k)
 
 directly from the inequality. This can be computed from leftovers we already have and we no longer have to keep track of $k$.
 
-
 ## Implementation and benchmarking
 
 We can code up our "creative solution" as
@@ -147,11 +146,11 @@ end
 
 which computes $S(13, 10^3)$ in @benchmark[bonus-root13:S_13_1000]. But damn that's like 150x slower than the uncreative solution!
 
-| $d$     | Uncreative | Creative |
-|---------|------------|----------|
-| $10^3$  | @benchmark[bonus-root13:S_not_creative_13_1000] | @benchmark[bonus-root13:S_13_1000] |
-| $10^4$  | @benchmark[bonus-root13:S_not_creative_13_10000] | @benchmark[bonus-root13:S_13_10000] |
-| $10^5$  | @benchmark[bonus-root13:S_not_creative_13_100000] | @benchmark[bonus-root13:S_13_100000] |
+| $d$    | Uncreative                                        | Creative                             |
+| ------ | ------------------------------------------------- | ------------------------------------ |
+| $10^3$ | @benchmark[bonus-root13:S_not_creative_13_1000]   | @benchmark[bonus-root13:S_13_1000]   |
+| $10^4$ | @benchmark[bonus-root13:S_not_creative_13_10000]  | @benchmark[bonus-root13:S_13_10000]  |
+| $10^5$ | @benchmark[bonus-root13:S_not_creative_13_100000] | @benchmark[bonus-root13:S_13_100000] |
 
 Both solutions agree that $S(13, 10^4) = 45,101$ and $S(13, 10^5) = 449,304$.
 

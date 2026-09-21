@@ -9,7 +9,7 @@ benchmark_file: "bonus-contfrac"
 benchmark_key: "Q_12"
 ---
 
-> Given an infinite sequence of nonnegative integers $a = (a_0, a_1, a_2, \dots)$, we can form a *negatively continued fraction*
+> Given an infinite sequence of nonnegative integers $a = (a_0, a_1, a_2, \dots)$, we can form a _negatively continued fraction_
 >
 > ```math
 > N(a) = a_0 - \cfrac{1}{a_1 - \cfrac{1}{a_2 - \cfrac{1}{\dots}}}
@@ -63,7 +63,7 @@ M_{f_2} M_{f_1}
 
 ## From fractions to matrices
 
-Now let's go back to the *negatively continued fraction*
+Now let's go back to the _negatively continued fraction_
 
 ```math
 N(a) = a_0 - \cfrac{1}{a_1 - \cfrac{1}{a_2 - \cfrac{1}{\dots}}}
@@ -126,7 +126,7 @@ Now setting $\det M_\text{total} = ps - qr = 1$ we can rewrite the discriminant 
 \Delta = (s - p)^2 + 4qr =  (s - p)^2 + 4(ps - 1) = (p + s)^2 - 4
 ```
 
-and noticing that the [trace](https://en.wikipedia.org/wiki/Trace_(linear_algebra)) is $\operatorname{tr} M_\text{total} = p + s$ and solving $\Delta < 0$ we get
+and noticing that the [trace](<https://en.wikipedia.org/wiki/Trace_(linear_algebra)>) is $\operatorname{tr} M_\text{total} = p + s$ and solving $\Delta < 0$ we get
 
 ```math
 \Delta < 0 \implies (p + s)^2 - 4 < 0 \implies \left(\operatorname{tr} M_\text{total}\right)^2 < 4
@@ -239,7 +239,7 @@ So we now have two ways to grow a valid sequence into a longer valid sequence. T
 \overline{0}, \quad \overline{1}, \quad \overline{1, 1}, \quad \overline{1, 2}, \quad \overline{2, 1}, \quad \overline{1, 3}, \quad \overline{3, 1}
 ```
 
-each of which satisfies the trace condition and cannot be obtained by forward-applying either rule to a shorter cycle. Starting from these seeds and repeatedly applying both expansion rules generates *exactly* the valid sequences up to whatever length we want, with no wasted work on sequences that fail the trace condition.
+each of which satisfies the trace condition and cannot be obtained by forward-applying either rule to a shorter cycle. Starting from these seeds and repeatedly applying both expansion rules generates _exactly_ the valid sequences up to whatever length we want, with no wasted work on sequences that fail the trace condition.
 
 ## Canonicalization
 
@@ -322,7 +322,7 @@ where $C_m$ is the number of primitive cyclic classes of length $m$.
 
 ## Implementation
 
-To check if a sequence is valid we walk the matrix product and look at the trace. Since the modular group acts as [Möbius transformations](https://en.wikipedia.org/wiki/M%C3%B6bius_transformation#Classification), we can borrow that taxonomy: a non-identity matrix with $|\operatorname{tr}| < 2$ is called *elliptic*, $|\operatorname{tr}| = 2$ is *parabolic*, and $|\operatorname{tr}| > 2$ is *hyperbolic*. Our valid sequences are exactly those whose matrix product is elliptic, so we name the function accordingly. We use `Int128` for headroom:
+To check if a sequence is valid we walk the matrix product and look at the trace. Since the modular group acts as [Möbius transformations](https://en.wikipedia.org/wiki/M%C3%B6bius_transformation#Classification), we can borrow that taxonomy: a non-identity matrix with $|\operatorname{tr}| < 2$ is called _elliptic_, $|\operatorname{tr}| = 2$ is _parabolic_, and $|\operatorname{tr}| > 2$ is _hyperbolic_. Our valid sequences are exactly those whose matrix product is elliptic, so we name the function accordingly. We use `Int128` for headroom:
 
 ```julia
 function is_elliptic(seq)
@@ -455,13 +455,13 @@ end
 
 Running `compute_Q(12)` produces the answer in @benchmark[bonus-contfrac:Q_12]. We can push beyond $n = 12$:
 
-| $n$  | $Q(n)$       | Time                              |
-|------|--------------|-----------------------------------|
-| 8    | 39,189       | @benchmark[bonus-contfrac:Q_8]    |
-| 10   | 797,501      | @benchmark[bonus-contfrac:Q_10]   |
-| 12   |              | @benchmark[bonus-contfrac:Q_12]   |
-| 13   | 75,862,288   | @benchmark[bonus-contfrac:Q_13]   |
-| 14   | 348,638,246  | @benchmark[bonus-contfrac:Q_14]   |
+| $n$ | $Q(n)$      | Time                            |
+| --- | ----------- | ------------------------------- |
+| 8   | 39,189      | @benchmark[bonus-contfrac:Q_8]  |
+| 10  | 797,501     | @benchmark[bonus-contfrac:Q_10] |
+| 12  |             | @benchmark[bonus-contfrac:Q_12] |
+| 13  | 75,862,288  | @benchmark[bonus-contfrac:Q_13] |
+| 14  | 348,638,246 | @benchmark[bonus-contfrac:Q_14] |
 
 For $n \le 12$ the bit-packed encoding fits in a `UInt64`, but at $n = 13$ a digit-by-digit packing already needs $4 + 5 \cdot 13 = 69$ bits, so we switch to `UInt128`. The growth in $Q(n)$ is exponential and so the memory consumption climbs quickly.
 

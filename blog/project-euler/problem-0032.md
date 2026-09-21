@@ -30,7 +30,7 @@ Combining these constraints and requiring $d_a \le d_b$ to avoid counting symmet
 @code[problem-0032:get_valid_digit_cases]
 
 | $N$ | Valid $(d_a, d_b, d_c)$  |
-|-----|--------------------------|
+| --- | ------------------------ |
 | 4   | $(1, 1, 2)$              |
 | 5   | $(1, 2, 2)$              |
 | 6   | $(1, 2, 3)$              |
@@ -53,7 +53,7 @@ We use a `Set` to collect products since the problem warns that some products ca
 This solves the original problem in @benchmark[problem-0032:pandigital_9]. We can also test smaller values of $N$:
 
 | $N$ | Sum    | Time                                  |
-|-----|--------|---------------------------------------|
+| --- | ------ | ------------------------------------- |
 | 4   | 12     | @benchmark[problem-0032:pandigital_4] |
 | 5   | 52     | @benchmark[problem-0032:pandigital_5] |
 | 6   | 162    | @benchmark[problem-0032:pandigital_6] |

@@ -23,7 +23,7 @@ The sieving logic also changes slightly. When we find a prime $p$ at index $i$, 
 
 @code[src/utils/Primes/sieve.jl:_sieve_of_eratosthenes]
 
-The internal `_sieve_of_eratosthenes` returns the boolean array directly, allowing us to build different functions on top of it. For this problem we only need the sum so we can avoid allocating a primes array by summing directly from the boolean array:
+The internal `_sieve_of_eratosthenes` returns the boolean array (as an `(is_prime, limit)` tuple) rather than a list of primes, allowing us to build different functions on top of it. For this problem we only need the sum so we can avoid allocating a primes array by summing directly from the boolean array:
 
 @code[src/utils/Primes/sieve.jl:sum_sieve_of_eratosthenes]
 

@@ -11,6 +11,10 @@ benchmark_key: "3_digits"
 >
 > Find the largest palindrome made from the product of two $3$-digit numbers.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) keeps the two $3$-digit factors but asks for the largest such palindrome below a given $N < 10^6$, with up to $100$ queries per run.
+:::
+
 First let's write a function that can quickly test whether an integer $n$ is a palindrome. This can be done pretty easily and elegantly:
 
 ```julia

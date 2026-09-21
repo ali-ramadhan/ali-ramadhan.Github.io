@@ -11,6 +11,10 @@ benchmark_key: "n_20"
 >
 > What is the smallest positive number that is evenly divisible by all of the numbers from $1$ to $20$?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler005/problem) raises the limit from $20$ to $N \leqslant 40$, with up to $10$ queries per run.
+:::
+
 We want to basically find the [lowest common multiple](https://en.wikipedia.org/wiki/Least_common_multiple) (LCM) of 1, 2, ..., 20. Since $\operatorname{lcm}(a, b) = \operatorname{lcm}(b, a)$ and $\operatorname{lcm}(a, b, c) = \operatorname{lcm}(a, \operatorname{lcm}(b, c))$ we can iteratively compute the LCM using
 
 @code[problem-0005:smallest_multiple]

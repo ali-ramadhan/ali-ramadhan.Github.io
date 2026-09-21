@@ -13,6 +13,10 @@ benchmark_key: "limit_4M"
 >
 > By considering the terms in the Fibonacci sequence whose values do not exceed four million, find the sum of the even-valued terms.
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler002/problem) raises the limit from four million to $N \leqslant 4 \times 10^{16}$, with up to $10^5$ queries per run.
+:::
+
 We want to sum all the even Fibonacci numbers up to some limit. We could generate all the Fibonacci numbers up to that limit and just sum the even ones, but there's a cooler method!
 
 We'll use a slightly different convention from Project Euler. The recurrence relation for the $n^\text{th}$ Fibonacci number is $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$ and $F_1 = 1$ so the first 13 terms are

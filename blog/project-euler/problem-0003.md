@@ -11,6 +11,10 @@ benchmark_key: "solution"
 >
 > What is the largest prime factor of the number $600851475143$?
 
+::: hackerrank
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler003/problem) replaces $600851475143$ with any $N \leqslant 10^{12}$, with up to $10$ queries per run.
+:::
+
 We want to find the largest prime factor of a given integer $n$.
 
 There are plenty of algorithms for [integer factorization](https://en.wikipedia.org/wiki/Integer_factorization) but since the numbers here aren't too large, we'll just use [trial division](https://en.wikipedia.org/wiki/Trial_division).

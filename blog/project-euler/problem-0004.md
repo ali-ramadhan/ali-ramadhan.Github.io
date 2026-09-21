@@ -34,7 +34,7 @@ We can then use this function to search for the largest palindrome made from the
 
 @code[problem-0004:largest_palindrome_product]
 
-So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're searching for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We added the option to specify a `max_product` to solve the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) of this problem.
+So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're searching for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We also added a `max_product` option that only considers products below a given value, which is what the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) asks for. With up to $100$ queries per run though, the [submission](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/hacker_rank/projecteuler+_problem0004.jl) instead precomputes every palindrome product of two $3$-digit numbers once and binary searches that sorted list for each query.
 
 Benchmarking the 3-digit case we find the solution `largest_palindrome_product(100, 999)` in @benchmark[problem-0004:3_digits].
 

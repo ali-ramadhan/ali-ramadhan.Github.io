@@ -1,0 +1,14 @@
+{#
+  A problem's difficulty as a bar, from `rating`: an entry of
+  _data/project-euler/difficulty.json ({ level, percent }, refreshed with
+  `npm run pe:difficulty`) or, for the bonus problems Project Euler does not
+  rate, a hand-entered { percent, estimate: true }. A problem without a rating
+  gets a dash.
+
+  Bar color: hue 120 (green) at 0% down to hue 0 (red) at 100%.
+#}
+{%- if rating -%}
+<div class="difficulty-bar" data-tooltip="Difficulty: {{ rating.percent }}%{% if rating.estimate %} (my estimate){% else %} (level {{ rating.level }}){% endif %}"><div class="difficulty-bar-fill{% if rating.percent == 100 %} difficulty-bar-fill--full{% endif %}" style="width: {{ rating.percent }}%; background: hsl({{ 120 - rating.percent * 1.2 }}, 70%, 45%);"></div></div>
+{%- else -%}
+—
+{%- endif -%}

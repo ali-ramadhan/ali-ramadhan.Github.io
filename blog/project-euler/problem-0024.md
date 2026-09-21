@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 24
 problem_name: "Lexicographic Permutations"
 date: 2025-12-16
-difficulty: 1
 benchmark_file: "problem-0024"
 benchmark_key: "solution"
 ---

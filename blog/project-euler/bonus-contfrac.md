@@ -4,7 +4,7 @@ bonus_problem: true
 bonus_problem_number: 6
 problem_name: "contfrac"
 date: 2026-05-02
-difficulty: 30
+difficulty_estimate: 77
 benchmark_file: "bonus-contfrac"
 benchmark_key: "Q_12"
 ---

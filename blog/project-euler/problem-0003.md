@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 3
 problem_name: "Largest Prime Factor"
 date: 2025-09-14
-difficulty: 0
 benchmark_file: "problem-0003"
 benchmark_key: "solution"
 ---

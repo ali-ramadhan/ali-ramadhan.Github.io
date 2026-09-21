@@ -1,8 +1,8 @@
-import { readFile } from "fs/promises";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import legacy from "@vitejs/plugin-legacy";
 import { configureMarkdown } from "./config/markdown.js";
 import { processBenchmark } from "./config/benchmark-utils.js";
+import { loadRatings, missingRatings } from "./config/pe-difficulty.js";
 import { prepareSolutions } from "./config/pe-solutions.js";
 
 export default function (eleventyConfig) {
@@ -12,15 +12,20 @@ export default function (eleventyConfig) {
   // --serve mode
   eleventyConfig.on("eleventy.before", () => {
     prepareSolutions();
+    // The difficulty ratings are a committed snapshot, so a new post needs a refresh
+    for (const number of missingRatings()) {
+      console.warn(
+        `[pe-difficulty] Problem ${number} has no rating in _data/project-euler/difficulty.json; run npm run pe:difficulty`
+      );
+    }
   });
   eleventyConfig.addWatchTarget("./pe-solutions.json");
   eleventyConfig.ignores.add(".cache/**");
   eleventyConfig.watchIgnores.add(".cache/**");
 
-  // Expose Project Euler difficulty data as a global template variable
-  eleventyConfig.addGlobalData("pe_difficulty", async () => {
-    return JSON.parse(await readFile("./_data/project-euler/difficulty.json", "utf8"));
-  });
+  // Project Euler difficulty ratings (`npm run pe:difficulty` refreshes them),
+  // read by the table of problems
+  eleventyConfig.addGlobalData("pe_difficulty", () => loadRatings());
 
   // Build-time date for sitemap and similar use cases
   eleventyConfig.addGlobalData("buildDate", () => new Date());

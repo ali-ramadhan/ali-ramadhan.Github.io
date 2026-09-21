@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 2
 problem_name: "Even Fibonacci Numbers"
 date: 2025-09-14
-difficulty: 0
 benchmark_file: "problem-0002"
 benchmark_key: "limit_4M"
 ---

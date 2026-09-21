@@ -4,7 +4,7 @@ bonus_problem: true
 bonus_problem_number: 1
 problem_name: "-1"
 date: 2025-11-27
-difficulty: 2
+difficulty_estimate: 5
 # No code for this one, so no GitHub source link in the layout breadcrumbs
 github_source: false
 ---

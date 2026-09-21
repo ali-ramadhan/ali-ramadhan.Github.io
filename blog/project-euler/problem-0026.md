@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 26
 problem_name: "Reciprocal Cycles"
 date: 2025-12-17
-difficulty: 2
 benchmark_file: "problem-0026"
 benchmark_key: "find_longest_cycle_1000"
 ---

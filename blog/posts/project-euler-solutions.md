@@ -30,16 +30,14 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
   </thead>
   <tbody>
     <!--
-      Difficulty bar color: hue = 120 - difficulty * (120 / pe_difficulty.max_difficulty_level)
-        - HSL hue 120 = green, hue 0 = red
-        - Difficulty level ranges from 0 to pe_difficulty.max_difficulty_level
-        - Maps level 0 to hue 120 (green) and max level to hue 0 (red)
+      Difficulty ratings come from _data/project-euler/difficulty.json, keyed by
+      problem number; `npm run pe:difficulty` refreshes them from projecteuler.net
     -->
     {% for problem in collections.euler %}
     <tr>
       <td>{{ problem.data.problem_number }}</td>
       <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
-      <td>{%- if problem.data.difficulty != null %}{% set hue = 120 - problem.data.difficulty * (120 / pe_difficulty.max_difficulty_level) %}<div class="difficulty-bar" data-tooltip="Difficulty level: {{ problem.data.difficulty }}/{{ pe_difficulty.max_difficulty_level }}"><div class="difficulty-bar-fill{% if problem.data.difficulty == pe_difficulty.max_difficulty_level %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty / pe_difficulty.max_difficulty_level * 100 }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
+      <td>{%- set rating = pe_difficulty.problems[problem.data.problem_number] -%}{%- include "difficulty-bar.html" -%}</td>
       <td>{%- if problem.data.benchmark_file and problem.data.benchmark_key %}{% benchmark problem.data.benchmark_file, problem.data.benchmark_key %}{% else %}—{% endif -%}</td>
     </tr>
     {% endfor %}
@@ -57,10 +55,14 @@ Right now I benchmark on a bunch of different AMD and Intel CPUs. For AMD we hav
     </tr>
   </thead>
   <tbody>
+    <!--
+      Project Euler does not rate the bonus problems, so each post carries my own
+      guess as `difficulty_estimate` (a percentage on the same scale)
+    -->
     {% for problem in collections.allEuler %}{% if problem.data.bonus_problem %}
     <tr>
       <td><a href="{{ problem.url }}">{{ problem.data.problem_name }}</a></td>
-      <td>{%- if problem.data.difficulty != null %}{% set hue = 120 - problem.data.difficulty * (120 / pe_difficulty.max_difficulty_level) %}<div class="difficulty-bar" data-tooltip="Difficulty level: {{ problem.data.difficulty }}/{{ pe_difficulty.max_difficulty_level }}"><div class="difficulty-bar-fill{% if problem.data.difficulty == pe_difficulty.max_difficulty_level %} difficulty-bar-fill--full{% endif %}" style="width: {{ problem.data.difficulty / pe_difficulty.max_difficulty_level * 100 }}%; background: hsl({{ hue }}, 70%, 45%);"></div></div>{% else %}—{% endif -%}</td>
+      <td>{%- set rating = { percent: problem.data.difficulty_estimate, estimate: true } if problem.data.difficulty_estimate != null else null -%}{%- include "difficulty-bar.html" -%}</td>
       <td>{%- if problem.data.benchmark_file and problem.data.benchmark_key %}{% benchmark problem.data.benchmark_file, problem.data.benchmark_key %}{% else %}—{% endif -%}</td>
     </tr>
     {% endif %}{% endfor %}

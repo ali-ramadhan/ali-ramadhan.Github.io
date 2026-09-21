@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 27
 problem_name: "Quadratic Primes"
 date: 2025-12-18
-difficulty: 1
 benchmark_file: "problem-0027"
 benchmark_key: "find_quadratic_with_most_primes_1000"
 ---

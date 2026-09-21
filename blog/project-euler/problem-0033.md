@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 33
 problem_name: "Digit Cancelling Fractions"
 date: 2026-04-30
-difficulty: 2
 benchmark_file: "problem-0033"
 benchmark_key: "multiply_curious_fractions_N2_K1"
 ---

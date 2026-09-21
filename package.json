@@ -27,6 +27,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "pe:bump": "node scripts/pe-bump.js",
+    "pe:difficulty": "node scripts/pe-difficulty.js",
     "test": "npm run lint && node --test \"test/**/*.test.js\""
   },
   "devDependencies": {

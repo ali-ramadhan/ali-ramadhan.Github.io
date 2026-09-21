@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 8
 problem_name: "Largest Product in a Series"
 date: 2025-10-09
-difficulty: 0
 benchmark_file: "problem-0008"
 benchmark_key: "window_13"
 ---

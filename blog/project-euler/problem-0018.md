@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 18
 problem_name: "Maximum Path Sum I"
 date: 2025-12-10
-difficulty: 1
 benchmark_file: "problem-0018"
 benchmark_key: "solution"
 ---

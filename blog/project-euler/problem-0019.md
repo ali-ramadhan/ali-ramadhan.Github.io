@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 19
 problem_name: "Counting Sundays"
 date: 2025-12-10
-difficulty: 2
 benchmark_file: "problem-0019"
 benchmark_key: "years_1901_2000"
 ---

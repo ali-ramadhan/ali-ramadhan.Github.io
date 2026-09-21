@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 28
 problem_name: "Number Spiral Diagonals"
 date: 2025-12-18
-difficulty: 0
 benchmark_file: "problem-0028"
 benchmark_key: "diagonal_sum_1001"
 ---

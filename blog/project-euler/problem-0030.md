@@ -3,7 +3,6 @@ layout: "project-euler-post"
 problem_number: 30
 problem_name: "Digit Fifth Powers"
 date: 2025-12-22
-difficulty: 0
 benchmark_file: "problem-0030"
 benchmark_key: "digits5"
 ---

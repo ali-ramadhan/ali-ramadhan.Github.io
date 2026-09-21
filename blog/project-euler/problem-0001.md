@@ -15,17 +15,13 @@ benchmark_key: "two_inclusion_exclusion"
 The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler001/problem) raises the limit from $1000$ to $N \leqslant 10^9$, with up to $10^5$ queries per run.
 :::
 
-Let's consider the problem of summing all multiples of $a$ or $b$ below $L$.
+Let's consider the problem of summing all multiples of $a$ or $b$ below a limit $L$.
 
 ## Generator expression
 
 The cleanest solution is to just sum over all integers below $L$ that are multiples of $a$ or $b$ using a generator expression instead of a list comprehension to avoid memory allocations:
 
-```julia
-function sum_multiples_two_generator(a, b, L)
-    return sum(n for n in 1:L-1 if n % a == 0 || n % b == 0)
-end
-```
+@code[problem-0001:sum_multiples_two_generator]
 
 Benchmarking `sum_multiples_two_generator(3, 5, 1000)`, it runs in @benchmark[problem-0001:two_generator].
 
@@ -59,33 +55,15 @@ where $A$ and $B$ are two finite sets and $|S|$ is the cardinality of the set $S
 
 We can code this up as
 
-```julia
-function sum_multiples(m, L)
-    if m >= L
-        return 0
-    end
-    l = div(L - 1, m)
-    return m * l * (l + 1) ÷ 2
-end
+@code[problem-0001:sum_multiples,sum_multiples_two_inclusion_exclusion]
 
-function sum_multiples_two(a, b, limit)
-    return sum_multiples(a, limit) +
-           sum_multiples(b, limit) -
-           sum_multiples(lcm(a, b), limit)
-end
-```
-
-and benchmarking `sum_multiples_two(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is roughly 2000x faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
+and benchmarking `sum_multiples_two_inclusion_exclusion(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is roughly 2000x faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
 
 ## Three factors
 
 The generator solution can easily be extended to deal with three factors:
 
-```julia
-function sum_multiples_three_generator(a, b, c, L)
-    return sum(n for n in 1:L-1 if n % a == 0 || n % b == 0 || n % c == 0)
-end
-```
+@code[problem-0001:sum_multiples_three_generator]
 
 Let's sum the multiples of 3, 5, and 7 below $10^6$. Benchmarking `sum_multiples_three_generator(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_generator]. Taking ~1500x longer than the 2 factor case with $L = 10^3$ makes sense since it's now checking 1000 times more numbers and 50% more factors.
 
@@ -107,17 +85,7 @@ S([a, b, c], L) &= s(a, L) + s(b, L) + s(c, L) \\
 
 We can implement this as:
 
-```julia
-function sum_multiples_three_inclusion_exclusion(a, b, c, L)
-    return sum_multiples(a, L) +
-           sum_multiples(b, L) +
-           sum_multiples(c, L) -
-           sum_multiples(lcm(a, b), L) -
-           sum_multiples(lcm(a, c), L) -
-           sum_multiples(lcm(b, c), L) +
-           sum_multiples(lcm(a, b, c), L)
-end
-```
+@code[problem-0001:sum_multiples_three_inclusion_exclusion]
 
 and if we benchmark `sum_multiples_three_inclusion_exclusion(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_inclusion_exclusion] which again is sub-nanosecond.
 

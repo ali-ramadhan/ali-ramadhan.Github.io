@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-09-21",
+  "fetched": "2026-09-24",
   "problems": {
     "1": { "level": 0, "percent": 1 },
     "2": { "level": 0, "percent": 1 },
@@ -8,13 +8,13 @@
     "5": { "level": 0, "percent": 2 },
     "6": { "level": 0, "percent": 1 },
     "7": { "level": 0, "percent": 1 },
-    "8": { "level": 0, "percent": 3 },
+    "8": { "level": 1, "percent": 3 },
     "9": { "level": 0, "percent": 1 },
     "10": { "level": 0, "percent": 2 },
     "11": { "level": 2, "percent": 6 },
     "12": { "level": 1, "percent": 4 },
     "13": { "level": 1, "percent": 4 },
-    "14": { "level": 1, "percent": 3 },
+    "14": { "level": 1, "percent": 4 },
     "15": { "level": 2, "percent": 6 },
     "16": { "level": 0, "percent": 1 },
     "17": { "level": 2, "percent": 8 },
@@ -33,6 +33,7 @@
     "30": { "level": 0, "percent": 2 },
     "31": { "level": 2, "percent": 8 },
     "32": { "level": 1, "percent": 4 },
-    "33": { "level": 0, "percent": 3 }
+    "33": { "level": 0, "percent": 3 },
+    "34": { "level": 0, "percent": 1 }
   }
 }

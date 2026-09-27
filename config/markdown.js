@@ -40,49 +40,49 @@ function markdownItMathBlocks(md) {
 // Custom benchmark plugin for markdown-it
 function markdownItBenchmark(md) {
   // Regex to match @benchmark[filename:key] or @benchmark[filename:key:display_type] pattern
-  const benchmarkRegex = /@benchmark\[([^:]+):([^:\]]+)(?::([^\]]+))?\]/g;
+  const shortcodeRegex = /@benchmark\[([^\]]+)\]/g;
+
+  function renderBenchmark(reference) {
+    const parts = reference.split(":");
+    if (parts.length < 2 || parts.length > 3 || parts.some((part) => !part)) {
+      throw new Error(`Expected "file:key" or "file:key:display_type", got "${reference}"`);
+    }
+    const [filename, key, displayType = "median_time"] = parts;
+    return processBenchmark(filename, key, displayType);
+  }
+
+  // Swap each shortcode in a text token for its HTML, escaping the text around
+  // it since the whole token becomes raw HTML. Returns null if there are none.
+  function renderShortcodes(text) {
+    let html = "";
+    let last = 0;
+    for (const match of text.matchAll(shortcodeRegex)) {
+      const [fullMatch, reference] = match;
+      let replacement;
+      try {
+        replacement = renderBenchmark(reference);
+      } catch (error) {
+        throw new Error(`${fullMatch}: ${error.message}`, { cause: error });
+      }
+      html += md.utils.escapeHtml(text.slice(last, match.index)) + replacement;
+      last = match.index + fullMatch.length;
+    }
+    return last === 0 ? null : html + md.utils.escapeHtml(text.slice(last));
+  }
 
   md.core.ruler.after("inline", "benchmark", function (state) {
-    for (let i = 0; i < state.tokens.length; i++) {
-      const token = state.tokens[i];
+    for (const token of state.tokens) {
+      if (token.type !== "inline" || !token.children) continue;
 
-      if (token.type === "inline" && token.children) {
-        for (let j = 0; j < token.children.length; j++) {
-          const child = token.children[j];
+      token.children = token.children.map((child) => {
+        const html = child.type === "text" ? renderShortcodes(child.content) : null;
+        if (html === null) return child;
 
-          if (child.type === "text" && benchmarkRegex.test(child.content)) {
-            benchmarkRegex.lastIndex = 0; // Reset regex
-            let match;
-            let content = child.content;
-            let hasMatches = false;
-
-            while ((match = benchmarkRegex.exec(child.content)) !== null) {
-              hasMatches = true;
-              const [fullMatch, filename, key, displayType = "median_time"] = match;
-              let replacement;
-              try {
-                replacement = processBenchmark(filename, key, displayType);
-              } catch (error) {
-                throw new Error(`${fullMatch}: ${error.message}`, { cause: error });
-              }
-              content = content.replace(fullMatch, replacement);
-            }
-
-            if (hasMatches) {
-              // Create new HTML inline token
-              const htmlToken = new state.Token("html_inline", "", 0);
-              htmlToken.content = content;
-              htmlToken.level = child.level;
-
-              // Replace the text token with HTML token
-              token.children[j] = htmlToken;
-
-              // Reset regex for safety
-              benchmarkRegex.lastIndex = 0;
-            }
-          }
-        }
-      }
+        const htmlToken = new state.Token("html_inline", "", 0);
+        htmlToken.content = html;
+        htmlToken.level = child.level;
+        return htmlToken;
+      });
     }
 
     return false;

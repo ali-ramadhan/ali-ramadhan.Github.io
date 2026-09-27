@@ -9,7 +9,7 @@ import markdownItAnchor from "markdown-it-anchor";
 import markdownItToc from "markdown-it-table-of-contents";
 import markdownItPrism from "markdown-it-prism";
 import { markdownItCitations, clearCitationCaches } from "./citations.js";
-import { processBenchmark, clearBenchmarkCache } from "./benchmark-utils.js";
+import { processBenchmark, processRatio, clearBenchmarkCache } from "./benchmark-utils.js";
 import { processCode } from "./code-utils.js";
 
 // Custom math blocks plugin for markdown-it
@@ -37,10 +37,13 @@ function markdownItMathBlocks(md) {
   };
 }
 
-// Custom benchmark plugin for markdown-it
+// Custom benchmark plugin for markdown-it:
+//   @benchmark[filename:key] or @benchmark[filename:key:display_type] shows one
+//   benchmark's median time (or memory), and
+//   @ratio[filename:key/key] or @ratio[filename:key/key:display_type] shows how
+//   many times larger the first benchmark's median time (or memory) is
 function markdownItBenchmark(md) {
-  // Regex to match @benchmark[filename:key] or @benchmark[filename:key:display_type] pattern
-  const shortcodeRegex = /@benchmark\[([^\]]+)\]/g;
+  const shortcodeRegex = /@(benchmark|ratio)\[([^\]]+)\]/g;
 
   function renderBenchmark(reference) {
     const parts = reference.split(":");
@@ -57,10 +60,10 @@ function markdownItBenchmark(md) {
     let html = "";
     let last = 0;
     for (const match of text.matchAll(shortcodeRegex)) {
-      const [fullMatch, reference] = match;
+      const [fullMatch, name, reference] = match;
       let replacement;
       try {
-        replacement = renderBenchmark(reference);
+        replacement = name === "ratio" ? processRatio(reference) : renderBenchmark(reference);
       } catch (error) {
         throw new Error(`${fullMatch}: ${error.message}`, { cause: error });
       }

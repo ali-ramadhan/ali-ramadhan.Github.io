@@ -210,61 +210,16 @@ export class BenchmarkManager {
       const benchmarkData = JSON.parse(element.dataset.benchmark);
       this.currentBenchmarkData = benchmarkData;
 
-      // Populate CPU dropdown, sorted by median time (fastest first)
       const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
       dropdown.innerHTML = "";
 
-      // Parse median time to numeric value for sorting
-      const parseTime = (timeStr) => {
-        const match = timeStr.match(/([\d.]+)\s*([nμm]?s)/);
-        if (!match) return Infinity;
-        const value = parseFloat(match[1]);
-        const unit = match[2];
-        // Convert to nanoseconds for comparison
-        if (unit === "ns") return value;
-        if (unit === "μs") return value * 1000;
-        if (unit === "ms") return value * 1000000;
-        if (unit === "s") return value * 1000000000;
-        return value;
-      };
+      const defaultCpu =
+        benchmarkData.kind === "ratio"
+          ? this.populateRatioOptions(dropdown, benchmarkData)
+          : this.populateBenchmarkOptions(dropdown, benchmarkData);
 
-      const cpuNames = Object.keys(benchmarkData.cpus).sort((a, b) => {
-        const timeA = parseTime(benchmarkData.cpus[a].median_time);
-        const timeB = parseTime(benchmarkData.cpus[b].median_time);
-        return timeA - timeB;
-      });
-
-      const fastestTime = parseTime(benchmarkData.cpus[cpuNames[0]].median_time);
-
-      cpuNames.forEach((cpuName, index) => {
-        const cpuData = benchmarkData.cpus[cpuName];
-        const rank = index + 1;
-        const option = document.createElement("option");
-        option.value = cpuName;
-
-        let text = `${rank}. ${cpuName}`;
-
-        // Show thread count if available (multi-threaded benchmark)
-        if (cpuData.thread_count) {
-          text += ` | ${cpuData.thread_count} threads`;
-        }
-
-        // Show slowdown for non-fastest CPUs
-        if (rank > 1) {
-          const cpuTime = parseTime(cpuData.median_time);
-          const slowdown = (cpuTime / fastestTime).toFixed(2);
-          text += ` | ${slowdown}× slower`;
-        }
-
-        option.textContent = text;
-        dropdown.appendChild(option);
-      });
-
-      // Select the fastest CPU (first in sorted list)
-      dropdown.value = cpuNames[0];
-
-      // Update tooltip content for the fastest CPU
-      this.updateTooltipForCpu(cpuNames[0]);
+      dropdown.value = defaultCpu;
+      this.updateTooltipForCpu(defaultCpu);
 
       // Show tooltip
       this.tooltip.classList.add("visible");
@@ -275,6 +230,103 @@ export class BenchmarkManager {
     } catch (error) {
       console.error("Error displaying benchmark:", error);
     }
+  }
+
+  // List CPUs by median time (fastest first) and return the fastest, whose
+  // time is the one shown inline
+  populateBenchmarkOptions(dropdown, benchmarkData) {
+    // Parse median time to numeric value for sorting
+    const parseTime = (timeStr) => {
+      const match = timeStr.match(/([\d.]+)\s*([nμm]?s)/);
+      if (!match) return Infinity;
+      const value = parseFloat(match[1]);
+      const unit = match[2];
+      // Convert to nanoseconds for comparison
+      if (unit === "ns") return value;
+      if (unit === "μs") return value * 1000;
+      if (unit === "ms") return value * 1000000;
+      if (unit === "s") return value * 1000000000;
+      return value;
+    };
+
+    const cpuNames = Object.keys(benchmarkData.cpus).sort((a, b) => {
+      const timeA = parseTime(benchmarkData.cpus[a].median_time);
+      const timeB = parseTime(benchmarkData.cpus[b].median_time);
+      return timeA - timeB;
+    });
+
+    const fastestTime = parseTime(benchmarkData.cpus[cpuNames[0]].median_time);
+
+    cpuNames.forEach((cpuName, index) => {
+      const cpuData = benchmarkData.cpus[cpuName];
+      const rank = index + 1;
+      const option = document.createElement("option");
+      option.value = cpuName;
+
+      let text = `${rank}. ${cpuName}`;
+
+      // Show thread count if available (multi-threaded benchmark)
+      if (cpuData.thread_count) {
+        text += ` | ${cpuData.thread_count} threads`;
+      }
+
+      // Show slowdown for non-fastest CPUs
+      if (rank > 1) {
+        const cpuTime = parseTime(cpuData.median_time);
+        const slowdown = (cpuTime / fastestTime).toFixed(2);
+        text += ` | ${slowdown}× slower`;
+      }
+
+      option.textContent = text;
+      dropdown.appendChild(option);
+    });
+
+    return cpuNames[0];
+  }
+
+  // List CPUs by ratio (largest first) and return the one closest to the
+  // median over CPUs, which is the ratio shown inline
+  populateRatioOptions(dropdown, ratio) {
+    const cpuNames = Object.keys(ratio.cpus).sort(
+      (a, b) => ratio.cpus[b].ratio - ratio.cpus[a].ratio
+    );
+
+    cpuNames.forEach((cpuName, index) => {
+      const option = document.createElement("option");
+      option.value = cpuName;
+      option.textContent = `${index + 1}. ${cpuName} | ${ratio.cpus[cpuName].ratio_text}`;
+      dropdown.appendChild(option);
+    });
+
+    const distance = (cpuName) => Math.abs(ratio.cpus[cpuName].ratio - ratio.median);
+    return cpuNames.reduce((closest, cpuName) =>
+      distance(cpuName) < distance(closest) ? cpuName : closest
+    );
+  }
+
+  // Both median times (or memory estimates) on one CPU, their ratio, and the
+  // spread over all CPUs
+  ratioSummary(ratio, cpuData) {
+    const width =
+      Math.max(ratio.numerator_key.length, ratio.denominator_key.length, "ratio".length) + 2;
+    const cpuCount = Object.keys(ratio.cpus).length;
+
+    let spread;
+    if (cpuCount === 1) {
+      spread = `${ratio.median_text} on the only CPU benchmarked`;
+    } else if (ratio.min_text === ratio.max_text) {
+      spread = `${ratio.median_text} on all ${cpuCount} CPUs`;
+    } else {
+      spread = `${ratio.median_text} median over ${cpuCount} CPUs (${ratio.min_text} to ${ratio.max_text})`;
+    }
+
+    return [
+      ratio.numerator_key.padEnd(width) + cpuData.numerator_value,
+      ratio.denominator_key.padEnd(width) + cpuData.denominator_value,
+      "ratio".padEnd(width) + cpuData.ratio_text,
+      "",
+      spread,
+    ].join("\n");
   }
 
   updateTooltipForCpu(cpuName) {
@@ -288,9 +340,13 @@ export class BenchmarkManager {
     const meta = this.tooltip.querySelector(".benchmark-meta");
     meta.textContent = `${cpuData.julia_version} · ${cpuData.os}`;
 
-    // Update tooltip content with colored ANSI output
     const output = this.tooltip.querySelector(".benchmark-output");
-    output.innerHTML = parseAnsiToHtml(cpuData.full_output);
+    if (this.currentBenchmarkData.kind === "ratio") {
+      output.textContent = this.ratioSummary(this.currentBenchmarkData, cpuData);
+    } else {
+      // Update tooltip content with colored ANSI output
+      output.innerHTML = parseAnsiToHtml(cpuData.full_output);
+    }
   }
 
   hideTooltip() {

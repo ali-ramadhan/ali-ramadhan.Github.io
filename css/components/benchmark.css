@@ -68,6 +68,31 @@ html[data-theme="dark"] .benchmark-reference--memory:hover {
   color: #e9d5ff;
 }
 
+/* Ratio variant - amber */
+.benchmark-reference--ratio {
+  background: #fef3c7;
+  border-color: #fcd34d;
+  color: #92400e;
+}
+
+.benchmark-reference--ratio:hover {
+  background: #fde68a;
+  border-color: #fbbf24;
+  color: #78350f;
+}
+
+html[data-theme="dark"] .benchmark-reference--ratio {
+  background: #451a03;
+  border-color: #92400e;
+  color: #fcd34d;
+}
+
+html[data-theme="dark"] .benchmark-reference--ratio:hover {
+  background: #78350f;
+  border-color: #b45309;
+  color: #fde68a;
+}
+
 /* Benchmark tooltip/modal styling */
 .benchmark-tooltip {
   position: fixed;

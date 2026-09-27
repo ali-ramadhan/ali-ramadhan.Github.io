@@ -17,7 +17,9 @@ benchmark_key: "limit_4M"
 The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler002/problem) raises the limit from four million to $N \leqslant 4 \times 10^{16}$, with up to $10^5$ queries per run.
 :::
 
-We want to sum all the even Fibonacci numbers up to some limit. We could generate all the Fibonacci numbers up to that limit and just sum the even ones, but there's a cooler method!
+## The naive approach
+
+We want to sum all the even Fibonacci numbers up to some limit.
 
 We'll use a slightly different convention from Project Euler. The recurrence relation for the $n^\text{th}$ Fibonacci number is $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$ and $F_1 = 1$ so the first 13 terms are
 
@@ -25,9 +27,15 @@ We'll use a slightly different convention from Project Euler. The recurrence rel
 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, \dots
 ```
 
-Notice that $F_3 = 2$, $F_6 = 8$, $F_9 = 34$, and $F_{12} = 144$. So every third number is even, and all the others are odd. This is because $F_0 = 0$ is even and $F_1 = 1$ is odd, so $F_2 = F_1 + F_0$ will be odd because $\text{even} + \text{odd} = \text{odd}$ by [parity](<https://en.wikipedia.org/wiki/Parity_(mathematics)>). Then $F_3 = F_2 + F_1$ will be even because $\text{odd} + \text{odd} = \text{even}$. This continues and so every third Fibonacci will be even, and all others are odd.
+We could generate all the Fibonacci numbers up to that limit and just sum the even ones:
+
+@code[problem-0002:sum_even_fibonacci_naive]
+
+Benchmarking `sum_even_fibonacci_naive(4 * 10^6)` we get @benchmark[problem-0002:naive_limit_4M], which is already fast enough for the problem. But there's a cooler method!
 
 ## A recurrence for the even Fibonacci numbers
+
+Notice that $F_3 = 2$, $F_6 = 8$, $F_9 = 34$, and $F_{12} = 144$. So every third number is even, and all the others are odd. This is because $F_0 = 0$ is even and $F_1 = 1$ is odd, so $F_2 = F_1 + F_0$ will be odd because $\text{even} + \text{odd} = \text{odd}$ by [parity](<https://en.wikipedia.org/wiki/Parity_(mathematics)>). Then $F_3 = F_2 + F_1$ will be even because $\text{odd} + \text{odd} = \text{even}$. This continues and so every third Fibonacci will be even, and all others are odd.
 
 Now that we know every third Fibonacci number is even, can we find a recurrence relation for just the even Fibonacci numbers? So we want to compute $F_n$ using $F_{n-3}$, $F_{n-6}$, $F_{n-9}$, etc.
 
@@ -66,7 +74,7 @@ We can implement this in Julia:
 
 @code[problem-0002:sum_even_fibonacci]
 
-Benchmarking `sum_even_fibonacci(4 * 10^6)` we get @benchmark[problem-0002:limit_4M] which is pretty fast. Since the Fibonacci numbers grow exponentially, we can increase the limit to a much larger number and still compute the sum quickly. For example, benchmarking `sum_even_fibonacci(4 * 10^15)` only takes @benchmark[problem-0002:limit_4e15].
+Benchmarking `sum_even_fibonacci(4 * 10^6)` we get @benchmark[problem-0002:limit_4M], which is @ratio[problem-0002:naive_limit_4M/limit_4M] faster than generating every Fibonacci number. There are three times fewer terms to generate, and no parity check on each one. Since the Fibonacci numbers grow exponentially, we can increase the limit to a much larger number and still compute the sum quickly. For example, benchmarking `sum_even_fibonacci(4 * 10^15)` only takes @benchmark[problem-0002:limit_4e15], which is @ratio[problem-0002:naive_limit_4e15/limit_4e15] faster than the naive approach.
 
 This solution takes $\mathcal{O}(\log L)$ time because Fibonacci numbers grow exponentially, so only about $\log L$ terms are needed to reach the limit $L$.
 

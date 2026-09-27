@@ -35,7 +35,7 @@ So instead of searching for palindromes, let's build them. A palindrome is deter
 
 Each $L$-digit palindrome is built from exactly one $h$, its own first half. There are $9 \cdot 10^{k-1}$ numbers with $k$ digits, so there are $9$ palindromes with one digit, $9$ with two digits, $90$ with three, $90$ with four, and so on. Below $10^6$ that's $9 + 9 + 90 + 90 + 900 + 900 = 1{,}998$ palindromes, not counting $0$, and in general the number of palindromes below $N$ grows like $\sqrt{N}$ since we only get to pick half of the digits.
 
-We start with $0$, which is a palindrome in every base, and build the rest one length at a time. For $L = 3$ the first halves $h = 10, 11, 12, \dots, 99$ give the palindromes $101, 111, 121, \dots, 999$. All that's left is to check each one in base $K$:
+We start with $0$, which is a palindrome in every base, and build the rest one length at a time. For $L = 3$ the first halves $h = 10, 11, 12, \dots, 99$ give the palindromes $101, 111, 121, \dots, 999$. We can stop as soon as the palindromes we're making reach $N$. All that's left is to check each one in base $K$:
 
 @code[problem-0036:find_double_base_palindromes]
 
@@ -43,11 +43,11 @@ The one-line method at the top is there for speed. Julia compiles a separate cop
 
 This finds the double-base palindromes below $10^6$ in @benchmark[problem-0036:find_double_base_palindromes_1M], which is @ratio[problem-0036:find_double_base_palindromes_naive_1M/find_double_base_palindromes_1M] faster than checking every number.
 
-Going up to $N = 10^{12}$ takes @benchmark[problem-0036:find_double_base_palindromes_1T] and finds $39$ double-base palindromes, the largest being $136{,}525{,}525{,}631$. That's a thousand times more palindromes to build than for $N = 10^6$, and each one takes longer to check since it has twice as many binary digits. How long a base takes depends on both how many digits numbers have in that base, from up to $40$ in base $2$ down to $13$ in base $9$ below $10^{12}$, and how cheap it is to divide by it. Dividing by a power of $2$ is a bit shift, so bases $2$, $4$ and $8$ are quicker than their number of digits would suggest. Here's every base the HackerRank version asks about, plus $N = 10^{15}$ for base $2$:
+Going up to $N = 10^{12}$ takes @benchmark[problem-0036:find_double_base_palindromes_1T] and finds $39$ double-base palindromes including $0$, the largest being $136{,}525{,}525{,}631$. That's a thousand times more palindromes to build than for $N = 10^6$, and each one takes longer to check since it has twice as many binary digits. How long a base takes depends on both how many digits numbers have in that base, from up to $40$ in base $2$ down to $13$ in base $9$ below $10^{12}$, and how cheap it is to divide by it. Dividing by a power of $2$ is a bit shift, so bases $2$, $4$ and $8$ are quicker than their number of digits would suggest. Here's every base the HackerRank version asks about, plus $N = 10^{15}$ for base $2$:
 
 | $N$       | $K$ | OEIS                                | Double-base palindromes | Sum                   | Time                                                        |
 | --------- | --- | ----------------------------------- | ----------------------- | --------------------- | ----------------------------------------------------------- |
-| $10^6$    | 2   | [A007632](https://oeis.org/A007632) | 20                      |                       | @benchmark[problem-0036:find_double_base_palindromes_1M]    |
+| $10^6$    | 2   | [A007632](https://oeis.org/A007632) | 20                      | —                     | @benchmark[problem-0036:find_double_base_palindromes_1M]    |
 | $10^{12}$ | 2   | [A007632](https://oeis.org/A007632) | 39                      | 394,832,891,346       | @benchmark[problem-0036:find_double_base_palindromes_1T]    |
 | $10^{15}$ | 2   | [A007632](https://oeis.org/A007632) | 52                      | 1,559,246,513,298,687 | @benchmark[problem-0036:find_double_base_palindromes_1e15]  |
 | --------- | --- | ----------------------------------- | ----------------------- | --------------------- | ----------------------------------------------------------- |
@@ -59,9 +59,9 @@ Going up to $N = 10^{12}$ takes @benchmark[problem-0036:find_double_base_palindr
 | $10^{12}$ | 8   | [A029804](https://oeis.org/A029804) | 45                      | 914,703,021,014       | @benchmark[problem-0036:find_double_base_palindromes_1T_K8] |
 | $10^{12}$ | 9   | [A029965](https://oeis.org/A029965) | 48                      | 852,336,088,346       | @benchmark[problem-0036:find_double_base_palindromes_1T_K9] |
 
-The base $2$ results match the list of every double-base palindrome below $10^{12}$ that [mvz](https://projecteuler.net/thread=36#1652) posted in the [forum thread](https://projecteuler.net/thread=36) back in 2005, and the sums that [NP](https://projecteuler.net/thread=36;page=5#440098), [8folder](https://projecteuler.net/thread=36;page=8#456103), and [yzqt](https://projecteuler.net/thread=36;page=8#456926) posted more recently.
+Every row matches the terms listed on OEIS, which include $0$ too. The base $2$ results also match the list of every double-base palindrome below $10^{12}$ that [mvz](https://projecteuler.net/thread=36#1652) posted in the [forum thread](https://projecteuler.net/thread=36) back in 2005, and the sums that [NP](https://projecteuler.net/thread=36;page=5#440098), [8folder](https://projecteuler.net/thread=36;page=8#456103), and [yzqt](https://projecteuler.net/thread=36;page=8#456926) posted more recently.
 
-We could also have built the palindromes in base $K$ and checked them in base $10$, but there are roughly as many palindromes below $N$ in any base so it wouldn't save much. And for $K = 2$ we could skip the decimal palindromes that start with an even digit, since they also end in one and every binary palindrome other than $0$ is odd, but that trick is specific to base $2$.
+We could also rule out some palindromes early. A base-$K$ palindrome other than $0$ is never divisible by $K$, since its last digit, and so its first, would be $0$. In base $2$ that means it's odd, so we could skip the decimal palindromes that start with an even digit since they also end in one, which is $4/9$ of them. In other bases, testing `p % K == 0` before reversing any digits rules out fewer, between $1/9$ and $1/3$ of them. This trick, plus potentially others specific to base $2$ are probably why[yzqt](https://projecteuler.net/thread=36;page=8#456926)'s solution is faster than mine.
 
 [Eshed Schacham](https://ashdnazg.github.io/articles/22/Finding-Really-Big-Palindromes) has a great write-up on finding really big binary-decimal palindromes, which starts with this same mirroring approach and then goes much further.
 

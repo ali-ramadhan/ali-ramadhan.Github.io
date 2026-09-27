@@ -134,6 +134,47 @@ function markdownItCode(md) {
   );
 }
 
+// Table row groups: a body row made only of dashes, like the delimiter row under
+// the header, ends one group of rows and starts the next. Each group becomes its
+// own <tbody>, and the table CSS draws a double line between groups.
+//
+//   | N    | Time |
+//   | ---- | ---- |
+//   | 10^6 | ...  |
+//   | ---- | ---- |
+//   | 10^9 | ...  |
+function markdownItTableGroups(md) {
+  const separatorCell = /^:?-{3,}:?$/;
+
+  md.core.ruler.after("inline", "table_groups", function (state) {
+    const tokens = state.tokens;
+    let inBody = false;
+
+    for (let i = 0; i < tokens.length; i++) {
+      if (tokens[i].type === "tbody_open") inBody = true;
+      if (tokens[i].type === "tbody_close") inBody = false;
+      if (!inBody || tokens[i].type !== "tr_open") continue;
+
+      let end = i + 1;
+      let separator = true;
+      while (tokens[end].type !== "tr_close") {
+        if (tokens[end].type === "inline" && !separatorCell.test(tokens[end].content.trim())) {
+          separator = false;
+        }
+        end++;
+      }
+      if (!separator) continue;
+
+      // Swap the row for the end of this <tbody> and the start of the next
+      const close = new state.Token("tbody_close", "tbody", -1);
+      const open = new state.Token("tbody_open", "tbody", 1);
+      close.block = open.block = true;
+      tokens.splice(i, end - i + 1, close, open);
+      i++;
+    }
+  });
+}
+
 export function configureMarkdown(eleventyConfig) {
   // The citation and benchmark plugins keep module-level caches; clear them
   // before every build so --serve rebuilds pick up reference YAML edits, drop
@@ -154,6 +195,9 @@ export function configureMarkdown(eleventyConfig) {
     // Custom code embedding plugin - must come before the Prism plugin, which
     // renders the fence tokens it emits
     mdLib.use(markdownItCode);
+
+    // Table row groups, split at body rows made only of dashes
+    mdLib.use(markdownItTableGroups);
 
     // Citations plugin - must come before other plugins that might process links
     mdLib.use(markdownItCitations, {

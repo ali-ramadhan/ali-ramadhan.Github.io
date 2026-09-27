@@ -24,6 +24,16 @@ html[data-theme="dark"] .blog-post-content td {
   border-bottom-color: #4a5568;
 }
 
+/* Groups of rows (see markdownItTableGroups in config/markdown.js) are separated
+   by a double line, darker than the lines between rows so it stands out */
+.blog-post-content tbody + tbody tr:first-child td {
+  border-top: 4px double #999;
+}
+
+html[data-theme="dark"] .blog-post-content tbody + tbody tr:first-child td {
+  border-top-color: #8896ab;
+}
+
 /* Mobile table adjustments */
 @media (width <= 768px) {
   .blog-post-content th,

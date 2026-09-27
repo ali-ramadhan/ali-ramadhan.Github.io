@@ -160,14 +160,18 @@ export class BenchmarkManager {
   }
 
   attachEventListeners() {
-    // Use event delegation for benchmark references
-    document.addEventListener("mouseenter", this.boundHandleMouseEnter, true);
-    document.addEventListener("mouseleave", this.boundHandleMouseLeave, true);
+    // Use event delegation for benchmark references. Hovering is handled with
+    // pointer events so it can be limited to a mouse: after a tap, browsers
+    // send a mouseleave that would close the tooltip the tap just opened.
+    document.addEventListener("pointerenter", this.boundHandleMouseEnter, true);
+    document.addEventListener("pointerleave", this.boundHandleMouseLeave, true);
     document.addEventListener("click", this.boundHandleClick, true);
     document.addEventListener("keydown", this.boundHandleKeydown);
   }
 
   handleMouseEnter(e) {
+    if (e.pointerType !== "mouse") return;
+
     // Capture-phase delegation on document: when the pointer enters the page
     // itself, e.target is the document node, which has no classList.
     if (e.target instanceof Element && e.target.classList.contains("benchmark-reference")) {
@@ -179,6 +183,8 @@ export class BenchmarkManager {
   }
 
   handleMouseLeave(e) {
+    if (e.pointerType !== "mouse") return;
+
     if (e.target instanceof Element && e.target.classList.contains("benchmark-reference")) {
       // Clear any pending hover timeout
       if (this.hoverTimeout) {
@@ -494,8 +500,8 @@ export class BenchmarkManager {
 
   cleanup() {
     // Remove document-level event listeners
-    document.removeEventListener("mouseenter", this.boundHandleMouseEnter, true);
-    document.removeEventListener("mouseleave", this.boundHandleMouseLeave, true);
+    document.removeEventListener("pointerenter", this.boundHandleMouseEnter, true);
+    document.removeEventListener("pointerleave", this.boundHandleMouseLeave, true);
     document.removeEventListener("click", this.boundHandleClick, true);
     document.removeEventListener("keydown", this.boundHandleKeydown);
 

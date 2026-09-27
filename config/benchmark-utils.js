@@ -149,6 +149,7 @@ export function processBenchmark(slug, key, displayType = "median_time") {
 
   const benchmarkObj = {
     cpus: cpus,
+    display_type: displayType,
     default_cpu: bestCpu,
     default_value: displayValue,
   };

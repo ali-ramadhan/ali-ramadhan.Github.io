@@ -81,6 +81,11 @@ export class BenchmarkManager {
     this.currentBenchmarkData = null;
     this.hoverTimeout = null;
 
+    // CPU picked in a tooltip, which every reference on the page then shows;
+    // null shows each one's default
+    this.pageCpu = null;
+    this.referenceCache = new WeakMap();
+
     // Store bound handlers for cleanup
     this.boundHandleMouseEnter = this.handleMouseEnter.bind(this);
     this.boundHandleMouseLeave = this.handleMouseLeave.bind(this);
@@ -103,6 +108,8 @@ export class BenchmarkManager {
       <div class="benchmark-tooltip-content">
         <div class="benchmark-cpu-selector">
           <select class="benchmark-cpu-dropdown" aria-label="Select CPU"></select>
+          <button class="benchmark-cpu-reset" type="button" hidden
+            title="Show each number's default again: the best CPU for each benchmark and the median over CPUs for each ratio">Reset</button>
         </div>
         <div class="benchmark-meta"></div>
         <pre class="benchmark-output"></pre>
@@ -116,12 +123,16 @@ export class BenchmarkManager {
       this.hideTooltip();
     });
 
-    // Add change handler for CPU dropdown
+    // Picking a CPU shows it for every benchmark and ratio on the page
     const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
     dropdown.addEventListener("change", (e) => {
       if (this.currentBenchmarkData) {
-        this.updateTooltipForCpu(e.target.value);
+        this.selectPageCpu(e.target.value);
       }
+    });
+
+    this.tooltip.querySelector(".benchmark-cpu-reset").addEventListener("click", () => {
+      this.selectPageCpu(null);
     });
 
     // Add scroll wheel navigation for CPU dropdown
@@ -207,19 +218,7 @@ export class BenchmarkManager {
 
   showTooltip(element, event) {
     try {
-      const benchmarkData = JSON.parse(element.dataset.benchmark);
-      this.currentBenchmarkData = benchmarkData;
-
-      const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
-      dropdown.innerHTML = "";
-
-      const defaultCpu =
-        benchmarkData.kind === "ratio"
-          ? this.populateRatioOptions(dropdown, benchmarkData)
-          : this.populateBenchmarkOptions(dropdown, benchmarkData);
-
-      dropdown.value = defaultCpu;
-      this.updateTooltipForCpu(defaultCpu);
+      this.populateTooltip(element);
 
       // Show tooltip
       this.tooltip.classList.add("visible");
@@ -229,6 +228,90 @@ export class BenchmarkManager {
       this.positionTooltip(event || element);
     } catch (error) {
       console.error("Error displaying benchmark:", error);
+    }
+  }
+
+  // Parsed data-benchmark of a reference, with the text it was built with kept
+  // as its default
+  referenceData(element) {
+    let data = this.referenceCache.get(element);
+    if (!data) {
+      data = JSON.parse(element.dataset.benchmark);
+      data.default_text = element.textContent;
+      this.referenceCache.set(element, data);
+    }
+    return data;
+  }
+
+  // Fill in the tooltip for a reference, open on the page's CPU if one was
+  // picked and on the reference's own default CPU otherwise
+  populateTooltip(element) {
+    const data = this.referenceData(element);
+    this.currentBenchmarkData = data;
+
+    const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
+    dropdown.innerHTML = "";
+
+    let cpuName =
+      data.kind === "ratio"
+        ? this.populateRatioOptions(dropdown, data)
+        : this.populateBenchmarkOptions(dropdown, data);
+
+    if (this.pageCpu) {
+      cpuName = this.pageCpu;
+      if (!data.cpus[cpuName]) {
+        // Keep the page's CPU in view even though this one never ran on it
+        const option = document.createElement("option");
+        option.value = cpuName;
+        option.textContent = `${cpuName} | not benchmarked`;
+        option.disabled = true;
+        dropdown.prepend(option);
+      }
+    }
+
+    dropdown.value = cpuName;
+    this.updateTooltipForCpu(cpuName);
+    this.tooltip.querySelector(".benchmark-cpu-reset").hidden = !this.pageCpu;
+  }
+
+  selectPageCpu(cpuName) {
+    this.pageCpu = cpuName;
+    this.updateReferences();
+    if (this.activeReference) {
+      this.populateTooltip(this.activeReference);
+    }
+  }
+
+  // What a reference shows for a CPU: its time, memory, or ratio there, and
+  // its default for no CPU
+  referenceText(data, cpuName) {
+    if (!cpuName) return data.default_text;
+
+    const cpuData = data.cpus[cpuName];
+    if (!cpuData) return "n/a";
+    if (data.kind === "ratio") return cpuData.ratio_text;
+    return data.display_type === "memory" ? cpuData.memory_estimate : cpuData.median_time;
+  }
+
+  updateReferences() {
+    const fadeIn = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    for (const element of document.querySelectorAll(".benchmark-reference")) {
+      const data = this.referenceData(element);
+      const text = this.referenceText(data, this.pageCpu);
+      element.classList.toggle(
+        "benchmark-reference--missing",
+        Boolean(this.pageCpu) && !data.cpus[this.pageCpu]
+      );
+
+      if (element.textContent === text) continue;
+      element.textContent = text;
+
+      // Fade the new number in so changes elsewhere on the page get noticed
+      if (fadeIn) {
+        const opacity = getComputedStyle(element).opacity;
+        element.animate([{ opacity: 0.2 }, { opacity }], { duration: 500, easing: "ease-out" });
+      }
     }
   }
 
@@ -330,17 +413,23 @@ export class BenchmarkManager {
   }
 
   updateTooltipForCpu(cpuName) {
-    if (!this.currentBenchmarkData || !this.currentBenchmarkData.cpus[cpuName]) {
+    if (!this.currentBenchmarkData) {
       return;
     }
 
     const cpuData = this.currentBenchmarkData.cpus[cpuName];
+    const meta = this.tooltip.querySelector(".benchmark-meta");
+    const output = this.tooltip.querySelector(".benchmark-output");
+
+    if (!cpuData) {
+      meta.textContent = "";
+      output.textContent = `Not benchmarked on ${cpuName}`;
+      return;
+    }
 
     // Update metadata line (Julia version and OS)
-    const meta = this.tooltip.querySelector(".benchmark-meta");
     meta.textContent = `${cpuData.julia_version} · ${cpuData.os}`;
 
-    const output = this.tooltip.querySelector(".benchmark-output");
     if (this.currentBenchmarkData.kind === "ratio") {
       output.textContent = this.ratioSummary(this.currentBenchmarkData, cpuData);
     } else {

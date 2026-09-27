@@ -57,7 +57,7 @@ We can code this up as
 
 @code[problem-0001:sum_multiples,sum_multiples_two_inclusion_exclusion]
 
-and benchmarking `sum_multiples_two_inclusion_exclusion(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is roughly 2000x faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
+and benchmarking `sum_multiples_two_inclusion_exclusion(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is @ratio[problem-0001:two_generator/two_inclusion_exclusion] faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
 
 ## Three factors
 

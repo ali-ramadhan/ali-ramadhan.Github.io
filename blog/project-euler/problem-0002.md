@@ -27,6 +27,8 @@ We'll use a slightly different convention from Project Euler. The recurrence rel
 
 Notice that $F_3 = 2$, $F_6 = 8$, $F_9 = 34$, and $F_{12} = 144$. So every third number is even, and all the others are odd. This is because $F_0 = 0$ is even and $F_1 = 1$ is odd, so $F_2 = F_1 + F_0$ will be odd because $\text{even} + \text{odd} = \text{odd}$ by [parity](<https://en.wikipedia.org/wiki/Parity_(mathematics)>). Then $F_3 = F_2 + F_1$ will be even because $\text{odd} + \text{odd} = \text{even}$. This continues and so every third Fibonacci will be even, and all others are odd.
 
+## A recurrence for the even Fibonacci numbers
+
 Now that we know every third Fibonacci number is even, can we find a recurrence relation for just the even Fibonacci numbers? So we want to compute $F_n$ using $F_{n-3}$, $F_{n-6}$, $F_{n-9}$, etc.
 
 We can start by writing out
@@ -58,6 +60,8 @@ F_n = 4F_{n-3} + F_{n-6}
 
 to generate all the even Fibonacci numbers directly, skipping over all the odd ones!
 
+The even Fibonacci numbers $0, 2, 8, 34, 144, 610, 2584, \dots$ are [OEIS A014445](https://oeis.org/A014445), and the entry lists this same recurrence $a_n = 4a_{n-1} + a_{n-2}$ along with the generating function $2x / (1 - 4x - x^2)$.
+
 We can implement this in Julia:
 
 @code[problem-0002:sum_even_fibonacci]
@@ -65,3 +69,86 @@ We can implement this in Julia:
 Benchmarking `sum_even_fibonacci(4 * 10^6)` we get @benchmark[problem-0002:limit_4M] which is pretty fast. Since the Fibonacci numbers grow exponentially, we can increase the limit to a much larger number and still compute the sum quickly. For example, benchmarking `sum_even_fibonacci(4 * 10^15)` only takes @benchmark[problem-0002:limit_4e15].
 
 This solution takes $\mathcal{O}(\log L)$ time because Fibonacci numbers grow exponentially, so only about $\log L$ terms are needed to reach the limit $L$.
+
+## Generalizing to every $k^\text{th}$ Fibonacci number
+
+We got lucky twice here. Every third Fibonacci number is even, and those even Fibonacci numbers happen to satisfy a two-term recurrence of their own. Is that second bit of luck special to $3$, or does every $k^\text{th}$ Fibonacci number satisfy a recurrence like this?
+
+The first bit of luck isn't luck at all. The even Fibonacci numbers are $F_3, F_6, F_9, \dots$ and they're even because they are multiples of $F_3 = 2$, which is an instance of a general [divisibility property](https://en.wikipedia.org/wiki/Fibonacci_sequence#Divisibility_properties): whenever $m$ divides $n$, $F_m$ divides $F_n$. This follows from the stronger identity $\gcd(F_m, F_n) = F_{\gcd(m, n)}$. So every fourth Fibonacci number is a multiple of $F_4 = 3$, every fifth is a multiple of $F_5 = 5$, every sixth is a multiple of $F_6 = 8$, and so on. "Even" is just the $k = 3$ case of "divisible by $F_k$".
+
+Now for the recurrence. We could grind through the same substitutions we did for $F_{n+6}$, but for a general $k$ it's much less painful to start from [Binet's formula](https://en.wikipedia.org/wiki/Fibonacci_sequence#Binet's_formula)
+
+```math
+F_n = \frac{\varphi^n - \psi^n}{\sqrt{5}}
+```
+
+where $\varphi = \frac{1 + \sqrt{5}}{2}$ is the [golden ratio](https://en.wikipedia.org/wiki/Golden_ratio) and $\psi = \frac{1 - \sqrt{5}}{2}$, the two roots of $x^2 - x - 1 = 0$. The only property of these two numbers we'll need is that their product is
+
+```math
+\varphi\psi = \frac{(1 + \sqrt{5})(1 - \sqrt{5})}{4} = \frac{1 - 5}{4} = -1
+```
+
+so $\psi = -1/\varphi$ and $\varphi = -1/\psi$. Now we want a formula involving $F_{n-k}$ and $F_{n+k}$ so taking $k$ steps backwards or forwards means that
+
+```math
+\begin{align}
+\varphi^{n-k} &= \varphi^n \varphi^{-k} = (-1)^k \varphi^n \psi^k \\
+\psi^{n-k}    &= \psi^n \psi^{-k} = (-1)^k \psi^n \varphi^k \\
+\varphi^{n+k} &= \varphi^n \varphi^k \\
+\psi^{n+k}    &= \psi^n \psi^k
+\end{align}
+```
+
+Putting the first two into Binet's formula we get
+
+```math
+F_{n-k} = \frac{\varphi^{n-k} - \psi^{n-k}}{\sqrt{5}} = \frac{(-1)^k \varphi^n \psi^k - (-1)^k \psi^n \varphi^k}{\sqrt{5}}
+```
+
+which we can rearrange to get
+
+```math
+(-1)^k F_{n-k} = \frac{\varphi^n \psi^k - \varphi^k \psi^n}{\sqrt{5}}
+```
+
+Similarly, the other two give $F_{n+k}$, and this time there's no sign to move around
+
+```math
+F_{n+k} = \frac{\varphi^{n+k} - \psi^{n+k}}{\sqrt{5}} = \frac{\varphi^n \varphi^k - \psi^n \psi^k}{\sqrt{5}}
+```
+
+Now adding the two of them, the $\varphi^n$ and $\psi^n$ terms group together
+
+```math
+\begin{align}
+F_{n+k} + (-1)^k F_{n-k} &= \frac{\varphi^n \varphi^k - \psi^n \psi^k}{\sqrt{5}} + \frac{\varphi^n \psi^k - \varphi^k \psi^n}{\sqrt{5}} \\
+                         &= \frac{\varphi^n (\varphi^k + \psi^k) - \psi^n (\psi^k + \varphi^k)}{\sqrt{5}} \\
+                         &= (\varphi^k + \psi^k) \frac{\varphi^n - \psi^n}{\sqrt{5}} \\
+                         &= (\varphi^k + \psi^k) F_n
+\end{align}
+```
+
+That leftover factor of $\varphi^k + \psi^k$ looks like it might be irrational, but it never is! Since $\varphi$ and $\psi$ are both roots of $x^2 - x - 1 = 0$, multiplying that through by $x^{k-2}$ gives $\varphi^k = \varphi^{k-1} + \varphi^{k-2}$ and the same for $\psi$, so the sums $\varphi^k + \psi^k$ obey the exact same recurrence the Fibonacci numbers do. They just start off somewhere else, at $\varphi^0 + \psi^0 = 2$ and $\varphi + \psi = 1$. These are the [Lucas numbers](https://en.wikipedia.org/wiki/Lucas_number) $L_k$
+
+```math
+2, 1, 3, 4, 7, 11, 18, 29, 47, 76, \dots
+```
+
+so what we've derived is that every $k^\text{th}$ Fibonacci number does satisfy a two-term recurrence
+
+```math
+F_{n+k} = L_k F_n - (-1)^k F_{n-k}
+```
+
+with the Lucas number $L_k$ as the coefficient and a sign that flips:
+
+| $k$ | $F_k$ | $L_k$ | recurrence                  |
+| --- | ----- | ----- | --------------------------- |
+| $1$ | $1$   | $1$   | $F_{n+1} = F_n + F_{n-1}$   |
+| $2$ | $1$   | $3$   | $F_{n+2} = 3F_n - F_{n-2}$  |
+| $3$ | $2$   | $4$   | $F_{n+3} = 4F_n + F_{n-3}$  |
+| $4$ | $3$   | $7$   | $F_{n+4} = 7F_n - F_{n-4}$  |
+| $5$ | $5$   | $11$  | $F_{n+5} = 11F_n + F_{n-5}$ |
+| $6$ | $8$   | $18$  | $F_{n+6} = 18F_n - F_{n-6}$ |
+
+The $k = 1$ row is just the Fibonacci recurrence we started with, and the $k = 3$ row is the $F_n = 4F_{n-3} + F_{n-6}$ we derived by hand, shifted along by three indices.

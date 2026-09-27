@@ -25,13 +25,15 @@ We can implement trial division in Julia:
 
 @code[src/utils/Primes/prime_factors.jl:prime_factors]
 
+The loop condition squares `factor` with `widemul`, which returns an `Int128`, because `factor^2` overflows `Int64` once `factor` gets past $\sqrt{2^{63}}. The wider multiply doesn't slow the loop down, unlike checking `factor <= isqrt(n)`, which adds a square root and an integer division to every iteration.
+
 The largest prime factor is then just the maximum of the list:
 
 @code[problem-0003:largest_prime_factor]
 
 Benchmarking `largest_prime_factor(600851475143)` to solve the problem we get @benchmark[problem-0003:solution] which is more than fast enough for this problem.
 
-If the number is made up of only small factors then `prime_factors` will take very little time. In the worst case, $n$ could be prime or semiprime and trial division will end up checking many factors. Finding the largest prime factor of a cool prime I found, $2^{55} - 55$ takes @benchmark[problem-0003:cool_prime]. And for the semiprime $268435399 \times 536870923$ it takes @benchmark[problem-0003:semiprime]. That's 100,000x longer in both cases compared to solving the original problem.
+If the number is made up of only small factors then `prime_factors` will take very little time. In the worst case, $n$ could be prime or semiprime and trial division will end up checking many factors. Finding the largest prime factor of a cool prime I found, $2^{55} - 55$ takes @benchmark[problem-0003:cool_prime]. And for the semiprime $268435399 \times 536870923$ it takes @benchmark[problem-0003:semiprime]. That's @ratio[problem-0003:cool_prime/solution] and @ratio[problem-0003:semiprime/solution] longer than solving the original problem.
 
 The runtime of `prime_factors` can vary wildly. In the best case when $n$ just has many small factors that are quickly found it runs in $\mathcal{O}(\log n)$ time. But in the worst case trial division will end up testing all odd divisors up to $\sqrt{n}$ so it'll take $\mathcal{O}(\sqrt{n})$ time.
 

@@ -57,7 +57,7 @@ We can code this up as
 
 @code[problem-0001:sum_multiples,sum_multiples_two_inclusion_exclusion]
 
-and benchmarking `sum_multiples_two_inclusion_exclusion(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is @ratio[problem-0001:two_generator/two_inclusion_exclusion] faster. It might even be faster but it's quite difficult to benchmark an operation that takes less than 1 ns as system clocks don't have sub-nanosecond resolution.
+and benchmarking `sum_multiples_two_inclusion_exclusion(3, 5, 1000)` I get a median time of @benchmark[problem-0001:two_inclusion_exclusion] which is @ratio[problem-0001:two_generator/two_inclusion_exclusion] faster. Benchmarking something this quick needs a bit of care though. With literal arguments like `(3, 5, 1000)`, Julia works out the answer at compile time and there's nothing left to time, so the arguments get passed in as `$(Ref(3))[]` and so on to hide their values from the compiler.
 
 ## Three factors
 
@@ -87,7 +87,7 @@ We can implement this as:
 
 @code[problem-0001:sum_multiples_three_inclusion_exclusion]
 
-and if we benchmark `sum_multiples_three_inclusion_exclusion(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_inclusion_exclusion] which again is sub-nanosecond.
+and if we benchmark `sum_multiples_three_inclusion_exclusion(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_inclusion_exclusion], which is @ratio[problem-0001:three_generator/three_inclusion_exclusion] faster than the generator. It has 7 terms to add up instead of 3, but unlike the generator it doesn't care that $L$ went up by a factor of 1000.
 
 ## Complexity Analysis
 

@@ -72,6 +72,6 @@ This gives us a direct formula:
 
 @code[problem-0025:first_fibonacci_with_n_digits_formula]
 
-Both approaches give the same answer, but using the formula is going to take like a few CPU cycles while the iterative approach will keep creating larger and larger integers. The iterative approach takes @benchmark[problem-0025:iterative_1000] while the formula computes the answer in @benchmark[problem-0025:formula_1000].
+Both approaches give the same answer, but using the formula is going to take like a few nanoseconds while the iterative approach will keep creating larger and larger integers. The iterative approach takes @benchmark[problem-0025:iterative_1000] while the formula computes the answer in @benchmark[problem-0025:formula_1000].
 
 For finding the first Fibonacci number with 10,000 digits, it takes @benchmark[problem-0025:iterative_10000] for the iterative approach versus @benchmark[problem-0025:formula_10000] for the formula. Turns out it is $F_{47847}$.

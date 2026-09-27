@@ -65,7 +65,7 @@ The generator solution can easily be extended to deal with three factors:
 
 @code[problem-0001:sum_multiples_three_generator]
 
-Let's sum the multiples of 3, 5, and 7 below $10^6$. Benchmarking `sum_multiples_three_generator(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_generator]. Taking ~1500x longer than the 2 factor case with $L = 10^3$ makes sense since it's now checking 1000 times more numbers and 50% more factors.
+Let's sum the multiples of 3, 5, and 7 below $10^6$. Benchmarking `sum_multiples_three_generator(3, 5, 7, 10^6)` we get @benchmark[problem-0001:three_generator]. Taking @ratio[problem-0001:three_generator/two_generator] longer than the 2 factor case with $L = 10^3$ makes sense since it's now checking 1000 times more numbers and 50% more factors.
 
 The inclusion-exclusion principle extends to any number of finite sets, although it does get more complex. For three finite sets $A$, $B$, and $C$:
 

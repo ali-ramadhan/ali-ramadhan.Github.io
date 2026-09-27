@@ -95,6 +95,6 @@ Let $f$ be the number of factors we're considering.
 
 The generator solutions take $\mathcal{O}(Lf)$ time as they iterate through every number until $L$ and perform $f$ modulo operations per number.
 
-The inclusion-exclusion solutions achieve $\mathcal{O}(2^f \log M)$ time complexity, where $M$ is the maximum factor value. They need to compute $2^f - 1$ non-empty subsets to apply the inclusion-exclusion principle. Each subset requires computing an LCM using the Euclidean algorithm, which takes $\mathcal{O}(\log M)$ time, followed by using the sum formula which takes constant time.
+The inclusion-exclusion solutions achieve $\mathcal{O}(2^f \log M)$ time complexity, where $M$ is the maximum factor value. They need to compute $2^f - 1$ non-empty subsets to apply the inclusion-exclusion principle. Each subset requires computing an LCM using the [binary GCD algorithm](https://en.wikipedia.org/wiki/Binary_GCD_algorithm), which takes $\mathcal{O}(\log M)$ time, followed by using the sum formula which takes constant time.
 
 If I have a lot of factors to crunch through, I personally prefer the elegance of the generator expression as $2^f - 1$ terms is a lot. If performance was critical there's probably a nice way to generate the terms of the inclusion-exclusion principle. But then, in the case of many factors and smaller $L$ the generator expression may end up being faster.

@@ -160,3 +160,65 @@ with the Lucas number $L_k$ as the coefficient and a sign that flips:
 | $6$ | $8$   | $18$  | $F_{n+6} = 18F_n - F_{n-6}$ |
 
 The $k = 1$ row is just the Fibonacci recurrence we started with, and the $k = 3$ row is the $F_n = 4F_{n-3} + F_{n-6}$ we derived by hand, shifted along by three indices.
+
+## Summing every $k^\text{th}$ Fibonacci number
+
+Since the subsequence we're summing has its own two-term recurrence, let's give it its own name. Let's write $U_j = F_{kj}$ so that $U_0 = 0$ and $U_1 = F_k$, and the recurrence above becomes
+
+```math
+U_{j+1} = L_k U_j - (-1)^k U_{j-1}
+```
+
+We want to compute $\displaystyle S_m = \sum_{j=1}^m U_j$ so let's sum the recurrence itself from $j = 1$ to $m$ to get
+
+```math
+\sum_{j=1}^m U_{j+1} = L_k \sum_{j=1}^m U_j - (-1)^k \sum_{j=1}^m U_{j-1}
+```
+
+We can rewrite each sum here as
+
+```math
+\begin{align}
+\sum_{j=1}^m U_{j+1} &= S_m + U_{m+1} - U_1 \\
+\sum_{j=1}^m U_j     &= S_m \\
+\sum_{j=1}^m U_{j-1} &= S_m - U_m
+\end{align}
+```
+
+Substituting these in we get
+
+```math
+S_m + U_{m+1} - U_1 = L_k S_m - (-1)^k (S_m - U_m)
+```
+
+which allows us to solve for $S_m$ to get
+
+```math
+S_m = \frac{U_{m+1} - (-1)^k U_m - U_1}{L_k - (-1)^k - 1}
+```
+
+We can now write a closed form for the sum of every $k^\text{th}$ Fibonacci number
+
+```math
+\sum_{j=1}^m F_{kj} = \frac{F_{k(m+1)} - (-1)^k F_{km} - F_k}{L_k - (-1)^k - 1}
+```
+
+For $k = 1$ we have $L_1 = 1$ and recover the classic identity for the sum of all the Fibonacci numbers
+
+```math
+\sum_{j=1}^m F_j = F_{m+1} + F_m - F_1 = F_{m+2} - 1
+```
+
+And for $k = 3$ we have $L_3 = 4$ giving a closed form for the sum we actually care about
+
+```math
+\sum_{j=1}^m F_{3j} = \frac{F_{3m+3} + F_{3m} - 2}{4}
+```
+
+The largest even Fibonacci number not exceeding four million is $F_{33}$ and the next one is $F_{36}$, so the answer is
+
+```math
+\frac{F_{36} + F_{33} - 2}{4}
+```
+
+It's not like we needed a closed-form solution to solve the problem in a reasonable amount of time, but it's cool that we can derive something like this!

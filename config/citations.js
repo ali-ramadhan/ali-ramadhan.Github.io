@@ -90,12 +90,46 @@ function formatReference(ref, key) {
   return formatted;
 }
 
+// Matches [@key], [@key1; @key2], and [@key, p. 86]
+const citationRegex = /\[@([^\]]+)\]/g;
+
+/**
+ * Parse the inside of a citation, e.g. "@freitag1973; @koshy2001, p. 86", into
+ * keys, each with an optional locator (whatever follows the key's first comma)
+ * @param {string} keysString - The text between "[" and "]"
+ * @returns {{key: string, locator: string}[]}
+ */
+export function parseCitationKeys(keysString) {
+  return keysString.split(";").map((part) => {
+    const [key, ...locator] = part.trim().replace(/^@/, "").split(",");
+    return { key: key.trim(), locator: locator.join(",").trim() };
+  });
+}
+
+/**
+ * Split text into its plain-text pieces and its citations, in order
+ * @param {string} text - Text that may contain citations
+ * @returns {Array<{type: "text", content: string} | {type: "citation", cites: {key: string, locator: string}[]}>}
+ */
+export function splitCitations(text) {
+  const pieces = [];
+  let last = 0;
+  for (const match of text.matchAll(citationRegex)) {
+    if (match.index > last) pieces.push({ type: "text", content: text.slice(last, match.index) });
+    pieces.push({ type: "citation", cites: parseCitationKeys(match[1]) });
+    last = match.index + match[0].length;
+  }
+  if (last < text.length) pieces.push({ type: "text", content: text.slice(last) });
+  return pieces;
+}
+
 /**
  * Format citation display text
  * @param {Object} ref - Reference object
+ * @param {string} [locator] - Optional locator such as "p. 86"
  * @returns {string} - Formatted citation display
  */
-function formatCitation(ref) {
+export function formatCitation(ref, locator = "") {
   if (!ref) return "[Unknown]";
 
   const authors = ref.authors || "Unknown";
@@ -104,7 +138,7 @@ function formatCitation(ref) {
   // Simple author formatting - just take first author if multiple
   const firstAuthor = authors.split(",")[0].split(" & ")[0];
 
-  return `${firstAuthor}, ${year}`;
+  return locator ? `${firstAuthor}, ${year}, ${locator}` : `${firstAuthor}, ${year}`;
 }
 
 /**
@@ -118,9 +152,6 @@ export function markdownItCitations(md, options = {}) {
     ...options,
   };
 
-  // Citation regex to match [@key] or [@key1; @key2] patterns
-  const citationRegex = /\[@([^\]]+)\]/g;
-
   // Bibliography marker regex to match [[bibliography]] or [[bibliography:filename]]
   const bibliographyRegex = /^\[\[bibliography(?::([^\]]+))?\]\]/gm;
 
@@ -132,73 +163,51 @@ export function markdownItCitations(md, options = {}) {
     }
 
     const usedCitations = pageCitations.get(pageUrl);
+    const referenceFile = state.env.referenceFile || defaultOptions.defaultReferenceFile;
 
-    for (let i = 0; i < state.tokens.length; i++) {
-      const token = state.tokens[i];
+    // One parenthesized group of citation links, e.g. "(Freitag, 1973; Koshy, 2001, p. 86)"
+    function renderCitation(cites) {
+      const references = loadReferences(referenceFile);
 
-      if (token.type === "inline" && token.children) {
-        for (let j = 0; j < token.children.length; j++) {
-          const child = token.children[j];
-
-          if (child.type === "text" && citationRegex.test(child.content)) {
-            citationRegex.lastIndex = 0; // Reset regex
-            let match;
-            let content = child.content;
-            let hasMatches = false;
-
-            while ((match = citationRegex.exec(child.content)) !== null) {
-              hasMatches = true;
-              const [fullMatch, keysString] = match;
-
-              // Split multiple keys by semicolon and remove @ prefix if present
-              const keys = keysString.split(";").map((k) => k.trim().replace(/^@/, ""));
-
-              // Load references from the appropriate file
-              const referenceFile = state.env.referenceFile || defaultOptions.defaultReferenceFile;
-              const references = loadReferences(referenceFile);
-
-              // Process each citation key
-              const citationParts = keys.map((key) => {
-                const ref = references[key];
-                if (ref) {
-                  usedCitations.add(key);
-                  const displayText = formatCitation(ref);
-                  const tooltipData = JSON.stringify({
-                    title: ref.title,
-                    authors: ref.authors,
-                    year: ref.year,
-                    journal: ref.journal || ref.publisher || "",
-                    doi: ref.doi || ref.url || "",
-                  }).replace(/'/g, "&#39;");
-
-                  return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${displayText}</a>`;
-                } else {
-                  console.warn(`Citation key "${key}" not found in ${referenceFile}.yaml`);
-                  return `<span class="citation-missing">[${key}]</span>`;
-                }
-              });
-
-              const replacement =
-                keys.length === 1 ? `(${citationParts[0]})` : `(${citationParts.join("; ")})`;
-
-              content = content.replace(fullMatch, replacement);
-            }
-
-            if (hasMatches) {
-              // Create new HTML inline token
-              const htmlToken = new state.Token("html_inline", "", 0);
-              htmlToken.content = content;
-              htmlToken.level = child.level;
-
-              // Replace the text token with HTML token
-              token.children[j] = htmlToken;
-
-              // Reset regex for safety
-              citationRegex.lastIndex = 0;
-            }
-          }
+      const citationParts = cites.map(({ key, locator }) => {
+        const ref = references[key];
+        if (!ref) {
+          console.warn(`Citation key "${key}" not found in ${referenceFile}.yaml`);
+          return `<span class="citation-missing">[${key}]</span>`;
         }
-      }
+
+        usedCitations.add(key);
+        const tooltipData = JSON.stringify({
+          title: ref.title,
+          authors: ref.authors,
+          year: ref.year,
+          journal: ref.journal || ref.publisher || "",
+          doi: ref.doi || ref.url || "",
+        }).replace(/'/g, "&#39;");
+
+        return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${formatCitation(ref, locator)}</a>`;
+      });
+
+      return `(${citationParts.join("; ")})`;
+    }
+
+    for (const token of state.tokens) {
+      if (token.type !== "inline" || !token.children) continue;
+
+      // Split each text token around its citations rather than turning it all
+      // into HTML. The text in between stays text, so markdown-it still escapes
+      // it and later rules (like the @benchmark shortcodes) still process it.
+      token.children = token.children.flatMap((child) => {
+        if (child.type !== "text" || !child.content.includes("[@")) return [child];
+
+        return splitCitations(child.content).map((piece) => {
+          const isText = piece.type === "text";
+          const pieceToken = new state.Token(isText ? "text" : "html_inline", "", 0);
+          pieceToken.content = isText ? piece.content : renderCitation(piece.cites);
+          pieceToken.level = child.level;
+          return pieceToken;
+        });
+      });
     }
 
     return false;

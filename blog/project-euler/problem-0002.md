@@ -203,7 +203,7 @@ We can now write a closed form for the sum of every $k^\text{th}$ Fibonacci numb
 \sum_{j=1}^m F_{kj} = \frac{F_{k(m+1)} - (-1)^k F_{km} - F_k}{L_k - (-1)^k - 1}
 ```
 
-For $k = 1$ we have $L_1 = 1$ and recover the classic identity for the sum of all the Fibonacci numbers
+This is a classical result [@freitag1973; @koshy2001, p. 86]. For $k = 1$ we have $L_1 = 1$ and recover the classic identity for the sum of all the Fibonacci numbers
 
 ```math
 \sum_{j=1}^m F_j = F_{m+1} + F_m - F_1 = F_{m+2} - 1
@@ -222,3 +222,7 @@ The largest even Fibonacci number not exceeding four million is $F_{33}$ and the
 ```
 
 It's not like we needed a closed-form solution to solve the problem in a reasonable amount of time, but it's cool that we can derive something like this!
+
+## References
+
+[[bibliography]]

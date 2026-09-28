@@ -1,0 +1,22 @@
+# References for the Project Euler blog posts, shared by every post in
+# blog/project-euler/ (see blog/project-euler/project-euler.11tydata.json)
+
+freitag1973:
+  authors: "Freitag, H. T."
+  year: 1973
+  title: "On summations and expansions of Fibonacci numbers"
+  type: article
+  journal: "The Fibonacci Quarterly"
+  volume: "11"
+  issue: "1"
+  pages: "63–71"
+  doi: "https://doi.org/10.1080/00150517.1973.12430868"
+  pdf: "https://www.fq.math.ca/Scanned/11-1/freitag.pdf"
+
+koshy2001:
+  authors: "Koshy, T."
+  year: 2001
+  title: "Fibonacci and Lucas numbers with applications"
+  type: book
+  publisher: "Wiley"
+  doi: "https://doi.org/10.1002/9781118033067"

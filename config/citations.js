@@ -1,6 +1,9 @@
 /**
  * Custom Citation Plugin for markdown-it
- * Handles [@key] and [@key1; @key2] syntax for citations
+ * Handles @citep[key] for parenthetical citations like "(Angell & Godwin, 1977)" and
+ * @citet[key] for textual ones like "Angell & Godwin (1977)". Both take several keys
+ * separated by semicolons, each with an optional locator after a comma, e.g.
+ * @citep[dagum2016; koshy2001, p. 86]
  */
 
 import { readFileSync } from "fs";
@@ -92,33 +95,38 @@ function formatReference(ref, key) {
   return formatted;
 }
 
-// Matches [@key], [@key1; @key2], and [@key, p. 86]
-const citationRegex = /\[@([^\]]+)\]/g;
+// Matches @citet[...] and @citep[...], e.g. @citep[key], @citet[key, p. 86], @citep[key1; key2]
+const citationRegex = /@cite([tp])\[([^\]]+)\]/g;
 
 /**
- * Parse the inside of a citation, e.g. "@freitag1973; @koshy2001, p. 86", into
+ * Parse the inside of a citation, e.g. "freitag1973; koshy2001, p. 86", into
  * keys, each with an optional locator (whatever follows the key's first comma)
  * @param {string} keysString - The text between "[" and "]"
  * @returns {{key: string, locator: string}[]}
  */
 export function parseCitationKeys(keysString) {
   return keysString.split(";").map((part) => {
-    const [key, ...locator] = part.trim().replace(/^@/, "").split(",");
+    const [key, ...locator] = part.split(",");
     return { key: key.trim(), locator: locator.join(",").trim() };
   });
 }
 
 /**
- * Split text into its plain-text pieces and its citations, in order
+ * Split text into its plain-text pieces and its citations, in order. Each citation
+ * records whether it is textual (@citet) or parenthetical (@citep).
  * @param {string} text - Text that may contain citations
- * @returns {Array<{type: "text", content: string} | {type: "citation", cites: {key: string, locator: string}[]}>}
+ * @returns {Array<{type: "text", content: string} | {type: "citation", textual: boolean, cites: {key: string, locator: string}[]}>}
  */
 export function splitCitations(text) {
   const pieces = [];
   let last = 0;
   for (const match of text.matchAll(citationRegex)) {
     if (match.index > last) pieces.push({ type: "text", content: text.slice(last, match.index) });
-    pieces.push({ type: "citation", cites: parseCitationKeys(match[1]) });
+    pieces.push({
+      type: "citation",
+      textual: match[1] === "t",
+      cites: parseCitationKeys(match[2]),
+    });
     last = match.index + match[0].length;
   }
   if (last < text.length) pieces.push({ type: "text", content: text.slice(last) });
@@ -141,20 +149,44 @@ function surnames(authors) {
 }
 
 /**
- * Format citation display text in author-year style: "Koshy, 2001", "Angell & Godwin, 1977",
- * or "Findley et al., 1998" for three or more authors, followed by any locator
+ * The authors part of a citation: "Koshy", "Angell & Godwin", or "Findley et al." for
+ * three or more authors
+ * @param {Object} ref - Reference object
+ * @returns {string}
+ */
+function citationAuthors(ref) {
+  const names = surnames(ref.authors || "Unknown");
+  return names.length > 2 ? `${names[0]} et al.` : names.join(" & ");
+}
+
+/**
+ * Parenthetical citation text, without the parentheses: "Angell & Godwin, 1977",
+ * followed by any locator as in "Koshy, 2001, p. 86"
  * @param {Object} ref - Reference object
  * @param {string} [locator] - Optional locator such as "p. 86"
- * @returns {string} - Formatted citation display
+ * @returns {string}
  */
-export function formatCitation(ref, locator = "") {
+export function formatCitep(ref, locator = "") {
   if (!ref) return "[Unknown]";
-
-  const names = surnames(ref.authors || "Unknown");
-  const authors = names.length > 2 ? `${names[0]} et al.` : names.join(" & ");
   const year = ref.year || "Unknown";
+  return locator
+    ? `${citationAuthors(ref)}, ${year}, ${locator}`
+    : `${citationAuthors(ref)}, ${year}`;
+}
 
-  return locator ? `${authors}, ${year}, ${locator}` : `${authors}, ${year}`;
+/**
+ * Textual citation text: "Angell & Godwin (1977)", with any locator inside the
+ * parentheses as in "Koshy (2001, p. 86)"
+ * @param {Object} ref - Reference object
+ * @param {string} [locator] - Optional locator such as "p. 86"
+ * @returns {string}
+ */
+export function formatCitet(ref, locator = "") {
+  if (!ref) return "[Unknown]";
+  const year = ref.year || "Unknown";
+  return locator
+    ? `${citationAuthors(ref)} (${year}, ${locator})`
+    : `${citationAuthors(ref)} (${year})`;
 }
 
 /**
@@ -181,9 +213,11 @@ export function markdownItCitations(md, options = {}) {
     const usedCitations = pageCitations.get(pageUrl);
     const referenceFile = state.env.referenceFile || defaultOptions.defaultReferenceFile;
 
-    // One parenthesized group of citation links, e.g. "(Freitag, 1973; Koshy, 2001, p. 86)"
-    function renderCitation(cites) {
+    // A group of citation links: "(Freitag, 1973; Koshy, 2001, p. 86)" for @citep or
+    // "Freitag (1973); Koshy (2001, p. 86)" for @citet
+    function renderCitation(cites, textual) {
       const references = loadReferences(referenceFile);
+      const format = textual ? formatCitet : formatCitep;
 
       const citationParts = cites.map(({ key, locator }) => {
         const ref = references[key];
@@ -201,10 +235,11 @@ export function markdownItCitations(md, options = {}) {
           doi: ref.doi || ref.url || "",
         }).replace(/'/g, "&#39;");
 
-        return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${md.utils.escapeHtml(formatCitation(ref, locator))}</a>`;
+        return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${md.utils.escapeHtml(format(ref, locator))}</a>`;
       });
 
-      return `(${citationParts.join("; ")})`;
+      const citations = citationParts.join("; ");
+      return textual ? citations : `(${citations})`;
     }
 
     for (const token of state.tokens) {
@@ -214,12 +249,12 @@ export function markdownItCitations(md, options = {}) {
       // into HTML. The text in between stays text, so markdown-it still escapes
       // it and later rules (like the @benchmark shortcodes) still process it.
       token.children = token.children.flatMap((child) => {
-        if (child.type !== "text" || !child.content.includes("[@")) return [child];
+        if (child.type !== "text" || !child.content.includes("@cite")) return [child];
 
         return splitCitations(child.content).map((piece) => {
           const isText = piece.type === "text";
           const pieceToken = new state.Token(isText ? "text" : "html_inline", "", 0);
-          pieceToken.content = isText ? piece.content : renderCitation(piece.cites);
+          pieceToken.content = isText ? piece.content : renderCitation(piece.cites, piece.textual);
           pieceToken.level = child.level;
           return pieceToken;
         });

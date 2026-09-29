@@ -48,7 +48,7 @@ The [Keeling Curve](https://en.wikipedia.org/wiki/Keeling_Curve) represents the 
 
 CO<sub>2</sub> level increase in the spring and summer as new vegetation growth pulls CO<sub>2</sub> out of the atmosphere through photosynthesis, then decrease in the fall as plants and leaves die off and decay, releasing CO<sub>2</sub> back into the atmosphere. Since Hawaii is quite isolated from sources of pollution and human activity and Mauna Loa is quite high up, the seasonal cycle exhibits little noise or variability, which will make it easier to forecast. In the Southern Hemisphere the cycle is reversed but it is also less pronounced as the Southern Hemisphere has less land and less vegetation as a result.
 
-Measurements were first taken by [@keeling1960] and they're more thoroughly discussed in [@keeling2005].
+Measurements were first taken by @citet[keeling1960] and they're more thoroughly discussed in @citet[keeling2005].
 
 We'll just look at monthly measurements (from the 15th of each month) but more frequent observations are available.
 
@@ -60,7 +60,7 @@ This is the number of [sunspots](https://en.wikipedia.org/wiki/Sunspot) on the S
 ![Sunspots time series](/assets/blog/time-series-zoo/time_series_sunspots.png)
 :::
 
-Sunspots are cold dark spots on the solar surface caused by concentrations of magnetic flux that inhibit convection. The cyclical behavior is the [solar cycle](https://en.wikipedia.org/wiki/Solar_cycle), a roughly 11-year cycle with significant amplitude variations. Each cycle the sun exhibits increased magnetic activity in the form of sunspots, solar flares, and coronal mass ejections. The period of low sunspot count from roughly 1796 to 1820 correspond to the [Dalton Minimum](https://en.wikipedia.org/wiki/Dalton_Minimum). The exact cause of such minima is not well understood. Predicting future solar cycles may be impossible due to the chaotic nature of the solar surface magnetic field, however short-term predictions of the upcoming solar cycle are possible based on a causal relationship between the Sun's polar field and the toroidal field of the next sunspot cycle [@nandy2021]. This suggests that we should be forecasting one solar cycle ahead for validation and testing.
+Sunspots are cold dark spots on the solar surface caused by concentrations of magnetic flux that inhibit convection. The cyclical behavior is the [solar cycle](https://en.wikipedia.org/wiki/Solar_cycle), a roughly 11-year cycle with significant amplitude variations. Each cycle the sun exhibits increased magnetic activity in the form of sunspots, solar flares, and coronal mass ejections. The period of low sunspot count from roughly 1796 to 1820 correspond to the [Dalton Minimum](https://en.wikipedia.org/wiki/Dalton_Minimum). The exact cause of such minima is not well understood. Predicting future solar cycles may be impossible due to the chaotic nature of the solar surface magnetic field, however short-term predictions of the upcoming solar cycle are possible based on a causal relationship between the Sun's polar field and the toroidal field of the next sunspot cycle @citep[nandy2021]. This suggests that we should be forecasting one solar cycle ahead for validation and testing.
 
 ### Multivariate ENSO Index
 
@@ -70,7 +70,7 @@ ENSO is the [El Niño-Southern Oscillation](https://en.wikipedia.org/wiki/El_Ni%
 ![mei time series](/assets/blog/time-series-zoo/time_series_mei.png)
 :::
 
-The Multivariate ENSO Index (MEI) is a method used to characterize the intensity of an ENSO event [@wolter2011]. Like other climate oscillations, ENSO is quasi-periodic with a period of 2-7 years making it difficult to forecast. While Earth's climate is a chaotic system, convolutional neural networks looking at sea surface temperature and oceanic heat content in the Pacific can provide skillful forecasts with a lead time of 1.5 years and older methods can go up to a year [@ham2019]. This suggests that we may be able to forecast a year out, but a forecast based solely on the MEI (like what we're doing) might not actually be skillful.
+The Multivariate ENSO Index (MEI) is a method used to characterize the intensity of an ENSO event @citep[wolter2011]. Like other climate oscillations, ENSO is quasi-periodic with a period of 2-7 years making it difficult to forecast. While Earth's climate is a chaotic system, convolutional neural networks looking at sea surface temperature and oceanic heat content in the Pacific can provide skillful forecasts with a lead time of 1.5 years and older methods can go up to a year @citep[ham2019]. This suggests that we may be able to forecast a year out, but a forecast based solely on the MEI (like what we're doing) might not actually be skillful.
 
 ### Durban temperature
 
@@ -193,13 +193,13 @@ The periodograms (right column) also make sense. Most of the power is in very lo
 
 ### X13-ARIMA-SEATS
 
-[X13-ARIMA-SEATS](https://www.census.gov/data/software/x13as.html) is a complex seasonal adjustment open-source software package developed by the U.S. Census Bureau. It's the 13th and latest version of a software package used by the Bureau since the 1950's. The first version, Census Method I, was based off the work of [@macaulay1931] on smoothing time series.[^smoothing]
+[X13-ARIMA-SEATS](https://www.census.gov/data/software/x13as.html) is a complex seasonal adjustment open-source software package developed by the U.S. Census Bureau. It's the 13th and latest version of a software package used by the Bureau since the 1950's. The first version, Census Method I, was based off the work of @citet[macaulay1931] on smoothing time series.[^smoothing]
 
 [^smoothing]: Smoothing is useful to reduce noise in time series and identify trends and seasonality, making it easier to visualize and forecast. Macaulay emphasized the importance of not just relying on a simple moving average, which has a few issues. A simple moving average weighs data points in the averaging window equally when more recent points may be more relevant. Also, it cannot be used at the endpoints. It tends to lag behind the original data. And it can be significantly impacted by outliers. The answer is to use a weighted moving average such as the Henderson moving average.[^henderson]
 
 [^henderson]: The Henderson moving average or filter.
 
-Census Method I was followed by Census Method II and eleven more experimental versions (X1, X2, ..., X11) until Census Method II-X11 [@shiskin1967] was good enough to be used widely. But X11 did have a major weakness. X11 produced poor seasonally adjusted data at the end of the time series which made it hard to assess and forecast the direction of short-term trends. At Statistics Canada [@dagum1978] developed X11-ARIMA to combat this weakness by using an appropriate ARIMA model to forecast a bit beyond the end of the time series and backcast a bit before the start, thereby allowing us to use symmetric weighted moving averages over the entire time series. Later [@findley1998] developed X12-ARIMA in which the ARIMA model includes regression variables (so it's now called regARIMA) to capture deterministic components such as trading day effects[^trading-day-effects], moving holiday effects, and outliers. Once the deterministic components have been taken out, the time series is said to be <i>linearized</i>[^linearized-confusion].
+Census Method I was followed by Census Method II and eleven more experimental versions (X1, X2, ..., X11) until Census Method II-X11 @citep[shiskin1967] was good enough to be used widely. But X11 did have a major weakness. X11 produced poor seasonally adjusted data at the end of the time series which made it hard to assess and forecast the direction of short-term trends. At Statistics Canada @citet[dagum1978] developed X11-ARIMA to combat this weakness by using an appropriate ARIMA model to forecast a bit beyond the end of the time series and backcast a bit before the start, thereby allowing us to use symmetric weighted moving averages over the entire time series. Later @citet[findley1998] developed X12-ARIMA in which the ARIMA model includes regression variables (so it's now called regARIMA) to capture deterministic components such as trading day effects[^trading-day-effects], moving holiday effects, and outliers. Once the deterministic components have been taken out, the time series is said to be <i>linearized</i>[^linearized-confusion].
 
 [^trading-day-effects]: Certain time periods (weeks, months, etc.) have more trading days which can affect economic time series.
 
@@ -209,7 +209,7 @@ X13-ARIMA-SEATS extends X12-ARIMA by using SEATS (Seasonal Extraction in ARIMA T
 
 [^tramo-seats]: TRAMO-SEATS is another method similar to X13-ARIMA-SEATS. TRAMO stands for Time Series Regression with ARIMA Noise, Missing Observations, and Outliers. It was developed at the Bank of Spain and is implemented by the [Demetra+](https://en.wikipedia.org/wiki/Demetra%2B) software package. It similarly accounts for calendar day effects and outliers and also uses SEATS for the decomposition.
 
-In general, methods like X13-ARIMA-SEATS are very detailed and describing them in detail would take up an entire blog post at least. For more of an overview I would refer to [@dagum2016]. If you want a much more detailed description of the X11 method see [@ladiray2001]. It's an entire book dedicated to describing the X11 method!
+In general, methods like X13-ARIMA-SEATS are very detailed and describing them in detail would take up an entire blog post at least. For more of an overview I would refer to @citet[dagum2016]. If you want a much more detailed description of the X11 method see @citet[ladiray2001]. It's an entire book dedicated to describing the X11 method!
 
 It's probably worth noting that X11 methods are still mainly designed to work with quarterly or monthly time series.
 
@@ -227,7 +227,7 @@ For X13-ARIMA-SEATS the trend component is very similar to the naive decompositi
 
 ### Seasonal and Trend decomposition using Loess (STL)
 
-Seasonal and Trend decomposition using LOESS (STL), introduced by [@cleveland1990], also decomposes a time series into three components: trend, seasonality, and residual. But STL uses a completely different approach from X13-ARIMA-SEATS called LOESS, which relies on local regression to isolate the trend and seasonal components rather than ARIMA models.
+Seasonal and Trend decomposition using LOESS (STL), introduced by @citet[cleveland1990], also decomposes a time series into three components: trend, seasonality, and residual. But STL uses a completely different approach from X13-ARIMA-SEATS called LOESS, which relies on local regression to isolate the trend and seasonal components rather than ARIMA models.
 
 LOESS (Locally Estimated Scatterplot Smoothing) is the local regression technique STL uses. It fits a smooth curve to the data by fitting a low-order (usually linear or quadratic) polynomial locally to each data point that gives more weight to nearby points. A traditional weight function is the tri-cube distance function $w(d) = (1 - \|d\|^3)^3$ where $d$ is scaled to be $0 \le d \le 1$. Applying LOESS to the original time series gives an estimate of the trend component. After subtracting the trend from the original time series, LOESS can be applied again to now estimate the seasonal component. Then what's left is the residual component.
 
@@ -276,7 +276,7 @@ You can get $\rho > 1$ processes in the real-world, e.g. financial bubbles and v
 
 ### Dickey-Fuller test
 
-The original test was introduced by [@dickey1979]. It tests the null hypothesis that a unit root is present in an autoregressive process. It considered the AR(1) process from equation \eqref{ar1-process}
+The original test was introduced by @citet[dickey1979]. It tests the null hypothesis that a unit root is present in an autoregressive process. It considered the AR(1) process from equation \eqref{ar1-process}
 
 $y_t = \alpha + \beta t + \rho y_{t-1} + \varepsilon_t$
 
@@ -288,7 +288,7 @@ where $\delta = \rho - 1$. So we can test whether $y_t$ is stationary by testing
 
 There are three versions of the test depending on whether you want to include the constant term $\alpha$ and/or linear trend $\beta$. You should include the constant term $\alpha$ if the time series fluctuates around a non-zero value. And you should include the linear trend term $\beta t$ if the time series shows a clear linear trend.
 
-Taking this model, the value and standard error of $\delta$ can be estimated using least squares to form the Dickey-Fuller statistic $\textrm{DF}_\delta = \hat{\delta} / \textrm{SE}(\delta)$ which looks like a [$t$-statistic](https://en.wikipedia.org/wiki/T-statistic), but instead of following a [$t$-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) it follows a distribution with no closed form so [@dickey1979] tabulate critical values of the Dickey-Fuller statistic. The critical values can be computed using Monte Carlo simulations, although packages like Python's `statsmodels` tend to interpolate the tables for efficiency.
+Taking this model, the value and standard error of $\delta$ can be estimated using least squares to form the Dickey-Fuller statistic $\textrm{DF}_\delta = \hat{\delta} / \textrm{SE}(\delta)$ which looks like a [$t$-statistic](https://en.wikipedia.org/wiki/T-statistic), but instead of following a [$t$-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) it follows a distribution with no closed form so @citet[dickey1979] tabulate critical values of the Dickey-Fuller statistic. The critical values can be computed using Monte Carlo simulations, although packages like Python's `statsmodels` tend to interpolate the tables for efficiency.
 
 If your time series data exhibits a Dickey-Fuller static below say the 1% critical value, then this is good because if the time series truly has a unit root (following the null hypothesis) then the probability of getting a test statistic this extreme by chance would be less than 1%. But we can't actually quantify the probability that the time series is truly stationary using this statistic.
 
@@ -330,7 +330,7 @@ One subtlety worth noting is that the ADF test, like its simpler predecessor, ha
 
 ### Kwiatkowski–Phillips–Schmidt–Shin (KPSS) test
 
-The KPSS test, developed by [@kwiatkowski1992], takes a different approach to testing for stationarity. It considers the model
+The KPSS test, developed by @citet[kwiatkowski1992], takes a different approach to testing for stationarity. It considers the model
 
 $y_t = \alpha + \beta t + r_t + \epsilon_t$
 
@@ -358,7 +358,7 @@ The test statistic examines how much the cumulative sum of the residuals fluctua
 
 ![KPSS test statistic distribution under the null hypothesis](/assets/blog/time-series-zoo/kpss_no_trend_null_hypothesis_distribution.png)
 
-KPSS test statistic distribution under the null hypothesis assuming no trend. The distribution was estimated using Monte Carlo sampling with 100,000 simulations, each consisting of 2,000 data points. The critical values agree with Table 1 of [@kwiatkowski1992]. Code to produce this figure (and corresponding figure with trend) can be found in <a href="https://github.com/ali-ramadhan/time-series-forecasting/blob/main/kpss_distribution.ipynb"><code>kpss_distribution.ipynb</code></a>
+KPSS test statistic distribution under the null hypothesis assuming no trend. The distribution was estimated using Monte Carlo sampling with 100,000 simulations, each consisting of 2,000 data points. The critical values agree with Table 1 of @citet[kwiatkowski1992]. Code to produce this figure (and corresponding figure with trend) can be found in <a href="https://github.com/ali-ramadhan/time-series-forecasting/blob/main/kpss_distribution.ipynb"><code>kpss_distribution.ipynb</code></a>
 
 :::
 
@@ -394,7 +394,7 @@ When possible we'll make probabilistic forecasts and look at the MIW and MIC.
 
 #### Description
 
-Exponential smoothing is a pretty simple method to produce forecasts using weighted averages of past observations, with the weights decaying exponentially as the observations get older. So more recent data points get larger weights. Holt-Winters' method builds on this by explicitly modeling trend and seasonality. [@hyndman2021] have a really nice introduction to exponential smoothing methods including Holt-Winters' method, so we'll just describe the model.
+Exponential smoothing is a pretty simple method to produce forecasts using weighted averages of past observations, with the weights decaying exponentially as the observations get older. So more recent data points get larger weights. Holt-Winters' method builds on this by explicitly modeling trend and seasonality. @citet[hyndman2021] have a really nice introduction to exponential smoothing methods including Holt-Winters' method, so we'll just describe the model.
 
 There are two main variations of Holt-Winters' method, depending on how seasonality is incorporated: additive or multiplicative.
 
@@ -669,7 +669,7 @@ It's worth noting that p-values are frequently misused in research. If you're lo
 
 #### $t$-test
 
-A commonly used hypothesis test is the [$t$-test](https://en.wikipedia.org/wiki/Student%27s_t-test) [@student1908], developed by William Sealy Gosset while working as a chemist at the Guinness brewery in Dublin. Gosset published under the pseudonym "Student" because apparently Guinness preferred it if research staff published under pen names, perhaps to avoid accidently leaking trade secrets and because they did not want competitors to know that they were using $t$-tests to determine the quality of barley. So now it's also known as "Student's $t$-test".
+A commonly used hypothesis test is the [$t$-test](https://en.wikipedia.org/wiki/Student%27s_t-test) @citep[student1908], developed by William Sealy Gosset while working as a chemist at the Guinness brewery in Dublin. Gosset published under the pseudonym "Student" because apparently Guinness preferred it if research staff published under pen names, perhaps to avoid accidently leaking trade secrets and because they did not want competitors to know that they were using $t$-tests to determine the quality of barley. So now it's also known as "Student's $t$-test".
 
 The $t$-test is used to determine if a sample mean differs significantly from a known mean or if two sample means differ from each other when sample sizes are small. It's easy to tell if your sample mean is significantly different from a known mean if you have plenty of data, but what do you do when you don't have much data?
 

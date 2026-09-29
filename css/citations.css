@@ -87,7 +87,7 @@ html[data-theme="dark"] .citation-tooltip::before {
 }
 
 .reference,
-.reference * {
+.reference :not(a) {
   color: #333 !important;
 }
 
@@ -109,20 +109,6 @@ html[data-theme="dark"] .citation-tooltip::before {
 .reference b {
   font-weight: 600;
   color: #333 !important;
-}
-
-.reference a {
-  color: #06c;
-  text-decoration: none;
-  margin-right: 0.5rem;
-}
-
-.reference a:hover {
-  text-decoration: underline;
-}
-
-.reference a:visited {
-  color: #06c;
 }
 
 /* Dark mode support */
@@ -159,7 +145,7 @@ html[data-theme="dark"] {
   }
 
   .reference,
-  .reference * {
+  .reference :not(a) {
     color: #e5e7eb !important;
   }
 
@@ -177,17 +163,5 @@ html[data-theme="dark"] {
 
   .reference b {
     color: #e5e7eb !important;
-  }
-
-  .reference a {
-    color: #66b3ff;
-  }
-
-  .reference a:hover {
-    text-decoration: underline;
-  }
-
-  .reference a:visited {
-    color: #66b3ff;
   }
 }

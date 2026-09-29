@@ -282,7 +282,9 @@ body {
   transition: color 0.5s ease;
 }
 
-#resources .publications-content a.publication-button {
+/* Also used for the doi/pdf links in blog post reference lists (see config/citations.js) */
+#resources .publications-content a.publication-button,
+.reference a.publication-button {
   display: inline-block;
   background: var(--nav-dot-active);
   color: var(--content-text);
@@ -296,19 +298,22 @@ body {
   transition: all 0.3s ease;
 }
 
-#resources .publications-content a.publication-button:hover {
+#resources .publications-content a.publication-button:hover,
+.reference a.publication-button:hover {
   background: var(--content-text);
   color: var(--content-bg);
   transform: translateY(-1px);
 }
 
-html[data-theme="dark"] #resources .publications-content a.publication-button {
+html[data-theme="dark"] #resources .publications-content a.publication-button,
+html[data-theme="dark"] .reference a.publication-button {
   background: rgb(224, 224, 224, 0.15);
   color: var(--content-text);
   border: 1px solid rgb(224, 224, 224, 0.3);
 }
 
-html[data-theme="dark"] #resources .publications-content a.publication-button:hover {
+html[data-theme="dark"] #resources .publications-content a.publication-button:hover,
+html[data-theme="dark"] .reference a.publication-button:hover {
   background: rgb(224, 224, 224, 0.25);
   border-color: rgb(224, 224, 224, 0.5);
 }

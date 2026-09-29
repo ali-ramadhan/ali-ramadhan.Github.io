@@ -75,12 +75,14 @@ function formatReference(ref, key) {
 
   formatted += ".";
 
-  // Add links
+  // Add links, styled like the publication buttons on the landing page
+  const button = (href, label) =>
+    `<a href="${href}" target="_blank" class="publication-button">${label}</a>`;
   const links = [];
-  if (ref.doi) links.push(`<a href="${ref.doi}" target="_blank">doi</a>`);
-  if (ref.url) links.push(`<a href="${ref.url}" target="_blank">url</a>`);
-  if (ref.pdf) links.push(`<a href="${ref.pdf}" target="_blank">pdf</a>`);
-  if (ref.source) links.push(`<a href="${ref.source}" target="_blank">source</a>`);
+  if (ref.doi) links.push(button(ref.doi, "doi"));
+  if (ref.url) links.push(button(ref.url, "url"));
+  if (ref.pdf) links.push(button(ref.pdf, "pdf"));
+  if (ref.source) links.push(button(ref.source, "source"));
 
   if (links.length > 0) {
     formatted += ` ${links.join(" ")}`;

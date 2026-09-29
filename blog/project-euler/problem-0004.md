@@ -26,6 +26,12 @@ end
 
 but this allocates memory for two strings. So when checking lots of large numbers it will be slower than a purely numerical approach that allocates no memory.
 
+The most naive solution checks every product $ij$ this way:
+
+@code[problem-0004:largest_palindrome_product_naive]
+
+It finds the answer in @benchmark[problem-0004:naive_3_digits] but allocates @benchmark[problem-0004:naive_3_digits:memory] along the way, since it builds two new strings for each of the $900^2 = 810,000$ products. The 6-digit case has a million times more products to check, so it would take hours.
+
 We can instead take a numerical approach where we reverse the number by extracting digits from right to left and rebuilding the number:
 
 @code[src/utils/Digits.jl:is_palindrome]
@@ -36,7 +42,7 @@ We can then use this function to search for the largest palindrome made from the
 
 So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're searching for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We also added a `max_product` option that only considers products below a given value, which is what the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) asks for. With up to $100$ queries per run though, the [submission](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/hacker_rank/projecteuler+_problem0004.jl) instead precomputes every palindrome product of two $3$-digit numbers once and binary searches that sorted list for each query.
 
-Benchmarking the 3-digit case we find the solution `largest_palindrome_product(100, 999)` in @benchmark[problem-0004:3_digits].
+Benchmarking the 3-digit case we find the solution `largest_palindrome_product(100, 999)` in @benchmark[problem-0004:3_digits], which is @ratio[problem-0004:naive_3_digits/3_digits] faster than the naive solution.
 
 For the 6-digit case we call `largest_palindrome_product(100000, 999999)` to find a maximum palindrome of $999,000,000,999 = 999,001 \times 999,999$ in @benchmark[problem-0004:6_digits].
 

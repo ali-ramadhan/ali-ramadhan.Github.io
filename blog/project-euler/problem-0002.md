@@ -21,7 +21,7 @@ The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/proje
 
 We want to sum all the even Fibonacci numbers up to some limit.
 
-We'll use a slightly different convention from Project Euler. The recurrence relation for the $n^\text{th}$ Fibonacci number is $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$ and $F_1 = 1$ so the first 13 terms are
+We'll use a slightly different convention from Project Euler. The recurrence relation for the $n^\text{th}$ Fibonacci number is $F_n = F_{n-1} + F_{n-2}$ with $F_0 = 0$ and $F_1 = 1$, the convention [OEIS A000045](https://oeis.org/A000045) uses, so the first 13 terms are
 
 ```math
 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, \dots
@@ -68,7 +68,7 @@ F_n = 4F_{n-3} + F_{n-6}
 
 to generate all the even Fibonacci numbers directly, skipping over all the odd ones!
 
-The even Fibonacci numbers $0, 2, 8, 34, 144, 610, 2584, \dots$ are [OEIS A014445](https://oeis.org/A014445), and the entry lists this same recurrence $a_n = 4a_{n-1} + a_{n-2}$ along with the generating function $2x / (1 - 4x - x^2)$.
+The even Fibonacci numbers $0, 2, 8, 34, 144, 610, 2584, \dots$ are [OEIS A014445](https://oeis.org/A014445), and the entry lists this same recurrence $a_n = 4a_{n-1} + a_{n-2}$ along with the generating function $2x / (1 - 4x - x^2)$. The sums of the even Fibonacci numbers, $2, 10, 44, 188, \dots$, are [OEIS A099919](https://oeis.org/A099919).
 
 We can implement this in Julia:
 
@@ -136,7 +136,7 @@ F_{n+k} + (-1)^k F_{n-k} &= \frac{\varphi^n \varphi^k - \psi^n \psi^k}{\sqrt{5}}
 \end{align}
 ```
 
-That leftover factor of $\varphi^k + \psi^k$ looks like it might be irrational, but it never is! Since $\varphi$ and $\psi$ are both roots of $x^2 - x - 1 = 0$, multiplying that through by $x^{k-2}$ gives $\varphi^k = \varphi^{k-1} + \varphi^{k-2}$ and the same for $\psi$, so the sums $\varphi^k + \psi^k$ obey the exact same recurrence the Fibonacci numbers do. They just start off somewhere else, at $\varphi^0 + \psi^0 = 2$ and $\varphi + \psi = 1$. These are the [Lucas numbers](https://en.wikipedia.org/wiki/Lucas_number) $L_k$
+That leftover factor of $\varphi^k + \psi^k$ looks like it might be irrational, but it never is! Since $\varphi$ and $\psi$ are both roots of $x^2 - x - 1 = 0$, multiplying that through by $x^{k-2}$ gives $\varphi^k = \varphi^{k-1} + \varphi^{k-2}$ and the same for $\psi$, so the sums $\varphi^k + \psi^k$ obey the exact same recurrence the Fibonacci numbers do. They just start off somewhere else, at $\varphi^0 + \psi^0 = 2$ and $\varphi + \psi = 1$. These are the [Lucas numbers](https://en.wikipedia.org/wiki/Lucas_number) $L_k$ ([OEIS A000032](https://oeis.org/A000032))
 
 ```math
 2, 1, 3, 4, 7, 11, 18, 29, 47, 76, \dots
@@ -203,7 +203,7 @@ We can now write a closed form for the sum of every $k^\text{th}$ Fibonacci numb
 \sum_{j=1}^m F_{kj} = \frac{F_{k(m+1)} - (-1)^k F_{km} - F_k}{L_k - (-1)^k - 1}
 ```
 
-This is a classical result @citep[koshy2001, Corollary 5.6, p. 86]. For $k = 1$ we have $L_1 = 1$ and recover the classic identity for the sum of all the Fibonacci numbers
+This is a classical result @citep[koshy2001, Corollary 5.6, p. 86], and the denominators $L_k - (-1)^k - 1 = 1, 1, 4, 5, 11, 16, \dots$ are the associated Mersenne numbers ([OEIS A001350](https://oeis.org/A001350)). For $k = 1$ we have $L_1 = 1$ and recover the classic identity for the sum of all the Fibonacci numbers
 
 ```math
 \sum_{j=1}^m F_j = F_{m+1} + F_m - F_1 = F_{m+2} - 1
@@ -222,6 +222,8 @@ The largest even Fibonacci number not exceeding four million is $F_{33}$ and the
 ```
 
 It's not like we needed a closed-form solution to solve the problem in a reasonable amount of time, but it's cool that we can derive something like this!
+
+While writing this post I made a few small contributions to the OEIS. I submitted a short proof there that the sums of every $k^\text{th}$ Fibonacci number satisfy a recurrence of their own, using the same trick of summing a recurrence that we used above. I also submitted the closed form for these sums to [A001350](https://oeis.org/A001350), since its terms are the denominators.
 
 ## References
 

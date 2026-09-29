@@ -1,6 +1,17 @@
 # References for the Project Euler blog posts, shared by every post in
 # blog/project-euler/ (see blog/project-euler/project-euler.11tydata.json)
 
+angell1977:
+  authors: "Angell, I. O., & Godwin, H. J."
+  year: 1977
+  title: "On truncatable primes"
+  type: article
+  journal: "Mathematics of Computation"
+  volume: "31"
+  issue: "137"
+  pages: "265–267"
+  doi: "https://doi.org/10.1090/S0025-5718-1977-0427213-2"
+
 koshy2001:
   authors: "Koshy, Thomas"
   year: 2001

@@ -1,5 +1,5 @@
 {
-  "fetched": "2026-09-26",
+  "fetched": "2026-09-28",
   "problems": {
     "1": { "level": 0, "percent": 1 },
     "2": { "level": 0, "percent": 1 },
@@ -8,7 +8,7 @@
     "5": { "level": 0, "percent": 2 },
     "6": { "level": 0, "percent": 1 },
     "7": { "level": 0, "percent": 1 },
-    "8": { "level": 1, "percent": 3 },
+    "8": { "level": 0, "percent": 3 },
     "9": { "level": 0, "percent": 1 },
     "10": { "level": 0, "percent": 2 },
     "11": { "level": 2, "percent": 6 },
@@ -19,7 +19,7 @@
     "16": { "level": 0, "percent": 1 },
     "17": { "level": 2, "percent": 8 },
     "18": { "level": 2, "percent": 7 },
-    "19": { "level": 2, "percent": 7 },
+    "19": { "level": 2, "percent": 8 },
     "20": { "level": 0, "percent": 1 },
     "21": { "level": 1, "percent": 5 },
     "22": { "level": 0, "percent": 2 },
@@ -36,6 +36,7 @@
     "33": { "level": 0, "percent": 3 },
     "34": { "level": 0, "percent": 1 },
     "35": { "level": 1, "percent": 5 },
-    "36": { "level": 0, "percent": 2 }
+    "36": { "level": 0, "percent": 2 },
+    "37": { "level": 0, "percent": 3 }
   }
 }

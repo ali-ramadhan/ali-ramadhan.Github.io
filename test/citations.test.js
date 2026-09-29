@@ -37,9 +37,22 @@ test("splitCitations leaves text without a complete citation alone", () => {
   ]);
 });
 
-test("formatCitation shows the first author and year, then any locator", () => {
+test("formatCitation shows the authors and year in author-year style, then any locator", () => {
   const ref = { authors: "Dickey, D. A., & Fuller, W. A.", year: 1979 };
-  assert.equal(formatCitation(ref), "Dickey, 1979");
-  assert.equal(formatCitation(ref, "p. 428"), "Dickey, 1979, p. 428");
+  assert.equal(formatCitation(ref), "Dickey & Fuller, 1979");
+  assert.equal(formatCitation(ref, "p. 428"), "Dickey & Fuller, 1979, p. 428");
+  assert.equal(formatCitation({ authors: "Koshy, Thomas", year: 2001 }), "Koshy, 2001");
+  // Three or more authors, with or without a comma before the "&"
+  assert.equal(
+    formatCitation({ authors: "Ham, Y. G., Kim, J. H. & Luo, J. J.", year: 2019 }),
+    "Ham et al., 2019"
+  );
+  assert.equal(
+    formatCitation({
+      authors: "Kwiatkowski, D., Phillips, P. C. B., Schmidt, P., Shin, Y.",
+      year: 1992,
+    }),
+    "Kwiatkowski et al., 1992"
+  );
   assert.equal(formatCitation(undefined), "[Unknown]");
 });

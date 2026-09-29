@@ -126,7 +126,23 @@ export function splitCitations(text) {
 }
 
 /**
- * Format citation display text
+ * Surnames from an author list of "Surname, Initials" pairs separated by commas and an
+ * optional "&", e.g. "Angell, I. O., & Godwin, H. J." gives ["Angell", "Godwin"]
+ * @param {string} authors - Author list as written in the reference file
+ * @returns {string[]} - Surnames in order
+ */
+function surnames(authors) {
+  const parts = authors
+    .replace(/&/g, ",")
+    .split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts.filter((_, i) => i % 2 === 0);
+}
+
+/**
+ * Format citation display text in author-year style: "Koshy, 2001", "Angell & Godwin, 1977",
+ * or "Findley et al., 1998" for three or more authors, followed by any locator
  * @param {Object} ref - Reference object
  * @param {string} [locator] - Optional locator such as "p. 86"
  * @returns {string} - Formatted citation display
@@ -134,13 +150,11 @@ export function splitCitations(text) {
 export function formatCitation(ref, locator = "") {
   if (!ref) return "[Unknown]";
 
-  const authors = ref.authors || "Unknown";
+  const names = surnames(ref.authors || "Unknown");
+  const authors = names.length > 2 ? `${names[0]} et al.` : names.join(" & ");
   const year = ref.year || "Unknown";
 
-  // Simple author formatting - just take first author if multiple
-  const firstAuthor = authors.split(",")[0].split(" & ")[0];
-
-  return locator ? `${firstAuthor}, ${year}, ${locator}` : `${firstAuthor}, ${year}`;
+  return locator ? `${authors}, ${year}, ${locator}` : `${authors}, ${year}`;
 }
 
 /**
@@ -187,7 +201,7 @@ export function markdownItCitations(md, options = {}) {
           doi: ref.doi || ref.url || "",
         }).replace(/'/g, "&#39;");
 
-        return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${formatCitation(ref, locator)}</a>`;
+        return `<a href="#${key}" class="${defaultOptions.citationClass}" data-tooltip='${tooltipData}'>${md.utils.escapeHtml(formatCitation(ref, locator))}</a>`;
       });
 
       return `(${citationParts.join("; ")})`;

@@ -1,9 +1,10 @@
+import path from "path";
 import EleventyVitePlugin from "@11ty/eleventy-plugin-vite";
 import legacy from "@vitejs/plugin-legacy";
 import { configureMarkdown } from "./config/markdown.js";
 import { processBenchmark } from "./config/benchmark-utils.js";
 import { loadRatings, missingRatings } from "./config/pe-difficulty.js";
-import { prepareSolutions } from "./config/pe-solutions.js";
+import { localSolutionsDir, prepareSolutions } from "./config/pe-solutions.js";
 
 export default function (eleventyConfig) {
   // Project Euler posts embed code and benchmark data straight from the commit
@@ -22,6 +23,15 @@ export default function (eleventyConfig) {
   eleventyConfig.addWatchTarget("./pe-solutions.json");
   eleventyConfig.ignores.add(".cache/**");
   eleventyConfig.watchIgnores.add(".cache/**");
+
+  // With PE_SOLUTIONS_DIR set they read a local checkout instead (see
+  // config/pe-solutions.js), and --serve rebuilds when its code or benchmark
+  // data changes
+  const localDir = localSolutionsDir();
+  if (localDir) {
+    eleventyConfig.addWatchTarget(path.join(localDir, "src"));
+    eleventyConfig.addWatchTarget(path.join(localDir, "benchmarks"));
+  }
 
   // Project Euler difficulty ratings (`npm run pe:difficulty` refreshes them),
   // read by the table of problems

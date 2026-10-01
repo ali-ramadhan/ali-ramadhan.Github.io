@@ -74,6 +74,95 @@ function parseAnsiToHtml(text) {
   );
 }
 
+const RATIO_FORMAT = new Intl.NumberFormat("en-US", {
+  minimumSignificantDigits: 3,
+  maximumSignificantDigits: 3,
+});
+
+// The same as formatRatio in config/benchmark-utils.js, for medians taken here
+export function formatRatio(ratio) {
+  return `${RATIO_FORMAT.format(ratio)}×`;
+}
+
+function median(values) {
+  const sorted = [...values].sort((a, b) => a - b);
+  const mid = Math.floor(sorted.length / 2);
+  return sorted.length % 2 ? sorted[mid] : (sorted[mid - 1] + sorted[mid]) / 2;
+}
+
+// The kinds of processor ("cpu", "gpu") a reference's numbers ran on
+function processorsOf(data) {
+  return data.kind === "ratio"
+    ? [...new Set([data.numerator_processor, data.denominator_processor])]
+    : [data.processor];
+}
+
+// The kinds of processor picked on the page that apply to a reference, so
+// picking a GPU leaves CPU numbers alone and the other way round. `selection`
+// is `{ cpu, gpu }`, with null for no pick.
+export function picksFor(data, selection) {
+  return processorsOf(data).filter((processor) => selection[processor]);
+}
+
+// The pairs of a ratio on the CPU and GPU picked on the page
+export function matchingPairs(ratio, selection) {
+  return ratio.pairs.filter((pair) =>
+    picksFor(ratio, selection).every((processor) => pair[processor] === selection[processor])
+  );
+}
+
+/**
+ * What a reference shows for the CPU and GPU picked on the page: a benchmark's
+ * time (or memory estimate) on the pick of its kind, or a ratio's median over
+ * the pairs left by the picks. With no pick that applies it shows its default,
+ * and "n/a" when it never ran on what was picked.
+ */
+export function referenceText(data, selection) {
+  if (picksFor(data, selection).length === 0) return data.default_text;
+
+  if (data.kind === "ratio") {
+    const pairs = matchingPairs(data, selection);
+    if (pairs.length === 0) return "n/a";
+    if (pairs.length === 1) return pairs[0].ratio_text;
+    return formatRatio(median(pairs.map((pair) => pair.ratio)));
+  }
+
+  const run = data.devices[selection[data.processor]];
+  if (!run) return "n/a";
+  return data.display_type === "memory" ? run.memory_estimate : run.median_time;
+}
+
+// A ratio's pair in the dropdown: its CPU or GPU, or "CPU ÷ GPU" in the
+// order of the ratio
+export function pairLabel(ratio, pair) {
+  const numerator = pair[ratio.numerator_processor];
+  const denominator = pair[ratio.denominator_processor];
+  return numerator === denominator ? numerator : `${numerator} ÷ ${denominator}`;
+}
+
+// What a ratio's pairs are called: CPUs, GPUs, or CPU–GPU pairs
+function pairNoun(ratio, count) {
+  if (ratio.numerator_processor !== ratio.denominator_processor) {
+    return count === 1 ? "CPU–GPU pair" : "CPU–GPU pairs";
+  }
+  const name = ratio.numerator_processor.toUpperCase();
+  return count === 1 ? name : `${name}s`;
+}
+
+// The line under the dropdown: the Julia version and OS, and for a GPU also the
+// CPU it ran alongside and the CUDA software it used
+export function runDetails(run) {
+  if (!run.host_cpu) return `${run.julia_version} · ${run.os}`;
+  return [
+    `Host CPU: ${run.host_cpu}`,
+    run.julia_version,
+    `CUDA ${run.cuda_runtime}`,
+    `CUDA.jl ${run.cuda_jl}`,
+    `NVIDIA driver ${run.nvidia_driver}`,
+    run.os,
+  ].join(" · ");
+}
+
 export class BenchmarkManager {
   constructor() {
     this.tooltip = null;
@@ -81,9 +170,9 @@ export class BenchmarkManager {
     this.currentBenchmarkData = null;
     this.hoverTimeout = null;
 
-    // CPU picked in a tooltip, which every reference on the page then shows;
-    // null shows each one's default
-    this.pageCpu = null;
+    // CPU and GPU picked in a tooltip. Every number on the page then shows the
+    // pick of the kind of processor it ran on; null shows each one's default.
+    this.pageSelection = { cpu: null, gpu: null };
     this.referenceCache = new WeakMap();
 
     // Store bound handlers for cleanup
@@ -107,9 +196,9 @@ export class BenchmarkManager {
     this.tooltip.innerHTML = `
       <div class="benchmark-tooltip-content">
         <div class="benchmark-cpu-selector">
-          <select class="benchmark-cpu-dropdown" aria-label="Select CPU"></select>
+          <select class="benchmark-cpu-dropdown" aria-label="Select CPU or GPU"></select>
           <button class="benchmark-cpu-reset" type="button" hidden
-            title="Show each number's default again: the best CPU for each benchmark and the median over CPUs for each ratio">Reset</button>
+            title="Show each number's default again: the fastest CPU or GPU for each benchmark and the median over all pairs for each ratio">Reset</button>
         </div>
         <div class="benchmark-meta"></div>
         <pre class="benchmark-output"></pre>
@@ -123,16 +212,17 @@ export class BenchmarkManager {
       this.hideTooltip();
     });
 
-    // Picking a CPU shows it for every benchmark and ratio on the page
+    // Picking a CPU or GPU, or a pair of them for a ratio, shows it for every
+    // benchmark and ratio on the page
     const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
     dropdown.addEventListener("change", (e) => {
       if (this.currentBenchmarkData) {
-        this.selectPageCpu(e.target.value);
+        this.selectOption(e.target.value);
       }
     });
 
     this.tooltip.querySelector(".benchmark-cpu-reset").addEventListener("click", () => {
-      this.selectPageCpu(null);
+      this.select({ cpu: null, gpu: null });
     });
 
     // Add scroll wheel navigation for CPU dropdown
@@ -249,8 +339,8 @@ export class BenchmarkManager {
     return data;
   }
 
-  // Fill in the tooltip for a reference, open on the page's CPU if one was
-  // picked and on the reference's own default CPU otherwise
+  // Fill in the tooltip for a reference, open on what the page picked if that
+  // applies to it and on the reference's own default otherwise
   populateTooltip(element) {
     const data = this.referenceData(element);
     this.currentBenchmarkData = data;
@@ -258,45 +348,42 @@ export class BenchmarkManager {
     const dropdown = this.tooltip.querySelector(".benchmark-cpu-dropdown");
     dropdown.innerHTML = "";
 
-    let cpuName =
-      data.kind === "ratio"
-        ? this.populateRatioOptions(dropdown, data)
-        : this.populateBenchmarkOptions(dropdown, data);
-
-    if (this.pageCpu) {
-      cpuName = this.pageCpu;
-      if (!data.cpus[cpuName]) {
-        // Keep the page's CPU in view even though this one never ran on it
-        const option = document.createElement("option");
-        option.value = cpuName;
-        option.textContent = `${cpuName} | not benchmarked`;
-        option.disabled = true;
-        dropdown.prepend(option);
-      }
+    if (data.kind === "ratio") {
+      this.populateRatioOptions(dropdown, data);
+    } else {
+      this.populateBenchmarkOptions(dropdown, data);
     }
 
-    dropdown.value = cpuName;
-    this.updateTooltipForCpu(cpuName);
-    this.tooltip.querySelector(".benchmark-cpu-reset").hidden = !this.pageCpu;
+    const { cpu, gpu } = this.pageSelection;
+    this.tooltip.querySelector(".benchmark-cpu-reset").hidden = !cpu && !gpu;
   }
 
-  selectPageCpu(cpuName) {
-    this.pageCpu = cpuName;
+  // Pick the dropdown's CPU or GPU, or both of a ratio's pair, for the whole page
+  selectOption(value) {
+    const data = this.currentBenchmarkData;
+    if (data.kind !== "ratio") {
+      this.select({ [data.processor]: value });
+      return;
+    }
+
+    // The scroll wheel can land on the disabled "not benchmarked" option, which isn't a pair
+    const pair = data.pairs[Number(value)];
+    if (!pair) return;
+
+    const picks = {};
+    for (const processor of ["cpu", "gpu"]) {
+      if (processor in pair) picks[processor] = pair[processor];
+    }
+    this.select(picks);
+  }
+
+  // Change the page's picks, leaving any kind of processor not in `picks` alone
+  select(picks) {
+    this.pageSelection = { ...this.pageSelection, ...picks };
     this.updateReferences();
     if (this.activeReference) {
       this.populateTooltip(this.activeReference);
     }
-  }
-
-  // What a reference shows for a CPU: its time, memory, or ratio there, and
-  // its default for no CPU
-  referenceText(data, cpuName) {
-    if (!cpuName) return data.default_text;
-
-    const cpuData = data.cpus[cpuName];
-    if (!cpuData) return "n/a";
-    if (data.kind === "ratio") return cpuData.ratio_text;
-    return data.display_type === "memory" ? cpuData.memory_estimate : cpuData.median_time;
   }
 
   updateReferences() {
@@ -304,11 +391,8 @@ export class BenchmarkManager {
 
     for (const element of document.querySelectorAll(".benchmark-reference")) {
       const data = this.referenceData(element);
-      const text = this.referenceText(data, this.pageCpu);
-      element.classList.toggle(
-        "benchmark-reference--missing",
-        Boolean(this.pageCpu) && !data.cpus[this.pageCpu]
-      );
+      const text = referenceText(data, this.pageSelection);
+      element.classList.toggle("benchmark-reference--missing", text === "n/a");
 
       if (element.textContent === text) continue;
       element.textContent = text;
@@ -321,8 +405,17 @@ export class BenchmarkManager {
     }
   }
 
-  // List CPUs by median time (fastest first) and return the fastest, whose
-  // time is the one shown inline
+  // A disabled option for something the page picked that a reference never ran on
+  missingOption(label, value) {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = `${label} | not benchmarked`;
+    option.disabled = true;
+    return option;
+  }
+
+  // List the CPUs (or GPUs) by median time, fastest first, and open on the
+  // page's pick, or on the fastest, whose time is the one shown inline
   populateBenchmarkOptions(dropdown, benchmarkData) {
     // Parse median time to numeric value for sorting
     const parseTime = (timeStr) => {
@@ -338,31 +431,29 @@ export class BenchmarkManager {
       return value;
     };
 
-    const cpuNames = Object.keys(benchmarkData.cpus).sort((a, b) => {
-      const timeA = parseTime(benchmarkData.cpus[a].median_time);
-      const timeB = parseTime(benchmarkData.cpus[b].median_time);
-      return timeA - timeB;
-    });
+    const devices = benchmarkData.devices;
+    const names = Object.keys(devices).sort(
+      (a, b) => parseTime(devices[a].median_time) - parseTime(devices[b].median_time)
+    );
 
-    const fastestTime = parseTime(benchmarkData.cpus[cpuNames[0]].median_time);
+    const fastestTime = parseTime(devices[names[0]].median_time);
 
-    cpuNames.forEach((cpuName, index) => {
-      const cpuData = benchmarkData.cpus[cpuName];
+    names.forEach((name, index) => {
+      const run = devices[name];
       const rank = index + 1;
       const option = document.createElement("option");
-      option.value = cpuName;
+      option.value = name;
 
-      let text = `${rank}. ${cpuName}`;
+      let text = `${rank}. ${name}`;
 
       // Show thread count if available (multi-threaded benchmark)
-      if (cpuData.thread_count) {
-        text += ` | ${cpuData.thread_count} threads`;
+      if (run.thread_count) {
+        text += ` | ${run.thread_count} threads`;
       }
 
-      // Show slowdown for non-fastest CPUs
+      // Show slowdown for all but the fastest
       if (rank > 1) {
-        const cpuTime = parseTime(cpuData.median_time);
-        const slowdown = (cpuTime / fastestTime).toFixed(2);
+        const slowdown = (parseTime(run.median_time) / fastestTime).toFixed(2);
         text += ` | ${slowdown}× slower`;
       }
 
@@ -370,78 +461,118 @@ export class BenchmarkManager {
       dropdown.appendChild(option);
     });
 
-    return cpuNames[0];
-  }
-
-  // List CPUs by ratio (largest first) and return the one closest to the
-  // median over CPUs, which is the ratio shown inline
-  populateRatioOptions(dropdown, ratio) {
-    const cpuNames = Object.keys(ratio.cpus).sort(
-      (a, b) => ratio.cpus[b].ratio - ratio.cpus[a].ratio
+    dropdown.setAttribute(
+      "aria-label",
+      benchmarkData.processor === "gpu" ? "Select GPU" : "Select CPU"
     );
 
-    cpuNames.forEach((cpuName, index) => {
+    let name = names[0];
+    const picked = this.pageSelection[benchmarkData.processor];
+    if (picked) {
+      name = picked;
+      if (!devices[picked]) {
+        // Keep the page's pick in view even though this one never ran on it
+        dropdown.prepend(this.missingOption(picked, picked));
+      }
+    }
+
+    dropdown.value = name;
+    this.showRun(benchmarkData, name);
+  }
+
+  // List the pairs by ratio, largest first, and open on the one the page's
+  // picks leave, or on the one closest to the median shown inline
+  populateRatioOptions(dropdown, ratio) {
+    const order = ratio.pairs
+      .map((pair, index) => index)
+      .sort((a, b) => ratio.pairs[b].ratio - ratio.pairs[a].ratio);
+
+    order.forEach((index, rank) => {
+      const pair = ratio.pairs[index];
       const option = document.createElement("option");
-      option.value = cpuName;
-      option.textContent = `${index + 1}. ${cpuName} | ${ratio.cpus[cpuName].ratio_text}`;
+      option.value = String(index);
+      option.textContent = `${rank + 1}. ${pairLabel(ratio, pair)} | ${pair.ratio_text}`;
       dropdown.appendChild(option);
     });
 
-    const distance = (cpuName) => Math.abs(ratio.cpus[cpuName].ratio - ratio.median);
-    return cpuNames.reduce((closest, cpuName) =>
-      distance(cpuName) < distance(closest) ? cpuName : closest
+    dropdown.setAttribute(
+      "aria-label",
+      ratio.numerator_processor === ratio.denominator_processor
+        ? `Select ${ratio.numerator_processor.toUpperCase()}`
+        : "Select CPU and GPU"
     );
+
+    const picks = picksFor(ratio, this.pageSelection);
+    const pairs = matchingPairs(ratio, this.pageSelection);
+    if (pairs.length === 0) {
+      // Keep the page's picks in view even though no pair ran on them
+      const label = picks.map((processor) => this.pageSelection[processor]).join(" and ");
+      dropdown.prepend(this.missingOption(label, "missing"));
+      dropdown.value = "missing";
+      this.showMissing(label);
+      return;
+    }
+
+    const shown = median(pairs.map((pair) => pair.ratio));
+    const closest = pairs.reduce((best, pair) =>
+      Math.abs(pair.ratio - shown) < Math.abs(best.ratio - shown) ? pair : best
+    );
+    dropdown.value = String(ratio.pairs.indexOf(closest));
+    this.showPair(ratio, closest);
   }
 
-  // Both median times (or memory estimates) on one CPU, their ratio, and the
-  // spread over all CPUs
-  ratioSummary(ratio, cpuData) {
+  // Both median times (or memory estimates) of a pair, their ratio, and the
+  // spread over all pairs. The values of a CPU–GPU pair say what each ran on.
+  ratioSummary(ratio, pair) {
     const width =
       Math.max(ratio.numerator_key.length, ratio.denominator_key.length, "ratio".length) + 2;
-    const cpuCount = Object.keys(ratio.cpus).length;
+    const count = ratio.pairs.length;
+    const noun = pairNoun(ratio, count);
+    const crossed = ratio.numerator_processor !== ratio.denominator_processor;
+    const on = (processor) => (crossed ? ` on ${pair[processor]}` : "");
 
     let spread;
-    if (cpuCount === 1) {
-      spread = `${ratio.median_text} on the only CPU benchmarked`;
+    if (count === 1) {
+      spread = `${ratio.median_text} on the only ${noun} benchmarked`;
     } else if (ratio.min_text === ratio.max_text) {
-      spread = `${ratio.median_text} on all ${cpuCount} CPUs`;
+      spread = `${ratio.median_text} on all ${count} ${noun}`;
     } else {
-      spread = `${ratio.median_text} median over ${cpuCount} CPUs (${ratio.min_text} to ${ratio.max_text})`;
+      spread = `${ratio.median_text} median over ${count} ${noun} (${ratio.min_text} to ${ratio.max_text})`;
     }
 
     return [
-      ratio.numerator_key.padEnd(width) + cpuData.numerator_value,
-      ratio.denominator_key.padEnd(width) + cpuData.denominator_value,
-      "ratio".padEnd(width) + cpuData.ratio_text,
+      ratio.numerator_key.padEnd(width) + pair.numerator_value + on(ratio.numerator_processor),
+      ratio.denominator_key.padEnd(width) +
+        pair.denominator_value +
+        on(ratio.denominator_processor),
+      "ratio".padEnd(width) + pair.ratio_text,
       "",
       spread,
     ].join("\n");
   }
 
-  updateTooltipForCpu(cpuName) {
-    if (!this.currentBenchmarkData) {
+  // Show one run of a benchmark: its details and BenchmarkTools output
+  showRun(benchmarkData, name) {
+    const run = benchmarkData.devices[name];
+    if (!run) {
+      this.showMissing(name);
       return;
     }
 
-    const cpuData = this.currentBenchmarkData.cpus[cpuName];
-    const meta = this.tooltip.querySelector(".benchmark-meta");
-    const output = this.tooltip.querySelector(".benchmark-output");
+    this.tooltip.querySelector(".benchmark-meta").textContent = runDetails(run);
+    this.tooltip.querySelector(".benchmark-output").innerHTML = parseAnsiToHtml(run.full_output);
+  }
 
-    if (!cpuData) {
-      meta.textContent = "";
-      output.textContent = `Not benchmarked on ${cpuName}`;
-      return;
-    }
+  // Show one pair of a ratio
+  showPair(ratio, pair) {
+    this.tooltip.querySelector(".benchmark-meta").textContent =
+      `${pair.julia_version} · ${pair.os}`;
+    this.tooltip.querySelector(".benchmark-output").textContent = this.ratioSummary(ratio, pair);
+  }
 
-    // Update metadata line (Julia version and OS)
-    meta.textContent = `${cpuData.julia_version} · ${cpuData.os}`;
-
-    if (this.currentBenchmarkData.kind === "ratio") {
-      output.textContent = this.ratioSummary(this.currentBenchmarkData, cpuData);
-    } else {
-      // Update tooltip content with colored ANSI output
-      output.innerHTML = parseAnsiToHtml(cpuData.full_output);
-    }
+  showMissing(label) {
+    this.tooltip.querySelector(".benchmark-meta").textContent = "";
+    this.tooltip.querySelector(".benchmark-output").textContent = `Not benchmarked on ${label}`;
   }
 
   hideTooltip() {

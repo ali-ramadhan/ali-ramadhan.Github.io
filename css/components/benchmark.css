@@ -307,7 +307,7 @@ html[data-theme="dark"] .ansi-gray {
   outline-offset: 2px;
 }
 
-/* Metadata line (Julia version, OS) */
+/* Metadata line (Julia version and OS, and for a GPU its host CPU and CUDA versions) */
 .benchmark-meta {
   text-align: center;
   font-size: 0.8rem;

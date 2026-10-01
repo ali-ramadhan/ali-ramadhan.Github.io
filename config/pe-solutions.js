@@ -7,6 +7,12 @@
  * build starts we shallow-fetch that commit into `.cache/pe-solutions/<sha>/`
  * (once per commit, cached across rebuilds) and everything downstream reads
  * plain files from there. Run `npm run pe:bump` to move the pin.
+ *
+ * To preview posts against a local checkout instead, uncommitted changes and
+ * all, set PE_SOLUTIONS_DIR to its path: `npm run dev:local` and
+ * `npm run build:local` use the sibling ../ProjectEulerSolutions.jl, and e.g.
+ * `PE_SOLUTIONS_DIR=/path/to/ProjectEulerSolutions.jl npm run dev` any other.
+ * The pin and the cached snapshot are left alone.
  */
 
 import { execFileSync } from "child_process";
@@ -30,9 +36,12 @@ const SHA_PATTERN = /^[0-9a-f]{40}$/;
 // (`problem-0012`, `bonus-18i`); anything else is a path relative to the repo root.
 const SOLUTION_SLUG = /^(problem-\d{4}|bonus-[a-z0-9-]+)$/;
 
-// Set once the pinned commit is on disk; read by every `@code` and
-// `@benchmark` reference during the build.
+// Set once the pinned commit (or the local checkout) is ready; read by every
+// `@code` and `@benchmark` reference during the build.
 let active = null;
+
+// Local checkouts already announced, so --serve rebuilds don't repeat it
+const announced = new Set();
 
 /**
  * Read and validate `pe-solutions.json`.
@@ -66,10 +75,31 @@ export function writePin({ repo, commit }) {
 }
 
 /**
- * Make sure the pinned commit is checked out under the cache directory and
- * activate it for this build. Cheap when the snapshot already exists.
+ * The local ProjectEulerSolutions.jl checkout named by PE_SOLUTIONS_DIR, as an
+ * absolute path, or null when it's unset. A relative path is relative to the
+ * website's root.
+ */
+export function localSolutionsDir(env = process.env) {
+  const dir = env.PE_SOLUTIONS_DIR?.trim();
+  return dir ? path.resolve(process.cwd(), dir) : null;
+}
+
+/**
+ * Activate the ProjectEulerSolutions.jl files this build reads: the local
+ * checkout named by PE_SOLUTIONS_DIR if it's set, and the pinned commit
+ * otherwise.
  */
 export function prepareSolutions() {
+  const localDir = localSolutionsDir();
+  active = localDir ? useLocalCheckout(localDir) : preparePinnedSnapshot();
+  return active;
+}
+
+/**
+ * Make sure the pinned commit is checked out under the cache directory and
+ * return it (`{ repo, commit, dir }`). Cheap when the snapshot already exists.
+ */
+export function preparePinnedSnapshot() {
   const pin = loadPin();
   const target = path.join(CACHE_DIR, pin.commit);
 
@@ -78,8 +108,35 @@ export function prepareSolutions() {
   }
   pruneCache(pin.commit);
 
-  active = { ...pin, dir: target };
-  return active;
+  return { ...pin, dir: target };
+}
+
+// A local checkout, read as it is on disk. GitHub has none of its uncommitted
+// changes, so View on GitHub links go to its HEAD commit, the closest it has.
+function useLocalCheckout(dir) {
+  if (!existsSync(path.join(dir, "src", "solutions"))) {
+    throw new Error(
+      `PE_SOLUTIONS_DIR is ${dir}, which isn't a ProjectEulerSolutions.jl checkout: it has no src/solutions/`
+    );
+  }
+
+  const pin = loadPin();
+  let commit = pin.commit;
+  try {
+    commit = git(["rev-parse", "HEAD"], dir).trim();
+  } catch {
+    // Not a git checkout, so link to the pinned commit instead
+  }
+
+  if (!announced.has(dir)) {
+    announced.add(dir);
+    console.log(
+      `[pe-solutions] Reading the local ProjectEulerSolutions.jl in ${dir} instead of the ` +
+        `pinned ${pin.commit.slice(0, 7)}; View on GitHub links go to ${commit.slice(0, 7)}`
+    );
+  }
+
+  return { repo: pin.repo, commit, dir, local: true };
 }
 
 function fetchSnapshot(pin, target) {
@@ -139,8 +196,9 @@ function pruneCache(keepCommit) {
 }
 
 /**
- * The active snapshot (`{ repo, commit, dir }`). Throws if `prepareSolutions()`
- * has not run yet, which happens in the `eleventy.before` hook.
+ * The active snapshot (`{ repo, commit, dir }`, with `local: true` for a local
+ * checkout). Throws if `prepareSolutions()` has not run yet, which happens in
+ * the `eleventy.before` hook.
  */
 export function activeSolutions() {
   if (!active) {
@@ -174,17 +232,20 @@ export function resolveSourcePath(reference) {
  * Read a file from the active snapshot by its repository-relative path.
  */
 export function readSolutionsFile(relativePath) {
-  const absolute = path.join(activeSolutions().dir, relativePath);
+  const { dir, local } = activeSolutions();
+  const absolute = path.join(dir, relativePath);
   if (!existsSync(absolute)) {
-    throw new Error(
-      `${relativePath} does not exist in ProjectEulerSolutions.jl at the pinned commit`
-    );
+    const where = local
+      ? `the local ProjectEulerSolutions.jl in ${dir}`
+      : "ProjectEulerSolutions.jl at the pinned commit";
+    throw new Error(`${relativePath} does not exist in ${where}`);
   }
   return readFileSync(absolute, "utf8");
 }
 
 /**
- * Permalink to a file (optionally a line range) at the pinned commit.
+ * Permalink to a file (optionally a line range) at the pinned commit, or at
+ * the HEAD of a local checkout.
  */
 export function githubUrl(relativePath, startLine, endLine) {
   const { repo, commit } = activeSolutions();

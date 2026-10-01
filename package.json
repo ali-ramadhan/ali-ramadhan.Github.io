@@ -17,6 +17,8 @@
   "scripts": {
     "dev": "eleventy --serve",
     "build": "eleventy",
+    "dev:local": "PE_SOLUTIONS_DIR=../ProjectEulerSolutions.jl eleventy --serve",
+    "build:local": "PE_SOLUTIONS_DIR=../ProjectEulerSolutions.jl eleventy",
     "preview": "npx serve _site",
     "lint:js": "eslint js config scripts test .eleventy.js eslint.config.js",
     "lint:css": "stylelint \"css/**/*.css\"",

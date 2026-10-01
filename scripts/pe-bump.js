@@ -10,7 +10,7 @@
  */
 
 import { execFileSync } from "child_process";
-import { loadPin, prepareSolutions, writePin } from "../config/pe-solutions.js";
+import { loadPin, preparePinnedSnapshot, writePin } from "../config/pe-solutions.js";
 
 const ref = process.argv[2] ?? "HEAD";
 const pin = loadPin();
@@ -26,7 +26,8 @@ if (commit === pin.commit) {
   console.log(`Changes: ${pin.repo}/compare/${pin.commit}...${commit}`);
 }
 
-prepareSolutions();
+// Always the pinned commit, even with PE_SOLUTIONS_DIR set, so a bad pin fails here
+preparePinnedSnapshot();
 
 /**
  * Resolve a ref against the remote repository without cloning it.

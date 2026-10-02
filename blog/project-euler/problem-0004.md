@@ -111,15 +111,11 @@ Putting it all together:
 
 @code[problem-0004:reverse_digits,largest_palindrome_product_fermat]
 
-`uv_max` keeps both factors at $n$ digits, and the inner loop tries carries until $D$ goes negative. This search can't miss a factorization: every way of writing a palindrome as a product of two $n$-digit numbers gives some $u$, $v$, and $c \ge 0$ that satisfy both equations, and for that carry $D = (u - v)^2 \ge 0$, so it gets tested before the loop stops. And since the palindromes get smaller as $m$ grows, the first one that passes is the largest.
+`uv_max` keeps both factors at $n$ digits, and the inner loop tries carries until $D$ goes negative. This search can't miss a factorization because every way of writing a palindrome as a product of two $n$-digit numbers gives some $u$, $v$, and $c \ge 0$ that satisfy both equations, and for that carry $D = (u - v)^2 \ge 0$, so it gets tested before the loop stops. And since the palindromes get smaller as $m$ grows, the first one that passes is the largest.
 
-This is [Fermat's factorization method](https://en.wikipedia.org/wiki/Fermat%27s_factorization_method) in disguise. Fermat factors a number $N$ by looking for an $a$ that makes $a^2 - N$ a perfect square $b^2$, because then $N = (a - b)(a + b)$. It's fast when the two factors are close together. Here $x + y = 2B - (m + c)$, so our discriminant is $D = (x + y)^2 - 4xy = (x - y)^2$, which is the same test with $a = (x + y)/2$. The digits of the palindrome pin down $x + y$ to one candidate per carry, and both factors are within about $10^{n/2}$ of $10^n$, so they're very close together.
+This is [Fermat's factorization method](https://en.wikipedia.org/wiki/Fermat%27s_factorization_method) in disguise. Fermat factors a number $N$ by looking for an $a$ that makes $a^2 - N$ a perfect square $b^2$, because then $N = (a - b)(a + b)$. It's fast when the two factors are close together. Here $x + y = 2B - (m + c)$, so our discriminant is $D = (x + y)^2 - 4xy = (x - y)^2$, which is the same test with $a = (x + y)/2$. The digits of the palindrome pin down $x + y$ to one candidate per carry, and both factors are within about $10^{n/2}$ of $10^n$.
 
-How many palindromes do we have to check? For even $n$, the palindrome $99\dots900\dots099\dots9 = (10^n - 1)(10^n - 10^{n/2} + 1)$ is always a product of two $n$-digit numbers. Its top half is $B - 10^{n/2}$, so we never check more than $10^{n/2} = \sqrt{B}$ palindromes. There's no such guarantee for odd $n$, but for every $n$ up to $24$ the answer has turned up within $4 \times 10^{n/2}$ palindromes of the top. The search also only works with numbers around $10^n$ rather than $10^{2n}$, so 64-bit integers are enough for up to 18 digits, which is why `T` defaults to `integer_type(n)` here rather than `integer_type(2n)`. Only the palindrome itself needs 128 bits once the factors have 10 or more digits, which `widemul` takes care of.
-
-Benchmarking `largest_palindrome_product_fermat(9)` we find the answer in @benchmark[problem-0004:fermat_9_digits], which is @ratio[problem-0004:9_digits/fermat_9_digits] faster than searching the largest products first. The 12-digit case, which would take many hours by searching products, finds $999,999,000,000,000,000,999,999 = 999,999,000,001 \times 999,999,999,999$ in @benchmark[problem-0004:fermat_12_digits], and the 15-digit case finds $999,999,974,180,040,040,081,479,999,999 = 999,999,975,838,971 \times 999,999,998,341,069$ in @benchmark[problem-0004:fermat_15_digits].
-
-The time mostly depends on how many palindromes we check before reaching the answer: $99,335$ for 9 digits, $1,000,000$ for 12 digits and $25,819,960$ for 15 digits.
+Benchmarking `largest_palindrome_product_fermat(9)` we find the answer in @benchmark[problem-0004:fermat_9_digits], which is @ratio[problem-0004:9_digits/fermat_9_digits] faster than searching the largest products first. The 12-digit case, which would take many hours by searching products runs in @benchmark[problem-0004:fermat_12_digits], and the 15-digit case runs in @benchmark[problem-0004:fermat_15_digits].
 
 ## Skipping palindromes that can't be products
 
@@ -129,11 +125,17 @@ Let $s = u + v = m + c$. Near the top, the upper half starts with $999$, so the 
 
 First, $uv$ ends in $9$, so $u$ and $v$ end in $1$ and $9$, $3$ and $3$, or $7$ and $7$. So $s$ ends in $0$, $6$ or $4$. Second, $uv \equiv 999 \equiv 7 \pmod 8$, so $u$ and $v$ are both odd. The residue of a number modulo $k$ is its remainder after dividing by $k$. The only odd residues modulo $8$ that multiply to $7$ are $1 \times 7$ and $3 \times 5$. Both add up to $8$, so $s \equiv 0 \pmod 8$.
 
-These rules are about $s$ rather than $m$, so we'll loop over $s$ instead and set $m = s - c$ for each carry. Modulo $120$ they only allow these residues:
+These rules are about $s$ rather than $m$, so we'll loop over $s$ instead and set $m = s - c$ for each carry.
+
+Both rules only depend on $s \bmod 8$ and $s \bmod 10$, which repeat every $40$ sums since $40$ is the smallest number that $8$ and $10$ both divide. Of $0, 1, \dots, 39$, only $0$, $16$ and $24$ pass, so of any $40$ consecutive sums only the ones congruent to those modulo $40$ can work. So rather than testing every $s$, we can step through the sums in blocks of $40$ and only try those three, skipping the other $37$ without doing any work.
+
+In blocks of $120$ the same rules allow these residues:
 
 @code[problem-0004:SUM_RESIDUES]
 
-Working modulo $120 = 8 \times 3 \times 5$ rather than $40$ means each residue also tells us $s \bmod 3$, which the next rule needs. A number is congruent to its digit sum modulo $3$, and the upper and lower halves have the same digits, so $L \equiv U \pmod 3$. Since $4 \equiv B \equiv 1 \pmod 3$ and $U = B - m = B - s + c$, the discriminant becomes
+Blocks of $40$ would keep the same $3$ in $40$ sums, but since $40 \equiv 1 \pmod 3$, the same residue would give a different $s \bmod 3$ in each of three consecutive blocks. In blocks of $120 = 8 \times 3 \times 5$ each residue also fixes $s \bmod 3$, so the next rule can drop whole residues instead of checking every sum.
+
+A number is congruent to its digit sum modulo $3$, and the upper and lower halves have the same digits, so $L \equiv U \pmod 3$. Since $B = 10^n \equiv 1 \pmod 3$ and $U = B - m = B - s + c$, the discriminant becomes
 
 ```math
 D = s^2 - 4(cB + L) \equiv s^2 + s + c - 1 \pmod 3
@@ -149,8 +151,6 @@ The middle of the palindrome narrows it down even further. The last digit of $U$
 
 @code[problem-0004:passes_middle_digit_rule]
 
-Without a carry, $s \equiv 16$ gives $d = 4$, so it needs $s \ge 1.26\sqrt{B}$, and $s \equiv 64$ gives $d = 6$, so it needs $s \ge 1.55\sqrt{B}$. Closer to the top only $s \equiv 40$ is left, so only $1$ in $120$ palindromes gets checked. These all have $d = 0$, i.e. $00$ in the middle, which is why $17$ of the $23$ answers from $2$ to $24$ digits do. To find the 6-digit answer, for example, the plain search walks through the top $1000$ palindromes, but now the full check only runs for $s = 40, 160, 280, \dots, 1000$, and the ninth one gives $999,000,000,999 = 999,001 \times 999,999$.
-
 The palindromes that get through can also be checked more cheaply:
 
 - Near the top the upper half is a run of $9$s followed by a short tail, so the lower half is the reversed tail followed by $9$s, and only the tail needs reversing. Reversing takes a division per digit, and once the numbers need `Int128` those divisions are slow, but the tail always fits in an `Int64`.
@@ -159,7 +159,7 @@ The palindromes that get through can also be checked more cheaply:
 
 @code[problem-0004:lower_half,reverse_tail,SQUARES_MOD_64,perfect_square_root]
 
-Looping over $s$ has one catch: we no longer visit the palindromes in order, since a larger $s$ with a larger carry can still give a smaller $m$. The 9-digit answer has $s = 99,336$ and $c = 1$, for example, so $m = 99,335$. So instead of stopping at the first hit, we keep the smallest $m$ found so far. The carry is at most $s^2/4B$, so every $s$ from here on gives $m \ge s - \lfloor s^2/4B \rfloor$, and once that's larger than the best $m$ we can stop:
+Looping over $s$ has one catch: we no longer visit the palindromes in order, since a larger $s$ with a larger carry can still give a smaller $m$. So instead of stopping at the first hit, we keep the smallest $m$ found so far. The carry is at most $s^2/4B$, so every $s$ from here on gives $m \ge s - \lfloor s^2/4B \rfloor$, and once that's larger than the best $m$ we can stop:
 
 @code[problem-0004:no_smaller_m_from]
 
@@ -169,4 +169,4 @@ Putting it all together:
 
 The rules only hold while the upper half starts with $999$, i.e. for $s \le 10^{n-3}$, and the tail has $k = \min(n, \lceil n/2 \rceil + 3, 18)$ digits, which is deeper than any answer has been. If the search can't prove its best palindrome is the largest within those limits, it falls back to the plain Fermat search. That only happens for 5 digits or fewer, where the plain search is fast anyway.
 
-Benchmarking `largest_palindrome_product_fermat_filtered(12)` we find the answer in @benchmark[problem-0004:fermat_filtered_12_digits], which is @ratio[problem-0004:fermat_12_digits/fermat_filtered_12_digits] faster than the plain Fermat search, and the 15-digit case takes @benchmark[problem-0004:fermat_filtered_15_digits], which is @ratio[problem-0004:fermat_15_digits/fermat_filtered_15_digits] faster.
+Benchmarking `largest_palindrome_product_fermat_filtered(12)` we find the same answer in @benchmark[problem-0004:fermat_filtered_12_digits], which is @ratio[problem-0004:fermat_12_digits/fermat_filtered_12_digits] faster than the plain Fermat search, and the 15-digit case takes @benchmark[problem-0004:fermat_filtered_15_digits], which is @ratio[problem-0004:fermat_15_digits/fermat_filtered_15_digits] faster.

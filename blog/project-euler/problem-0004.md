@@ -170,3 +170,35 @@ Putting it all together:
 The rules only hold while the upper half starts with $999$, i.e. for $s \le 10^{n-3}$, and the tail has $k = \min(n, \lceil n/2 \rceil + 3, 18)$ digits, which is deeper than any answer has been. If the search can't prove its best palindrome is the largest within those limits, it falls back to the plain Fermat search. That only happens for 5 digits or fewer, where the plain search is fast anyway.
 
 Benchmarking `largest_palindrome_product_fermat_filtered(12)` we find the same answer in @benchmark[problem-0004:fermat_filtered_12_digits], which is @ratio[problem-0004:fermat_12_digits/fermat_filtered_12_digits] faster than the plain Fermat search, and the 15-digit case takes @benchmark[problem-0004:fermat_filtered_15_digits], which is @ratio[problem-0004:fermat_15_digits/fermat_filtered_15_digits] faster.
+
+## Running the search on a GPU
+
+The filtered search still checks one sum at a time. The answer is usually around $10^{n/2}$ palindromes from the top, so each extra digit means about $\sqrt{10} \approx 3$ times as many sums to check. But checking one sum doesn't depend on any other, and all we need from them is the smallest $m$, so we can check many sums at the same time. It's an embarassingly parallel problem. That's what GPUs are good at!
+
+Each GPU thread can take groups of $120$ consecutive sums, like the blocks in `find_smallest_m`, and checks the ones whose residues pass the rules. When a thread finds a palindrome product, it lowers the smallest $m$ found so far with `CUDA.@atomic`, so that two threads can't overwrite each other's results:
+
+@code[problem-0004:search_kernel!,check_group!,check_sum!,passes_middle_digit_rule_gpu]
+
+Each thread loops over every `num_threads`-th group, so the kernel can be launched on any number of groups. Rather than testing every residue against the rules, `check_group!` uses two thresholds: below the first only $s \equiv 40$ can pass, and below the second there's no carry yet, so only $16$, $40$ and $64$ can. `check_sum!` also keeps $4cB$ as a running total instead of multiplying for every carry, which is the only change in `passes_middle_digit_rule_gpu`.
+
+The CPU decides how far to search. It launches the kernel on batches of groups from $s = 0$ upwards, doubling the batch each time, so an answer near the top only takes a few small launches while a deep one gets launches big enough to keep the GPU busy. After each launch it copies back the smallest $m$ and stops once no larger $s$ can beat it, using `no_smaller_m_from` again:
+
+@code[problem-0004:largest_palindrome_product_gpu]
+
+The GPU only reports $m$, so `palindrome_and_factors` then works out the carry and the two factors on the CPU. There's no fallback to the plain search, so the GPU version needs at least 6 digits.
+
+The arithmetic takes more care on a GPU. Its integer instructions work on 32 bits, so 64-bit arithmetic takes a few instructions and 128-bit arithmetic many more, and division, which the hardware can't do directly, is the slowest of all.
+
+@code[problem-0004:GPUSearch]
+
+Two pieces of the CPU code are also rewritten to avoid slow arithmetic. Reversing the tail takes a division by $10$ per digit, so `reverse_tail_gpu` splits the tail into its last $9$ digits and the rest, which both fit in 32 bits. That makes the whole search about 1.5× faster than dividing a `UInt64`. And Base's `isqrt` corrects its floating-point estimate with a Newton step that divides one `UInt128` by another, which makes the whole search about 6× slower. So `isqrt_uint128` corrects the estimate by comparing squares instead, which only needs multiplications:
+
+@code[problem-0004:lower_half_gpu,reverse_tail_gpu,reverse_last_digits,is_perfect_square,isqrt_uint128]
+
+The residue rules don't change, so the GPU code reuses `SUM_RESIDUES`, `passes_mod_3_rule` and `SQUARES_MOD_64` from the CPU version.
+
+On a V100 the 20-digit case takes @benchmark[problem-0004:gpu_20_digits], which is @ratio[problem-0004:fermat_filtered_20_digits/gpu_20_digits] faster than the filtered search on one CPU core, and the 24-digit case takes @benchmark[problem-0004:gpu_24_digits].
+
+That's fast enough to keep going past 24 digits!
+
+The `UInt128` arithmetic works up to 37 digits, where $4B$ stops fitting, but each digit makes the search about $\sqrt{10}$ times longer. With an even number of digits the answer is at most $10^{n/2}$ palindromes from the top, so 32 digits takes up to about an hour, while an odd number of digits can take longer, depending on how far down the answer is.

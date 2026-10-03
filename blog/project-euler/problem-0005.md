@@ -29,8 +29,10 @@ and where $\operatorname{gcd}(a, b)$ is the [greatest common divisor](https://en
 
 Computing `smallest_multiple(20)` is then done very quickly in just @benchmark[problem-0005:n_20].
 
-The result grows very quickly with `smallest_multiple(42)` being the largest that does not overflow `Int64`, returning 219060189739591200 in @benchmark[problem-0005:n_42].
+The answers $\operatorname{lcm}(1, 2, \dots, n) = 1, 2, 6, 12, 60, 60, 420, \dots$ are [OEIS A003418](https://oeis.org/A003418), and they grow very quickly with `smallest_multiple(42)` being the largest that does not overflow `Int64`, returning 219060189739591200 in @benchmark[problem-0005:n_42].
 
 `smallest_multiple(Int128(88))` is the largest that does not overflow `Int128`, returning 8076030954443701744994070304101969600 in @benchmark[problem-0005:n_88_i128].
+
+Why 42 and 88? The logarithm of $\operatorname{lcm}(1, 2, \dots, n)$ is the [second Chebyshev function](https://en.wikipedia.org/wiki/Chebyshev_function) $\psi(n)$, and the [prime number theorem](https://en.wikipedia.org/wiki/Prime_number_theorem) is equivalent to $\psi(n) \sim n$, so $\operatorname{lcm}(1, 2, \dots, n) \approx e^n$. `Int64` holds numbers up to $2^{63} \approx e^{43.7}$ and `Int128` up to $2^{127} \approx e^{88.0}$.
 
 We can keep going past 88 using `BigInt`. Going all the way to `smallest_multiple(BigInt(100000))` returns a 43452-digit number in @benchmark[problem-0005:n_100k_bigint].

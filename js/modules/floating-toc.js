@@ -5,15 +5,27 @@
 
 import { expandCollapsedSections } from "./collapsible-headers.js";
 
+// Windows at least this wide have room for the ToC beside the post. Below
+// 1920px the post column is up to 1200px wide and the ToC takes up the 300px at
+// the window's right edge, so they meet at about 1730px, and 1800px leaves a
+// gap of about 30px even with a scrollbar. On narrower windows the ToC would
+// cover the text, so it starts closed and opens over the post from the 📋
+// button.
+const BESIDE_POST_QUERY = "(width >= 1800px)";
+
 export class FloatingTocManager {
   constructor() {
-    this.isVisible = true;
     this.tocContainer = null;
+    this.restoreButton = null;
     this.headings = [];
     this.tocLinks = [];
     this.isScrolling = false;
+    this.besidePost = window.matchMedia(BESIDE_POST_QUERY);
     this.scrollHandler = null;
     this.linkClickHandlers = [];
+    this.keydownHandler = null;
+    this.outsideClickHandler = null;
+    this.widthChangeHandler = null;
 
     this.init();
 
@@ -70,9 +82,18 @@ export class FloatingTocManager {
     }
 
     this.createTocContainer();
+    this.createRestoreButton();
     this.buildTocStructure();
     this.setupScrollListener();
     this.setupTocNavigation();
+    this.setupOverlayDismissal();
+
+    // Open the ToC where it fits beside the post and close it where it
+    // doesn't, both now and whenever the window crosses that width
+    this.widthChangeHandler = () => this.setOpen(this.besidePost.matches);
+    this.besidePost.addEventListener("change", this.widthChangeHandler);
+    this.setOpen(this.besidePost.matches);
+
     this.highlightCurrentSection();
   }
 
@@ -90,7 +111,55 @@ export class FloatingTocManager {
     document.body.appendChild(this.tocContainer);
 
     const closeButton = this.tocContainer.querySelector(".floating-toc-close");
-    closeButton.addEventListener("click", () => this.hideToc());
+    closeButton.addEventListener("click", () => this.setOpen(false));
+  }
+
+  // The 📋 button that takes the ToC's place while it's closed
+  createRestoreButton() {
+    this.restoreButton = document.createElement("button");
+    this.restoreButton.className = "floating-toc-restore";
+    this.restoreButton.title = "Show Table of Contents";
+    this.restoreButton.setAttribute("aria-label", "Show table of contents");
+
+    const icon = document.createElement("span");
+    icon.className = "restore-icon";
+    icon.textContent = "📋";
+    this.restoreButton.appendChild(icon);
+
+    this.restoreButton.addEventListener("click", () => this.setOpen(true));
+
+    document.body.appendChild(this.restoreButton);
+  }
+
+  setOpen(open) {
+    this.tocContainer.hidden = !open;
+    this.restoreButton.hidden = open;
+  }
+
+  // Whether the ToC is open on top of the post
+  isOverPost() {
+    return !this.tocContainer.hidden && !this.besidePost.matches;
+  }
+
+  // While the ToC covers the post, Escape or a click anywhere else closes it
+  setupOverlayDismissal() {
+    this.keydownHandler = (e) => {
+      if (e.key === "Escape" && this.isOverPost()) this.setOpen(false);
+    };
+
+    // The click on the 📋 button that opened the ToC also reaches the document
+    this.outsideClickHandler = (e) => {
+      if (
+        this.isOverPost() &&
+        !this.tocContainer.contains(e.target) &&
+        !this.restoreButton.contains(e.target)
+      ) {
+        this.setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", this.keydownHandler);
+    document.addEventListener("click", this.outsideClickHandler);
   }
 
   buildTocStructure() {
@@ -210,6 +279,9 @@ export class FloatingTocManager {
         if (targetElement) {
           expandCollapsedSections(targetElement);
 
+          // Don't cover the section the reader picked
+          if (this.isOverPost()) this.setOpen(false);
+
           this.isScrolling = true;
 
           window.scrollTo({
@@ -238,6 +310,16 @@ export class FloatingTocManager {
       link.removeEventListener("click", handler);
     });
     this.linkClickHandlers = [];
+    if (this.keydownHandler) {
+      document.removeEventListener("keydown", this.keydownHandler);
+      document.removeEventListener("click", this.outsideClickHandler);
+      this.keydownHandler = null;
+      this.outsideClickHandler = null;
+    }
+    if (this.widthChangeHandler) {
+      this.besidePost.removeEventListener("change", this.widthChangeHandler);
+      this.widthChangeHandler = null;
+    }
   }
 
   highlightCurrentSection() {
@@ -279,49 +361,5 @@ export class FloatingTocManager {
         }
       }
     });
-  }
-
-  hideToc() {
-    if (this.tocContainer) {
-      this.tocContainer.style.display = "none";
-      this.isVisible = false;
-      this.createRestoreButton();
-    }
-  }
-
-  showToc() {
-    if (this.tocContainer) {
-      this.tocContainer.style.display = "block";
-      this.isVisible = true;
-      this.removeRestoreButton();
-    }
-  }
-
-  createRestoreButton() {
-    // Don't create multiple restore buttons
-    if (document.querySelector(".floating-toc-restore")) return;
-
-    const restoreButton = document.createElement("button");
-    restoreButton.className = "floating-toc-restore";
-    restoreButton.title = "Show Table of Contents";
-    restoreButton.setAttribute("aria-label", "Show table of contents");
-
-    const icon = document.createElement("span");
-    icon.className = "restore-icon";
-    icon.textContent = "📋";
-    restoreButton.appendChild(icon);
-
-    restoreButton.addEventListener("click", () => {
-      this.showToc();
-    });
-
-    document.body.appendChild(restoreButton);
-  }
-
-  removeRestoreButton() {
-    const restoreButton = document.querySelector(".floating-toc-restore");
-    if (restoreButton) {
-      restoreButton.remove();
-    }
   }
 }

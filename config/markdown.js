@@ -259,6 +259,15 @@ export function configureMarkdown(eleventyConfig) {
         return tokens[idx].nesting === 1 ? '<aside class="hackerrank-note">\n' : "</aside>\n";
       },
     });
+
+    // A table with many columns of benchmarks, which scrolls sideways when it's
+    // too wide for the post instead of splitting benchmarks over two lines:
+    // ::: wide-table ... :::
+    mdLib.use(markdownItContainer, "wide-table", {
+      render: function (tokens, idx) {
+        return tokens[idx].nesting === 1 ? '<div class="wide-table">\n' : "</div>\n";
+      },
+    });
   });
 
   // Post-process HTML transforms

@@ -34,6 +34,16 @@ html[data-theme="dark"] .blog-post-content tbody + tbody tr:first-child td {
   border-top-color: #8896ab;
 }
 
+/* ::: wide-table (see config/markdown.js) scrolls sideways when the table is
+   too wide for the post, so each benchmark can stay on one line */
+.blog-post-content .wide-table {
+  overflow-x: auto;
+}
+
+.blog-post-content .wide-table .benchmark-reference {
+  white-space: nowrap;
+}
+
 /* Mobile table adjustments */
 @media (width <= 768px) {
   .blog-post-content th,

@@ -4,7 +4,7 @@ problem_number: 4
 problem_name: "Largest Palindrome Product"
 date: 2025-10-07
 benchmark_file: "problem-0004"
-benchmark_key: "3_digits"
+benchmark_key: "fermat_3_digits"
 floating_toc: true
 ---
 
@@ -45,15 +45,15 @@ Testing for palindromes with strings allocates memory for two strings every time
 
 We can then use this function to search for the largest palindrome made from the product of two $n$-digit numbers:
 
-@code[problem-0004:largest_palindrome_product]
+@code[problem-0004:largest_palindrome_product_pruned]
 
 So we search through all products $ij$ in descending order to find the largest palindrome. The search is sped up in a few ways. First, we iterate from largest to smallest values since we're searching for a maximum. This lets us terminate early if $ij$ can no longer exceed the current maximum palindrome found so far. We also added a `max_product` option that only considers products below a given value, which is what the [HackerRank version](https://www.hackerrank.com/contests/projecteuler/challenges/euler004/problem) asks for. With up to $100$ queries per run though, the [submission](https://github.com/ali-ramadhan/ProjectEulerSolutions.jl/blob/main/hacker_rank/projecteuler+_problem0004.jl) instead precomputes every palindrome product of two $3$-digit numbers once and binary searches that sorted list for each query.
 
-Benchmarking the 3-digit case we find the solution `largest_palindrome_product(3)` in @benchmark[problem-0004:3_digits], which is @ratio[problem-0004:naive_3_digits/3_digits] faster than the naive solution.
+Benchmarking the 3-digit case we find the solution `largest_palindrome_product_pruned(3)` in @benchmark[problem-0004:pruned_3_digits], which is @ratio[problem-0004:naive_3_digits/pruned_3_digits] faster than the naive solution.
 
-For the 6-digit case we call `largest_palindrome_product(6)` to find a maximum palindrome of $999,000,000,999 = 999,001 \times 999,999$ in @benchmark[problem-0004:6_digits].
+For the 6-digit case we call `largest_palindrome_product_pruned(6)` to find a maximum palindrome of $999,000,000,999 = 999,001 \times 999,999$ in @benchmark[problem-0004:pruned_6_digits].
 
-We can also do the 9-digit case and call `largest_palindrome_product(9)` to find $999,900,665,566,009,999 = 999,920,317 \times 999,980,347$ in @benchmark[problem-0004:9_digits] which is still under a minute.
+The 8-digit case takes @benchmark[problem-0004:pruned_8_digits]. We can still do the 9-digit case, where `largest_palindrome_product_pruned(9)` finds $999,900,665,566,009,999 = 999,920,317 \times 999,980,347$, but that takes almost a minute.
 
 Beyond that, the product of two 10-digit numbers no longer fits in a 64-bit integer, so `T` switches to `Int128`. The 12-digit case will probably also take a lot longer than 1 minute! Besides `Int128` operations taking more CPU cycles than `Int64` operations, the solution time scales superlinearly.
 
@@ -115,7 +115,7 @@ Putting it all together:
 
 This is [Fermat's factorization method](https://en.wikipedia.org/wiki/Fermat%27s_factorization_method) in disguise. Fermat factors a number $N$ by looking for an $a$ that makes $a^2 - N$ a perfect square $b^2$, because then $N = (a - b)(a + b)$. It's fast when the two factors are close together. Here $x + y = 2B - (m + c)$, so our discriminant is $D = (x + y)^2 - 4xy = (x - y)^2$, which is the same test with $a = (x + y)/2$. The digits of the palindrome pin down $x + y$ to one candidate per carry, and both factors are within about $10^{n/2}$ of $10^n$.
 
-Benchmarking `largest_palindrome_product_fermat(9)` we find the answer in @benchmark[problem-0004:fermat_9_digits], which is @ratio[problem-0004:9_digits/fermat_9_digits] faster than searching the largest products first. The 12-digit case, which would take many hours by searching products runs in @benchmark[problem-0004:fermat_12_digits], and the 15-digit case runs in @benchmark[problem-0004:fermat_15_digits].
+Benchmarking `largest_palindrome_product_fermat(8)` we find the answer in @benchmark[problem-0004:fermat_8_digits], which is @ratio[problem-0004:pruned_8_digits/fermat_8_digits] faster than searching the largest products first. For the original 3-digit problem it takes @benchmark[problem-0004:fermat_3_digits], which is @ratio[problem-0004:pruned_3_digits/fermat_3_digits] faster. The 12-digit case, which would take many hours by searching products runs in @benchmark[problem-0004:fermat_12_digits], and the 15-digit case runs in @benchmark[problem-0004:fermat_15_digits].
 
 ## Skipping palindromes that can't be products
 
@@ -197,7 +197,7 @@ Two pieces of the CPU code are also rewritten to avoid slow arithmetic. Reversin
 
 The residue rules don't change, so the GPU code reuses `SUM_RESIDUES`, `passes_mod_3_rule` and `SQUARES_MOD_64` from the CPU version.
 
-On a V100 the 20-digit case takes @benchmark[problem-0004:gpu_20_digits], which is @ratio[problem-0004:fermat_filtered_20_digits/gpu_20_digits] faster than the filtered search on one CPU core, and the 24-digit case takes @benchmark[problem-0004:gpu_24_digits].
+On a GPU the 20-digit case takes @benchmark[problem-0004:gpu_20_digits], which is @ratio[problem-0004:fermat_filtered_20_digits/gpu_20_digits] faster than the filtered search on one CPU core, and the 24-digit case takes @benchmark[problem-0004:gpu_24_digits].
 
 That's fast enough to keep going past 24 digits!
 
@@ -242,3 +242,27 @@ Here's the largest palindrome that's a product of two $n$-digit numbers for ever
 | 32  | 9999999999999999000000000000000000000000000000009999999999999999<br>= 99999999999999990000000000000001 × 99999999999999999999999999999999 |
 
 [OEIS A308803](https://oeis.org/A308803) asks the same question by the number of digits in the palindrome instead: the largest $k$-digit palindrome that's a product of two numbers with the same number of digits. For even $k$ that's the table above, since a $2n$-digit product needs two $n$-digit factors. For odd $k$ the two factors can be much further apart, which makes those terms easy to find, and they're known up to $95$ digits.
+
+## How far each method gets
+
+Here's every benchmark from this post in one table. Each method is only benchmarked at sizes it can do in a few seconds, and it shares at least two sizes with the method before it. Under each time is how many times faster that method is than the one to its left. The CPU searches all run on one core.
+
+::: wide-table
+
+| $n$ | Naive                                   | Largest products first                                                                                 | Fermat                                                                                                  | Filtered                                                                                                                     | GPU                                                                                                           |
+| --- | --------------------------------------- | ------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| 3   | @benchmark[problem-0004:naive_3_digits] | @benchmark[problem-0004:pruned_3_digits]<br>@ratio[problem-0004:naive_3_digits/pruned_3_digits] faster | @benchmark[problem-0004:fermat_3_digits]<br>@ratio[problem-0004:pruned_3_digits/fermat_3_digits] faster |                                                                                                                              |                                                                                                               |
+| 4   | @benchmark[problem-0004:naive_4_digits] | @benchmark[problem-0004:pruned_4_digits]<br>@ratio[problem-0004:naive_4_digits/pruned_4_digits] faster |                                                                                                         |                                                                                                                              |                                                                                                               |
+| 6   |                                         | @benchmark[problem-0004:pruned_6_digits]                                                               | @benchmark[problem-0004:fermat_6_digits]<br>@ratio[problem-0004:pruned_6_digits/fermat_6_digits] faster |                                                                                                                              |                                                                                                               |
+| 8   |                                         | @benchmark[problem-0004:pruned_8_digits]                                                               | @benchmark[problem-0004:fermat_8_digits]<br>@ratio[problem-0004:pruned_8_digits/fermat_8_digits] faster |                                                                                                                              |                                                                                                               |
+| 12  |                                         |                                                                                                        | @benchmark[problem-0004:fermat_12_digits]                                                               | @benchmark[problem-0004:fermat_filtered_12_digits]<br>@ratio[problem-0004:fermat_12_digits/fermat_filtered_12_digits] faster |                                                                                                               |
+| 15  |                                         |                                                                                                        | @benchmark[problem-0004:fermat_15_digits]                                                               | @benchmark[problem-0004:fermat_filtered_15_digits]<br>@ratio[problem-0004:fermat_15_digits/fermat_filtered_15_digits] faster | @benchmark[problem-0004:gpu_15_digits]<br>@ratio[problem-0004:fermat_filtered_15_digits/gpu_15_digits] faster |
+| 20  |                                         |                                                                                                        |                                                                                                         | @benchmark[problem-0004:fermat_filtered_20_digits]                                                                           | @benchmark[problem-0004:gpu_20_digits]<br>@ratio[problem-0004:fermat_filtered_20_digits/gpu_20_digits] faster |
+| 24  |                                         |                                                                                                        |                                                                                                         |                                                                                                                              | @benchmark[problem-0004:gpu_24_digits]                                                                        |
+| 26  |                                         |                                                                                                        |                                                                                                         |                                                                                                                              | @benchmark[problem-0004:gpu_26_digits]                                                                        |
+
+:::
+
+Searching palindromes instead of products changes how quickly the time grows. From 6 to 8 digits, searching products gets @ratio[problem-0004:pruned_8_digits/pruned_6_digits] slower, but the Fermat search only gets @ratio[problem-0004:fermat_8_digits/fermat_6_digits] slower, since the answer is only around $10^{n/2}$ palindromes from the top. So the palindrome searches only get about $\sqrt{10} \approx 3$ times slower with each extra digit, which makes every later speedup worth a few more digits in the same time: the filters' @ratio[problem-0004:fermat_15_digits/fermat_filtered_15_digits] is worth about 3, and the GPU's @ratio[problem-0004:fermat_filtered_20_digits/gpu_20_digits] about 6.
+
+The filters skip about the same share of the work at every size, so they stay around @ratio[problem-0004:fermat_12_digits/fermat_filtered_12_digits] to @ratio[problem-0004:fermat_15_digits/fermat_filtered_15_digits] faster. The GPU instead pulls further ahead as $n$ grows, since the fixed cost of each kernel launch matters less, going from @ratio[problem-0004:fermat_filtered_15_digits/gpu_15_digits] faster than one CPU core at 15 digits to @ratio[problem-0004:fermat_filtered_20_digits/gpu_20_digits] at 20.

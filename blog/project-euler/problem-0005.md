@@ -37,7 +37,7 @@ We don't even need all of 1, 2, ..., 20. Any $k \leq 10$ can be doubled until it
 
 The answers to the general problem, $\operatorname{lcm}(1, 2, \dots, n) = 1, 2, 6, 12, 60, 60, 420, \dots$ are [OEIS A003418](https://oeis.org/A003418), and they grow very quickly with `smallest_multiple(42)` being the largest that does not overflow `Int64`, returning 219060189739591200 in @benchmark[problem-0005:n_42].
 
-`smallest_multiple(Int128(88))` is the largest that does not overflow `Int128`, returning 8076030954443701744994070304101969600 in @benchmark[problem-0005:n_88_i128].
+`smallest_multiple(Int128(88))` is the largest that does not overflow `Int128`, returning 8076030954443701744994070304101969600 in @benchmark[problem-0005:n_88_i128]. That's @ratio[problem-0005:n_88_i128/n_42] longer than $n = 42$ for only about twice as many `lcm` calls, since 128-bit arithmetic is much slower than 64-bit arithmetic.
 
 Why 42 and 88? The logarithm of $\operatorname{lcm}(1, 2, \dots, n)$ is the [second Chebyshev function](https://en.wikipedia.org/wiki/Chebyshev_function) $\psi(n)$, and the [prime number theorem](https://en.wikipedia.org/wiki/Prime_number_theorem) is equivalent to $\psi(n) \sim n$, so $\operatorname{lcm}(1, 2, \dots, n) \approx e^n$. `Int64` holds numbers up to $2^{63} \approx e^{43.7}$ and `Int128` up to $2^{127} \approx e^{88.0}$.
 
@@ -60,3 +60,23 @@ Primorials are useful here because $\operatorname{lcm}(1, 2, \dots, n)$ is built
 ```
 
 The [GMP](https://gmplib.org/) library, which Julia's `BigInt` is built on, already has a fast primorial function, [`mpz_primorial_ui`](https://gmplib.org/manual/Number-Theoretic-Functions). [Its implementation](https://gmplib.org/repo/gmp/file/tip/mpz/primorial_ui.c) sieves the primes up to $n$ and packs as many as fit into each 64-bit word. It then multiplies the words together with a [binary splitting](https://gmplib.org/repo/gmp/file/tip/mpz/prodlimbs.c) product. Computing $\operatorname{lcm}(1, 2, \dots, n)$ is then just a handful of calls to it and a few multiplications.
+
+## Computing the LCM with primorials
+
+The layered product works, but we can simplify it. Every layer after the first only contains primes $p \leq \sqrt{n}$, and together those layers give each such prime its missing $p^{e-1}$, where $p^e$ is the largest power of $p$ up to $n$. So
+
+```math
+\operatorname{lcm}(1, 2, \dots, n) = n\# \cdot \prod_{p \leq \sqrt{n}\atop p\,\text{prime}} p^{e_p - 1}
+```
+
+where the second factor is [OEIS A045948](https://oeis.org/A045948). For $n = 20$ it's $2^3 \cdot 3 = 24$, the extra factors that $16 = 2^4$ and $9 = 3^2$ need, and $20\\# \cdot 24 = 9699690 \cdot 24 = 232792560$.
+
+We can get $n\\#$ straight from GMP's `mpz_primorial_ui` (Julia's `BigInt` is GMP's `mpz_t`, so we can pass it in directly)
+
+@code[src/utils/Primes/primorial.jl:primorial]
+
+and $p^{e-1}$ is the largest power of $p$ that is at most $n \div p$, which we can find with integer division so nothing overflows:
+
+@code[problem-0005:smallest_multiple_primorial]
+
+This computes `smallest_multiple_primorial(100000)` in @benchmark[problem-0005:primorial_n_100k], @ratio[problem-0005:n_100k_bigint/primorial_n_100k] faster than the @benchmark[problem-0005:n_100k_bigint] of the iterative loop. It also scales much better. The loop multiplies its whole growing result at every step, so its cost grows roughly like $n^2$, but going up to $n = 10^6$ takes @benchmark[problem-0005:primorial_n_1M], only @ratio[problem-0005:primorial_n_1M/primorial_n_100k] longer for a 10× larger $n$. Going all the way to $n = 10^8$, a 43,428,686-digit number, takes @benchmark[problem-0005:primorial_n_100M], @ratio[problem-0005:primorial_n_100M/primorial_n_1M] longer than $n = 10^6$ for a 100× larger $n$.

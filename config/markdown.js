@@ -260,8 +260,9 @@ export function configureMarkdown(eleventyConfig) {
       },
     });
 
-    // A table with many columns of benchmarks, which scrolls sideways when it's
-    // too wide for the post instead of splitting benchmarks over two lines:
+    // A table that can be too wide for the post, like one with many columns of
+    // benchmarks or very long numbers. It scrolls sideways instead of
+    // overflowing the post or splitting benchmarks over two lines:
     // ::: wide-table ... :::
     mdLib.use(markdownItContainer, "wide-table", {
       render: function (tokens, idx) {

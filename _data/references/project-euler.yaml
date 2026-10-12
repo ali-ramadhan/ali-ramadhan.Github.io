@@ -19,3 +19,45 @@ koshy2001:
   type: book
   publisher: "Wiley"
   doi: "https://doi.org/10.1002/9781118033067"
+
+buthe2018:
+  authors: "Büthe, J."
+  year: 2018
+  title: "An analytic method for bounding ψ(x)"
+  type: article
+  journal: "Mathematics of Computation"
+  volume: "87"
+  issue: "312"
+  pages: "1991–2009"
+  doi: "https://doi.org/10.1090/mcom/3264"
+
+littlewood1914:
+  authors: "Littlewood, J. E."
+  year: 1914
+  title: "Sur la distribution des nombres premiers"
+  type: article
+  journal: "Comptes rendus hebdomadaires des séances de l'Académie des sciences"
+  volume: "158"
+  pages: "1869–1872"
+  url: "https://archive.org/details/comptesrendusheb158acad/page/1869/mode/1up"
+
+saouter2015:
+  authors: "Saouter, Y., Trudgian, T., & Demichel, P."
+  year: 2015
+  title: "A still sharper region where π(x) − li(x) is positive"
+  type: article
+  journal: "Mathematics of Computation"
+  volume: "84"
+  issue: "295"
+  pages: "2433–2446"
+  doi: "https://doi.org/10.1090/S0025-5718-2015-02930-5"
+
+temme2010:
+  authors: "Temme, N. M."
+  year: 2010
+  title: "Exponential, logarithmic, sine, and cosine integrals"
+  type: chapter
+  book_title: "NIST Handbook of Mathematical Functions"
+  editors: "F. W. J. Olver, D. W. Lozier, R. F. Boisvert & C. W. Clark"
+  publisher: "Cambridge University Press"
+  url: "https://dlmf.nist.gov/6"

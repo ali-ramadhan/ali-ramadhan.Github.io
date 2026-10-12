@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64"
+     role="img" aria-label="OEIS">
+  <title>OEIS</title>
+  <!-- The OEIS monogram redrawn for small sizes: geometric letters, one 1px stroke
+       throughout, on a grid whose every edge lands on a whole pixel of a 16px icon.
+       4 viewBox units is 1px at 16, 2px at 32 and 3px at 48, so what snaps at one
+       size snaps at all three. Black on an opaque white tile.
+
+       The E sets the size: three arms and two counters, all a whole pixel, only comes
+       out at 5px or 7px, and 7 leaves no room for two rows. So the cell is 5px and the
+       E is arm, counter, arm, counter, arm. The I is centred under the O and on the
+       grid at once, because (cell - stem) / 2 is a whole pixel.
+
+       There is no optical overshoot on the round letters. It was 0.55 of a viewBox
+       unit, about a seventh of a pixel at 16, and it would have cost every edge it
+       touched its place on the grid.
+
+       GENERATED - do not edit by hand. The grid is the handful of constants at the top
+       of favicon.swift; change them there and re-run. -->
+  <rect width="64" height="64" rx="12" fill="#fff"/>
+  <g fill="#000">
+    <!-- O -->
+    <circle cx="18" cy="18" r="8" fill="none" stroke="#000" stroke-width="4"/>
+    <!-- E: the letter the grid is built around -->
+    <rect x="36" y="8" width="4" height="20"/>
+    <rect x="36" y="8" width="20" height="4"/>
+    <rect x="36" y="16" width="16" height="4"/>
+    <rect x="36" y="24" width="20" height="4"/>
+    <!-- I: centred under the O -->
+    <rect x="16" y="36" width="4" height="20"/>
+    <!-- S: in its cell, but the tail drawn on a wider ellipse so it reaches 0.5px further -->
+    <path fill="none" stroke="#000" stroke-width="4" d="M53.2505 40.3095
+      A8 4 0 0 0 46 38
+      A8 4 0 0 0 38 42
+      A8 4 0 0 0 46 46
+      A8 4 0 0 1 54 50
+      A8 4 0 0 1 46 54
+      A10.4179 4 0 0 1 36.5582 51.6905"/>
+  </g>
+</svg>

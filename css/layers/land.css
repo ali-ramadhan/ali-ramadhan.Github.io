@@ -240,6 +240,10 @@ html[data-theme="dark"] #land::before {
   flex-shrink: 0;
 }
 
+html[data-theme="dark"] .social-icon[src*="github"] {
+  filter: invert(1);
+}
+
 .social-text {
   font-size: 0.9rem;
   font-weight: 500;

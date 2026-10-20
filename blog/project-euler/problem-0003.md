@@ -25,7 +25,7 @@ We can implement trial division in Julia:
 
 @code[src/utils/Primes/prime_factors.jl:prime_factors]
 
-The loop condition squares `factor` with `widemul`, which returns an `Int128`, because `factor^2` overflows `Int64` once `factor` gets past $\sqrt{2^{63}}. The wider multiply doesn't slow the loop down, unlike checking `factor <= isqrt(n)`, which adds a square root and an integer division to every iteration.
+The loop condition squares `factor` with `widemul`, which returns an `Int128`, because `factor^2` overflows `Int64` once `factor` gets past $\sqrt{2^{63}}$. The wider multiply doesn't slow the loop down, unlike checking `factor <= isqrt(n)`, which adds a square root and an integer division to every iteration.
 
 The largest prime factor is then just the maximum of the list:
 

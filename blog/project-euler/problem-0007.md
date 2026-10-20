@@ -9,10 +9,10 @@ benchmark_key: "n_10001"
 
 > By listing the first six prime numbers: $2, 3, 5, 7, 11$, and $13$, we can see that the $6$th prime is $13$.
 >
-> What is the $10\,001$st prime number?
+> What is the $10\\,001$st prime number?
 
 ::: hackerrank
-The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler007/problem) replaces $10\,001$ with any $N \leqslant 10^4$, with up to $10^3$ queries per run.
+The [HackerRank ProjectEuler+ version](https://www.hackerrank.com/contests/projecteuler/challenges/euler007/problem) replaces $10\\,001$ with any $N \leqslant 10^4$, with up to $10^3$ queries per run.
 :::
 
 ## Trial division

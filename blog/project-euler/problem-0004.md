@@ -154,7 +154,7 @@ The middle of the palindrome narrows it down even further. The last digit of $U$
 The palindromes that get through can also be checked more cheaply:
 
 - Near the top the upper half is a run of $9$s followed by a short tail, so the lower half is the reversed tail followed by $9$s, and only the tail needs reversing. Reversing takes a division per digit, and once the numbers need `Int128` those divisions are slow, but the tail always fits in an `Int64`.
-- Only $12$ of the $64$ residues modulo $64$ are perfect squares, so checking $D \bmod 64$ against a 64-bit mask first rules out about $81\%$ of the non-squares before taking the square root.
+- Only $12$ of the $64$ residues modulo $64$ are perfect squares, so checking $D \bmod 64$ against a 64-bit mask first rules out about $81\\%$ of the non-squares before taking the square root.
 - Julia turns `s^2` into `s * s` for integers up to 64 bits, but for `Int128` it calls the generic `power_by_squaring`, so we write `s * s` ourselves.
 
 @code[problem-0004:lower_half,reverse_tail,SQUARES_MOD_64,perfect_square_root]

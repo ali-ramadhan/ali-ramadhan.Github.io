@@ -36,7 +36,7 @@ I tried using logarithms (since $a^b = c^d \Leftrightarrow b \log a = d \log c$)
 
 So instead of computing powers, let's track exponents and reduce this down to a counting problem. The idea is that $4^3 = 2^6$ and $8^2 = 2^6$ are duplicates because they're both $2^6$. More generally, if $a = r^k$ for some primitive root $r$ (a number that isn't itself a perfect power), then $a^b = r^{kb}$.
 
-Looking at powers of $2$ to start and assuming $N = 100$ the bases $\{2, 4, 8, 16, 32, 64\}$ all reduce to powers of 2. So the number of unique powers with root 2 is the cardinality of the set
+Looking at powers of $2$ to start and assuming $N = 100$ the bases $\\{2, 4, 8, 16, 32, 64\\}$ all reduce to powers of 2. So the number of unique powers with root 2 is the cardinality of the set
 
 ```math
 | \lbrace 2^2, 2^3, \dots, 2^{100} \rbrace \cup \lbrace 4^2, 4^3, \dots, 4^{100} \rbrace \cup \cdots \cup \lbrace 64^2, 64^3, \dots, 64^{100} \rbrace | \\

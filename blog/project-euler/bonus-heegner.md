@@ -6,7 +6,7 @@ problem_name: "Heegner"
 date: 2025-12-07
 difficulty_estimate: 10
 benchmark_file: "bonus-heegner"
-benchmark_key: "n_1k"
+benchmark_key: "n_1k_multithreaded"
 ---
 
 > Among all non-square integers $n$ with absolute value not exceeding $10^3$, find the value of $n$ such that $\cos(\pi \sqrt n)$ is closest to an integer.
@@ -39,9 +39,9 @@ The top 10 are logged so we can see how close the runners-up get:
 
 @code[bonus-heegner:using Printf,log_top_results]
 
-Going up to $n = 10^3$ requires 250 bits of precision and produces the correct answer in @benchmark[bonus-heegner:n_1k] using all the threads on the machine.
+Going up to $n = 10^3$ requires 250 bits of precision and produces the correct answer in @benchmark[bonus-heegner:n_1k_multithreaded] using all the threads on the machine.
 
-Going up to $n = 10^6$ requires 4641 bits of precision and actually does not find a closer value after searching for @benchmark[bonus-heegner:n_1M]!
+Going up to $n = 10^6$ requires 4641 bits of precision and actually does not find a closer value after searching for @benchmark[bonus-heegner:n_1M_multithreaded]!
 
 ## Just knowing the solution
 

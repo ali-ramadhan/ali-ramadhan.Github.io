@@ -6,7 +6,7 @@ problem_name: "18i"
 date: 2025-12-13
 difficulty_estimate: 74
 benchmark_file: "bonus-18i"
-benchmark_key: "solution"
+benchmark_key: "solution_multithreaded"
 ---
 
 > Let $R(p)$ be the remainder when the _product_ $\prod_{x=0}^{p-1}(x^3-3x+4)$ is divided by $p$. For example, $R(11)=0$ and $R(29)=13$.
@@ -114,7 +114,7 @@ Now we just need to sum over all $p$. Since each prime can be processed independ
 
 @code[bonus-18i:using ProjectEulerSolutions.Utils.Primes,sum_R_mod_p,_sum_R_mod_p_inner]
 
-Running `sum_R_mod_p(1_000_000_000, 1_100_000_000)` returns the answer in @benchmark[bonus-18i:solution]!
+Running `sum_R_mod_p(1_000_000_000, 1_100_000_000)` returns the answer in @benchmark[bonus-18i:solution_multithreaded]!
 
 ## $18i$
 
